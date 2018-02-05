@@ -1,0 +1,143 @@
+@font-face {
+font-family: 'InstalledComicSans';
+src: url(ComicSans.ttf);
+}
+
+@font-face {
+font-family: 'InstalledImpact';
+src: url(impact.ttf);
+}
+
+@font-face {
+font-family: 'InstalledMyriad';
+src: url(myriad-pro.otf);
+}
+
+
+body {
+font-family: IntalledMyriad, sans-serif;
+font-size: 18px;
+background-image: url('tex.jpg');
+padding-bottom: 50px;
+}
+
+.nav-link, .navbar-brand {
+	font-size: 1.2em;
+	cursor: pointer;
+}
+
+#body {
+margin-top: 30px;
+padding-top: 60px;
+min-height: 400px;
+border-radius: 10px;
+background-color: #DEE;
+box-shadow: -5px -5px 20px #888888;
+}
+
+h1, h2, h3 {
+font-family: InstalledImpact, Impact, sans-serif;
+letter-spacing: 1px;
+}
+
+h2 {
+	text-align: center;
+}
+
+.role {
+	display: block;
+	background-color: #123;
+	color: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.role:hover {
+	text-decoration: none;
+	color: grey;
+}
+
+select {
+font-size: 18px;
+}
+
+.btn {
+	cursor: pointer;
+}
+
+.button {
+font-family: sans-serif;
+font-size: 18px;
+background-color: rgba(0, 25, 50, 0.5);
+padding: 5px;
+border-radius: 10px;
+color: white;
+text-decoration: none;
+}
+.button:hover {
+background-color: rgba(100, 125, 150, 0.5);
+color: grey;
+}
+
+textarea.text {
+height: 200px;
+}
+
+.custom-control-indicator {
+	background-color: white;
+	border: 1px solid rgba(0,0,0,.15);
+}
+
+.custom-control-description, .custom-control-indicator {
+	cursor: pointer;
+}
+
+a {
+font-weight: bold;
+color: black;
+}
+
+a:hover {
+text-decoration: none;
+}
+
+#footer {
+position: absolute;
+width: 95%;
+text-align: center;
+font-size: 0.8em;
+z-index: -1;
+}
+
+.filter {
+display: block;
+float: right;
+margin-bottom: 10px;
+}
+
+.custom-control-indicator {
+	border: 1px solid black;
+}
+
+.dropdown-menu {
+	background-color: #343a40 !important;
+}
+
+.dropdown-menu a.dropdown-item {
+	color: rgba(255,255,255,.5);
+	cursor: pointer;
+}
+
+.dropdown-menu a.dropdown-item:hover {
+	color: rgba(255,255,255,.75);
+	background-color: initial !important;
+}
+
+.stukje {
+	background-color: rgba(50,100,150,0.3);
+	border-radius: 5px;
+}
+
+.text-grey {
+	color: grey;
+}

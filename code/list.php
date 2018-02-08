@@ -13,7 +13,7 @@ $list = $Stukjes->getStukjes(null, $Error);
 $Error->printAll();
 ?>
 
-<h2 class='mb-4'>Welkom</h2>
+<h2 class='mb-4'>Stukjes</h2>
 <?php
 if ($Session->role == 2) {
 	if ($_GET['filter'] && $_GET['filter'] == "1")

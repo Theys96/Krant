@@ -1,15 +1,11 @@
 <?php
-$mysql_host = '';
-$mysql_username = '';
-$mysql_password = '';
-$mysql_database = '';
-$Error->throwFatal("MySQL settings are not set!"); // Comment out this line when deploying.
+require 'serverconfig.php';
 
-$passwords = array(
-	1 => null,
-	2 => null,
-	3 => "printer");
-$pagechars = 4500;
+if (!isset($mysql_host) || !isset($mysql_username) || !isset($mysql_password) || !isset($mysql_database)) {
+	$Error->throwFatal("MySQL settings are not set!");
+}
+
+$pagechars = 4500; // Characters per page (part of the effort to estimate article size)
 
 $roles = array(
 	1 => 'schrijver',

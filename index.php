@@ -58,7 +58,7 @@ else
 ?>
 </div>
 
-    <div id="footer">&copy; Thijs Havinga, 2018</div>
+    <div id="footer">&copy; Thijs Havinga, 2018 - DIT IS EEN TESTOMGEVING</div>
 
 
     <!-- Bootstrap core JavaScript

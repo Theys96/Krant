@@ -59,7 +59,7 @@ function setRole(setRole)
 <form method='post' action='index.php'>
 
 <div id='navDiv'>
-<h1>Kies wat je gaat doen</h1>
+<h1 class='mb-3'>Kies wat je gaat doen</h1>
 <div class='row'>
 	<div class='col-md-4'>
 		<a class='role m-2' onClick='setRole(1)' href='#'>Schrijven</a>

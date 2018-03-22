@@ -61,7 +61,7 @@ $(function() {
 
 <div class='form-group'>
 	<textarea id='text' class='form-control text input' name='text'></textarea>
-	<small class='float: right' id='charcount'></small>
+	<small class='float-right' id='charcount'></small>
 </div>
 
 

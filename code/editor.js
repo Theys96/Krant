@@ -6,7 +6,8 @@ function insertChar(button) {
 
 // Sets character counter of text in element 1 to element 2
 function charCount(source, counter) {
-	source.on('change', function() {
-		counter.text(source.text().length + " tekens");
+	source.on('input', function() {
+		counter.text(this.value.length + " tekens");
 	})
+	source.trigger('input');
 }

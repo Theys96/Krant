@@ -28,7 +28,11 @@ $(function() {
 		}, 10000);
 		$('.input').off('input');
 	});
-	charCount($('#text'), $('#charcount'));
+
+	$('#text').on('input', function() {
+		$('#charcount').text(this.value.length + " tekens");
+	});
+	$('#text').trigger('input');
 });
 </script>
 
@@ -51,7 +55,8 @@ $(function() {
 	<label for='category'>Categorie</label>
 	<select name='category' id='category' class='form-control'>
 		<?php
-		foreach ($Categories->getCats() as $id => $category)
+		var_dump($Categories->getCats($Error));
+		foreach ($Categories->getCats($Error) as $id => $category)
 		    {
 		    echo "<option value='" . $id . "'>" . htmlspecialchars($category['name']) . "</option>\n";
 		    }

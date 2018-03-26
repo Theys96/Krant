@@ -10,6 +10,7 @@ if ($Db->connect_errno) {
     $Error->throwFatal("MySQL connection failed: " . $Db->connect_error);
 }
 $Session = new Session($Db);
+$Error->session = $Session;
 $Stukjes = new Stukjes($Db);
 $Categories = new Categories($Db);
 $Users = new Users($Db);

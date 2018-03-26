@@ -1,10 +1,13 @@
 <?php
 if (!$page_loaded) {return;}
 
-if (isset($_GET['undo']))
-	{
-	$Stukjes->undoDelStukje($_GET['undo'], $Error);
+if (isset($_GET['undo'])) {
+	if ($Session->role == 3) {
+		$Stukjes->undoDelStukje($_GET['undo'], $Error);
+	} else {
+		$Error->throwError("Je moet beheerder zijn om stukjes uit de prullenbak te halen.");
 	}
+}
 $list = $Stukjes->getDeletedStukjes(null, $Error);
 $Error->printAll();
 ?>
@@ -26,9 +29,11 @@ foreach ($list as $stukje)
 			echo "<div class='col-5 text-right'>" . (($stukje['klaar'] == 1) ? "klaar" : "niet klaar") . "</div>";
 		echo "</div></div>";
 		echo "<div class='col-12 mb-2 text-center text-grey'><i>" . htmlspecialchars(substr($stukje['tekst'],0,75) . (strlen($stukje['tekst']) > 75 ? "..." : "")) . "</i></div>";
-		echo "<div class='col-sm-3'></div>";
-		echo "<div class='col-sm-6 text-right'><a class='btn btn-primary w-100 my-1 py-1' href='?action=bin&undo=" . $stukje['stukje'] . "'>Terugplaatsen</a></div>";
-		echo "<div class='col-sm-3'></div>";
+		if ($Session->role == 3) {
+			echo "<div class='col-sm-3'></div>";
+			echo "<div class='col-sm-6 text-right'><a class='btn btn-primary w-100 my-1 py-1' href='?action=bin&undo=" . $stukje['stukje'] . "'>Terugplaatsen</a></div>";
+			echo "<div class='col-sm-3'></div>";
+		}
 	echo "</div>";
 	}
 ?>

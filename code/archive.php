@@ -5,7 +5,7 @@ if (isset($_GET['undo'])) {
 	if ($Session->role == 3) {
 		$Stukjes->undoPlaatsStukje($_GET['undo'], $Error);
 	} else {
-		$Error->throwWarning("Je moet beheerder zijn om stukjes terug te plaatsen.");
+		$Error->throwError("Je moet beheerder zijn om stukjes terug te plaatsen.");
 	}
 }
 $list = $Stukjes->getGeplaatsteStukjes(null, $Error);

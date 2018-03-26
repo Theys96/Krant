@@ -67,13 +67,15 @@ Class Stukjes {
 
 			case 'Nagekeken':
 				$version = $this->getVersion($stukje, $err) + 1;
-				$query = "INSERT INTO stukjes (stukje, categorie, version, type, titel, user, tekst, klaar) VALUES (" . $stukje . ", " . $categorie . ", " . ($this->getVersion($stukje, $err)+1) . ", '" . $type . "', '" . $titel . "', '" . $auteur . "', '" . $tekst . "', " . $done . ")";
+				$query = "INSERT INTO stukjes (stukje, categorie, version, type, titel, user, tekst, klaar) VALUES (" . $stukje . ", " . $categorie . ", " . $version . ", '" . $type . "', '" . $titel . "', '" . $auteur . "', '" . $tekst . "', " . $done . ")";
 				break;
 
 			case 'Nieuw':
-				$query = "INSERT INTO stukjes (stukje, categorie, version, type, titel, user, tekst, klaar) VALUES (" . ($this->numStukjes()+1) . ", " . $categorie . ", 0, '" . $type . "', '" . $titel . "', '" . $auteur . "', '" . $tekst . "', " . $done . ")";
+				$query = "INSERT INTO stukjes (stukje, categorie, version, type, titel, user, tekst, klaar) VALUES (" . ($this->numStukjes($err)+1) . ", " . $categorie . ", 0, '" . $type . "', '" . $titel . "', '" . $auteur . "', '" . $tekst . "', " . $done . ")";
 				break;
 		}
+
+
 		
 		if (!$this->db->query($query)) {
 			$err->throwError("Er is iets misgegaan bij het plaatsen van het stukje. Controleer de query: ");
@@ -87,6 +89,8 @@ Class Stukjes {
 			$err->throwError($query);
 			return;
 		}
+
+
 
 		$err->throwMessage("Stukje geplaatst.");
 	}

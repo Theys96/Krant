@@ -2,6 +2,7 @@
 if (!$page_loaded) {return;}
 ?>
 <script src='code/draft.js'></script>
+<script src='code/editor.js'></script>
 <?php
 if (isset($_POST['draftid']))
 	{
@@ -19,15 +20,11 @@ $Error->printAll();
 ?>
 
 <script>
-function insertChar(button)
-    {
-    document.getElementById('text').value = document.getElementById('text').value + button.value;
-    }
-
 $(function() {
 	setInterval(function() {
 		Draft.draft();
 		}, 10000);
+	charCounter("#text", "#charcount");
 	});
 </script>
 
@@ -50,7 +47,7 @@ $(function() {
 	<label for='category'>Categorie</label>
 	<select name='category' id='category' class='form-control'>
 		<?php
-		foreach ($Categories->getCats() as $id => $category)
+		foreach ($Categories->getCats($Error) as $id => $category)
 		    {
 			if ($id == $stukje['categorie']) {
 			echo "<option value='" . $id . "' selected>" . htmlspecialchars($category['name']) . "</option>\n";
@@ -66,6 +63,7 @@ $(function() {
 	<div class='col-sm-6'>
 		<br />
 		<textarea class='form-control text' id='text' name='text'><?php echo htmlspecialchars($stukje['tekst']); ?></textarea>
+		<small class='float-right' id='charcount'></small>
 	</div>
 	<div class='col-sm-6'>
 		<b>Origineel:</b><br />

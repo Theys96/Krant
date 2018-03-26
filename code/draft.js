@@ -12,6 +12,17 @@ Draft = {
 	done: $($('[name="done"]')[0]),
 	draftIDinput: $($('#draftid')[0]),
 
+	/* Start drafting */
+	init: function(inputSelector) {
+		$(inputSelector).on('input', function() {
+			Draft.draft();
+			setInterval(function() {
+				Draft.draft();
+			}, 10000);
+			$(inputSelector).off('input');
+		});
+	},
+
 	/* Post draft naar server */
 	postDraft: function() {	
 		/* Determine action */

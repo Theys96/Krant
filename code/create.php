@@ -20,19 +20,8 @@ $Error->printAll();
 
 <script>
 $(function() {
-	/* Draft stuff */
-	$('.input').on('input', function() {
-		Draft.draft();
-		setInterval(function() {
-			Draft.draft();
-		}, 10000);
-		$('.input').off('input');
-	});
-
-	$('#text').on('input', function() {
-		$('#charcount').text(this.value.length + " tekens");
-	});
-	$('#text').trigger('input');
+	Draft.init('.input');
+	charCounter("#text", "#charcount");
 });
 </script>
 

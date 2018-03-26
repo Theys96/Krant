@@ -17,19 +17,19 @@
           <li class="nav-item">
             <a class="nav-link" href="?action=cats">Categorieën</a>
           </li>
-          <?php if ($Session->role == 3) : ?>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beheer</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="?action=drafts">Drafts</a>
               <a class="dropdown-item" href="?action=bin">Prullenbak</a>
               <a class="dropdown-item" href="?action=archive">Geplaatst</a>
+              <?php if ($Session->role == 3) : ?>
               <a class="dropdown-item" href="?action=users">Gebruikers</a>
               <a class="dropdown-item" href="?action=versionctrl">Versies</a>
               <a class="dropdown-item" href="?action=feedbacklist">Feedback</a>
+              <?php endif; ?>
             </div>
           </li>
-      		<?php endif; ?>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link" href="?action=feedback">Feedback</a></li>

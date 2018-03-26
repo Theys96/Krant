@@ -1,14 +1,20 @@
 <?php
 if (!$page_loaded) {return;}
 
-if (isset($_GET['delstukje']))
-	{
-	$Stukjes->delStukje($_GET['delstukje'], $Error);
+if (isset($_GET['delstukje'])) {
+	if ($Session->role == 3) {
+		$Stukjes->delStukje($_GET['delstukje'], $Error);
+	} else {
+		$Error->throwWarning("Je moet beheerder zijn om stukjes te verwijderen.");
 	}
-if (isset($_GET['plaatsstukje']))
-	{
-	$Stukjes->plaatsStukje($_GET['plaatsstukje'], $Error);
+}
+if (isset($_GET['plaatsstukje'])) {
+	if ($Session->role == 3) {
+		$Stukjes->plaatsStukje($_GET['plaatsstukje'], $Error);
+	} else {
+		$Error->throwWarning("Je moet beheerder zijn om stukjes te plaatsen.");
 	}
+}
 $list = $Stukjes->getStukjes(null, $Error);
 $Error->printAll();
 ?>
@@ -85,7 +91,7 @@ foreach ($list as $stukje) {
 		echo "</div>\n";
 	}
 }
-if ($n == 0) {
+if (isset($filter) && $n == 0 && count($list) > 0) {
 	echo "<div class='mt-3 text-center text-grey'><i>Er zijn geen stukjes die voldoen aan het huidige filter.</div>\n";
 }
 ?>

@@ -85,7 +85,7 @@ foreach ($list as $stukje) {
 		echo "</div>\n";
 	}
 }
-if ($n == 0) {
+if (isset($filter) && $n == 0 && count($list) > 0) {
 	echo "<div class='mt-3 text-center text-grey'><i>Er zijn geen stukjes die voldoen aan het huidige filter.</div>\n";
 }
 ?>

@@ -1,14 +1,20 @@
 <?php
 if (!$page_loaded) {return;}
 
-if (isset($_GET['delstukje']))
-	{
-	$Stukjes->delStukje($_GET['delstukje'], $Error);
+if (isset($_GET['delstukje'])) {
+	if ($Session->role == 3) {
+		$Stukjes->delStukje($_GET['delstukje'], $Error);
+	} else {
+		$Error->throwWarning("Je moet beheerder zijn om stukjes te verwijderen.");
 	}
-if (isset($_GET['plaatsstukje']))
-	{
-	$Stukjes->plaatsStukje($_GET['plaatsstukje'], $Error);
+}
+if (isset($_GET['plaatsstukje'])) {
+	if ($Session->role == 3) {
+		$Stukjes->plaatsStukje($_GET['plaatsstukje'], $Error);
+	} else {
+		$Error->throwWarning("Je moet beheerder zijn om stukjes te plaatsen.");
 	}
+}
 $list = $Stukjes->getStukjes(null, $Error);
 $Error->printAll();
 ?>

@@ -1,6 +1,6 @@
 <?php
 /* INIT */
-error_reporting(E_ALL);
+error_reporting(0);
 session_start();
 include 'code/code.php';
 $Error = new ErrorHandler();

@@ -16,10 +16,16 @@ $Error->printAll();
 <h2 class='mb-4'>Stukjes</h2>
 <?php
 if ($Session->role == 2) {
-	if ($_GET['filter'] && $_GET['filter'] == "1")
-		echo "<div class='w-100 text-right'><a href='?action=lijst'>alle stukjes tonen</a></div>";
-	else
-		echo "<div class='w-100 text-right'><a href='?action=lijst&filter=1'>alleen stukjes tonen die klaar zijn en nog niet nagekeken zijn</a></div>";	
+	$filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
+	/* 0 - alle stukjes
+	 * 1 - alle stukjes die klaar zijn
+	 * 2 - alle stukjes die klaar zijn & nog niet nagekeken
+	 */
+	echo "<div class='w-100 text-right'>Filter: ";
+	echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=lijst&filter=0'>alles</a> | ";
+	echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=lijst&filter=1'>klaar</a> | ";
+	echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=lijst&filter=2'>klaar & nog niet nagekeken</a>";
+	echo "</div>\n";
 }
 ?>
 
@@ -29,12 +35,20 @@ if (count($list) == 0) {
 	echo "<div class='text-center text-grey'><i>Er zijn op dit moment (nog) geen stukjes.</div>\n";
 }
 
+$n = 0;
 foreach ($list as $stukje) {
 	$checks = $Stukjes->numChecks($stukje['stukje'], $Error);
-	if (isset($_GET['filter']) && $_GET['filter'] == "1" && ($stukje['klaar'] != 1 || $checks > 0)) {
-		//NOPE
+	$filtered = false;
+	if (isset($filter)) {
+		if ($filter >= 1) {
+			$filtered = $filtered || $stukje['klaar'] == 0;
 		}
-	else {
+		if ($filter >= 2) {
+			$filtered = $filtered || $checks > 0;
+		}
+	}
+	if (!$filtered) {
+		$n++;
 		$author = $Stukjes->getAuthor($stukje['stukje'], 'stukjes', $Error);
 		echo "<div class='stukje my-2 mx-1 row pt-1'>\n";
 			echo "<div class='col-md-6'><div class='row'>";
@@ -71,5 +85,7 @@ foreach ($list as $stukje) {
 		echo "</div>\n";
 	}
 }
+if ($n == 0) {
+	echo "<div class='mt-3 text-center text-grey'><i>Er zijn geen stukjes die voldoen aan het huidige filter.</div>\n";
+}
 ?>
-</table>

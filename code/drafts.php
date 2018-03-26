@@ -14,7 +14,7 @@ if (count($list) == 0) {
 foreach ($list as $draft) {
 	echo "<div class='stukje my-2 mx-1 row pb-1 pt-2'>\n";
 		echo "<div class='col-md-6'><div class='row'>";
-			echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars($draft['titel']) . "</b></h4></div>";
+			echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars( cap($draft['titel'], 40) ) . "</b></h4></div>";
 			echo "<div class='col-sm-5 text-right'>" . htmlspecialchars($draft['user']) . "</div>";
 		echo "</div></div><div class='col-md-6'><div class='row'>";
 			echo "<div class='col-7'>" . htmlspecialchars($Categories->getCatValue($draft['categorie'], 'name', $Error)) . "</div>";

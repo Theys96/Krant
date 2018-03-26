@@ -4,8 +4,10 @@ Class ErrorHandler {
 	private $errors = array();
 	private $warnings = array();
 	private $messages = array();
+	public $session;
 
 	function throwFatal($message) {
+		$this->log("Fatal: " . $message);
 		echo "<center>\n";
 			echo "<h1>Fatal error</h1>\n";
 			echo "<p>" . $message . "</p>\n";
@@ -15,10 +17,12 @@ Class ErrorHandler {
 
 	function throwError($message) {
 		$this->errors[] = $message;
+		$this->log("Error: " . $message);
 	}
 
 	function throwWarning($message) {
 		$this->warnings[] = $message;
+		$this->log("Warning: " . $message);
 	}
 
 	function throwMessage($message) {
@@ -88,6 +92,12 @@ Class ErrorHandler {
 			$array['message'] = ob_get_clean();
 		}
 		return $array;
+	}
+
+	function log($message) {
+		if (isset($this->session)) {
+			$this->session->log($message);
+		}
 	}
 }
 ?>

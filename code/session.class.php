@@ -53,8 +53,13 @@ Class Session
 			$this->username = $info['username' . $info['role']];
 			$this->role = $info['role'];
 			$this->logged = true;
-			$this->db->query("INSERT INTO log(user, role, address) VALUES ('" . $this->username . "', " . $this->role . ", '" . $_SERVER['REMOTE_ADDR'] . "')");
+			$this->log("login");
 			}
+		}
+		
+	function log($message) 
+		{
+		$this->db->query("INSERT INTO log(user, role, address, message) VALUES ('" . $this->username . "', " . $this->role . ", '" . $_SERVER['REMOTE_ADDR'] . "', '" . $message . "')");
 		}
 	}
 ?>

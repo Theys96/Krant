@@ -21,7 +21,7 @@ foreach ($list as $stukje)
 	{
 	echo "<div class='stukje my-2 mx-1 row pb-1 pt-2'>\n";
 		echo "<div class='col-md-6'><div class='row'>";
-			echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars($stukje['titel']) . "</b></h4></div>";
+			echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars( cap($stukje['titel'], 40) ) . "</b></h4></div>";
 			echo "<div class='col-sm-5 text-right'>" . htmlspecialchars($Stukjes->getAuthor($stukje['stukje'], 'geplaatst', $Error)) . "</div>";
 		echo "</div></div><div class='col-md-6'><div class='row'>";
 			echo "<div class='col-7'>" . htmlspecialchars($Categories->getCatValue($stukje['categorie'], 'name', $Error)) . "</div>";

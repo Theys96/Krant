@@ -58,14 +58,14 @@ foreach ($list as $stukje) {
 		$author = $Stukjes->getAuthor($stukje['stukje'], 'stukjes', $Error);
 		echo "<div class='stukje my-2 mx-1 row pt-1'>\n";
 			echo "<div class='col-md-6'><div class='row'>";
-				echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars($stukje['titel']) . "</b></h4></div>";
+				echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars( cap($stukje['titel'], 40) ) . "</b></h4></div>";
 				echo "<div class='col-sm-5 text-right'>" . htmlspecialchars($author) . "</div>";
 			echo "</div></div><div class='col-md-6'><div class='row'>";
 				echo "<div class='col-7'>" . htmlspecialchars($Categories->getCatValue($stukje['categorie'], 'name', $Error)) . "</div>";
 				echo "<div class='col-5 text-right'>" . (($stukje['klaar'] == 1) ? "klaar" : "niet klaar") . "</div>";
 			echo "</div></div>";
 
-			echo "<div class='col-12 mb-2 text-center text-grey'><i>" . htmlspecialchars((substr($stukje['tekst'],0,75) . (strlen($stukje['tekst']) > 75 ? "..." : ""))) . "</i></div>";
+			echo "<div class='col-12 mb-2 text-center text-grey'><i>" . htmlspecialchars( cap($stukje['tekst'], 75) ) . "</i></div>";
 			echo "<div class='col-6'><b>" . $lengte = $stukje['lengte'] . "</b> tekens</div>";
 			echo "<div class='col-6 text-right'><b>" . $checks . "</b> check(s)</div>";
 			echo "<div class='col-12'><div class='row justify-content-center'>";

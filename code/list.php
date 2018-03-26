@@ -35,10 +35,11 @@ foreach ($list as $stukje) {
 		//NOPE
 		}
 	else {
+		$author = $Stukjes->getAuthor($stukje['stukje'], 'stukjes', $Error);
 		echo "<div class='stukje my-2 mx-1 row pt-1'>\n";
 			echo "<div class='col-md-6'><div class='row'>";
 				echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars($stukje['titel']) . "</b></h4></div>";
-				echo "<div class='col-sm-5 text-right'>" . htmlspecialchars($Stukjes->getAuthor($stukje['stukje'], 'stukjes', $Error)) . "</div>";
+				echo "<div class='col-sm-5 text-right'>" . htmlspecialchars($author) . "</div>";
 			echo "</div></div><div class='col-md-6'><div class='row'>";
 				echo "<div class='col-7'>" . htmlspecialchars($Categories->getCatValue($stukje['categorie'], 'name', $Error)) . "</div>";
 				echo "<div class='col-5 text-right'>" . (($stukje['klaar'] == 1) ? "klaar" : "niet klaar") . "</div>";

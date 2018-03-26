@@ -1,6 +1,5 @@
 <?php
 if (!$page_loaded) {return;}
-
 ?>
 <script src='code/draft.js'></script>
 <script src='code/editor.js'></script>
@@ -19,7 +18,14 @@ function printButtons($chars) {
 
 $stukje = $Stukjes->getStukje($_GET['stukje'], null, $Error);
 $checks = $Stukjes->getChecks($_GET['stukje'], $Error);
+$author = $Stukjes->getAuthor($stukje['stukje'], 'stukjes', $Error);
 $Error->printAll();
+
+if ($author == $Session->username) {
+	$Error->throwError("Je mag je eigen stukje niet nakijken.");
+	$Error->printAll();
+	return;
+}
 ?>
 
 <script>
@@ -53,7 +59,7 @@ $(function() {
 
 <div class='form-group'>
 	<label for='user'>Auteur</label>
-	<input type='text' class='form-control' id='user' value='<?php echo htmlspecialchars($Stukjes->getAuthor($stukje['stukje'], 'stukjes', $Error)); ?>' disabled />
+	<input type='text' class='form-control' id='user' value='<?php echo htmlspecialchars($author); ?>' disabled />
 </div>
 
 <div class='form-group'>

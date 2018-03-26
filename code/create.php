@@ -2,6 +2,7 @@
 if (!$page_loaded) {return;}
 ?>
 <script src='code/draft.js'></script>
+<script src='code/editor.js'></script>
 <?php
 if (isset($_POST['draftid'])) 
 	{
@@ -19,19 +20,9 @@ $Error->printAll();
 
 <script>
 $(function() {
-	$('.input').on('input', function() {
-		Draft.draft();
-		setInterval(function() {
-			Draft.draft();
-		}, 10000);
-		$('.input').off('input');
-	});
+	Draft.init('.input');
+	charCounter("#text", "#charcount");
 });
-
-function insertChar(button)
-    {
-    document.getElementById('text').value = document.getElementById('text').value + button.value;
-    }
 </script>
 
 <h2>Nieuw stukje</h2>
@@ -53,7 +44,8 @@ function insertChar(button)
 	<label for='category'>Categorie</label>
 	<select name='category' id='category' class='form-control'>
 		<?php
-		foreach ($Categories->getCats() as $id => $category)
+		var_dump($Categories->getCats($Error));
+		foreach ($Categories->getCats($Error) as $id => $category)
 		    {
 		    echo "<option value='" . $id . "'>" . htmlspecialchars($category['name']) . "</option>\n";
 		    }
@@ -63,6 +55,7 @@ function insertChar(button)
 
 <div class='form-group'>
 	<textarea id='text' class='form-control text input' name='text'></textarea>
+	<small class='float-right' id='charcount'></small>
 </div>
 
 

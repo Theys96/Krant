@@ -5,6 +5,6 @@ This project's front-end is in **dutch**. This repository accepts dutch besides 
 ## Deployment
 Copy the entire repository to a folder on a webserver with PHP ≥ 5 and MySQL installed.
 
-Enter the required info, at least the MySQL credentials, in the serverconfig.php file. config.php generally does not need to be configured.
+Enter the required info, at least the MySQL credentials, in the `serverconfig.example.php` file, and rename it to just `serverconfig.php`. `config.php` generally does not need to be configured.
 
-To set up the database, use krant.sql (this defines all the required tables).
+To set up the database, use `krant.sql` (this defines all the required tables).

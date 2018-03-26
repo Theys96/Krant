@@ -11,6 +11,7 @@ Class Categories {
 		$query = "SELECT * FROM categories";
 		$array = array();
 		$result = $this->db->query($query);
+		
 		if ($result) {
 			while ($cat = $result->fetch_assoc()) {
 			$array[$cat['id']] = $cat;

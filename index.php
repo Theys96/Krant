@@ -59,7 +59,7 @@ else
 ?>
 </div>
 
-    <div id="footer">&copy; Thijs Havinga, 2018 TEST</div>
+    <div id="footer">&copy; Thijs Havinga, 2018</div>
 
 
     <!-- Bootstrap core JavaScript

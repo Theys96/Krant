@@ -43,7 +43,8 @@ if (count($list) == 0) {
 
 $n = 0;
 foreach ($list as $stukje) {
-	$checks = $Stukjes->numChecks($stukje['stukje'], $Error);
+	$checks = $Stukjes->getChecks($stukje['stukje'] $Error);
+	//$checks = $Stukjes->numChecks($stukje['stukje'], $Error);
 	$filtered = false;
 	if (isset($filter)) {
 		if ($filter >= 1) {
@@ -67,7 +68,7 @@ foreach ($list as $stukje) {
 
 			echo "<div class='col-12 mb-2 text-center text-grey'><i>" . htmlspecialchars( cap($stukje['tekst'], 75) ) . "</i></div>";
 			echo "<div class='col-6'><b>" . $lengte = $stukje['lengte'] . "</b> tekens</div>";
-			echo "<div class='col-6 text-right'><b>" . $checks . "</b> check(s)</div>";
+			echo "<div class='col-6 text-right'><b>" . count($checks) . "</b> check(s): " . htmlspecialchars(implode(", ", $checks)) . "</div>";
 			echo "<div class='col-12'><div class='row justify-content-center'>";
 				if ($Session->role != 2)
 					echo "<div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=edit&stukje=" . $stukje['stukje'] . "'>Wijzigen</a></div>";

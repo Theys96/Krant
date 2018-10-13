@@ -43,7 +43,7 @@ if (count($list) == 0) {
 
 $n = 0;
 foreach ($list as $stukje) {
-	$checks = $Stukjes->getChecks($stukje['stukje'] $Error);
+	$checks = $Stukjes->getChecks($stukje['id'] $Error);
 	//$checks = $Stukjes->numChecks($stukje['stukje'], $Error);
 	$filtered = false;
 	if (isset($filter)) {

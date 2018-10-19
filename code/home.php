@@ -7,9 +7,6 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="?action=schrijfregels" target="_blank">Schrijfregels</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="?action=lijst">Stukjes</a>
           </li>
           <?php if ($Session->role == 1 || $Session->role == 3) : ?>
@@ -33,8 +30,9 @@
           </li>
         </ul>
         <ul class="navbar-nav">
+	  <li class="nav-item"><a class="nav-link" href="?action=schrijfregels" target="_blank">Schrijfregels</a></li>
           <li class="nav-item"><a class="nav-link" href="?action=feedback">Feedback</a></li>
-        	<li class="nav-item"><a class="nav-link" href="?action=logout">Uitloggen</a></li>
+          <li class="nav-item"><a class="nav-link" href="?action=logout">Uitloggen</a></li>
         </ul>
       </div>
     </nav>

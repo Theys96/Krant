@@ -18,7 +18,7 @@
             <a class="nav-link" href="?action=cats">Categorieën</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?action=schrijfregels">Schrijfregels</a>
+            <a class="nav-link" href="?action=schrijfregels" target="_blank">Schrijfregels</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beheer</a>

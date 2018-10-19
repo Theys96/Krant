@@ -7,6 +7,9 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
+            <a class="nav-link" href="?action=schrijfregels" target="_blank">Schrijfregels</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="?action=lijst">Stukjes</a>
           </li>
           <?php if ($Session->role == 1 || $Session->role == 3) : ?>
@@ -14,15 +17,10 @@
             <a class="nav-link" href="?action=schrijf">Schrijf</a>
           </li>
           <?php endif; ?>
-          <li class="nav-item">
-            <a class="nav-link" href="?action=cats">Categorieën</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="?action=schrijfregels" target="_blank">Schrijfregels</a>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beheer</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
+	      <a class="dropdown-item" href="?action=cats">Categorieën<</a>
               <a class="dropdown-item" href="?action=drafts">Drafts</a>
               <a class="dropdown-item" href="?action=bin">Prullenbak</a>
               <a class="dropdown-item" href="?action=archive">Geplaatst</a>

@@ -5,7 +5,7 @@
 	<li>Vermijdt woorden als "kunnen", "worden" en "zullen" die de zinnen onnodig langer maken.</li>
 	<li>Wist je datjes:<ul>
 		<li>Zet geen streepje of een ander teken voor de wistjedatjes en een vraagteken op het eind.</li>
-		<li>Beperk opeenvolgende wistjedatjes.<li>
+		<li>Beperk opeenvolgende wistjedatjes.</li>
 		<li>Minimaal ongeveer 5 per pagina.</li></ul>
 	<li>Schrijf begrijpbaar en lijk voor de desbetreffende speltak.</li>
 	<li>Hou er rekening mee dat alle speltakken alles kunnen lezen. Wil je foute teksten plaatsen bij de pivo's, doe dat dan zodanig dat de welpen die het lezen niet begrijpen.</li>

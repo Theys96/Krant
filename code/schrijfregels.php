@@ -15,4 +15,7 @@
 	<li>Zorg er voor dat in elk stukje een paar namen en hun scouting groep voorkomen. Ook bij thema stukjes (vraag bijvoorbeeld naar wat de mensen die er bij staan er van vinden).</li>
 	<li>Schijf leuke stukjes. Stukjes in de richting "post 1 was ...,  post 2 was  ... , etc." zijn niet zo leuk om te lezen.</li>
 	<li>Richtlijn is 500 tekens per stukje.</li>
+	<li>Getallen tot en met twintig schrijven we uit als woord (ipv 20).</li>
+	<li>Scoutinggroepen met een hoofdletter, bijvoorbeeld Scouting Veendam. Het woord "scouting" los is zonder hoofdletter.</li>
+	<li>Namen van hikes zijn met een hoofdlettter (Welpenhike, Scoutshike+, etc.).</li>
 </ul>

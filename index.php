@@ -59,7 +59,7 @@ else
 ?>
 </div>
 
-    <div id="footer">&copy; Thijs Havinga, 2018</div>
+    <div id="footer">&copy; <?php echo date("Y"); ?> Copyright Thijs Havinga.</div>
 
 
     <!-- Bootstrap core JavaScript

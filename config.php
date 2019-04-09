@@ -64,5 +64,8 @@ $actions = array(
 	'feedbacklist' => array(
 		'include' => array('code/feedbacklist.php'),
 		'level' => array(1,2,3)),
+	'schrijfregels' => array(
+		'include' => array('code/schrijfregels.php'),
+		'level' => array(1,2,3))
 		);
 ?>

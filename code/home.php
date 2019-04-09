@@ -1,5 +1,5 @@
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="?action=lijst">Krant</a>
+      <a class="navbar-brand" href="?action=lijst">Krant | <?php echo $Session->username; ?></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -14,12 +14,10 @@
             <a class="nav-link" href="?action=schrijf">Schrijf</a>
           </li>
           <?php endif; ?>
-          <li class="nav-item">
-            <a class="nav-link" href="?action=cats">Categorieën</a>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beheer</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
+	      <a class="dropdown-item" href="?action=cats">Categorieën</a>
               <a class="dropdown-item" href="?action=drafts">Drafts</a>
               <a class="dropdown-item" href="?action=bin">Prullenbak</a>
               <a class="dropdown-item" href="?action=archive">Geplaatst</a>
@@ -32,8 +30,9 @@
           </li>
         </ul>
         <ul class="navbar-nav">
+	  <li class="nav-item"><a class="nav-link" href="?action=schrijfregels" target="_blank">Schrijfregels</a></li>
           <li class="nav-item"><a class="nav-link" href="?action=feedback">Feedback</a></li>
-        	<li class="nav-item"><a class="nav-link" href="?action=logout">Uitloggen</a></li>
+          <li class="nav-item"><a class="nav-link" href="?action=logout">Uitloggen</a></li>
         </ul>
       </div>
     </nav>

@@ -5,8 +5,6 @@ if (!isset($mysql_host) || !isset($mysql_username) || !isset($mysql_password) ||
 	$Error->throwFatal("MySQL settings are not set!");
 }
 
-$pagechars = 4500; // Characters per page (part of the effort to estimate article size)
-
 $roles = array(
 	1 => 'schrijver',
 	2 => 'nakijker',

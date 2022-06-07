@@ -3,10 +3,10 @@
 $Error->throwFatal("Server configuration has not been done yet (serverconfig.php)!");
 
 /* Set these settings! */
-$mysql_host = null;
-$mysql_username = null;
-$mysql_password = null;
-$mysql_database = null;
+$mysql_host = 'localhost';
+$mysql_username = 'thijs';
+$mysql_password = 'krant';
+$mysql_database = 'krant';
 
 $passwords = array(
 	1 => null,

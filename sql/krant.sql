@@ -127,3 +127,7 @@ ALTER TABLE `stukjes`
 
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+INSERT INTO `users` (username, perm_level) VALUES ('Thijs', 3);
+INSERT INTO `categories` (name, description) VALUES ('Algemeen', 'Algemeen');

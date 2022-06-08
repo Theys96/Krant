@@ -1,10 +1,22 @@
 <?php
+namespace Util\Singleton;
+
 Class ErrorHandler {
 	
 	private $errors = array();
 	private $warnings = array();
 	private $messages = array();
 	public $session;
+
+	private static ?ErrorHandler $instance = null;
+
+	public static function instance(): ErrorHandler
+	{
+		if (self::$instance === null) {
+			self::$instance = new ErrorHandler();
+		}
+		return self::$instance;
+	}
 
 	function throwFatal($message) {
 		$this->log("Fatal: " . $message);

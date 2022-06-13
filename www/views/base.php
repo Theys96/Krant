@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var string $body
+ */
+?>
 <!DOCTYPE html>
 <html lang="nl">
     <head>

@@ -9,5 +9,9 @@ class Home extends LoggedIn
     {
         return '<pre>' . var_export($_SESSION, true) . '</pre>';
     }
+
+    public function allowed_roles(): array
+    {
+        return [1,2,3];
+    }
 }
-?>

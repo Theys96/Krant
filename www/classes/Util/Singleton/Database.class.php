@@ -19,7 +19,6 @@ class Database
 	/**
 	 * Returns the singleton instance.
 	 * @return Database
-     * @throws Exception
 	 */
 	public static function instance(): Database
 	{

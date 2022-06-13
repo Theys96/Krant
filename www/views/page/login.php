@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var array $users
+ * @var array $passwords
+ * @var string $errors
+ */
+?>
 <script>
 $(function() {
 	$('.step2').hide();

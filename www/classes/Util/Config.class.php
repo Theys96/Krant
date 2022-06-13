@@ -14,4 +14,3 @@ class Config
         3 => "printer"
     ];
 }
-?>

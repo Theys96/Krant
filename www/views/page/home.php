@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var string $username
+ * @var int $role
+ * @var string $errors
+ * @var string $content
+ */
+?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="?action=lijst">Krant | <?php echo $username; ?></a>
     <button 
@@ -25,7 +33,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beheer</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="?action=cats">Categorieën</a>
+                    <a class="dropdown-item" href="?action=categories">Categorieën</a>
                     <a class="dropdown-item" href="?action=drafts">Drafts</a>
                     <a class="dropdown-item" href="?action=bin">Prullenbak</a>
                     <a class="dropdown-item" href="?action=archive">Geplaatst</a>
@@ -46,5 +54,6 @@
 </nav>
 
 <div class='jumbotron' id='body'>
+    <?php echo $errors; ?>
     <?php echo $content; ?>
 </div>

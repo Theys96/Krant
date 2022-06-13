@@ -22,10 +22,7 @@ class Category
         $this->description = $description;
     }
 
-    /**
-     * @throws Exception
-     */
-    public static function getCategoryById(int $id): ?Category
+    public static function getById(int $id): ?Category
     {
 		$query = "SELECT * FROM categories WHERE id = ?";
         $stmt = Database::instance()->con->prepare($query);
@@ -36,5 +33,19 @@ class Category
             return new Category($category_data['id'], $category_data['name'], $category_data['description']);
         }
         return null;
+    }
+
+    public static function getAll(): array
+    {
+        $query = "SELECT * FROM categories";
+        $stmt = Database::instance()->con->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $categories = [];
+        while ( ($category_data = $result->fetch_assoc()) ) {
+            $categories[$category_data['id']] = new Category($category_data['id'], $category_data['name'], $category_data['description']);
+        }
+        return $categories;
     }
 }

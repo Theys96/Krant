@@ -3,6 +3,7 @@ namespace Controller\Page;
 
 use Controller\Page\RegularPage;
 use Util\Config;
+use Util\Singleton\ErrorHandler;
 use Util\ViewRenderer;
 
 class Login extends BasePage
@@ -21,7 +22,8 @@ class Login extends BasePage
                     'Thijs'
                 ]
             ],
-            'passwords' => Config::PASSWORDS
+            'passwords' => Config::PASSWORDS,
+            'errors' => ErrorHandler::instance()->printAllToString()
         ]); 
     }
 }

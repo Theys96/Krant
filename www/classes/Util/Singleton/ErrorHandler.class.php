@@ -1,14 +1,18 @@
 <?php
 namespace Util\Singleton;
 
+use JetBrains\PhpStorm\NoReturn;
+use Throwable;
+
 Class ErrorHandler {
 	
-	private $errors = array();
-	private $warnings = array();
-	private $messages = array();
-	public $session;
+	private array $errors = array();
+	private array $warnings = array();
+	private array $messages = array();
 
 	private static ?ErrorHandler $instance = null;
+
+    protected const FATAL_ERROR_TITLE = 'Oeps!';
 
 	public static function instance(): ErrorHandler
 	{
@@ -18,63 +22,83 @@ Class ErrorHandler {
 		return self::$instance;
 	}
 
-	function throwFatal($message) {
+    #[NoReturn] public static function exceptionHandler(Throwable $exception): void
+    {
+        ErrorHandler::instance()->throwFatal($exception->getMessage());
+    }
+
+    /**
+     * @param string $message
+     * @return void
+     */
+	#[NoReturn] public function throwFatal(string $message): void
+    {
 		$this->log("Fatal: " . $message);
-		echo "<center>\n";
-			echo "<h1>Fatal error</h1>\n";
-			echo "<p>" . $message . "</p>\n";
-		echo "</center>\n";
+		echo '<center>';
+			echo '<h1>' . self::FATAL_ERROR_TITLE . '</h1>';
+			echo '<p>' . $message . '</p>';
+		echo '</center>';
 		exit();
 	}
 
-	function throwError($message) {
+	function addError($message): void
+    {
 		$this->errors[] = $message;
 		$this->log("Error: " . $message);
 	}
 
-	function throwWarning($message) {
+	function addWarning($message): void
+    {
 		$this->warnings[] = $message;
 		$this->log("Warning: " . $message);
 	}
 
-	function throwMessage($message) {
+	function addMessage($message): void
+    {
 		$this->messages[] = $message;
 	}
 
-	function numErrors() {
+	function numErrors(): int
+    {
 		return count($this->errors);
 	}
 
-	function numWarnings() {
+	function numWarnings(): int
+    {
 		return count($this->warnings);
 	}
 
-	function numMessages() {
+	function numMessages(): int
+    {
 		return count($this->messages);
 	}
 
-	function printErrors() {
+	function printErrors(): void
+    {
 		echo "<center><h2 class='text-danger'>Error</h2>\n";
 		echo "<p class='text-danger'>" . implode("<br />\n", $this->errors) . "</p>\n";
 		echo "</center>";
 		$this->errors = array();
 	}
 
-	function printWarnings() {
+	function printWarnings(): void
+    {
 		echo "<center><h2 class='text-warning'>Waarschuwing</h2>\n";
 		echo "<p class='text-warning'>" . implode("<br />\n", $this->warnings) . "</p>\n";
 		echo "</center>";
 		$this->warnings = array();
 	}
 
-	function printMessages() {
+	function printMessages(): void
+    {
 		echo "<center>";
 		echo "<p class='text-success'>" . implode("<br />\n", $this->messages) . "</p>\n";
 		echo "</center>";
 		$this->messages = array();
 	}
 
-	function printAll() {
+	function printAll(): void
+    {
 		if ($this->numErrors()) {
 			$this->printErrors();
 		}
@@ -86,30 +110,14 @@ Class ErrorHandler {
 		}
 	}
 
-	function arrayAll() {
-		$array = array('error' => '', 'warning' => '', 'message' => '');
-		if ($this->numErrors()) {
-			ob_start();
-			$this->printErrors();
-			$array['error'] = ob_get_clean();
-		}
-		if ($this->numWarnings()) {
-			ob_start();
-			$this->printWarnings();
-			$array['warning'] = ob_get_clean();
-		}
-		if ($this->numMessages()) {
-			ob_start();
-			$this->printMessages();
-			$array['message'] = ob_get_clean();
-		}
-		return $array;
-	}
+    function printAllToString(): string
+    {
+        ob_start();
+        $this->printAll();
+        return ob_get_clean();
+    }
 
 	function log($message) {
-		if (isset($this->session)) {
-			$this->session->log($message);
-		}
+        // TODO: Implement.
 	}
 }
-?>

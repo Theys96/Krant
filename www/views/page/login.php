@@ -122,4 +122,7 @@ function setRole(setRole)
             </div>
         </form>
     </center>
+    <?php
+    echo $errors;
+    ?>
 </div>

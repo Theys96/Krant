@@ -2,6 +2,7 @@
 namespace Controller\Page;
 
 use Controller\Response;
+use Util\Singleton\ErrorHandler;
 use Util\ViewRenderer;
 
 abstract class BasePage implements Response

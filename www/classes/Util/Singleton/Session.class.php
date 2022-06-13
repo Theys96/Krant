@@ -46,7 +46,8 @@ class Session
 	 * @param string $name
 	 * @return mixed
 	 */
-	function __get(string $name): mixed {
+	function __get(string $name): mixed
+    {
 		if (key_exists($name, $_SESSION[self::SESSION_NAMESPACE])) {
 			return $_SESSION[self::SESSION_NAMESPACE][$name];
 		}
@@ -60,7 +61,8 @@ class Session
 	 * @param mixed $value
 	 * @return void
 	 */
-	function __set(string $name, mixed $value): void {
+	function __set(string $name, mixed $value): void
+    {
 		$_SESSION[self::SESSION_NAMESPACE][$name] = $value;
 	}
 
@@ -69,7 +71,8 @@ class Session
 	 *
 	 * @return void
 	 */
-	function reset(): void {
+	function reset(): void
+    {
 		$_SESSION[self::SESSION_NAMESPACE] = array();
 	}
 
@@ -78,7 +81,8 @@ class Session
 	 *
 	 * @return void
 	 */
-	public function check_login(): void {
+	public function check_login(): void
+    {
 		if (!$this->logged_in && isset($_POST['role'])) {
             $role = (int) $_POST['role'];
             $username = $_POST['username'][$role];
@@ -94,11 +98,14 @@ class Session
      * @param string $username
      * @return void
      */
-	public function login(int $role, string $password, string $username): void {
+	public function login(int $role, string $password, string $username): void
+    {
 		if (!isset(Config::PASSWORDS[$role]) || Config::PASSWORDS[$role] === $password) {
 			$this->username = $username;
 			$this->role = $role;
 			$this->logged_in = true;
-		}
+		} else {
+            ErrorHandler::instance()->addError('Onjuist wachtwoord.');
+        }
 	}
 }

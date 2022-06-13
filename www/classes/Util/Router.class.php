@@ -10,13 +10,18 @@ use Exception;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 
+/**
+ * Controller router.
+ */
 class Router
 {
+    /** @var string[] */
     private array $actions = [
         'categories' => LoggedIn\Categories::class
     ];
 
     /**
+     * @return Response|null
      * @throws Exception
      */
     public function get_controller_instance(): ?Response

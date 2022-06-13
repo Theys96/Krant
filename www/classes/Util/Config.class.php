@@ -1,6 +1,9 @@
 <?php 
 namespace Util;
 
+/**
+ * Configuration holder.
+ */
 class Config
 {
     const BASE_URL = 'http://localhost/';

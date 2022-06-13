@@ -1,13 +1,20 @@
 <?php
 namespace Model;
 
-use Exception;
 use Util\Singleton\Database;
 
+/**
+ * Categorieën model.
+ */
 class Category
 {
+    /** @var int */
     public int $id;
+
+    /** @var string */
     public string $name;
+
+    /** @var string */
     public string $description;
 
     /**
@@ -22,6 +29,10 @@ class Category
         $this->description = $description;
     }
 
+    /**
+     * @param int $id
+     * @return Category|null
+     */
     public static function getById(int $id): ?Category
     {
 		$query = "SELECT * FROM categories WHERE id = ?";
@@ -35,6 +46,9 @@ class Category
         return null;
     }
 
+    /**
+     * @return Category[]
+     */
     public static function getAll(): array
     {
         $query = "SELECT * FROM categories";

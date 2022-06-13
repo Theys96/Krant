@@ -1,11 +1,13 @@
 <?php
 namespace Controller\Page;
 
-use Controller\Page\RegularPage;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 
+/**
+ * Basis voor elke pagina na login.
+ */
 abstract class LoggedIn extends BasePage
 {
     /**
@@ -31,4 +33,3 @@ abstract class LoggedIn extends BasePage
         ]); 
     }
 }
-?>

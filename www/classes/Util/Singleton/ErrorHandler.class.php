@@ -4,16 +4,28 @@ namespace Util\Singleton;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
+/**
+ * Handler voor errors, warnings en dergelijke.
+ */
 Class ErrorHandler {
-	
-	private array $errors = array();
-	private array $warnings = array();
-	private array $messages = array();
+    /** @var string[] */
+	private array $errors = [];
 
+    /** @var string[] */
+	private array $warnings = [];
+
+    /** @var string[] */
+	private array $messages = [];
+
+    /** @var ErrorHandler|null */
 	private static ?ErrorHandler $instance = null;
 
+    /** @var string FATAL_ERROR_TITLE */
     protected const FATAL_ERROR_TITLE = 'Oeps!';
 
+    /**
+     * @return ErrorHandler
+     */
 	public static function instance(): ErrorHandler
 	{
 		if (self::$instance === null) {
@@ -22,6 +34,10 @@ Class ErrorHandler {
 		return self::$instance;
 	}
 
+    /**
+     * @param Throwable $exception
+     * @return void
+     */
     #[NoReturn] public static function exceptionHandler(Throwable $exception): void
     {
         ErrorHandler::instance()->throwFatal($exception->getMessage());
@@ -41,38 +57,62 @@ Class ErrorHandler {
 		exit();
 	}
 
-	function addError($message): void
+    /**
+     * @param string $message
+     * @return void
+     */
+	function addError(string $message): void
     {
 		$this->errors[] = $message;
 		$this->log("Error: " . $message);
 	}
 
-	function addWarning($message): void
+    /**
+     * @param string $message
+     * @return void
+     */
+	function addWarning(string $message): void
     {
 		$this->warnings[] = $message;
 		$this->log("Warning: " . $message);
 	}
 
-	function addMessage($message): void
+    /**
+     * @param string $message
+     * @return void
+     */
+	function addMessage(string $message): void
     {
 		$this->messages[] = $message;
 	}
 
+    /**
+     * @return int
+     */
 	function numErrors(): int
     {
 		return count($this->errors);
 	}
 
+    /**
+     * @return int
+     */
 	function numWarnings(): int
     {
 		return count($this->warnings);
 	}
 
+    /**
+     * @return int
+     */
 	function numMessages(): int
     {
 		return count($this->messages);
 	}
 
+    /**
+     * @return void
+     */
 	function printErrors(): void
     {
 		echo "<center><h2 class='text-danger'>Error</h2>\n";
@@ -81,6 +121,9 @@ Class ErrorHandler {
 		$this->errors = array();
 	}
 
+    /**
+     * @return void
+     */
 	function printWarnings(): void
     {
 		echo "<center><h2 class='text-warning'>Waarschuwing</h2>\n";
@@ -89,6 +132,9 @@ Class ErrorHandler {
 		$this->warnings = array();
 	}
 
+    /**
+     * @return void
+     */
 	function printMessages(): void
     {
 		echo "<center>";
@@ -97,6 +143,9 @@ Class ErrorHandler {
 		$this->messages = array();
 	}
 
+    /**
+     * @return void
+     */
 	function printAll(): void
     {
 		if ($this->numErrors()) {
@@ -110,6 +159,9 @@ Class ErrorHandler {
 		}
 	}
 
+    /**
+     * @return string
+     */
     function printAllToString(): string
     {
         ob_start();
@@ -117,7 +169,11 @@ Class ErrorHandler {
         return ob_get_clean();
     }
 
-	function log($message) {
+    /**
+     * @param $message
+     * @return void
+     */
+	function log($message): void {
         // TODO: Implement.
 	}
 }

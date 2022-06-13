@@ -1,13 +1,18 @@
 <?php
 namespace Controller\Page;
 
-use Controller\Page\RegularPage;
 use Util\Config;
 use Util\Singleton\ErrorHandler;
 use Util\ViewRenderer;
 
+/**
+ * Login pagina.
+ */
 class Login extends BasePage
 {
+    /**
+     * @return string
+     */
     public function get_body(): string
     {
         return ViewRenderer::render_view('page.login', [
@@ -27,4 +32,3 @@ class Login extends BasePage
         ]); 
     }
 }
-?>

@@ -1,6 +1,7 @@
 <?php
 namespace Util;
 
+use Controller\API\ExceptionResponse;
 use Controller\Page\LoggedIn;
 use Controller\Page\LoggedIn\Home;
 use Controller\Page\Login;
@@ -17,14 +18,15 @@ class Router
 {
     /** @var string[] */
     private array $actions = [
-        'categories' => LoggedIn\Categories::class
+        'categories'   => LoggedIn\Categories::class,
+        'create'       => LoggedIn\Create::class
     ];
 
     /**
-     * @return Response|null
+     * @return Response
      * @throws Exception
      */
-    public function get_controller_instance(): ?Response
+    public function get_page_controller_instance(): Response
     {
         if (Session::instance()->isLoggedIn()) {
             if (isset($_GET['action'])) {
@@ -56,5 +58,13 @@ class Router
             throw new Exception('Pagina kon niet worden geladen.');
         }
         return $response;
+    }
+
+    /**
+     * @return Response
+     */
+    public function get_api_controller_instance(): Response
+    {
+        return new ExceptionResponse(500, 'Action not found.');
     }
 }

@@ -27,7 +27,7 @@
             </li>
             <?php if ($role == 1 || $role == 3) : ?>
             <li class="nav-item">
-                <a class="nav-link" href="?action=schrijf">Schrijf</a>
+                <a class="nav-link" href="?action=create">Schrijf</a>
             </li>
             <?php endif; ?>
             <li class="nav-item dropdown">

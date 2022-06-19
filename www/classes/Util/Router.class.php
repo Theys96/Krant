@@ -26,7 +26,7 @@ class Router
      */
     public function get_controller_instance(): ?Response
     {
-        if (Session::instance()->logged_in) {
+        if (Session::instance()->isLoggedIn()) {
             if (isset($_GET['action'])) {
                 if ($_GET['action'] === 'logout') {
                     $response = new Logout();
@@ -34,7 +34,7 @@ class Router
                 elseif (array_key_exists($_GET['action'], $this->actions)) {
                     $response = new $this->actions[$_GET['action']]();
                     if ($response instanceof LoggedIn && !in_array(
-                            Session::instance()->role,
+                            Session::instance()->getRole(),
                             $response->allowed_roles()
                         )) {
                         ErrorHandler::instance()->addWarning('Deze pagina is niet toegankelijk voor deze rol.');

@@ -40,31 +40,63 @@ class Session
 		}
     }
 
-	/**
-	 * Magic attribute getter.
-	 *
-	 * @param string $name
-	 * @return mixed
-	 */
-	function __get(string $name): mixed
+    /**
+     * @return bool Whether the user is logged in.
+     */
+    public function isLoggedIn(): bool
     {
-		if (key_exists($name, $_SESSION[self::SESSION_NAMESPACE])) {
-			return $_SESSION[self::SESSION_NAMESPACE][$name];
-		}
-		return null;
-	}
+        if (!key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE]) ||
+            $_SESSION[self::SESSION_NAMESPACE]['logged_in'] !== true) {
+            $this->check_login();
+        }
+        return key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE]) &&
+            $_SESSION[self::SESSION_NAMESPACE]['logged_in'] === true;
+    }
 
-	/**
-	 * Magic attribute setter.
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 * @return void
-	 */
-	function __set(string $name, mixed $value): void
+    /**
+     * @return string|null The username.
+     */
+    public function getUsername(): ?string
     {
-		$_SESSION[self::SESSION_NAMESPACE][$name] = $value;
-	}
+        return key_exists('username', $_SESSION[self::SESSION_NAMESPACE]) ?
+            $_SESSION[self::SESSION_NAMESPACE]['username'] : null;
+    }
+
+    /**
+     * @return int|null The user's role level.
+     */
+    public function getRole(): ?int
+    {
+        return key_exists('role', $_SESSION[self::SESSION_NAMESPACE]) ?
+            $_SESSION[self::SESSION_NAMESPACE]['role'] : null;
+    }
+
+    /**
+     * @param bool $logged_in Whether the user is logged in.
+     * @return void
+     */
+    public function setLoggedIn(bool $logged_in): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['logged_in'] = $logged_in;
+    }
+
+    /**
+     * @param string $username The username.
+     * @return void
+     */
+    public function setUsername(string $username): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['username'] = $username;
+    }
+
+    /**
+     * @param int $role The user's role level.
+     * @return void
+     */
+    public function setRole(int $role): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['role'] = $role;
+    }
 
 	/**
 	 * Empties the session attributes.
@@ -83,10 +115,11 @@ class Session
 	 */
 	public function check_login(): void
     {
-		if (!$this->logged_in && isset($_POST['role'])) {
+		if (isset($_POST['role'])) {
             $role = (int) $_POST['role'];
             $username = $_POST['username'][$role];
 			$this->login($role, $_POST['password'], $username);
+            unset($_POST['role']);
 		}
 	}
 
@@ -101,9 +134,9 @@ class Session
 	public function login(int $role, string $password, string $username): void
     {
 		if (!isset(Config::PASSWORDS[$role]) || Config::PASSWORDS[$role] === $password) {
-			$this->username = $username;
-			$this->role = $role;
-			$this->logged_in = true;
+			$this->setUsername($username);
+			$this->setRole($role);
+			$this->setLoggedIn(true);
 		} else {
             ErrorHandler::instance()->addError('Onjuist wachtwoord.');
         }

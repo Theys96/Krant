@@ -26,8 +26,8 @@ abstract class LoggedIn extends BasePage
     public function get_body(): string
     {
         return ViewRenderer::render_view('page.home', [
-            'username' => Session::instance()->username,
-            'role' => Session::instance()->role,
+            'username' => Session::instance()->getUsername(),
+            'role' => Session::instance()->getRole(),
             'content' => $this->get_content(),
             'errors' => ErrorHandler::instance()->printAllToString()
         ]); 

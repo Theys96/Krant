@@ -6,10 +6,6 @@ use Util\Config;
 
 /**
  * Session wrapper.
- *
- * @property bool $logged_in
- * @property string $username
- * @property int $role
  */
 class Session
 {
@@ -49,6 +45,9 @@ class Session
         if (!key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE]) ||
             $_SESSION[self::SESSION_NAMESPACE]['logged_in'] !== true) {
             $this->check_login();
+        }
+        if ($this->getUser() === null) {
+            return false;
         }
         return key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE]) &&
             $_SESSION[self::SESSION_NAMESPACE]['logged_in'] === true;

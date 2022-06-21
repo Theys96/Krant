@@ -3,7 +3,7 @@ var Draft = {};
 $(function() {
 
 Draft = {
-	server: 'server.php',
+	server: 'api.php',
 	draftID: null,
 
 	title: $($('[name="title"]')[0]),
@@ -28,10 +28,10 @@ Draft = {
 		/* Determine action */
 		var action;
 		if (Draft.draftID == null) {
-			action = 'createdraft';
+			action = 'draft_new_article';
 			}
 		else {
-			action = 'updatedraft';
+			action = 'update_draft';
 			}
 		
 		klaar = Draft.done.is(':checked') ? 1 : 0;
@@ -40,17 +40,16 @@ Draft = {
 		console.log(action, Draft.draftID, Draft.title.val(), Draft.category.val(), Draft.text.val(), klaar);
 		post = $.getJSON(Draft.server, {
 			action: action,
-			id: Draft.draftID,
-			titel: Draft.title.val(),
-			cat: Draft.category.val(),
-			tekst: Draft.text.val(),
-			klaar: klaar
+			draft_id: Draft.draftID,
+			title: Draft.title.val(),
+			category_id: Draft.category.val(),
+			contents: Draft.text.val(),
+			ready: klaar
 		}).done(function(data) {
 			/* Get a Draft ID  */
-			if (data.draftID) {
-				getID = data.draftID;
-				if (getID != 0) {
-					Draft.draftID = getID;
+			if (data.draft_id) {
+				if (data.draft_id) {
+					Draft.draftID = data.draft_id;
 				}
 			}
 		});

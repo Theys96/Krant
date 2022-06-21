@@ -13,7 +13,10 @@ use Util\Singleton\Database;
  */
 class ArticleChange
 {
-    public const CHANGE_TYPE_DEFAULT = 1;
+    /** @var int  */
+    public const CHANGE_TYPE_DRAFT = 1;
+    /** @var int  */
+    public const CHANGE_TYPE_NEW_ARTICLE = 2;
 
     /** @var int */
     public int $id;
@@ -119,6 +122,53 @@ class ArticleChange
             return ArticleChange::getById($stmt->insert_id);
         }
         return null;
+    }
+
+    /**
+     * @param string|null $changed_title
+     * @param string|null $changed_contents
+     * @param int|null $changed_category_id
+     * @param bool|null $changed_ready
+     * @return ArticleChange
+     */
+    public function updateFields(
+        ?string $changed_title,
+        ?string $changed_contents,
+        ?int $changed_category_id,
+        ?bool $changed_ready
+    ): ArticleChange
+    {
+        Database::instance()->storeQuery(
+            "UPDATE `article_updates` SET changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ? WHERE id = ?"
+        );
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param(
+            'ssiii',
+            $changed_title,
+            $changed_contents,
+            $changed_category_id,
+            $changed_ready,
+            $this->id
+        );
+        $stmt->execute();
+        return ArticleChange::getById($this->id);
+    }
+
+    /**
+     * Update a draft ArticleChange to 'open'.
+     *
+     * @param int $change_type
+     * @return ArticleChange
+     */
+    public function openDraft(int $change_type): ArticleChange
+    {
+        Database::instance()->storeQuery(
+            "UPDATE `article_updates` SET update_type = ?, changed_status = 'open' WHERE id = ?"
+        );
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $change_type, $this->id);
+        $stmt->execute();
+        return ArticleChange::getById($this->id);
     }
 
     /**

@@ -68,8 +68,8 @@ function printButtons($chars): void
 <span id='info'></span>
 
 </form>
-<script src='code/draft.js'></script>
-<script src='code/editor.js'></script>
+<script src='assets/js/draft.js'></script>
+<script src='assets/js/editor.js'></script>
 <script>
 $(function() {
 	Draft.init('.input');

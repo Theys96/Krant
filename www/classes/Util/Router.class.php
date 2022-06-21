@@ -1,6 +1,8 @@
 <?php
 namespace Util;
 
+use Controller\API\Draft\DraftNewArticle;
+use Controller\API\Draft\UpdateDraft;
 use Controller\API\ExceptionResponse;
 use Controller\Page\LoggedIn;
 use Controller\Page\LoggedIn\Home;
@@ -65,6 +67,13 @@ class Router
      */
     public function get_api_controller_instance(): Response
     {
-        return new ExceptionResponse(500, 'Action not found.');
+        if (!array_key_exists('action', $_REQUEST)) {
+            return new ExceptionResponse(500, 'Action not found.');
+        }
+        return match ($_REQUEST['action']) {
+            'draft_new_article' => new DraftNewArticle(),
+            'update_draft' => new UpdateDraft(),
+            default => new ExceptionResponse(500, 'Action not found.'),
+        };
     }
 }

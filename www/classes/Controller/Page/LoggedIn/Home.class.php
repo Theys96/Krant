@@ -28,7 +28,9 @@ class Home extends LoggedIn
             1
         );
         $new_article->applyChange($new_article_change);
-        return '<pre>' . var_export($new_article_change, true) . '</pre>' .
+        return
+            '<pre>' . var_export(Session::instance()->getUser(), true) . '</pre>' .
+            '<pre>' . var_export($new_article_change, true) . '</pre>' .
             '<pre>' . var_export($new_article_change->article, true) . '</pre>';
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace Util\Singleton;
 
+use Model\User;
 use Util\Config;
 
 /**
@@ -54,12 +55,12 @@ class Session
     }
 
     /**
-     * @return string|null The username.
+     * @return User|null The user object.
      */
-    public function getUsername(): ?string
+    public function getUser(): ?User
     {
-        return key_exists('username', $_SESSION[self::SESSION_NAMESPACE]) ?
-            $_SESSION[self::SESSION_NAMESPACE]['username'] : null;
+        return key_exists('user', $_SESSION[self::SESSION_NAMESPACE]) ?
+            unserialize($_SESSION[self::SESSION_NAMESPACE]['user']) : null;
     }
 
     /**
@@ -81,12 +82,12 @@ class Session
     }
 
     /**
-     * @param string $username The username.
+     * @param User $user The user object.
      * @return void
      */
-    public function setUsername(string $username): void
+    public function setUser(User $user): void
     {
-        $_SESSION[self::SESSION_NAMESPACE]['username'] = $username;
+        $_SESSION[self::SESSION_NAMESPACE]['user'] = serialize($user);
     }
 
     /**
@@ -117,8 +118,8 @@ class Session
     {
 		if (isset($_POST['role'])) {
             $role = (int) $_POST['role'];
-            $username = $_POST['username'][$role];
-			$this->login($role, $_POST['password'], $username);
+            $user_id = $_POST['user'][$role];
+			$this->login($role, $_POST['password'], $user_id);
             unset($_POST['role']);
 		}
 	}
@@ -128,13 +129,20 @@ class Session
      *
      * @param int $role
      * @param string $password
-     * @param string $username
+     * @param int $user_id
      * @return void
      */
-	public function login(int $role, string $password, string $username): void
+	public function login(int $role, string $password, int $user_id): void
     {
+        $user = User::getById($user_id);
+        if ($user === null) {
+            ErrorHandler::instance()->addError('Gebruiker niet gevonden.');
+        }
+        if ($user->perm_level < $role) {
+            ErrorHandler::instance()->addError('Deze gebruiker mag deze rol niet gebruiken.');
+        }
 		if (!isset(Config::PASSWORDS[$role]) || Config::PASSWORDS[$role] === $password) {
-			$this->setUsername($username);
+			$this->setUser(User::getById($user_id));
 			$this->setRole($role);
 			$this->setLoggedIn(true);
 		} else {

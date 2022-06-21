@@ -1,6 +1,8 @@
 <?php
+use Model\User;
+
 /**
- * @var array $users
+ * @var User[] $users
  * @var array $passwords
  * @var string $errors
  */
@@ -82,11 +84,13 @@ function setRole(setRole)
 
             <div class='step2 form-group' id='role1'>
                 <h1>Schrijven</h1>
-                <label for='username1'>Kies je naam:</label>
-                <select name='username[1]' id='username1' class='username form-control w-50'>
+                <label for='user1'>Kies je naam:</label>
+                <select name='user[1]' id='user1' class='username form-control w-50'>
                     <?php
-                    foreach ($users[1] as $username) {
-                        echo "<option value='" . $username . "'>" . $username . "</option>\n";
+                    foreach ($users as $user) {
+                        if ($user->perm_level >= 1) {
+                            echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+                        }
                     }
                     ?>
                 </select>
@@ -94,11 +98,13 @@ function setRole(setRole)
 
             <div class='step2 form-group' id='role2'>
                 <h1>Nakijken</h1>
-                <label for='username2'>Kies je naam:</label>
-                <select name='username[2]' id='username2' class='username form-control w-50'>
+                <label for='user2'>Kies je naam:</label>
+                <select name='user[2]' id='user2' class='username form-control w-50'>
                     <?php
-                    foreach ($users[2] as $username) {
-                        echo "<option value='" . $username . "'>" . $username . "</option>\n";
+                    foreach ($users as $user) {
+                        if ($user->perm_level >= 2) {
+                            echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+                        }
                     }
                     ?>
                 </select>
@@ -106,11 +112,13 @@ function setRole(setRole)
 
             <div class='step2 form-group' id='role3'>
                 <h1>Beheren</h1>
-                <label for='username1'>Kies je naam:</label>
-                <select name='username[3]' id='username3' class='username form-control w-50'>
+                <label for='user3'>Kies je naam:</label>
+                <select name='user[3]' id='user3' class='username form-control w-50'>
                     <?php
-                    foreach ($users[3] as $username) {
-                        echo "<option value='" . $username . "'>" . $username . "</option>\n";
+                    foreach ($users as $user) {
+                        if ($user->perm_level >= 3) {
+                            echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+                        }
                     }
                     ?>
                 </select>

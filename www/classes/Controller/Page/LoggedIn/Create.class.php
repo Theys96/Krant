@@ -18,7 +18,7 @@ class Create extends LoggedIn
     {
         return ViewRenderer::render_view('page.content.create', [
             'categories' => Category::getAll(),
-            'username' => Session::instance()->getUsername()
+            'username' => Session::instance()->getUser()->username
         ]);
     }
 

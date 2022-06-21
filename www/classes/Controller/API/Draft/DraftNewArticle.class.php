@@ -22,6 +22,7 @@ class DraftNewArticle extends APIResponse
                 $_REQUEST['ready'] ?? null,
                 Session::instance()->getUser()->id
             );
+            $new_article->applyChange($new_article_change);
             return [
                 'draft_id' => $new_article_change->id
             ];

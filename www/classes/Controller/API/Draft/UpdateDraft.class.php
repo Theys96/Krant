@@ -22,6 +22,7 @@ class UpdateDraft extends APIResponse
                 $_REQUEST['category_id'] ?? null,
                 $_REQUEST['ready'] ?? null,
             );
+            $new_article_change->article->applyChange($new_article_change);
             return [
                 'draft_id' => $new_article_change->id
             ];

@@ -21,7 +21,8 @@ class Router
     /** @var string[] */
     private array $actions = [
         'categories'   => LoggedIn\Categories::class,
-        'create'       => LoggedIn\Create::class
+        'create'       => LoggedIn\Create::class,
+        'list'         => Loggedin\ArticleList::class,
     ];
 
     /**

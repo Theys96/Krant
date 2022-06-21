@@ -9,6 +9,8 @@ use Util\Singleton\Database;
  * Model voor stukjes.
  *
  * @property Category|null $category
+ * @property User[] $authors
+ * @property User[] $checkers
  */
 class Article
 {
@@ -26,6 +28,12 @@ class Article
 
     /** @var int|null */
     protected ?int $category_id;
+
+    /** @var User[]|null  */
+    protected ?array $authors = null;
+
+    /** @var User[]|null  */
+    protected ?array $checkers = null;
 
     /** @var bool */
     public bool $ready;
@@ -68,6 +76,14 @@ class Article
                 return null;
             }
             return Category::getById($this->category_id);
+        } elseif ($value === 'authors') {
+            if ($this->authors === null) {
+                $this->authors = $this->getAuthors();
+            }
+        } elseif ($value === 'checkers') {
+            if ($this->checkers === null) {
+                $this->checkers = $this->getCheckers();
+            }
         }
         return $this->$value;
     }
@@ -157,5 +173,48 @@ class Article
             );
         }
         return $articles;
+    }
+
+    /**
+     * @return User[]
+     */
+    private function getAuthors(): array
+    {
+        $new_article = ArticleChange::CHANGE_TYPE_NEW_ARTICLE;
+        $edit_article = ArticleChange::CHANGE_TYPE_EDIT;
+        Database::instance()->storeQuery(
+            'SELECT * FROM users WHERE id IN (SELECT DISTINCT(user) AS author FROM `article_updates` WHERE `article_id` = ? AND update_type IN (?,?))'
+        );
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('iii', $this->id, $new_article, $edit_article);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $users = [];
+        while ( ($user_data = $result->fetch_assoc()) ) {
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
+        }
+        return $users;
+    }
+
+    /**
+     * @return User[]
+     */
+    private function getCheckers(): array
+    {
+        $check_change = ArticleChange::CHANGE_TYPE_CHECK;
+        Database::instance()->storeQuery(
+            'SELECT * FROM users WHERE id IN (SELECT DISTINCT(user) AS author FROM `article_updates` WHERE `article_id` = ? AND update_type = ?)'
+        );
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $check_change);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $users = [];
+        while ( ($user_data = $result->fetch_assoc()) ) {
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
+        }
+        return $users;
     }
 }

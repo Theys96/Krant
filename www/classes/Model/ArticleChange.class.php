@@ -17,6 +17,10 @@ class ArticleChange
     public const CHANGE_TYPE_DRAFT = 1;
     /** @var int  */
     public const CHANGE_TYPE_NEW_ARTICLE = 2;
+    /** @var int  */
+    public const CHANGE_TYPE_EDIT = 3;
+    /** @var int  */
+    public const CHANGE_TYPE_CHECK = 4;
 
     /** @var int */
     public int $id;

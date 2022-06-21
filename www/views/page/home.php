@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="?action=lijst">Stukjes</a>
+                <a class="nav-link" href="?action=list">Stukjes</a>
             </li>
             <?php if ($role == 1 || $role == 3) : ?>
             <li class="nav-item">

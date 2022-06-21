@@ -3,6 +3,7 @@ namespace Util\Singleton;
 
 use Exception;
 use Mysqli;
+use mysqli_stmt;
 use Util\Config;
 
 /**
@@ -16,7 +17,10 @@ class Database
     /** @var Mysqli Database connection. */
     public Mysqli $con;
 
-	/**
+    /** @var string|null Stored query. */
+    private ?string $query = null;
+
+    /**
 	 * Returns the singleton instance.
 	 * @return Database
 	 */
@@ -43,5 +47,34 @@ class Database
         if ($this->con->connect_error) {
             throw new Exception("Database verbinding mislukt: " . $this->con->connect_error);
         }
+    }
+
+    /**
+     * Store a query (for debugging purposes).
+     *
+     * @param string $query
+     * @return void
+     */
+    public function storeQuery(string $query): void
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * Direct call for preparing a stored query.
+     *
+     * @return false|mysqli_stmt
+     */
+    public function prepareStoredQuery(): false|mysqli_stmt
+    {
+        return $this->con->prepare($this->query);
+    }
+
+    /**
+     * @return string|null The stored query.
+     */
+    public function getStoredQuery(): ?string
+    {
+        return $this->query;
     }
 }

@@ -40,19 +40,30 @@ Class ErrorHandler {
      */
     #[NoReturn] public static function exceptionHandler(Throwable $exception): void
     {
-        ErrorHandler::instance()->throwFatal($exception->getMessage());
+        ErrorHandler::instance()->throwFatal($exception->getMessage(), $exception->getFile(), $exception->getLine());
     }
 
     /**
      * @param string $message
      * @return void
      */
-	#[NoReturn] public function throwFatal(string $message): void
+	#[NoReturn] public function throwFatal(string $message, ?string $file = null, ?int $line = null): void
     {
 		$this->log("Fatal: " . $message);
 		echo '<center>';
 			echo '<h1>' . self::FATAL_ERROR_TITLE . '</h1>';
-			echo '<p>' . $message . '</p>';
+            echo '<p>Als je dit leest is er iets helemaal misgegaan (heeft Thijs dus iets verprutst). De foutmelding is:</p>';
+			echo '<xmp>' . $message . '</xmp>';
+            if ($file !== null) {
+			    echo '<p>(' . $file;
+                if ($line !== null) {
+                    echo ':' . $line;
+                }
+                echo ')</p>';
+            }
+            if (Database::instance() && Database::instance()->getStoredQuery() !== null) {
+                echo '<p>Laatste query: </p><xmp>' . Database::instance()->getStoredQuery() . '</xmp>';
+            }
 		echo '</center>';
 		exit();
 	}

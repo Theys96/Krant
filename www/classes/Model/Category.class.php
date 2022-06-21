@@ -35,8 +35,8 @@ class Category
      */
     public static function getById(int $id): ?Category
     {
-		$query = "SELECT * FROM categories WHERE id = ?";
-        $stmt = Database::instance()->con->prepare($query);
+		Database::instance()->storeQuery("SELECT * FROM categories WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $category_data = $stmt->get_result()->fetch_assoc();
@@ -51,8 +51,8 @@ class Category
      */
     public static function getAll(): array
     {
-        $query = "SELECT * FROM categories";
-        $stmt = Database::instance()->con->prepare($query);
+        Database::instance()->storeQuery("SELECT * FROM categories");
+        $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $result = $stmt->get_result();
 

@@ -180,13 +180,15 @@ class Article
      */
     private function getAuthors(): array
     {
-        $new_article = ArticleChange::CHANGE_TYPE_NEW_ARTICLE;
-        $edit_article = ArticleChange::CHANGE_TYPE_EDIT;
-        Database::instance()->storeQuery(
-            'SELECT * FROM users WHERE id IN (SELECT DISTINCT(user) AS author FROM `article_updates` WHERE `article_id` = ? AND update_type IN (?,?))'
-        );
+        Database::instance()->storeQuery(<<<SQL
+            SELECT * FROM users WHERE id IN (
+                SELECT DISTINCT(user) AS author FROM `article_updates` 
+                    LEFT JOIN `article_update_types` ON article_updates.update_type = article_update_types.id
+                    WHERE `article_id` = ? AND author = 1
+            )
+        SQL);
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('iii', $this->id, $new_article, $edit_article);
+        $stmt->bind_param('i', $this->id);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -203,9 +205,16 @@ class Article
     private function getCheckers(): array
     {
         $check_change = ArticleChange::CHANGE_TYPE_CHECK;
-        Database::instance()->storeQuery(
-            'SELECT * FROM users WHERE id IN (SELECT DISTINCT(user) AS author FROM `article_updates` WHERE `article_id` = ? AND update_type = ?)'
-        );
+        Database::instance()->storeQuery(<<<SQL
+            SELECT * FROM users WHERE users.id IN (
+                SELECT DISTINCT(au.user) AS author FROM `article_updates` au WHERE au.`article_id` = ? AND au.update_type = ?
+                    AND au.id > (
+                        SELECT MAX(au2.id) FROM `article_updates` au2
+                            LEFT JOIN `article_update_types` ON au2.update_type = article_update_types.id
+                            WHERE au2.`article_id` = au.article_id AND article_update_types.author = 1
+                    )
+            )
+        SQL);
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('ii', $this->id, $check_change);
         $stmt->execute();

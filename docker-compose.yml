@@ -20,7 +20,7 @@ services:
             MYSQL_PASSWORD: krant
             MYSQL_ROOT_PASSWORD: krant
         volumes:
-            - ./sql:/docker-entrypoint-initdb.d
+            - ./sql/init:/docker-entrypoint-initdb.d
             - persistent:/var/lib/mysql
         networks:
             - default

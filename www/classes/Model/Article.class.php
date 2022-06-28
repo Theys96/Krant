@@ -88,6 +88,10 @@ class Article
         return $this->$value;
     }
 
+    /**
+     * @param ArticleChange $change
+     * @return Article
+     */
     public function applyChange(ArticleChange $change): Article
     {
         $new_status = $change->changed_status ?? $this->status;

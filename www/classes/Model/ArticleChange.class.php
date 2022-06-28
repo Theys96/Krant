@@ -28,18 +28,25 @@ class ArticleChange
     /** @var int */
     protected int $article_id;
 
+    /** @var string */
     public string $update_type;
 
+    /** @var string|null */
     public ?string $changed_status;
 
+    /** @var string|null */
     public ?string $changed_title;
 
+    /** @var string|null */
     public ?string $changed_contents;
 
+    /** @var int|null */
     protected ?int $changed_category_id;
 
+    /** @var bool|null */
     public ?bool $changed_ready;
 
+    /** @var int */
     protected int $user_id;
 
     /** @var DateTime|null */
@@ -85,6 +92,10 @@ class ArticleChange
         }
     }
 
+    /**
+     * @param $value
+     * @return mixed|null
+     */
     public function __get($value)
     {
         if ($value === 'article') {
@@ -95,6 +106,17 @@ class ArticleChange
         return $this->$value;
     }
 
+    /**
+     * @param int $article_id
+     * @param int $update_type
+     * @param string|null $changed_status
+     * @param string|null $changed_title
+     * @param string|null $changed_contents
+     * @param int|null $changed_category_id
+     * @param bool|null $changed_ready
+     * @param int $user_id
+     * @return ArticleChange|null
+     */
     public static function createNew(
         int $article_id,
         int $update_type,

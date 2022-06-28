@@ -18,7 +18,7 @@ class ArticleList extends LoggedIn
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.list', [
-            'articles' => Article::getAll(),
+            'articles' => Article::getAllOpen(),
             'role' => Session::instance()->getRole()
         ]);
     }

@@ -1,7 +1,7 @@
 <?php
 namespace Util;
 
-use Controller\API\Draft\DraftNewArticle;
+use Controller\API\Draft\NewDraft;
 use Controller\API\Draft\UpdateDraft;
 use Controller\API\ExceptionResponse;
 use Controller\Page\LoggedIn;
@@ -22,6 +22,7 @@ class Router
     private array $actions = [
         'categories'   => LoggedIn\Categories::class,
         'create'       => LoggedIn\Create::class,
+        'edit'         => LoggedIn\Edit::class,
         'list'         => Loggedin\ArticleList::class,
     ];
 
@@ -72,7 +73,7 @@ class Router
             return new ExceptionResponse(500, 'Action not found.');
         }
         return match ($_REQUEST['action']) {
-            'draft_new_article' => new DraftNewArticle(),
+            'new_draft' => new NewDraft(),
             'update_draft' => new UpdateDraft(),
             default => new ExceptionResponse(500, 'Action not found.'),
         };

@@ -5,6 +5,7 @@ $(function() {
 Draft = {
 	server: 'api.php',
 	draftID: null,
+	article_id: $('#article_id').val(),
 
 	title: $($('[name="title"]')[0]),
 	category: $($('[name="category"]')[0]),
@@ -28,7 +29,7 @@ Draft = {
 		/* Determine action */
 		var action;
 		if (Draft.draftID == null) {
-			action = 'draft_new_article';
+			action = 'new_draft';
 			}
 		else {
 			action = 'update_draft';
@@ -38,8 +39,10 @@ Draft = {
 		
 		/* Post action */
 		console.log(action, Draft.draftID, Draft.title.val(), Draft.category.val(), Draft.text.val(), klaar);
+		console.log(Draft);
 		post = $.getJSON(Draft.server, {
 			action: action,
+			article_id: Draft.article_id === '' ? null : Draft.article_id,
 			draft_id: Draft.draftID,
 			title: Draft.title.val(),
 			category_id: Draft.category.val(),

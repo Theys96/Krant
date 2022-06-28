@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 use DateTime;
@@ -29,10 +30,10 @@ class Article
     /** @var int|null */
     protected ?int $category_id;
 
-    /** @var User[]|null  */
+    /** @var User[]|null */
     protected ?array $authors = null;
 
-    /** @var User[]|null  */
+    /** @var User[]|null */
     protected ?array $checkers = null;
 
     /** @var bool */
@@ -94,20 +95,30 @@ class Article
      */
     public function applyChange(ArticleChange $change): Article
     {
+        $change = $change->updateFields(
+            $change->changed_status === $this->status ? null : $change->changed_status,
+            $change->changed_title === $this->title ? null : $change->changed_title,
+            $change->changed_contents === $this->contents ? null : $change->changed_contents,
+            $change->changed_category->id === $this->category_id ? null : $change->changed_category->id,
+            $change->changed_ready === $this->ready ? null : $change->changed_ready,
+        );
+
         $new_status = $change->changed_status ?? $this->status;
         $new_title = $change->changed_title ?? $this->title;
         $new_contents = $change->changed_contents ?? $this->contents;
         $new_category_id = $change->changed_category ? $change->changed_category->id : $this->category_id;
+        $new_ready = $change->changed_ready ?? $this->ready;
         $timestamp = $change->timestamp->format('Y-m-d H:i:s');
 
-		Database::instance()->storeQuery("UPDATE articles SET status = ?, title = ?, contents = ?, category = ?, last_updated = ? WHERE id = ?");
+        Database::instance()->storeQuery("UPDATE articles SET status = ?, title = ?, contents = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'sssisi',
+            'sssiisi',
             $new_status,
             $new_title,
             $new_contents,
             $new_category_id,
+            $new_ready,
             $timestamp,
             $this->id
         );
@@ -135,7 +146,7 @@ class Article
      */
     public static function getById(int $id): ?Article
     {
-		Database::instance()->storeQuery("SELECT * FROM articles WHERE id = ?");
+        Database::instance()->storeQuery("SELECT * FROM articles WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -155,17 +166,18 @@ class Article
     }
 
     /**
+     * @param string $query
      * @return Article[]
      */
-    public static function getAll(): array
+    protected static function getAllByQuery(string $query): array
     {
-        Database::instance()->storeQuery("SELECT * FROM articles");
+        Database::instance()->storeQuery($query);
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $result = $stmt->get_result();
 
         $articles = [];
-        while ( ($article_data = $result->fetch_assoc()) ) {
+        while (($article_data = $result->fetch_assoc())) {
             $articles[$article_data['id']] = new Article(
                 $article_data['id'],
                 $article_data['status'],
@@ -180,6 +192,22 @@ class Article
     }
 
     /**
+     * @return Article[]
+     */
+    public static function getAll(): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles");
+    }
+
+    /**
+     * @return Article[]
+     */
+    public static function getAllOpen(): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='open'");
+    }
+
+    /**
      * @return User[]
      */
     private function getAuthors(): array
@@ -190,14 +218,15 @@ class Article
                     LEFT JOIN `article_update_types` ON article_updates.update_type = article_update_types.id
                     WHERE `article_id` = ? AND author = 1
             )
-        SQL);
+        SQL
+        );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $this->id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $users = [];
-        while ( ($user_data = $result->fetch_assoc()) ) {
+        while (($user_data = $result->fetch_assoc())) {
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
         }
         return $users;
@@ -218,14 +247,15 @@ class Article
                             WHERE au2.`article_id` = au.article_id AND article_update_types.author = 1
                     )
             )
-        SQL);
+        SQL
+        );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('ii', $this->id, $check_change);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $users = [];
-        while ( ($user_data = $result->fetch_assoc()) ) {
+        while (($user_data = $result->fetch_assoc())) {
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
         }
         return $users;

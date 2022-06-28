@@ -158,6 +158,7 @@ class ArticleChange
      * @return ArticleChange
      */
     public function updateFields(
+        ?string $changed_status,
         ?string $changed_title,
         ?string $changed_contents,
         ?int $changed_category_id,
@@ -165,11 +166,12 @@ class ArticleChange
     ): ArticleChange
     {
         Database::instance()->storeQuery(
-            "UPDATE `article_updates` SET changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ? WHERE id = ?"
+            "UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ? WHERE id = ?"
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'ssiii',
+            'sssiii',
+            $changed_status,
             $changed_title,
             $changed_contents,
             $changed_category_id,

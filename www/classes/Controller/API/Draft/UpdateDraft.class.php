@@ -17,12 +17,13 @@ class UpdateDraft extends APIResponse
             }
 
             $new_article_change = $article_change->updateFields(
+                null,
                 $_REQUEST['title'] ?? null,
                 $_REQUEST['contents'] ?? null,
                 $_REQUEST['category_id'] ?? null,
                 $_REQUEST['ready'] ?? null,
             );
-            $new_article_change->article->applyChange($new_article_change);
+
             return [
                 'draft_id' => $new_article_change->id
             ];

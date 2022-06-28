@@ -6,14 +6,23 @@ use Model\Article;
 use Model\ArticleChange;
 use Util\Singleton\Session;
 
-class DraftNewArticle extends APIResponse
+class NewDraft extends APIResponse
 {
     protected function get_response_object(): object|array
     {
         if (Session::instance()->isLoggedIn()) {
-            $new_article = Article::createNew();
+
+            if (isset($_REQUEST['article_id']) && $_REQUEST['article_id'] !== '') {
+                $article = Article::getById($_REQUEST['article_id']);
+                if ($article === null) {
+                    $article = Article::createNew();
+                }
+            } else {
+                $article = Article::createNew();
+            }
+
             $new_article_change = ArticleChange::createNew(
-                $new_article->id,
+                $article->id,
                 ArticleChange::CHANGE_TYPE_DRAFT,
                 null,
                 $_REQUEST['title'] ?? null,
@@ -22,10 +31,11 @@ class DraftNewArticle extends APIResponse
                 $_REQUEST['ready'] ?? null,
                 Session::instance()->getUser()->id
             );
-            $new_article->applyChange($new_article_change);
+
             return [
                 'draft_id' => $new_article_change->id
             ];
+
         }
         return [];
     }

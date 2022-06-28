@@ -15,7 +15,8 @@ function get_class_path($class_name): string
   $filename = 'classes/' . implode('/', $parts) . '.class.php';
   $filename_alt = 'classes/' . implode('/', $parts) . '.php';
   if (!file_exists($filename) && file_exists($filename_alt)) {
-      throw new Exception(sprintf('File %s should be renamed to %s.', $filename_alt, $filename));
+      return 'classes/' . implode('/', $parts) . '.php';
+      //throw new Exception(sprintf('File %s should be renamed to %s.', $filename_alt, $filename));
   }
   return 'classes/' . implode('/', $parts) . '.class.php';
 }

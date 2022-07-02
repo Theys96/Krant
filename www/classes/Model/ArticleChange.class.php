@@ -21,6 +21,8 @@ class ArticleChange
     public const CHANGE_TYPE_EDIT = 3;
     /** @var int  */
     public const CHANGE_TYPE_CHECK = 4;
+    /** @var int  */
+    public const CHANGE_TYPE_TO_BIN = 5;
 
     /** @var int */
     public int $id;
@@ -41,7 +43,7 @@ class ArticleChange
     public ?string $changed_contents;
 
     /** @var int|null */
-    protected ?int $changed_category_id;
+    public ?int $changed_category_id;
 
     /** @var bool|null */
     public ?bool $changed_ready;

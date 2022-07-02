@@ -80,7 +80,7 @@ foreach ($articles as $article) {
 						echo "<div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=check&stukje=" . $article->id . "'>Nakijken</a></div>";
 					}
 				if ($role == 3)
-					echo "<div class='col-4 px-1 text-center'><a class='btn btn-danger py-1 my-1 w-100' href='?action=lijst&delstukje=" . $article->id . "'>Verwijderen</a></div>";
+					echo "<div class='col-4 px-1 text-center'><a class='btn btn-danger py-1 my-1 w-100' href='?action=list&remove_article=" . $article->id . "'>Verwijderen</a></div>";
 				if ($role == 3)
 					{
 					if ($article->ready === true)

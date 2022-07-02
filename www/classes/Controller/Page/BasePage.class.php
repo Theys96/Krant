@@ -2,6 +2,7 @@
 namespace Controller\Page;
 
 use Controller\Response;
+use Util\Singleton\ErrorHandler;
 use Util\ViewRenderer;
 
 /**
@@ -22,6 +23,7 @@ abstract class BasePage implements Response
     public function render(): string
     {
         return ViewRenderer::render_view('base', [
+            'errors' => ErrorHandler::instance()->printAllToString(),
             'body' => $this->get_body()
         ]);
     }

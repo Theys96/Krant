@@ -5,6 +5,7 @@ namespace Model;
 use DateTime;
 use Exception;
 use Util\Singleton\Database;
+use Util\Singleton\Session;
 
 /**
  * Model voor stukjes.
@@ -99,7 +100,7 @@ class Article
             $change->changed_status === $this->status ? null : $change->changed_status,
             $change->changed_title === $this->title ? null : $change->changed_title,
             $change->changed_contents === $this->contents ? null : $change->changed_contents,
-            $change->changed_category->id === $this->category_id ? null : $change->changed_category->id,
+            $change->changed_category_id === $this->category_id ? null : $change->changed_category->id,
             $change->changed_ready === $this->ready ? null : $change->changed_ready,
         );
 
@@ -259,5 +260,23 @@ class Article
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
         }
         return $users;
+    }
+
+    /**
+     * @return Article
+     */
+    public function moveToBin(): Article
+    {
+        $article_change = ArticleChange::createNew(
+            $this->id,
+            ArticleChange::CHANGE_TYPE_TO_BIN,
+            'bin',
+            null,
+            null,
+            null,
+            null,
+            Session::instance()->getUser()->id
+        );
+        return $this->applyChange($article_change);
     }
 }

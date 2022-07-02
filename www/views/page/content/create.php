@@ -1,5 +1,4 @@
 <?php
-
 use Model\Article;
 use Model\Category;
 
@@ -7,7 +6,6 @@ use Model\Category;
  * @var Category[] $categories
  * @var string $username
  * @var Article|null $article
- * @var string $diff
  */
 
 function printButtons($chars): void
@@ -85,9 +83,6 @@ $ready = $article?->ready;
 
     <input class='btn btn-primary' type='submit' value='Plaats'/><br/>
     <span id='info'></span>
-
-    <?php echo $diff; ?>
-
 </form>
 <script src='assets/js/draft.js'></script>
 <script src='assets/js/editor.js'></script>

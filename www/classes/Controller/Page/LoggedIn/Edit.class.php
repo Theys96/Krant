@@ -39,7 +39,6 @@ class Edit extends Create
             'categories' => Category::getAll(),
             'username' => Session::instance()->getUser()->username,
             'article' => $this->article,
-            'diff' => $this->diff
         ]);
     }
 }

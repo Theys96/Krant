@@ -15,8 +15,6 @@ use Jfcherng\Diff\Differ;
  */
 class Create extends LoggedIn
 {
-    protected string $diff = '';
-
     /**
      * @param int $article_change_type
      */
@@ -33,12 +31,12 @@ class Create extends LoggedIn
                     $_POST['done'] ?? false,
                 );
                 $article_change = $article_change->openDraft($article_change_type);
-                $differ = new Differ(
-                    explode(PHP_EOL, $article_change->article->contents),
-                    explode(PHP_EOL, $article_change->changed_contents)
-                );
-                $renderer = RendererFactory::make('Inline'); // or your own renderer object
-                $this->diff = $renderer->render($differ);
+//                $differ = new Differ(
+//                    explode(PHP_EOL, $article_change->article->contents),
+//                    explode(PHP_EOL, $article_change->changed_contents)
+//                );
+//                $renderer = RendererFactory::make('Inline'); // or your own renderer object
+//                $this->diff = $renderer->render($differ);
                 $article_change->article->applyChange($article_change);
             }
         }

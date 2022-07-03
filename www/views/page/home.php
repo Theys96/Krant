@@ -7,7 +7,7 @@
  */
 ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="?action=lijst">Krant | <?php echo $username; ?></a>
+    <a class="navbar-brand" href="?action=list">Krant | <?php echo $username; ?></a>
     <button 
         class="navbar-toggler" 
         type="button" 

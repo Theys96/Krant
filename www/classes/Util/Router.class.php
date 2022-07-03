@@ -5,7 +5,6 @@ use Controller\API\Draft\NewDraft;
 use Controller\API\Draft\UpdateDraft;
 use Controller\API\ExceptionResponse;
 use Controller\Page\LoggedIn;
-use Controller\Page\LoggedIn\Home;
 use Controller\Page\Login;
 use Controller\Page\Logout;
 use Controller\Response;
@@ -44,15 +43,15 @@ class Router
                             $response->allowed_roles()
                         )) {
                         ErrorHandler::instance()->addWarning('Deze pagina is niet toegankelijk voor deze rol.');
-                        $response = new Home();
+                        $response = new LoggedIn\ArticleList();
                     }
                 }
                 else {
                     ErrorHandler::instance()->addWarning('Pagina niet gevonden.');
-                    $response = new Home();
+                    $response = new LoggedIn\ArticleList();
                 }
             } else {
-                $response = new Home();
+                $response = new LoggedIn\ArticleList();
             }
         } else {
             $response = new Login();

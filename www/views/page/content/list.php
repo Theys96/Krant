@@ -1,6 +1,7 @@
 <?php
 use Model\Article;
 use Model\User;
+use Util\Singleton\Session;
 
 /**
  * @var Article[] $articles
@@ -42,7 +43,7 @@ foreach ($articles as $article) {
 			$filtered = $filtered || $article->ready === false;
 		}
 		if ($filter >= 2) {
-			$filtered = $filtered || $article->checkers > 0;
+			$filtered = $filtered || count($article->checkers) > 0;
 		}
 	}
 	if (!$filtered) {
@@ -59,6 +60,12 @@ foreach ($articles as $article) {
             },
             $article->checkers
         )));
+        $authors_ids = array_map(
+            static function (User $checker): int {
+                return $checker->id;
+            },
+            $article->authors
+        );
 
 		echo "<div class='stukje my-2 mx-1 row pt-1'>\n";
 			echo "<div class='col-md-6'><div class='row'>";
@@ -76,7 +83,7 @@ foreach ($articles as $article) {
 				if ($role != 2)
 					echo "<div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=edit&stukje=" . $article->id . "'>Wijzigen</a></div>";
 				else if ($role == 2) {
-					if ($article->ready === true)
+					if ($article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids))
 						echo "<div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=check&stukje=" . $article->id . "'>Nakijken</a></div>";
 					}
 				if ($role == 3)

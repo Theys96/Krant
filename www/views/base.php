@@ -1,6 +1,5 @@
 <?php
 /**
- * @var string $errors
  * @var string $body
  */
 ?>
@@ -24,7 +23,6 @@
     <body>
 
         <div class="container">
-            <?php echo $errors; ?>
             <?php echo $body; ?>
         </div>
 

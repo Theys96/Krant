@@ -137,7 +137,7 @@ Class ErrorHandler {
      */
 	function printWarnings(): void
     {
-		echo "<center><h2 class='text-warning'>Waarschuwing</h2>\n";
+		echo "<center><h2 class='text-warning'>Error</h2>\n";
 		echo "<p class='text-warning'>" . implode("<br />\n", $this->warnings) . "</p>\n";
 		echo "</center>";
 		$this->warnings = array();

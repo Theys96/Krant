@@ -91,7 +91,7 @@ foreach ($articles as $article) {
 				if ($role == 3)
 					{
 					if ($article->ready === true)
-						echo "<div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=plaats&stukje=" .$article->id . "'>Lezen</a></div>";
+						echo "<div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=" .$article->id . "'>Lezen</a></div>";
 					else
 						echo "<div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=" . $article->id . "'>Lezen</a></div>";
 					}

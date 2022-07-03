@@ -23,7 +23,8 @@ class Router
         'create'       => LoggedIn\Create::class,
         'edit'         => LoggedIn\Edit::class,
         'check'        => LoggedIn\Check::class,
-        'list'         => Loggedin\ArticleList::class,
+        'list'         => LoggedIn\ArticleList::class,
+        'read'         => LoggedIn\Read::class
     ];
 
     /**

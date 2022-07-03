@@ -77,6 +77,7 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 (2, 'Nieuw stukje.', 1),
 (3, 'Aanpassing.', 1),
 (4, 'Nagekeken.', 0);
+(5, 'Verplaatst naar prullenbak.', 0)
 
 -- --------------------------------------------------------
 

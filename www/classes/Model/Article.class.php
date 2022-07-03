@@ -5,6 +5,7 @@ namespace Model;
 use DateTime;
 use Exception;
 use Util\Singleton\Database;
+use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 
 /**
@@ -42,6 +43,18 @@ class Article
 
     /** @var DateTime|null */
     public ?DateTime $last_updated;
+
+    /** @var string */
+    public const STATUS_DRAFT = 'draft';
+
+    /** @var string */
+    public const STATUS_OPEN = 'open';
+
+    /** @var string */
+    public const STATUS_PLACED = 'placed';
+
+    /** @var string */
+    public const STATUS_BIN = 'bin';
 
     /**
      * @param int $id
@@ -205,7 +218,23 @@ class Article
      */
     public static function getAllOpen(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='open'");
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_OPEN . "'");
+    }
+
+    /**
+     * @return Article[]
+     */
+    public static function getAllBinned(): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_BIN . "'");
+    }
+
+    /**
+     * @return Article[]
+     */
+    public static function getAllPlaced(): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_PLACED . "'");
     }
 
     /**
@@ -270,13 +299,17 @@ class Article
         $article_change = ArticleChange::createNew(
             $this->id,
             ArticleChange::CHANGE_TYPE_TO_BIN,
-            'bin',
+            static::STATUS_BIN,
             null,
             null,
             null,
             null,
             Session::instance()->getUser()->id
         );
+        if ($article_change === null) {
+            ErrorHandler::instance()->addError('Er is iets misgegaan bij het verwijderen van het stukje.');
+            return $this;
+        }
         return $this->applyChange($article_change);
     }
 }

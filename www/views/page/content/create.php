@@ -6,6 +6,8 @@ use Model\Category;
  * @var Category[] $categories
  * @var string $username
  * @var Article|null $article
+ * @var string $title
+ * @var bool $check_mode
  */
 
 function printButtons($chars): void
@@ -15,12 +17,12 @@ function printButtons($chars): void
     }
 }
 
-$title = $article?->title;
+$article_title = $article?->title;
 $category_id = $article?->category->id;
 $contents = $article?->contents;
 $ready = $article?->ready;
 ?>
-<h2>Nieuw stukje</h2>
+<h2><?php echo $title; ?></h2>
 
 <form method='post' onSubmit='return Draft.plaats(this)'>
     <input type='hidden' name='draftid' id='draftid'/>
@@ -32,7 +34,7 @@ $ready = $article?->ready;
 
     <div class='form-group'>
         <label for='title'>Titel</label>
-        <input type='text' class='form-control input' name='title' id='title' value='<?php echo $title; ?>'/>
+        <input type='text' class='form-control input' name='title' id='title' value='<?php echo $article_title; ?>'/>
     </div>
 
     <div class='form-group'>
@@ -81,7 +83,14 @@ $ready = $article?->ready;
         </label>
     </div>
 
-    <input class='btn btn-primary' type='submit' value='Plaats'/><br/>
+    <?php
+    if ($check_mode) {
+        echo "<input class='btn btn-primary' type='submit' value='Nagekeken' /> ";
+        echo "<a class='btn btn-secondary' href='?action=list'>Niet nagekeken</a><br />";
+    } else {
+        echo "<input class='btn btn-primary' type='submit' value='Opslaan'/><br/>";
+    }
+    ?>
     <span id='info'></span>
 </form>
 <script src='assets/js/draft.js'></script>

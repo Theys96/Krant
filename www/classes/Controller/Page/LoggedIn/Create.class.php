@@ -39,6 +39,7 @@ class Create extends LoggedIn
 //                $this->diff = $renderer->render($differ);
                 $article_change->article->applyChange($article_change);
             }
+            header('location: ?action=list');
         }
     }
 
@@ -51,7 +52,8 @@ class Create extends LoggedIn
             'categories' => Category::getAll(),
             'username' => Session::instance()->getUser()->username,
             'article' => null,
-            'diff' => $this->diff
+            'check_mode' => false,
+            'title' => 'Nieuw stukje'
         ]);
     }
 

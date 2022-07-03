@@ -22,6 +22,7 @@ class Router
         'categories'   => LoggedIn\Categories::class,
         'create'       => LoggedIn\Create::class,
         'edit'         => LoggedIn\Edit::class,
+        'check'        => LoggedIn\Check::class,
         'list'         => Loggedin\ArticleList::class,
     ];
 

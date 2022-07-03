@@ -193,7 +193,7 @@ class ArticleChange
     public function openDraft(int $change_type): ArticleChange
     {
         Database::instance()->storeQuery(
-            "UPDATE `article_updates` SET update_type = ?, changed_status = 'open' WHERE id = ?"
+            "UPDATE `article_updates` SET update_type = ?, changed_status = '" . Article::STATUS_OPEN . "' WHERE id = ?"
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('ii', $change_type, $this->id);

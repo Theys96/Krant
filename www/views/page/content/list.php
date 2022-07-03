@@ -22,9 +22,9 @@ if ($role == 2) {
 	 * 2 - alle stukjes die klaar zijn & nog niet nagekeken
 	 */
 	echo "<div class='w-100 text-right'>Filter: ";
-	echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=lijst&filter=0'>alles</a> | ";
-	echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=lijst&filter=1'>klaar</a> | ";
-	echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=lijst&filter=2'>klaar & nog niet nagekeken</a>";
+	echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
+	echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
+	echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & nog niet nagekeken</a>";
 	echo "</div>\n";
 }
 ?>

@@ -216,6 +216,14 @@ class Article
     /**
      * @return Article[]
      */
+    public static function getAllDrafts(): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_DRAFT . "'");
+    }
+
+    /**
+     * @return Article[]
+     */
     public static function getAllOpen(): array
     {
         return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_OPEN . "'");

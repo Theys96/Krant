@@ -33,7 +33,7 @@ $authors = htmlspecialchars(implode(', ', array_map(
     <div class='col-sm-4'><b>Auteur</b></div>
     <div class='col-sm-8'><?php echo $authors; ?></div>
     <div class='col-sm-4'><b>Categorie</b></div>
-    <div class='col-sm-8'><?php echo $article->category->name; ?></div>
+    <div class='col-sm-8'><?php echo $article->category?->name; ?></div>
 </div>
 <?php echo nl2br(htmlspecialchars($article->contents)); ?>
 <div class='row'>

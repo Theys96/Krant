@@ -1,4 +1,5 @@
 <?php
+
 namespace Util;
 
 use Controller\API\Draft\NewDraft;
@@ -19,12 +20,13 @@ class Router
 {
     /** @var string[] */
     private array $actions = [
-        'categories'   => LoggedIn\Categories::class,
-        'create'       => LoggedIn\Create::class,
-        'edit'         => LoggedIn\Edit::class,
-        'check'        => LoggedIn\Check::class,
-        'list'         => LoggedIn\ArticleList::class,
-        'read'         => LoggedIn\Read::class
+        'categories' => LoggedIn\Categories::class,
+        'create' => LoggedIn\Create::class,
+        'edit' => LoggedIn\Edit::class,
+        'check' => LoggedIn\Check::class,
+        'list' => LoggedIn\ArticleList\Open::class,
+        'read' => LoggedIn\Read::class,
+        'drafts' => LoggedIn\ArticleList\Drafts::class
     ];
 
     /**
@@ -37,23 +39,21 @@ class Router
             if (isset($_GET['action'])) {
                 if ($_GET['action'] === 'logout') {
                     $response = new Logout();
-                }
-                elseif (array_key_exists($_GET['action'], $this->actions)) {
+                } elseif (array_key_exists($_GET['action'], $this->actions)) {
                     $response = new $this->actions[$_GET['action']]();
                     if ($response instanceof LoggedIn && !in_array(
                             Session::instance()->getRole(),
                             $response->allowed_roles()
                         )) {
                         ErrorHandler::instance()->addWarning('Deze pagina is niet toegankelijk voor deze rol.');
-                        $response = new LoggedIn\ArticleList();
+                        $response = new LoggedIn\ArticleList\Open();
                     }
-                }
-                else {
+                } else {
                     ErrorHandler::instance()->addWarning('Pagina niet gevonden.');
-                    $response = new LoggedIn\ArticleList();
+                    $response = new LoggedIn\ArticleList\Open();
                 }
             } else {
-                $response = new LoggedIn\ArticleList();
+                $response = new LoggedIn\ArticleList\Open();
             }
         } else {
             $response = new Login();

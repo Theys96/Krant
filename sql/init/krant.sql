@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 04, 2022 at 06:41 PM
+-- Generation Time: Jul 04, 2022 at 07:07 PM
 -- Server version: 5.7.38
 -- PHP Version: 8.0.19
 
@@ -102,24 +102,12 @@ INSERT INTO `categories` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
---
-
-CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user` int(11) NOT NULL,
-  `text` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `log`
 --
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
+  `type` enum('info','warning','error','feedback') NOT NULL,
   `user` int(11) NOT NULL,
   `role` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -181,13 +169,6 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `feedback_users` (`user`);
-
---
 -- Indexes for table `log`
 --
 ALTER TABLE `log`
@@ -223,12 +204,6 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
@@ -258,12 +233,6 @@ ALTER TABLE `article_updates`
   ADD CONSTRAINT `article_updates_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
   ADD CONSTRAINT `article_updates_categories` FOREIGN KEY (`changed_category`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `article_updates_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `log`

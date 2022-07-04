@@ -3,19 +3,19 @@ namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedIn;
 use Util\Singleton\Session;
+use Util\ViewRenderer;
 
 /**
- * Home pagina.
+ * Schrijfregels pagina.
  */
-class Home extends LoggedIn
+class Schrijfregels extends LoggedIn
 {
     /**
      * @return string
      */
     public function get_content(): string
     {
-        return
-            '<pre>' . var_export(Session::instance()->getUser(), true) . '</pre>';
+        return ViewRenderer::render_view('page.content.schrijfregels', []);
     }
 
     /**

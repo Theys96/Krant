@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jun 22, 2022 at 06:06 PM
+-- Generation Time: Jul 04, 2022 at 06:41 PM
 -- Server version: 5.7.38
 -- PHP Version: 8.0.19
 
@@ -76,9 +76,9 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 (1, 'Draft.', 0),
 (2, 'Nieuw stukje.', 1),
 (3, 'Aanpassing.', 1),
-(4, 'Nagekeken.', 0);
-(5, 'Verplaatst naar prullenbak.', 0)
-(6, 'Geplaatst.', 0)
+(4, 'Nagekeken.', 0),
+(5, 'Verplaatst naar prullenbak.', 0),
+(6, 'Geplaatst.', 0);
 
 -- --------------------------------------------------------
 
@@ -108,7 +108,7 @@ INSERT INTO `categories` (`id`, `name`, `description`) VALUES
 CREATE TABLE `feedback` (
   `id` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user` text NOT NULL,
+  `user` int(11) NOT NULL,
   `text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -120,12 +120,12 @@ CREATE TABLE `feedback` (
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
-  `user` text NOT NULL,
+  `user` int(11) NOT NULL,
   `role` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `address` text NOT NULL,
   `message` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -184,13 +184,15 @@ ALTER TABLE `categories`
 -- Indexes for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `feedback_users` (`user`);
 
 --
 -- Indexes for table `log`
 --
 ALTER TABLE `log`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `log_users` (`user`);
 
 --
 -- Indexes for table `users`
@@ -256,6 +258,18 @@ ALTER TABLE `article_updates`
   ADD CONSTRAINT `article_updates_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
   ADD CONSTRAINT `article_updates_categories` FOREIGN KEY (`changed_category`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `article_updates_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `log`
+--
+ALTER TABLE `log`
+  ADD CONSTRAINT `log_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -29,6 +29,8 @@ class Router
         'drafts' => LoggedIn\ArticleList\Drafts::class,
         'placed' => LoggedIn\ArticleList\Placed::class,
         'bin' => LoggedIn\ArticleList\Bin::class,
+        'schrijfregels' => LoggedIn\Schrijfregels::class,
+        'feedback' => LoggedIn\Feedback::class
     ];
 
     /**

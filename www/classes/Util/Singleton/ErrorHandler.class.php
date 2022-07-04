@@ -3,6 +3,7 @@
 namespace Util\Singleton;
 
 use JetBrains\PhpStorm\NoReturn;
+use Model\Log;
 use Throwable;
 
 /**
@@ -51,20 +52,27 @@ class ErrorHandler
      */
     #[NoReturn] public function throwFatal(string $message, ?string $file = null, ?int $line = null): void
     {
-        $this->log("Fatal: " . $message);
         echo '<center>';
         echo '<h1>' . self::FATAL_ERROR_TITLE . '</h1>';
         echo '<p>Als je dit leest is er iets helemaal misgegaan (heeft Thijs dus iets verprutst). De foutmelding is:</p>';
         echo '<xmp>' . $message . '</xmp>';
+        $log_message = 'Fatal: ' . $message . PHP_EOL;
         if ($file !== null) {
             echo '<p>(' . $file;
+            $log_message .= ' ' . $file;
             if ($line !== null) {
                 echo ':' . $line;
+                $log_message .= ':' . $line;
             }
+            $log_message .= PHP_EOL;
             echo ')</p>';
         }
-        if (Database::instance() && Database::instance()->getStoredQuery() !== null) {
-            echo '<p>Laatste query: </p><xmp>' . Database::instance()->getStoredQuery() . '</xmp>';
+        if (Database::instance()) {
+            if (Database::instance()->getStoredQuery() !== null) {
+                echo '<p>Laatste query: </p><xmp>' . Database::instance()->getStoredQuery() . '</xmp>';
+                $log_message .= Database::instance()->getStoredQuery() . PHP_EOL;
+            }
+            Log::logError($log_message);
         }
         echo '</center>';
         exit();
@@ -77,7 +85,7 @@ class ErrorHandler
     function addError(string $message): void
     {
         $this->errors[] = $message;
-        $this->log("Error: " . $message);
+        Log::logError($message);
     }
 
     /**
@@ -87,7 +95,7 @@ class ErrorHandler
     function addWarning(string $message): void
     {
         $this->warnings[] = $message;
-        $this->log("Warning: " . $message);
+        Log::logWarning($message);
     }
 
     /**
@@ -180,14 +188,5 @@ class ErrorHandler
         ob_start();
         $this->printAll();
         return ob_get_clean();
-    }
-
-    /**
-     * @param $message
-     * @return void
-     */
-    function log($message): void
-    {
-        // TODO: Implement.
     }
 }

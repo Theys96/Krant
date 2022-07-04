@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 04, 2022 at 07:07 PM
+-- Generation Time: Jul 04, 2022 at 07:23 PM
 -- Server version: 5.7.38
 -- PHP Version: 8.0.19
 
@@ -108,10 +108,11 @@ INSERT INTO `categories` (`id`, `name`, `description`) VALUES
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
   `type` enum('info','warning','error','feedback') NOT NULL,
-  `user` int(11) NOT NULL,
-  `role` int(11) NOT NULL,
+  `user` int(11) DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `address` text NOT NULL,
+  `request` text NOT NULL,
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

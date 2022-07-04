@@ -15,14 +15,9 @@ class Feedback extends LoggedIn
     public function __construct()
     {
         if (isset($_POST['text'])) {
-            $result = Log::createNew(
-                Log::TYPE_FEEDBACK,
-                Session::instance()->getUser()->id,
-                Session::instance()->getRole(),
-                $_POST['text']
-            );
+            $result = Log::logFeedback($_POST['text']);
             if ($result) {
-                ErrorHandler::instance()->addMessage("Feedback verzonden. " . $result->timestamp?->format('Y-m-d H:i:s'));
+                ErrorHandler::instance()->addMessage("Feedback verzonden.");
             } else {
                 ErrorHandler::instance()->addError("Er is iets misgegaan bij het verzenden van de feedback.");
             }

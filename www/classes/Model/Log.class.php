@@ -23,17 +23,20 @@ class Log
     /** @var string */
     public string $message;
 
-    /** @var int */
-    public int $user_id;
+    /** @var int|null */
+    public ?int $user_id;
 
-    /** @var int */
-    public int $role;
+    /** @var int|null */
+    public ?int $role;
 
     /** @var User|null */
     public ?User $user = null;
 
     /** @var string */
     public string $address;
+
+    /** @var string */
+    public string $request;
 
     /** @var DateTime|null */
     public ?DateTime $timestamp;
@@ -53,19 +56,20 @@ class Log
     /**
      * @param int $id
      * @param string $type
-     * @param int $user_id
-     * @param int $role
+     * @param int|null $user_id
+     * @param int|null $role
      * @param string $timestamp
      * @param string $address
      * @param string $message
      */
-    public function __construct(int $id, string $type, int $user_id, int $role, string $timestamp, string $address, string $message)
+    public function __construct(int $id, string $type, ?int $user_id, ?int $role, string $timestamp, string $address, string $request, string $message)
     {
         $this->id = $id;
         $this->type = $type;
         $this->user_id = $user_id;
         $this->role = $role;
         $this->address = $address;
+        $this->request = $request;
         $this->message = $message;
         $this->user = User::getById($user_id);
         try {
@@ -77,17 +81,18 @@ class Log
 
     /**
      * @param string $type
-     * @param int $user_id
-     * @param int $role
+     * @param int|null $user_id
+     * @param int|null $role
      * @param string $message
      * @return Log|null
      */
-    public static function createNew(string $type, int $user_id, int $role, string $message): ?Log
+    public static function createNew(string $type, ?int $user_id, ?int $role, string $message): ?Log
     {
         $address = $_SERVER['REMOTE_ADDR'];
-        Database::instance()->storeQuery("INSERT INTO `log` (type, user, role, address, message) VALUES (?, ?, ?, ?, ?)");
+        $request = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        Database::instance()->storeQuery("INSERT INTO `log` (type, user, role, address, request, message) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('siiss', $type, $user_id, $role, $address, $message);
+        $stmt->bind_param('siisss', $type, $user_id, $role, $address, $request, $message);
         $stmt->execute();
         if ($stmt->insert_id) {
             return Log::getById($stmt->insert_id);
@@ -114,9 +119,61 @@ class Log
                 $log_data['role'],
                 $log_data['timestamp'],
                 $log_data['address'],
-                $log_data['message'],
+                $log_data['request'],
+                $log_data['message']
             );
         }
         return null;
+    }
+
+    /**
+     * @param string $type
+     * @param string $message
+     * @return Log|null
+     */
+    public static function log(string $type, string $message): ?Log
+    {
+        return self::createNew(
+            $type,
+            Session::instance()->getUser()?->id,
+            Session::instance()->getRole(),
+            $message
+        );
+    }
+
+    /**
+     * @param string $message
+     * @return Log|null
+     */
+    public static function logFeedback(string $message): ?Log
+    {
+        return self::log(self::TYPE_FEEDBACK, $message);
+    }
+
+    /**
+     * @param string $message
+     * @return Log|null
+     */
+    public static function logInfo(string $message): ?Log
+    {
+        return self::log(self::TYPE_INFO, $message);
+    }
+
+    /**
+     * @param string $message
+     * @return Log|null
+     */
+    public static function logWarning(string $message): ?Log
+    {
+        return self::log(self::TYPE_WARNING, $message);
+    }
+
+    /**
+     * @param string $message
+     * @return Log|null
+     */
+    public static function logError(string $message): ?Log
+    {
+        return self::log(self::TYPE_ERROR, $message);
     }
 }

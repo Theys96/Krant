@@ -1,6 +1,8 @@
 <?php
+
 namespace Util\Singleton;
 
+use Model\Log;
 use Model\User;
 use Util\Config;
 
@@ -9,32 +11,32 @@ use Util\Config;
  */
 class Session
 {
-	/** @var Session|null Singleton instance. */
-	private static ?Session $instance = null;
+    /** @var Session|null Singleton instance. */
+    private static ?Session $instance = null;
 
-	/** @var string PHP session variable namespace. */
-	protected const SESSION_NAMESPACE = 'krant';
+    /** @var string PHP session variable namespace. */
+    protected const SESSION_NAMESPACE = 'krant';
 
-	/**
-	 * Returns the singleton instance.
-	 * @return Session
-	 */
-	public static function instance(): Session
-	{
-		if (self::$instance === null) {
-			self::$instance = new Session();
-		}
-		return self::$instance;
-	}
+    /**
+     * Returns the singleton instance.
+     * @return Session
+     */
+    public static function instance(): Session
+    {
+        if (self::$instance === null) {
+            self::$instance = new Session();
+        }
+        return self::$instance;
+    }
 
-	/**
-	 * Sets up the Session object.
-	 */
+    /**
+     * Sets up the Session object.
+     */
     public function __construct()
-	{
-		if (!isset($_SESSION[self::SESSION_NAMESPACE])) {
-			$_SESSION[self::SESSION_NAMESPACE] = array();
-		}
+    {
+        if (!isset($_SESSION[self::SESSION_NAMESPACE])) {
+            $_SESSION[self::SESSION_NAMESPACE] = array();
+        }
     }
 
     /**
@@ -98,30 +100,30 @@ class Session
         $_SESSION[self::SESSION_NAMESPACE]['role'] = $role;
     }
 
-	/**
-	 * Empties the session attributes.
-	 *
-	 * @return void
-	 */
-	function reset(): void
+    /**
+     * Empties the session attributes.
+     *
+     * @return void
+     */
+    function reset(): void
     {
-		$_SESSION[self::SESSION_NAMESPACE] = array();
-	}
+        $_SESSION[self::SESSION_NAMESPACE] = array();
+    }
 
-	/**
-	 * Try to log in if the required $_POST variables are available.
-	 *
-	 * @return void
-	 */
-	public function check_login(): void
+    /**
+     * Try to log in if the required $_POST variables are available.
+     *
+     * @return void
+     */
+    public function check_login(): void
     {
-		if (isset($_POST['role'])) {
-            $role = (int) $_POST['role'];
+        if (isset($_POST['role'])) {
+            $role = (int)$_POST['role'];
             $user_id = $_POST['user'][$role];
-			$this->login($role, $_POST['password'], $user_id);
+            $this->login($role, $_POST['password'], $user_id);
             unset($_POST['role']);
-		}
-	}
+        }
+    }
 
     /**
      * Log in given a role, password and username.
@@ -131,7 +133,7 @@ class Session
      * @param int $user_id
      * @return void
      */
-	public function login(int $role, string $password, int $user_id): void
+    public function login(int $role, string $password, int $user_id): void
     {
         $user = User::getById($user_id);
         if ($user === null) {
@@ -140,12 +142,13 @@ class Session
         if ($user->perm_level < $role) {
             ErrorHandler::instance()->addError('Deze gebruiker mag deze rol niet gebruiken.');
         }
-		if (!isset(Config::PASSWORDS[$role]) || Config::PASSWORDS[$role] === $password) {
-			$this->setUser(User::getById($user_id));
-			$this->setRole($role);
-			$this->setLoggedIn(true);
-		} else {
+        if (!isset(Config::PASSWORDS[$role]) || Config::PASSWORDS[$role] === $password) {
+            $this->setUser(User::getById($user_id));
+            $this->setRole($role);
+            $this->setLoggedIn(true);
+            Log::logInfo('Ingelogd.');
+        } else {
             ErrorHandler::instance()->addError('Onjuist wachtwoord.');
         }
-	}
+    }
 }

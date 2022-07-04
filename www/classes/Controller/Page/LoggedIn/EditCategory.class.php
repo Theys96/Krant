@@ -4,38 +4,39 @@ namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedIn;
 use Model\Article;
+use Model\Category;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 
 /**
- * Stukje lezen.
+ * Categorie aanpassen.
  */
-class Read extends LoggedIn
+class EditCategory extends LoggedIn
 {
-    /** @var Article */
-    protected Article $article;
+    /** @var Category */
+    protected Category $category;
 
     public function __construct()
     {
-        if (isset($_GET['stukje'])) {
-            $article = Article::getById((int)$_GET['stukje']);
-            if ($article !== null) {
-                $this->article = $article;
+        if (isset($_GET['category'])) {
+            $category = Category::getById((int)$_GET['category']);
+            if ($category !== null) {
+                $this->category = $category;
                 return;
             }
         }
         ErrorHandler::instance()->addError('Stukje niet gevonden.');
     }
 
+
     /**
      * @return string
      */
     public function get_content(): string
     {
-        return ViewRenderer::render_view('page.content.read', [
-            'article' => $this->article,
-            'role' => Session::instance()->getRole()
+        return ViewRenderer::render_view('page.content.edit_category', [
+            'category' => $this->category,
         ]);
     }
 
@@ -44,6 +45,6 @@ class Read extends LoggedIn
      */
     public function allowed_roles(): array
     {
-        return [1, 2, 3];
+        return [3];
     }
 }

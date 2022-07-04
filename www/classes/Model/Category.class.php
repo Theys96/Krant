@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 use Util\Singleton\Database;
@@ -30,12 +31,26 @@ class Category
     }
 
     /**
+     * @param string $name
+     * @param string $description
+     * @return Category|null
+     */
+    public function update(string $name, string $description): ?Category
+    {
+        Database::instance()->storeQuery("UPDATE categories SET name = ?, description = ? WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ssi', $name, $description, $this->id);
+        $stmt->execute();
+        return Category::getById($this->id);
+    }
+
+    /**
      * @param int $id
      * @return Category|null
      */
     public static function getById(int $id): ?Category
     {
-		Database::instance()->storeQuery("SELECT * FROM categories WHERE id = ?");
+        Database::instance()->storeQuery("SELECT * FROM categories WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -57,7 +72,7 @@ class Category
         $result = $stmt->get_result();
 
         $categories = [];
-        while ( ($category_data = $result->fetch_assoc()) ) {
+        while (($category_data = $result->fetch_assoc())) {
             $categories[$category_data['id']] = new Category($category_data['id'], $category_data['name'], $category_data['description']);
         }
         return $categories;

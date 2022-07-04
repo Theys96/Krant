@@ -75,7 +75,7 @@ foreach ($articles as $article) {
         echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars(cap($article->title, 40)) . "</b></h4></div>";
         echo "<div class='col-sm-5 text-right'>" . $authors . "</div>";
         echo "</div></div><div class='col-md-6'><div class='row'>";
-        echo "<div class='col-7'>" . htmlspecialchars($article->category?->description) . "</div>";
+        echo "<div class='col-7'>" . htmlspecialchars($article->category?->name) . "</div>";
         echo "<div class='col-5 text-right'>" . (($article->ready === true) ? "klaar" : "niet klaar") . "</div>";
         echo "</div></div>";
 

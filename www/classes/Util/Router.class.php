@@ -30,7 +30,8 @@ class Router
         'placed' => LoggedIn\ArticleList\Placed::class,
         'bin' => LoggedIn\ArticleList\Bin::class,
         'schrijfregels' => LoggedIn\Schrijfregels::class,
-        'feedback' => LoggedIn\Feedback::class
+        'feedback' => LoggedIn\Feedback::class,
+        'edit_category' => LoggedIn\EditCategory::class
     ];
 
     /**

@@ -7,15 +7,15 @@
  */
 ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="?action=list">Krant | <?php echo $username; ?></a>
-    <button 
-        class="navbar-toggler" 
-        type="button" 
-        data-toggle="collapse" 
-        data-target="#navbarsExampleDefault" 
-        aria-controls="navbarsExampleDefault"
-        aria-expanded="false" 
-        aria-label="Toggle navigation"
+    <a class="navbar-brand" href="?action=list">Krant 2.0 | <?php echo $username; ?></a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
     >
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,12 +26,13 @@
                 <a class="nav-link" href="?action=list">Stukjes</a>
             </li>
             <?php if ($role == 1 || $role == 3) : ?>
-            <li class="nav-item">
-                <a class="nav-link" href="?action=create">Schrijf</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?action=create">Schrijf</a>
+                </li>
             <?php endif; ?>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beheer</a>
+                <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Beheer</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="?action=categories">Categorieën</a>
                     <a class="dropdown-item" href="?action=drafts">Drafts</a>

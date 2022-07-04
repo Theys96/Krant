@@ -14,17 +14,16 @@ use Util\ViewRenderer;
 abstract class ArticleList extends LoggedIn
 {
     /** @var Article[] $articles */
-    protected array $articles;
+    protected array $articles = [];
 
     /** @var string $title */
     protected string $title;
 
     /**
-     * @param Article[] $articles
+     * @param string $title
      */
-    public function __construct(array $articles, string $title)
+    public function __construct(string $title)
     {
-        $this->articles = $articles;
         $this->title = $title;
         if (Session::instance()->getRole() === 3) {
             if (isset($_GET['remove_article'])) {
@@ -46,6 +45,15 @@ abstract class ArticleList extends LoggedIn
                 }
             }
         }
+    }
+
+    /**
+     * @param Article[] $articles
+     * @return void
+     */
+    protected function setArticles(array $articles): void
+    {
+        $this->articles = $articles;
     }
 
     /**

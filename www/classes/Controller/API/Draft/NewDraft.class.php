@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\API\Draft;
 
 use Controller\API\APIResponse;
@@ -31,6 +32,10 @@ class NewDraft extends APIResponse
                 $_REQUEST['ready'] ?? null,
                 Session::instance()->getUser()->id
             );
+
+            if ($article->status === Article::STATUS_DRAFT) {
+                $article->applyChange($new_article_change);
+            }
 
             return [
                 'draft_id' => $new_article_change->id

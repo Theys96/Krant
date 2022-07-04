@@ -6,14 +6,14 @@ use Controller\Page\LoggedIn\ArticleList;
 use Model\Article;
 
 /**
- * Drafts pagina.
+ * Geplaatste stukjes pagina.
  */
-class Drafts extends ArticleList
+class Placed extends ArticleList
 {
     public function __construct()
     {
-        parent::__construct('Drafts');
-        $this->setArticles(Article::getAllDrafts());
+        parent::__construct('Geplaatst');
+        $this->setArticles(Article::getAllPlaced());
     }
 
     public function allowed_roles(): array

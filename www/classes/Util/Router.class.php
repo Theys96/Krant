@@ -26,7 +26,9 @@ class Router
         'check' => LoggedIn\Check::class,
         'list' => LoggedIn\ArticleList\Open::class,
         'read' => LoggedIn\Read::class,
-        'drafts' => LoggedIn\ArticleList\Drafts::class
+        'drafts' => LoggedIn\ArticleList\Drafts::class,
+        'placed' => LoggedIn\ArticleList\Placed::class,
+        'bin' => LoggedIn\ArticleList\Bin::class,
     ];
 
     /**

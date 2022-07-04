@@ -12,7 +12,8 @@ class Open extends ArticleList
 {
     public function __construct()
     {
-        parent::__construct(Article::getAllOpen(), 'Stukjes');
+        parent::__construct('Stukjes');
+        $this->setArticles(Article::getAllOpen());
     }
 
     public function allowed_roles(): array

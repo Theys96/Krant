@@ -36,10 +36,9 @@
                     <a class="dropdown-item" href="?action=categories">Categorieën</a>
                     <a class="dropdown-item" href="?action=drafts">Drafts</a>
                     <a class="dropdown-item" href="?action=bin">Prullenbak</a>
-                    <a class="dropdown-item" href="?action=archive">Geplaatst</a>
+                    <a class="dropdown-item" href="?action=placed">Geplaatst</a>
                     <?php if ($role == 3) : ?>
                         <a class="dropdown-item" href="?action=users">Gebruikers</a>
-                        <a class="dropdown-item" href="?action=versionctrl">Versies</a>
                         <a class="dropdown-item" href="?action=feedbacklist">Feedback</a>
                     <?php endif; ?>
                 </div>

@@ -6,10 +6,11 @@ use Util\Singleton\Session;
 /**
  * @var Article[] $articles
  * @var int $role
+ * @var string $title
  */
 ?>
 
-<h2 class='mb-4'>Stukjes</h2>
+<h2 class='mb-4'><?php echo $title; ?></h2>
 <?php
 function cap($text, $len) {
 	return substr($text,0,$len) . (strlen($text) > $len ? "..." : "");

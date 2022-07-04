@@ -15,13 +15,24 @@ class ArticleList extends LoggedIn
 {
     public function __construct()
     {
-        if (isset($_GET['remove_article'])) {
-            $remove_article_id = (int) $_GET['remove_article'];
-            $article = Article::getById($remove_article_id);
-            if ($article !== null) {
-                $article->moveToBin();
-            } else {
-                ErrorHandler::instance()->addWarning('Kon stukje niet verwijderen: Niet gevonden.');
+        if (Session::instance()->getRole() === 3) {
+            if (isset($_GET['remove_article'])) {
+                $remove_article_id = (int) $_GET['remove_article'];
+                $article = Article::getById($remove_article_id);
+                if ($article !== null) {
+                    $article->moveToBin();
+                } else {
+                    ErrorHandler::instance()->addWarning('Kon stukje niet verwijderen: Niet gevonden.');
+                }
+            }
+            if (isset($_GET['place_article'])) {
+                $remove_article_id = (int) $_GET['place_article'];
+                $article = Article::getById($remove_article_id);
+                if ($article !== null) {
+                    $article->moveToPlaced();
+                } else {
+                    ErrorHandler::instance()->addWarning('Kon stukje niet plaatsen: Niet gevonden.');
+                }
             }
         }
     }
@@ -33,6 +44,7 @@ class ArticleList extends LoggedIn
     {
         return ViewRenderer::render_view('page.content.list', [
             'articles' => Article::getAllOpen(),
+            'title' => 'Stukjes',
             'role' => Session::instance()->getRole()
         ]);
     }

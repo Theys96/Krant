@@ -113,7 +113,7 @@ class Article
             $change->changed_status === $this->status ? null : $change->changed_status,
             $change->changed_title === $this->title ? null : $change->changed_title,
             $change->changed_contents === $this->contents ? null : $change->changed_contents,
-            $change->changed_category_id === $this->category_id ? null : $change->changed_category->id,
+            $change->changed_category_id === $this->category_id ? null : $change->changed_category_id,
             $change->changed_ready === $this->ready ? null : $change->changed_ready,
         );
 
@@ -308,6 +308,28 @@ class Article
         );
         if ($article_change === null) {
             ErrorHandler::instance()->addError('Er is iets misgegaan bij het verwijderen van het stukje.');
+            return $this;
+        }
+        return $this->applyChange($article_change);
+    }
+
+    /**
+     * @return Article
+     */
+    public function moveToPlaced(): Article
+    {
+        $article_change = ArticleChange::createNew(
+            $this->id,
+            ArticleChange::CHANGE_TYPE_TO_PLACED,
+            static::STATUS_PLACED,
+            null,
+            null,
+            null,
+            null,
+            Session::instance()->getUser()->id
+        );
+        if ($article_change === null) {
+            ErrorHandler::instance()->addError('Er is iets misgegaan bij het plaatsen van het stukje.');
             return $this;
         }
         return $this->applyChange($article_change);

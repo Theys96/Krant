@@ -2,14 +2,10 @@
 namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedIn;
-use Jfcherng\Diff\Factory\RendererFactory;
 use Model\Article;
-use Model\ArticleChange;
-use Model\Category;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
-use Jfcherng\Diff\Differ;
 
 /**
  * Stukje lezen.
@@ -39,7 +35,8 @@ class Read extends LoggedIn
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.read', [
-            'article' => $this->article
+            'article' => $this->article,
+            'role' => Session::instance()->getRole()
         ]);
     }
 

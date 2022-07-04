@@ -23,6 +23,8 @@ class ArticleChange
     public const CHANGE_TYPE_CHECK = 4;
     /** @var int  */
     public const CHANGE_TYPE_TO_BIN = 5;
+    /** @var int  */
+    public const CHANGE_TYPE_TO_PLACED = 6;
 
     /** @var int */
     public int $id;

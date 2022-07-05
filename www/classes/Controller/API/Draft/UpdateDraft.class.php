@@ -21,8 +21,8 @@ class UpdateDraft extends APIResponse
                 null,
                 $_REQUEST['title'] ?? null,
                 $_REQUEST['contents'] ?? null,
-                $_REQUEST['category_id'] ?? null,
-                $_REQUEST['ready'] ?? null,
+                is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : null,
+                is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : null,
             );
 
             if ($new_article_change->article->status === Article::STATUS_DRAFT) {

@@ -10,8 +10,8 @@ use Model\Category;
 
 <form method='post' action="?action=categories&edit_category=<?php echo $category->id; ?>">
     <div class='form-group'>
-        <label for='title'>Naam</label>
-        <input type='text' class='form-control input' name='edit_title' id='title'
+        <label for='name'>Naam</label>
+        <input type='text' class='form-control input' name='edit_name' id='name'
                value='<?php echo $category->name; ?>'/>
     </div>
 

@@ -8,7 +8,8 @@ use Model\Category;
  */
 ?>
 <h2>Categorieën</h2>
-<div class='px-3 mx-auto'>
+
+<div class='px-3 mx-auto my-5'>
     <?php
     $row = true;
     foreach ($categories as $category) {
@@ -27,3 +28,22 @@ use Model\Category;
     }
     ?>
 </div>
+
+<?php
+if ($role == 3) :
+?>
+<form method='post'>
+<h3>Categorie toevoegen</h3>
+<div class='form-group'>
+	<label for='name'>Naam</label>
+	<input id='name' name='new_name' class='form-control' type='text' />
+</div>
+<div class='form-group'>
+	<label for='description'>Beschrijving</label>
+	<input id='description' name='new_description' class='form-control' type='text' />
+</div>
+<input type='submit' class='btn btn-primary' value='Toevoegen' />
+</form>
+<?php
+endif;
+?>

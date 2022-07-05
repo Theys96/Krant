@@ -35,6 +35,23 @@ class Category
      * @param string $description
      * @return Category|null
      */
+    public static function createNew(string $name, string $description): ?Category
+    {
+        Database::instance()->storeQuery("INSERT INTO `categories` (name, description) VALUES (?, ?)");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ss', $name, $description);
+        $stmt->execute();
+        if ($stmt->insert_id) {
+            return Category::getById($stmt->insert_id);
+        }
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @param string $description
+     * @return Category|null
+     */
     public function update(string $name, string $description): ?Category
     {
         Database::instance()->storeQuery("UPDATE categories SET name = ?, description = ? WHERE id = ?");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 04, 2022 at 07:23 PM
+-- Generation Time: Jul 05, 2022 at 08:49 PM
 -- Server version: 5.7.38
 -- PHP Version: 8.0.19
 
@@ -78,7 +78,8 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 (3, 'Aanpassing.', 1),
 (4, 'Nagekeken.', 0),
 (5, 'Verplaatst naar prullenbak.', 0),
-(6, 'Geplaatst.', 0);
+(6, 'Geplaatst.', 0),
+(7, 'Categorie verwijderd.', 0);
 
 -- --------------------------------------------------------
 
@@ -91,13 +92,6 @@ CREATE TABLE `categories` (
   `name` text NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `description`) VALUES
-(1, 'Algemeen', 'Algemeen');
 
 -- --------------------------------------------------------
 
@@ -202,7 +196,7 @@ ALTER TABLE `article_updates`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `log`

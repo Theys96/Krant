@@ -137,6 +137,11 @@ class Article
             $this->id
         );
         $stmt->execute();
+
+        if ($change->update_type_id === ArticleChange::CHANGE_TYPE_REMOVED_CATEGORY) {
+            $this->removeCategory();
+        }
+
         return Article::getById($this->id);
     }
 
@@ -246,6 +251,15 @@ class Article
     }
 
     /**
+     * @param Category $category
+     * @return Article[]
+     */
+    public static function getAllByCategory(Category $category): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles WHERE category = " . ((int)$category->id));
+    }
+
+    /**
      * @return User[]
      */
     private function getAuthors(): array
@@ -341,5 +355,17 @@ class Article
             return $this;
         }
         return $this->applyChange($article_change);
+    }
+
+    /**
+     * @return Article|null
+     */
+    public function removeCategory(): ?Article
+    {
+        Database::instance()->storeQuery("UPDATE articles SET category = NULL WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $this->id);
+        $stmt->execute();
+        return Article::getById($this->id);
     }
 }

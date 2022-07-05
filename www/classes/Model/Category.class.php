@@ -3,6 +3,7 @@
 namespace Model;
 
 use Util\Singleton\Database;
+use Util\Singleton\Session;
 
 /**
  * Categorieën model.
@@ -59,6 +60,31 @@ class Category
         $stmt->bind_param('ssi', $name, $description, $this->id);
         $stmt->execute();
         return Category::getById($this->id);
+    }
+
+    /**
+     * @return bool
+     */
+    public function remove(): bool
+    {
+        foreach (Article::getAllByCategory($this) as $article) {
+            $article_change = ArticleChange::createNew(
+                $article->id,
+                ArticleChange::CHANGE_TYPE_REMOVED_CATEGORY,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Session::instance()->getUser()->id
+            );
+            $article->applyChange($article_change);
+        }
+        Database::instance()->storeQuery("DELETE FROM categories WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $this->id);
+        $stmt->execute();
+        return $stmt->affected_rows > 0;
     }
 
     /**

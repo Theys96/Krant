@@ -18,7 +18,7 @@ function printButtons($chars): void
 }
 
 $article_title = $article?->title;
-$category_id = $article?->category->id;
+$category_id = $article?->category?->id;
 $contents = $article?->contents;
 $ready = $article?->ready;
 ?>

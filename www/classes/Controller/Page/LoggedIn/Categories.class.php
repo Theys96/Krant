@@ -35,6 +35,19 @@ class Categories extends LoggedIn
                     ErrorHandler::instance()->addMessage('Categorie aangemaakt.');
                 }
             }
+            if (isset($_GET['remove_category'])) {
+                $remove_category_id = (int)$_GET['remove_category'];
+                $remove_category = Category::getById($remove_category_id);
+                if ($remove_category !== null) {
+                    if ($remove_category->remove()) {
+                        ErrorHandler::instance()->addMessage('Categorie verwijderd.');
+                    } else {
+                        ErrorHandler::instance()->addError('Kon categorie niet verwijderen.');
+                    }
+                } else {
+                    ErrorHandler::instance()->addError('Kon categorie niet verwijderen: Niet gevonden.');
+                }
+            }
         }
     }
 

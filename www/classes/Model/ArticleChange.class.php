@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 use DateTime;
@@ -13,18 +14,20 @@ use Util\Singleton\Database;
  */
 class ArticleChange
 {
-    /** @var int  */
+    /** @var int */
     public const CHANGE_TYPE_DRAFT = 1;
-    /** @var int  */
+    /** @var int */
     public const CHANGE_TYPE_NEW_ARTICLE = 2;
-    /** @var int  */
+    /** @var int */
     public const CHANGE_TYPE_EDIT = 3;
-    /** @var int  */
+    /** @var int */
     public const CHANGE_TYPE_CHECK = 4;
-    /** @var int  */
+    /** @var int */
     public const CHANGE_TYPE_TO_BIN = 5;
-    /** @var int  */
+    /** @var int */
     public const CHANGE_TYPE_TO_PLACED = 6;
+    /** @var int */
+    const CHANGE_TYPE_REMOVED_CATEGORY = 7;
 
     /** @var int */
     public int $id;
@@ -32,8 +35,11 @@ class ArticleChange
     /** @var int */
     protected int $article_id;
 
+    /** @var int */
+    public int $update_type_id;
+
     /** @var string */
-    public string $update_type;
+    public string $update_type_description;
 
     /** @var string|null */
     public ?string $changed_status;
@@ -69,20 +75,23 @@ class ArticleChange
      * @param string $timestamp
      */
     public function __construct(
-        int $id,
-        int $article_id,
-        string $update_type,
+        int     $id,
+        int     $article_id,
+        int     $update_type_id,
+        string  $update_type_description,
         ?string $changed_status,
         ?string $changed_title,
         ?string $changed_contents,
-        ?int $changed_category_id,
-        ?bool $changed_ready,
-        int $user_id,
-        string $timestamp
-    ) {
+        ?int    $changed_category_id,
+        ?bool   $changed_ready,
+        int     $user_id,
+        string  $timestamp
+    )
+    {
         $this->id = $id;
         $this->article_id = $article_id;
-        $this->update_type = $update_type;
+        $this->update_type_id = $update_type_id;
+        $this->update_type_description = $update_type_description;
         $this->changed_status = $changed_status;
         $this->changed_title = $changed_title;
         $this->changed_contents = $changed_contents;
@@ -122,14 +131,14 @@ class ArticleChange
      * @return ArticleChange|null
      */
     public static function createNew(
-        int $article_id,
-        int $update_type,
+        int     $article_id,
+        int     $update_type,
         ?string $changed_status,
         ?string $changed_title,
         ?string $changed_contents,
-        ?int $changed_category_id,
-        ?bool $changed_ready,
-        int $user_id
+        ?int    $changed_category_id,
+        ?bool   $changed_ready,
+        int     $user_id
     ): ?ArticleChange
     {
         Database::instance()->storeQuery(
@@ -165,8 +174,8 @@ class ArticleChange
         ?string $changed_status,
         ?string $changed_title,
         ?string $changed_contents,
-        ?int $changed_category_id,
-        ?bool $changed_ready
+        ?int    $changed_category_id,
+        ?bool   $changed_ready
     ): ArticleChange
     {
         Database::instance()->storeQuery(
@@ -209,8 +218,8 @@ class ArticleChange
      */
     public static function getById(int $id): ?ArticleChange
     {
-		Database::instance()->storeQuery(
-            "SELECT article_updates.*, article_update_types.description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.id = ?"
+        Database::instance()->storeQuery(
+            "SELECT article_updates.*, article_update_types.id AS update_type_id, article_update_types.description AS update_type_description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.id = ?"
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);
@@ -220,7 +229,8 @@ class ArticleChange
             return new ArticleChange(
                 $change_data['id'],
                 $change_data['article_id'],
-                $change_data['description'],
+                $change_data['update_type_id'],
+                $change_data['update_type_description'],
                 $change_data['changed_status'],
                 $change_data['changed_title'],
                 $change_data['changed_contents'],

@@ -279,7 +279,7 @@ class Article
 
         $users = [];
         while (($user_data = $result->fetch_assoc())) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active']);
         }
         return $users;
     }
@@ -308,7 +308,7 @@ class Article
 
         $users = [];
         while (($user_data = $result->fetch_assoc())) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active']);
         }
         return $users;
     }

@@ -31,7 +31,9 @@ class Router
         'bin' => LoggedIn\ArticleList\Bin::class,
         'schrijfregels' => LoggedIn\Schrijfregels::class,
         'feedback' => LoggedIn\Feedback::class,
-        'edit_category' => LoggedIn\EditCategory::class
+        'edit_category' => LoggedIn\EditCategory::class,
+        'users' => LoggedIn\Users::class,
+        'edit_user' => LoggedIn\EditUser::class
     ];
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\Page;
 
 use Model\User;
@@ -17,9 +18,9 @@ class Login extends BasePage
     public function get_body(): string
     {
         return ViewRenderer::render_view('page.login', [
-            'users' => User::getAll(),
+            'users' => User::getAllActive(),
             'passwords' => Config::PASSWORDS,
             'errors' => ErrorHandler::instance()->printAllToString()
-        ]); 
+        ]);
     }
 }

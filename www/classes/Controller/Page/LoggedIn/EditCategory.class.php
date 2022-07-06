@@ -26,7 +26,7 @@ class EditCategory extends LoggedIn
                 return;
             }
         }
-        ErrorHandler::instance()->addError('Stukje niet gevonden.');
+        ErrorHandler::instance()->addError('Categorie niet gevonden.');
     }
 
 

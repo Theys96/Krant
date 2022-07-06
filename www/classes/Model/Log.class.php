@@ -60,6 +60,7 @@ class Log
      * @param int|null $role
      * @param string $timestamp
      * @param string $address
+     * @param string $request
      * @param string $message
      */
     public function __construct(int $id, string $type, ?int $user_id, ?int $role, string $timestamp, string $address, string $request, string $message)
@@ -71,7 +72,9 @@ class Log
         $this->address = $address;
         $this->request = $request;
         $this->message = $message;
-        $this->user = User::getById($user_id);
+        if ($user_id !== null) {
+            $this->user = User::getById($user_id);
+        }
         try {
             $this->timestamp = new DateTime($timestamp);
         } catch (Exception) {

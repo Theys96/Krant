@@ -35,6 +35,8 @@ class Router
         'users' => LoggedIn\Users::class,
         'edit_user' => LoggedIn\EditUser::class,
         'feedbacklist' => LoggedIn\FeedbackList::class,
+        'editions' => LoggedIn\Editions::class,
+        'edit_edition' => LoggedIn\EditEdition::class,
     ];
 
     /**

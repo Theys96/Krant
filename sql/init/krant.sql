@@ -113,7 +113,7 @@ CREATE TABLE `editions` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
-  `active` tinyint(1) NOT NULL
+  `active` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

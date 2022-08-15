@@ -35,6 +35,7 @@
                    aria-haspopup="true" aria-expanded="false">Beheer</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="?action=categories">Categorieën</a>
+                    <a class="dropdown-item" href="?action=editions">Edities</a>
                     <a class="dropdown-item" href="?action=drafts">Drafts</a>
                     <a class="dropdown-item" href="?action=bin">Prullenbak</a>
                     <a class="dropdown-item" href="?action=placed">Geplaatst</a>

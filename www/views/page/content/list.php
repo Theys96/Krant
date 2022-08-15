@@ -3,6 +3,7 @@
 use Model\Article;
 use Model\User;
 use Util\Singleton\Session;
+use Util\ViewRenderer;
 
 /**
  * @var Article[] $articles
@@ -51,56 +52,10 @@ foreach ($articles as $article) {
     }
     if (!$filtered) {
         $n++;
-        $authors = htmlspecialchars(implode(', ', array_map(
-            static function (User $author): string {
-                return $author->username;
-            },
-            $article->authors
-        )));
-        $checkers = htmlspecialchars(implode(', ', array_map(
-            static function (User $author): string {
-                return $author->username;
-            },
-            $article->checkers
-        )));
-        $authors_ids = array_map(
-            static function (User $checker): int {
-                return $checker->id;
-            },
-            $article->authors
-        );
-
-        echo "<div class='stukje my-2 mx-1 row pt-1'>\n";
-        echo "<div class='col-md-6'><div class='row'>";
-        echo "<div class='col-sm-7'><h4><b>" . htmlspecialchars(cap($article->title, 40)) . "</b></h4></div>";
-        echo "<div class='col-sm-5 text-right'>" . $authors . "</div>";
-        echo "</div></div><div class='col-md-6'><div class='row'>";
-        echo "<div class='col-7'>" . htmlspecialchars($article->category?->name) . "</div>";
-        echo "<div class='col-5 text-right'>" . (($article->ready === true) ? "klaar" : "niet klaar") . "</div>";
-        echo "</div></div>";
-
-        echo "<div class='col-12 mb-2 text-center text-grey'><i>" . htmlspecialchars(cap($article->contents, 75)) . "</i></div>";
-        echo "<div class='col-6'><b>" . $lengte = strlen($article->contents) . "</b> tekens</div>";
-        echo "<div class='col-6 text-right'><b>" . count($article->checkers) . "</b> check(s)" . (count($article->checkers) == 0 ? "" : ": ") . $checkers . "</div>";
-        echo "<div class='col-12'><div class='row justify-content-center'>";
-        if ($role != 2)
-            echo "<div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=edit&stukje=" . $article->id . "'>Wijzigen</a></div>";
-        else if ($role == 2) {
-            if ($article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids))
-                echo "<div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=check&stukje=" . $article->id . "'>Nakijken</a></div>";
-        }
-        if ($role == 3)
-            echo "<div class='col-4 px-1 text-center'><a class='btn btn-danger py-1 my-1 w-100' href='?action=list&remove_article=" . $article->id . "'>Verwijderen</a></div>";
-        if ($role == 3) {
-            if ($article->ready === true)
-                echo "<div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=" . $article->id . "'>Lezen</a></div>";
-            else
-                echo "<div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=" . $article->id . "'>Lezen</a></div>";
-        } else {
-            echo "<div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=" . $article->id . "'>Lezen</a></div>";
-        }
-        echo "</div></div>";
-        echo "</div>\n";
+        echo ViewRenderer::render_view('partial.article_list_item', [
+            'article' => $article,
+            'role' => $role
+        ]);
     }
 }
 if (isset($filter) && $n == 0 && count($articles) > 0) {

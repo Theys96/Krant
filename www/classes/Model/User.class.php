@@ -31,18 +31,23 @@ class User
     /** @var bool */
     public bool $active;
 
+    /** @var bool */
+    public bool $alt_css;
+
     /**
      * @param int $id
      * @param string $username
      * @param int $perm_level
      * @param bool $active
+     * @param bool $alt_css
      */
-    public function __construct(int $id, string $username, int $perm_level, bool $active)
+    public function __construct(int $id, string $username, int $perm_level, bool $active, bool $alt_css)
     {
         $this->id = $id;
         $this->username = $username;
         $this->perm_level = $perm_level;
         $this->active = $active;
+        $this->alt_css = $alt_css;
     }
 
     /**
@@ -57,7 +62,7 @@ class User
         $stmt->execute();
         $user_data = $stmt->get_result()->fetch_assoc();
         if ($user_data) {
-            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active']);
+            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
         }
         return null;
     }
@@ -74,7 +79,7 @@ class User
 
         $users = [];
         while (($user_data = $result->fetch_assoc())) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
         }
         return $users;
     }
@@ -116,9 +121,10 @@ class User
      * @param string $name
      * @param int $perm_level
      * @param bool $active
+     * @param bool $alt_css
      * @return User|null
      */
-    public function update(string $name, int $perm_level, bool $active): ?User
+    public function update(string $name, int $perm_level, bool $active, bool $alt_css): ?User
     {
         if ($this->id === 1) {
             if ($active === false) {
@@ -130,9 +136,9 @@ class User
                 return null;
             }
         }
-        Database::instance()->storeQuery("UPDATE `users` SET username = ?, perm_level = ?, active = ? WHERE id = ?");
+        Database::instance()->storeQuery("UPDATE `users` SET username = ?, perm_level = ?, active = ?, alt_css = ? WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('siii', $name, $perm_level, $active, $this->id);
+        $stmt->bind_param('siiii', $name, $perm_level, $active, $alt_css, $this->id);
         $stmt->execute();
         return User::getById($this->id);
     }

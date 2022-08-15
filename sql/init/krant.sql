@@ -119,16 +119,18 @@ CREATE TABLE `log` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` text NOT NULL,
-  `perm_level` int(11) NOT NULL
+  `perm_level` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `alt_css` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `perm_level`) VALUES
-(1, 'Thijs', 3),
-(2, 'Renske', 3);
+INSERT INTO `users` (`id`, `username`, `perm_level`, `active`, `alt_css`) VALUES
+(1, 'Thijs', 3, 1, 0),
+(2, 'Renske', 3, 1, 0);
 
 --
 -- Indexes for dumped tables

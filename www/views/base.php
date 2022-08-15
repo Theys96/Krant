@@ -1,7 +1,11 @@
 <?php
+use Util\Singleton\Session;
+
 /**
  * @var string $body
  */
+
+$alt_css = Session::instance()->getUser()?->alt_css === true;
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -16,6 +20,9 @@
 
         <!-- Krant CSS -->
         <link href="assets/css/style.css" rel="stylesheet">
+        <?php if ($alt_css): ?>
+        <link href="assets/css/alt_style.css" rel="stylesheet">
+        <?php endif; ?>
 
         <!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -26,7 +33,12 @@
             <?php echo $body; ?>
         </div>
 
-        <div id="footer">&copy; <?php echo date("Y"); ?> Thijs Havinga</div>
+        <div id="footer">
+            &copy; <?php echo date("Y"); ?> Thijs Havinga
+            <?php if ($alt_css): ?>
+            <br /><img src="assets/css/banana-dance.gif" height="45px" />
+            <?php endif; ?>
+        </div>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->

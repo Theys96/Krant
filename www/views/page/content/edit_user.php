@@ -33,6 +33,15 @@ use Model\User;
         </label>
     </div>
 
+    <div class='form-group'>
+        <label class="custom-control custom-checkbox">
+            <input type='checkbox' name='edit_alt_css' value='1'
+                   class="custom-control-input" <?php echo $user->alt_css === true ? ' checked' : ''; ?>/>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Comic Sans</span>
+        </label>
+    </div>
+
     <input class='btn btn-primary' type='submit' value='Opslaan'/>
     <a class='btn btn-info' href='?action=users'>Terug</a>
 </form>

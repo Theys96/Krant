@@ -32,7 +32,7 @@ use Model\Edition;
 <?php
 if ($role == 3) :
 ?>
-<form method='post'>
+<form method='post' action='?action=editions'>
     <h3>Editie toevoegen</h3>
     <div class='form-group'>
         <label for='name'>Naam</label>
@@ -44,7 +44,7 @@ if ($role == 3) :
     </div>
     <input type='submit' class='btn btn-primary' value='Toevoegen' />
 </form>
-<form method = 'post'>
+<form method='post' action='?action=editions'>
     <h3 class="mt-5">Huidige editie</h3>
     <div class='form-group'>
         <select name='active_edition' id='active_edition' class='form-control'>

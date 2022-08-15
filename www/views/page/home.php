@@ -1,13 +1,18 @@
 <?php
+use Model\Edition;
+
 /**
  * @var string $username
  * @var int $role
  * @var string $errors
  * @var string $content
  */
+
+$edition = Edition::getActive();
+$edition_name = $edition === null ? "" : $edition->name . " | ";
 ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="?action=list">Krant 2.0 | <?php echo $username; ?></a>
+    <a class="navbar-brand" href="?action=list">Krant 2.0 | <?php echo $edition_name . $username; ?></a>
     <button
             class="navbar-toggler"
             type="button"

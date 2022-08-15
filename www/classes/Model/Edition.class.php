@@ -63,6 +63,7 @@ class Edition
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $this->id);
         $stmt->execute();
+        $this->active = true;
         return $stmt->affected_rows > 0;
     }
 
@@ -112,5 +113,21 @@ class Edition
             $editions[$edition_data['id']] = new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], $edition_data['active']);
         }
         return $editions;
+    }
+
+    /**
+     * @return Edition|null
+     */
+    public static function getActive(): ?Edition
+    {
+        Database::instance()->storeQuery("SELECT * FROM editions WHERE active = 1");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($edition_data = $result->fetch_assoc()) {
+            return new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], $edition_data['active']);
+        }
+        return null;
     }
 }

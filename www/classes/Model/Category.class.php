@@ -38,9 +38,13 @@ class Category
      */
     public static function createNew(string $name, string $description): ?Category
     {
-        Database::instance()->storeQuery("INSERT INTO `categories` (name, description) VALUES (?, ?)");
+        $edition = Edition::getActive()?->id;
+        if ($edition === null) {
+            return null;
+        }
+        Database::instance()->storeQuery("INSERT INTO `categories` (name, description, edition) VALUES (?, ?, ?)");
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('ss', $name, $description);
+        $stmt->bind_param('ssi', $name, $description, $edition);
         $stmt->execute();
         if ($stmt->insert_id) {
             return Category::getById($stmt->insert_id);

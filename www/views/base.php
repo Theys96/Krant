@@ -35,9 +35,6 @@ $alt_css = Session::instance()->getUser()?->alt_css === true;
 
         <div id="footer">
             &copy; <?php echo date("Y"); ?> Thijs Havinga
-            <?php if ($alt_css): ?>
-            <br /><img src="assets/css/banana-dance.gif" height="45px" />
-            <?php endif; ?>
         </div>
 
         <!-- Bootstrap core JavaScript

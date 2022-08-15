@@ -18,11 +18,11 @@ class UpdateDraft extends APIResponse
             }
 
             $new_article_change = $article_change->updateFields(
-                null,
-                $_REQUEST['title'] ?? null,
-                $_REQUEST['contents'] ?? null,
-                is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : null,
-                is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : null,
+                $article_change->article->status,
+                $_REQUEST['title'] ?? $article_change->article->title,
+                $_REQUEST['contents'] ?? $article_change->article->contents,
+                is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : $article_change->article->category->id,
+                is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : $article_change->article->ready,
             );
 
             if ($new_article_change->article->status === Article::STATUS_DRAFT) {

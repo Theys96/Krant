@@ -109,38 +109,21 @@ class Article
      */
     public function applyChange(ArticleChange $change): Article
     {
-        $change = $change->updateFields(
-            $change->changed_status === $this->status ? null : $change->changed_status,
-            $change->changed_title === $this->title ? null : $change->changed_title,
-            $change->changed_contents === $this->contents ? null : $change->changed_contents,
-            $change->changed_category_id === $this->category_id ? null : $change->changed_category_id,
-            $change->changed_ready === $this->ready ? null : $change->changed_ready,
-        );
-
-        $new_status = $change->changed_status ?? $this->status;
-        $new_title = $change->changed_title ?? $this->title;
-        $new_contents = $change->changed_contents ?? $this->contents;
-        $new_category_id = $change->changed_category ? $change->changed_category->id : $this->category_id;
-        $new_ready = $change->changed_ready ?? $this->ready;
         $timestamp = $change->timestamp->format('Y-m-d H:i:s');
 
         Database::instance()->storeQuery("UPDATE articles SET status = ?, title = ?, contents = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
             'sssiisi',
-            $new_status,
-            $new_title,
-            $new_contents,
-            $new_category_id,
-            $new_ready,
+            $change->changed_status,
+            $change->changed_title,
+            $change->changed_contents,
+            $change->changed_category_id,
+            $change->changed_ready,
             $timestamp,
             $this->id
         );
         $stmt->execute();
-
-        if ($change->update_type_id === ArticleChange::CHANGE_TYPE_REMOVED_CATEGORY) {
-            $this->removeCategory();
-        }
 
         return Article::getById($this->id);
     }
@@ -322,10 +305,10 @@ class Article
             $this->id,
             ArticleChange::CHANGE_TYPE_TO_BIN,
             static::STATUS_BIN,
-            null,
-            null,
-            null,
-            null,
+            $this->title,
+            $this->contents,
+            $this->category->id,
+            $this->ready,
             Session::instance()->getUser()->id
         );
         if ($article_change === null) {
@@ -344,10 +327,10 @@ class Article
             $this->id,
             ArticleChange::CHANGE_TYPE_TO_PLACED,
             static::STATUS_PLACED,
-            null,
-            null,
-            null,
-            null,
+            $this->title,
+            $this->contents,
+            $this->category->id,
+            $this->ready,
             Session::instance()->getUser()->id
         );
         if ($article_change === null) {

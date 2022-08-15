@@ -25,11 +25,11 @@ class NewDraft extends APIResponse
             $new_article_change = ArticleChange::createNew(
                 $article->id,
                 ArticleChange::CHANGE_TYPE_DRAFT,
-                null,
-                $_REQUEST['title'] ?? null,
-                $_REQUEST['contents'] ?? null,
-                is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : null,
-                is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : null,
+                $article->status,
+                $_REQUEST['title'] ?? $article->title,
+                $_REQUEST['contents'] ?? $article->contents,
+                is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : $article->category->id,
+                is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : $article->ready,
                 Session::instance()->getUser()->id
             );
 

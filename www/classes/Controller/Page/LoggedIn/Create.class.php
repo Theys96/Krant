@@ -24,11 +24,11 @@ class Create extends LoggedIn
             $article_change = ArticleChange::getById((int) $_POST['draftid']);
             if ($article_change !== null && $article_change->article !== null) {
                 $article_change = $article_change->updateFields(
-                    null,
-                    $_POST['title'] ?? null,
-                    $_POST['text'] ?? null,
-                    $_POST['category'] ?? null,
-                    $_POST['done'] ?? false,
+                    $article_change->article->status,
+                    $_POST['title'] ?? $article_change->article->title,
+                    $_POST['text'] ?? $article_change->article->contents,
+                    $_POST['category'] ?? $article_change->article->category->id,
+                    $_POST['done'] ?? $article_change->article->ready,
                 );
                 $article_change = $article_change->openDraft($article_change_type);
 //                $differ = new Differ(

@@ -71,16 +71,16 @@ class Category
             $article_change = ArticleChange::createNew(
                 $article->id,
                 ArticleChange::CHANGE_TYPE_REMOVED_CATEGORY,
-                null,
-                null,
-                null,
-                null,
-                null,
+                $article->status,
+                $article->title,
+                $article->contents,
+                NULL,
+                $article->ready,
                 Session::instance()->getUser()->id
             );
             $article->applyChange($article_change);
         }
-        Database::instance()->storeQuery("DELETE FROM categories WHERE id = ?");
+        Database::instance()->storeQuery("UPDATE categories SET active = 0 WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $this->id);
         $stmt->execute();
@@ -109,7 +109,7 @@ class Category
      */
     public static function getAll(): array
     {
-        Database::instance()->storeQuery("SELECT * FROM categories");
+        Database::instance()->storeQuery("SELECT * FROM categories WHERE active = 1");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $result = $stmt->get_result();

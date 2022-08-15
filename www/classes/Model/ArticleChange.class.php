@@ -41,20 +41,20 @@ class ArticleChange
     /** @var string */
     public string $update_type_description;
 
-    /** @var string|null */
-    public ?string $changed_status;
+    /** @var string */
+    public string $changed_status;
 
-    /** @var string|null */
-    public ?string $changed_title;
+    /** @var string */
+    public string $changed_title;
 
-    /** @var string|null */
-    public ?string $changed_contents;
+    /** @var string */
+    public string $changed_contents;
 
     /** @var int|null */
     public ?int $changed_category_id;
 
     /** @var bool|null */
-    public ?bool $changed_ready;
+    public bool $changed_ready;
 
     /** @var int */
     protected int $user_id;
@@ -65,12 +65,13 @@ class ArticleChange
     /**
      * @param int $id
      * @param int $article_id
-     * @param string $update_type
-     * @param string|null $changed_status
-     * @param string|null $changed_title
-     * @param string|null $changed_contents
+     * @param int $update_type_id
+     * @param string $update_type_description
+     * @param string $changed_status
+     * @param string $changed_title
+     * @param string $changed_contents
      * @param int|null $changed_category_id
-     * @param bool|null $changed_ready
+     * @param bool $changed_ready
      * @param int $user_id
      * @param string $timestamp
      */
@@ -79,11 +80,11 @@ class ArticleChange
         int     $article_id,
         int     $update_type_id,
         string  $update_type_description,
-        ?string $changed_status,
-        ?string $changed_title,
-        ?string $changed_contents,
+        string $changed_status,
+        string $changed_title,
+        string $changed_contents,
         ?int    $changed_category_id,
-        ?bool   $changed_ready,
+        bool   $changed_ready,
         int     $user_id,
         string  $timestamp
     )
@@ -164,18 +165,19 @@ class ArticleChange
     }
 
     /**
-     * @param string|null $changed_title
-     * @param string|null $changed_contents
+     * @param string $changed_status
+     * @param string $changed_title
+     * @param string $changed_contents
      * @param int|null $changed_category_id
-     * @param bool|null $changed_ready
+     * @param bool $changed_ready
      * @return ArticleChange
      */
     public function updateFields(
-        ?string $changed_status,
-        ?string $changed_title,
-        ?string $changed_contents,
+        string $changed_status,
+        string $changed_title,
+        string $changed_contents,
         ?int    $changed_category_id,
-        ?bool   $changed_ready
+        bool   $changed_ready
     ): ArticleChange
     {
         Database::instance()->storeQuery(

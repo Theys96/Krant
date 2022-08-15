@@ -47,11 +47,11 @@ CREATE TABLE `article_updates` (
   `id` int(11) NOT NULL,
   `article_id` int(11) NOT NULL,
   `update_type` int(11) NOT NULL,
-  `changed_status` enum('draft','open','placed','bin') DEFAULT NULL,
-  `changed_title` text,
-  `changed_contents` text,
+  `changed_status` enum('draft','open','placed','bin') NOT NULL,
+  `changed_title` text NOT NULL,
+  `changed_contents` text NOT NULL,
   `changed_category` int(11) DEFAULT NULL,
-  `changed_ready` tinyint(1) DEFAULT NULL,
+  `changed_ready` tinyint(1) NOT NULL,
   `user` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -90,7 +90,8 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

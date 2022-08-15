@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 05, 2022 at 08:49 PM
--- Server version: 5.7.38
+-- Generation Time: Aug 15, 2022 at 05:57 PM
+-- Server version: 5.7.39
 -- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -92,8 +92,36 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `edition` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `description`, `active`, `edition`) VALUES
+(1, 'Algemeen', 'Algemeen', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `editions`
+--
+
+CREATE TABLE `editions` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `description` text NOT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `editions`
+--
+
+INSERT INTO `editions` (`id`, `name`, `description`, `active`) VALUES
+(1, 'Eerste editie', 'Eerste editie', 1);
 
 -- --------------------------------------------------------
 
@@ -165,6 +193,13 @@ ALTER TABLE `article_update_types`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `categories_editions` (`edition`);
+
+--
+-- Indexes for table `editions`
+--
+ALTER TABLE `editions`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -200,7 +235,13 @@ ALTER TABLE `article_updates`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `editions`
+--
+ALTER TABLE `editions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `log`
@@ -232,6 +273,12 @@ ALTER TABLE `article_updates`
   ADD CONSTRAINT `article_updates_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
   ADD CONSTRAINT `article_updates_categories` FOREIGN KEY (`changed_category`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `article_updates_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_editions` FOREIGN KEY (`edition`) REFERENCES `editions` (`id`);
 
 --
 -- Constraints for table `log`

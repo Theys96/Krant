@@ -109,7 +109,7 @@ class Category
      */
     public static function getAll(): array
     {
-        Database::instance()->storeQuery("SELECT * FROM categories WHERE active = 1");
+        Database::instance()->storeQuery("SELECT * FROM categories WHERE active = 1 AND edition IN (SELECT id FROM editions WHERE active = 1)");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $result = $stmt->get_result();

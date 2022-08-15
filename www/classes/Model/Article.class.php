@@ -56,6 +56,9 @@ class Article
     /** @var string */
     public const STATUS_BIN = 'bin';
 
+    /** @var string */
+    private const ACTIVE_CATEGORY_WHERE_QUERY = 'category IN (SELECT categories.id FROM categories LEFT JOIN editions ON categories.edition = editions.id WHERE editions.active = 1 AND categories.active = 1)';
+
     /**
      * @param int $id
      * @param string $status
@@ -198,7 +201,7 @@ class Article
      */
     public static function getAll(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles");
+        return Article::getAllByQuery("SELECT * FROM articles WHERE " . self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -206,7 +209,7 @@ class Article
      */
     public static function getAllDrafts(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_DRAFT . "'");
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_DRAFT . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -214,7 +217,7 @@ class Article
      */
     public static function getAllOpen(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_OPEN . "'");
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_OPEN . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -222,7 +225,7 @@ class Article
      */
     public static function getAllBinned(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_BIN . "'");
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_BIN . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -230,7 +233,7 @@ class Article
      */
     public static function getAllPlaced(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_PLACED . "'");
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_PLACED . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**

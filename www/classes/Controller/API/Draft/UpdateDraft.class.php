@@ -5,6 +5,7 @@ namespace Controller\API\Draft;
 use Controller\API\APIResponse;
 use Model\Article;
 use Model\ArticleChange;
+use Model\User;
 use Util\Singleton\Session;
 
 class UpdateDraft extends APIResponse
@@ -29,8 +30,21 @@ class UpdateDraft extends APIResponse
                 $new_article_change->article->applyChange($new_article_change);
             }
 
+            $warning = null;
+            $live_drafters = array_filter(
+                User::getLiveDrafters($new_article_change->article->id),
+                static function (User $user): bool {
+                    return $user->id !== Session::instance()->getUser()->id;
+                }
+            );
+            if (count($live_drafters) > 0) {
+                $names = implode(', ', array_column($live_drafters, 'username'));
+                $warning = htmlspecialchars($names) . (count($live_drafters) > 1 ? ' werken ' : ' werkt ') . 'nu ook aan dit stukje.';
+            }
+
             return [
-                'draft_id' => $new_article_change->id
+                'draft_id' => $new_article_change->id,
+                'warning' => $warning
             ];
         }
         return [];

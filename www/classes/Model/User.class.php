@@ -101,6 +101,18 @@ class User
     }
 
     /**
+     * @param int $article_id
+     * @return User[]
+     */
+    public static function getLiveDrafters(int $article_id): array
+    {
+        $update_type = ArticleChange::CHANGE_TYPE_DRAFT;
+        return User::getAllByQuery(
+            "SELECT * FROM users WHERE id IN (SELECT DISTINCT(user) FROM `article_updates` WHERE article_id = " . $article_id . " AND update_type = " . $update_type . " AND timestamp >= DATE_SUB(NOW(), INTERVAL 20 SECOND))"
+        );
+    }
+
+    /**
      * @param string $name
      * @param int $perm_level
      * @return User|null

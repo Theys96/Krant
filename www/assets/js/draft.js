@@ -64,7 +64,9 @@ Draft = {
 		post = Draft.postDraft();
 		post.done(function(data) {
 			time = new Date();
-			$('#info').html(data.error + data.warning + data.message);
+			if (data.warning) {
+				$('#info').html('<span style="color: red; font-size: 15px;">' + data.warning + '</span>');
+			}
 		});
 		post.fail(function() {
 			$('#info').html('<span style="color: red; font-size: 15px;">Verbinding met de server verloren!</span>');

@@ -183,7 +183,7 @@ class ArticleChange
     ): ArticleChange
     {
         Database::instance()->storeQuery(
-            "UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ? WHERE id = ?"
+            "UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?"
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(

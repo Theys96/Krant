@@ -35,7 +35,7 @@ if ($role == 2) {
 
 <?php
 if (count($articles) == 0) {
-    echo "<div class='text-center text-grey'><i>Er zijn op dit moment (nog) geen stukjes.</div>\n";
+    echo "<div class='text-center text-grey'><i>Hier zijn op dit moment (nog) geen stukjes.</div>\n";
 }
 
 $n = 0;

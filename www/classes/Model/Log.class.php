@@ -131,6 +131,34 @@ class Log
 
     /**
      * @param string $type
+     * @return Log[]
+     */
+    public static function getByType(string $type): array
+    {
+        Database::instance()->storeQuery("SELECT * FROM log WHERE type = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('s', $type);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $logs = [];
+        while (($log_data = $result->fetch_assoc())) {
+            $logs[$log_data['id']] = new Log(
+                $log_data['id'],
+                $log_data['type'],
+                $log_data['user'],
+                $log_data['role'],
+                $log_data['timestamp'],
+                $log_data['address'],
+                $log_data['request'],
+                $log_data['message']
+            );
+        }
+        return $logs;
+    }
+
+    /**
+     * @param string $type
      * @param string $message
      * @return Log|null
      */

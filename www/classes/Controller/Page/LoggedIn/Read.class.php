@@ -35,7 +35,8 @@ class Read extends LoggedIn
     {
         return ViewRenderer::render_view('page.content.read', [
             'article' => $this->article,
-            'role' => Session::instance()->getRole()
+            'role' => Session::instance()->getRole(),
+            'source' => $_GET['source'] ?? 'list'
         ]);
     }
 

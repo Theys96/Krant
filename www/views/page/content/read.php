@@ -6,6 +6,7 @@ use Model\User;
 /**
  * @var Article $article
  * @var int $role
+ * @var string $source
  */
 
 $checkers = array_map(
@@ -42,12 +43,12 @@ $authors = htmlspecialchars(implode(', ', array_map(
 </div>
 
 <center>
-    <?php if ($role === 3): ?>
+    <?php if ($role === 3 && $article->status === Article::STATUS_OPEN && $article->ready): ?>
         <form method="post" action="?action=list&place_article=<?php echo $_GET['stukje']; ?>">
             <input class='btn btn-primary my-2 px-5' type='submit' value='Plaats'/>
-            <a class='btn btn-info px-5' href='?action=list'>Terug</a>
+            <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
         </form>
     <?php else: ?>
-        <a class='btn btn-info px-5' href='?action=list'>Terug</a>
+        <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
     <?php endif; ?>
 </center>

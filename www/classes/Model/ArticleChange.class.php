@@ -27,7 +27,9 @@ class ArticleChange
     /** @var int */
     public const CHANGE_TYPE_TO_PLACED = 6;
     /** @var int */
-    const CHANGE_TYPE_REMOVED_CATEGORY = 7;
+    public const CHANGE_TYPE_REMOVED_CATEGORY = 7;
+    /** @var int */
+    public const CHANGE_TYPE_TO_OPEN = 8;
 
     /** @var int */
     public int $id;

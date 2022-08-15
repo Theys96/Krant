@@ -12,7 +12,7 @@ class Open extends ArticleList
 {
     public function __construct()
     {
-        parent::__construct('Stukjes');
+        parent::__construct('Stukjes', 'list');
         $this->setArticles(Article::getAllOpen());
     }
 

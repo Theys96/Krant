@@ -2,13 +2,10 @@
 namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedIn;
-use Jfcherng\Diff\Factory\RendererFactory;
-use Model\Article;
 use Model\ArticleChange;
 use Model\Category;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
-use Jfcherng\Diff\Differ;
 
 /**
  * Nieuw stukje.
@@ -25,10 +22,10 @@ class Create extends LoggedIn
             if ($article_change !== null && $article_change->article !== null) {
                 $article_change = $article_change->updateFields(
                     $article_change->article->status,
-                    $_POST['title'] ?? $article_change->article->title,
-                    $_POST['text'] ?? $article_change->article->contents,
-                    $_POST['category'] ?? $article_change->article->category->id,
-                    $_POST['done'] ?? $article_change->article->ready,
+                    $_POST['title'],
+                    $_POST['text'],
+                    $_POST['category'],
+                    isset($_POST['done'])
                 );
                 $article_change = $article_change->openDraft($article_change_type);
 //                $differ = new Differ(

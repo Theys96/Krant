@@ -12,7 +12,7 @@ class Bin extends ArticleList
 {
     public function __construct()
     {
-        parent::__construct('Prullenbak');
+        parent::__construct('Prullenbak', 'bin');
         $this->setArticles(Article::getAllBinned());
     }
 

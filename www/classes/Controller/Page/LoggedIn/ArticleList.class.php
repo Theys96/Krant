@@ -19,11 +19,16 @@ abstract class ArticleList extends LoggedIn
     /** @var string $title */
     protected string $title;
 
+    /** @var string $list_type */
+    protected string $list_type;
+
     /**
      * @param string $title
+     * @param string $action
      */
-    public function __construct(string $title)
+    public function __construct(string $title, string $action)
     {
+        $this->list_type = $action;
         $this->title = $title;
         if (Session::instance()->getRole() === 3) {
             if (isset($_GET['remove_article'])) {
@@ -36,12 +41,21 @@ abstract class ArticleList extends LoggedIn
                 }
             }
             if (isset($_GET['place_article'])) {
-                $remove_article_id = (int)$_GET['place_article'];
-                $article = Article::getById($remove_article_id);
+                $place_article_id = (int)$_GET['place_article'];
+                $article = Article::getById($place_article_id);
                 if ($article !== null) {
                     $article->moveToPlaced();
                 } else {
                     ErrorHandler::instance()->addWarning('Kon stukje niet plaatsen: Niet gevonden.');
+                }
+            }
+            if (isset($_GET['open_article'])) {
+                $open_article_id = (int)$_GET['open_article'];
+                $article = Article::getById($open_article_id);
+                if ($article !== null) {
+                    $article->moveToOpen();
+                } else {
+                    ErrorHandler::instance()->addWarning('Kon stukje niet terugzetten: Niet gevonden.');
                 }
             }
         }
@@ -64,6 +78,7 @@ abstract class ArticleList extends LoggedIn
         return ViewRenderer::render_view('page.content.list', [
             'articles' => $this->articles,
             'title' => $this->title,
+            'list_type' => $this->list_type,
             'role' => Session::instance()->getRole()
         ]);
     }

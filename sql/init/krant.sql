@@ -79,7 +79,8 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 (4, 'Nagekeken.', 0),
 (5, 'Verplaatst naar prullenbak.', 0),
 (6, 'Geplaatst.', 0),
-(7, 'Categorie verwijderd.', 0);
+(7, 'Categorie verwijderd.', 0),
+(8, 'Teruggezet.', 0);
 
 -- --------------------------------------------------------
 

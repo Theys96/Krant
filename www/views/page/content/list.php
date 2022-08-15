@@ -9,6 +9,7 @@ use Util\ViewRenderer;
  * @var Article[] $articles
  * @var int $role
  * @var string $title
+ * @var string $list_type
  */
 ?>
 
@@ -54,7 +55,8 @@ foreach ($articles as $article) {
         $n++;
         echo ViewRenderer::render_view('partial.article_list_item', [
             'article' => $article,
-            'role' => $role
+            'role' => $role,
+            'list_type' => $list_type
         ]);
     }
 }

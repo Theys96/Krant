@@ -341,14 +341,24 @@ class Article
     }
 
     /**
-     * @return Article|null
+     * @return Article
      */
-    public function removeCategory(): ?Article
+    public function moveToOpen(): Article
     {
-        Database::instance()->storeQuery("UPDATE articles SET category = NULL WHERE id = ?");
-        $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('i', $this->id);
-        $stmt->execute();
-        return Article::getById($this->id);
+        $article_change = ArticleChange::createNew(
+            $this->id,
+            ArticleChange::CHANGE_TYPE_TO_OPEN,
+            static::STATUS_OPEN,
+            $this->title,
+            $this->contents,
+            $this->category->id,
+            $this->ready,
+            Session::instance()->getUser()->id
+        );
+        if ($article_change === null) {
+            ErrorHandler::instance()->addError('Er is iets misgegaan bij het plaatsen van het stukje.');
+            return $this;
+        }
+        return $this->applyChange($article_change);
     }
 }

@@ -6,6 +6,7 @@ use Util\Singleton\Session;
 /**
  * @var Article $article
  * @var int $role
+ * @var string $list_type
  */
 
 $authors = htmlspecialchars(implode(', ', array_map(
@@ -46,17 +47,19 @@ $authors_ids = array_map(
     <div class='col-6 text-right'><b><?php echo count($article->checkers); ?></b> check(s)<?php echo (count($article->checkers) == 0 ? "" : ": ") . $checkers; ?></div>
     <div class='col-12'>
         <div class='row justify-content-center'>
-            <?php if ($role != 2): ?>
+            <?php if ($role != 2 && $article->status === Article::STATUS_OPEN): ?>
                 <div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=edit&stukje=<?php echo $article->id; ?>'>Wijzigen</a></div>
             <?php elseif ($article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids)): ?>
                 <div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=check&stukje=<?php echo $article->id; ?>'>Nakijken</a></div>
             <?php endif; ?>
             <?php if ($role == 3): ?>
                 <?php if ($article->status === Article::STATUS_OPEN): ?>
-                    <div class='col-4 px-1 text-center'><a class='btn btn-danger py-1 my-1 w-100' href='?action=list&remove_article=<?php echo $article->id; ?>'>Verwijderen</a></div>
+                    <div class='col-4 px-1 text-center'><a class='btn btn-danger py-1 my-1 w-100' href='?action=<?php echo $list_type; ?>&remove_article=<?php echo $article->id; ?>'>Verwijderen</a></div>
+                <?php elseif ($article->status !== Article::STATUS_DRAFT):?>
+                    <div class='col-4 px-1 text-center'><a class='btn btn-danger py-1 my-1 w-100' href='?action=<?php echo $list_type; ?>&open_article=<?php echo $article->id; ?>'>Terugzetten</a></div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=<?php echo $article->id; ?>'>Lezen</a></div>
+            <div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>'>Lezen</a></div>
         </div>
     </div>
 </div>

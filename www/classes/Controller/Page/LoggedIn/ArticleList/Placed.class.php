@@ -12,7 +12,7 @@ class Placed extends ArticleList
 {
     public function __construct()
     {
-        parent::__construct('Geplaatst');
+        parent::__construct('Geplaatst', 'placed');
         $this->setArticles(Article::getAllPlaced());
     }
 

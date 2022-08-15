@@ -12,7 +12,7 @@ class Drafts extends ArticleList
 {
     public function __construct()
     {
-        parent::__construct('Drafts');
+        parent::__construct('Drafts', 'drafts');
         $this->setArticles(Article::getAllDrafts());
     }
 

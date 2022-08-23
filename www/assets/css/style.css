@@ -137,3 +137,8 @@ margin-bottom: 10px;
 .text-grey {
 	color: grey;
 }
+
+table.diff-wrapper {
+	width: 100%;
+	font-size: 0.8em;
+}

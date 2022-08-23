@@ -11,6 +11,7 @@ use Util\Singleton\Database;
  *
  * @property Article|null $article
  * @property Category|null $changed_category
+ * @property User|null $user
  */
 class ArticleChange
 {
@@ -63,6 +64,9 @@ class ArticleChange
 
     /** @var DateTime|null */
     public ?DateTime $timestamp;
+
+    /** @var User|null */
+    private ?User $user = null;
 
     /**
      * @param int $id
@@ -118,6 +122,11 @@ class ArticleChange
             return Article::getById($this->article_id);
         } elseif ($value === 'changed_category') {
             return $this->changed_category_id === null ? null : Category::getById($this->changed_category_id);
+        } elseif ($value === 'user') {
+            if ($this->user === null) {
+                $this->user = User::getById($this->user_id);
+            }
+            return $this->user;
         }
         return $this->$value;
     }
@@ -214,6 +223,38 @@ class ArticleChange
         $stmt->bind_param('ii', $change_type, $this->id);
         $stmt->execute();
         return ArticleChange::getById($this->id);
+    }
+
+    /**
+     * @param int $id
+     * @return ArticleChange[]
+     */
+    public static function getByArticleId(int $id): array
+    {
+        Database::instance()->storeQuery(
+            "SELECT article_updates.*, article_update_types.id AS update_type_id, article_update_types.description AS update_type_description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.article_id = ? ORDER BY article_updates.timestamp DESC"
+        );
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $article_changes = [];
+        while ( ($change_data = $result->fetch_assoc()) != false) {
+            $article_changes[$change_data['id']] = new ArticleChange(
+                $change_data['id'],
+                $change_data['article_id'],
+                $change_data['update_type_id'],
+                $change_data['update_type_description'],
+                $change_data['changed_status'],
+                $change_data['changed_title'],
+                $change_data['changed_contents'],
+                $change_data['changed_category'],
+                $change_data['changed_ready'],
+                $change_data['user'],
+                $change_data['timestamp']
+            );
+        }
+        return $article_changes;
     }
 
     /**

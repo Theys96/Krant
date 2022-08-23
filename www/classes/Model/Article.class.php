@@ -57,7 +57,7 @@ class Article
     public const STATUS_BIN = 'bin';
 
     /** @var string */
-    private const ACTIVE_CATEGORY_WHERE_QUERY = 'category IN (SELECT categories.id FROM categories LEFT JOIN editions ON categories.edition = editions.id WHERE editions.active = 1 AND categories.active = 1)';
+    private const ACTIVE_CATEGORY_WHERE_QUERY = '(category IS NULL OR category IN (SELECT categories.id FROM categories LEFT JOIN editions ON categories.edition = editions.id WHERE editions.active = 1 AND categories.active = 1))';
 
     /**
      * @param int $id

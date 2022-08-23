@@ -73,14 +73,14 @@ CREATE TABLE `article_update_types` (
 --
 
 INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
-(1, 'Draft.', 0),
-(2, 'Nieuw stukje.', 1),
-(3, 'Aanpassing.', 1),
-(4, 'Nagekeken.', 0),
-(5, 'Verplaatst naar prullenbak.', 0),
-(6, 'Geplaatst.', 0),
-(7, 'Categorie verwijderd.', 0),
-(8, 'Teruggezet.', 0);
+(1, '%s is begonnen aan een wijziging zonder deze op te slaan.', 0),
+(2, '%s is aan het stukje begonnen.', 1),
+(3, '%s heeft het stukje aangepast.', 1),
+(4, '%s heeft het stukje nagekeken.', 0),
+(5, '%s heeft het stukje naar de prullenbak verplaatst.', 0),
+(6, '%s heeft het stukje als geplaatst gemarkeerd.', 0),
+(7, '%s heeft de categorie van het stukje verwijderd.', 0),
+(8, '%s heeft het stukje teruggeplaatst.', 0);
 
 -- --------------------------------------------------------
 

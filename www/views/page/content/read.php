@@ -1,10 +1,14 @@
 <?php
 
+use Jfcherng\Diff\Factory\RendererFactory;
 use Model\Article;
+use Model\ArticleChange;
 use Model\User;
+use Util\ViewRenderer;
 
 /**
  * @var Article $article
+ * @var ArticleChange[] $article_changes
  * @var int $role
  * @var string $source
  */
@@ -52,3 +56,21 @@ $authors = htmlspecialchars(implode(', ', array_map(
         <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
     <?php endif; ?>
 </center>
+
+<hr />
+
+<h3 class="text-center my-3">Geschiedenis</h3>
+<?php
+$ids = array_keys($article_changes);
+$diff_renderer = RendererFactory::make('SideBySide', $rendererOptions = [
+    'language' => 'dut',
+    'lineNumbers' => false,
+]);
+for ($i = 0; $i < count($ids); $i++) {
+    echo ViewRenderer::render_view('partial.article_change_entry', [
+        'article_change' => $article_changes[$ids[$i]],
+        'previous_article_change' => $i + 1 < count($ids) ? $article_changes[$ids[$i + 1]] : null,
+        'diff_renderer' => $diff_renderer
+    ]);
+}
+?>

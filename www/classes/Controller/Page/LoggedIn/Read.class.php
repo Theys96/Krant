@@ -4,6 +4,7 @@ namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedIn;
 use Model\Article;
+use Model\ArticleChange;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
@@ -35,6 +36,7 @@ class Read extends LoggedIn
     {
         return ViewRenderer::render_view('page.content.read', [
             'article' => $this->article,
+            'article_changes' => ArticleChange::getByArticleId($this->article->id),
             'role' => Session::instance()->getRole(),
             'source' => $_GET['source'] ?? 'list'
         ]);

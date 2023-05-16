@@ -3,6 +3,7 @@
 namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedIn;
+use Model\Article;
 use Model\Edition;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
@@ -41,6 +42,18 @@ class Editions extends LoggedIn
                     $edit_edition->setActive();
                 } else {
                     ErrorHandler::instance()->addError('Kon editie niet activeren: Niet gevonden.');
+                }
+            }
+            if (isset($_POST['migrate_articles'])) {
+                $mapping = [];
+                foreach ($_POST['from_edition_categories'] as $idx => $from_id) {
+                    $mapping[(int) $from_id] = (int) $_POST['to_edition_categories'][$idx];
+                }
+                foreach ($_POST['migrate_articles'] as $article_id) {
+                    $article = Article::getById($article_id);
+                    if (array_key_exists($article->category->id, $mapping)) {
+                        $article->migrateToCategory($mapping[$article->category->id]);
+                    }
                 }
             }
         }

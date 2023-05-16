@@ -31,6 +31,8 @@ class ArticleChange
     public const CHANGE_TYPE_REMOVED_CATEGORY = 7;
     /** @var int */
     public const CHANGE_TYPE_TO_OPEN = 8;
+    /** @var int */
+    public const CHANGE_TYPE_MIGRATION = 9;
 
     /** @var int */
     public int $id;

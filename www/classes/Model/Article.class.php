@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Controller\Page\LoggedIn\Edit;
 use DateTime;
 use Exception;
 use Util\Singleton\Database;
@@ -246,6 +247,15 @@ class Article
     }
 
     /**
+     * @param Edition $edition
+     * @return Article[]
+     */
+    public static function getAllByEdition(Edition $edition): array
+    {
+        return Article::getAllByQuery("SELECT * FROM articles WHERE category IN (SELECT id FROM categories WHERE edition = " . ((int)$edition->id) . ")");
+    }
+
+    /**
      * @return User[]
      */
     private function getAuthors(): array
@@ -360,6 +370,29 @@ class Article
         );
         if ($article_change === null) {
             ErrorHandler::instance()->addError('Er is iets misgegaan bij het plaatsen van het stukje.');
+            return $this;
+        }
+        return $this->applyChange($article_change);
+    }
+
+    /**
+     * @param int $category_id
+     * @return Article|$this
+     */
+    public function migrateToCategory(int $category_id): Article
+    {
+        $article_change = ArticleChange::createNew(
+            $this->id,
+            ArticleChange::CHANGE_TYPE_MIGRATION,
+            $this->status,
+            $this->title,
+            $this->contents,
+            $category_id,
+            $this->ready,
+            Session::instance()->getUser()->id
+        );
+        if ($article_change === null) {
+            ErrorHandler::instance()->addError('Er is iets misgegaan bij het overzetten van het stukje.');
             return $this;
         }
         return $this->applyChange($article_change);

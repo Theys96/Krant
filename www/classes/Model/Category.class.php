@@ -111,9 +111,12 @@ class Category
     /**
      * @return Category[]
      */
-    public static function getAll(): array
+    public static function getAll(?Edition $edition = null): array
     {
-        Database::instance()->storeQuery("SELECT * FROM categories WHERE active = 1 AND edition IN (SELECT id FROM editions WHERE active = 1)");
+        $query = ($edition === null)
+            ? "SELECT * FROM categories WHERE active = 1 AND edition IN (SELECT id FROM editions WHERE active = 1)"
+            : "SELECT * FROM categories WHERE active = 1 AND edition = " . ((int)$edition->id);
+        Database::instance()->storeQuery($query);
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $result = $stmt->get_result();

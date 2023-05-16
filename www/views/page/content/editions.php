@@ -1,5 +1,6 @@
 <?php
 
+use Model\Article;
 use Model\Edition;
 
 /**
@@ -16,12 +17,19 @@ use Model\Edition;
         $color = $row ? '#AAAAAA' : '#DDDDDD';
         $row = !$row;
 
+        $article_count = $edition->countArticles(Article::STATUS_OPEN);
         echo "<div style='background-color: " . $color . "' class='row'>\n";
-        echo "<div class='col-4'><b>" . htmlspecialchars($edition->name) . "</b></div>";
-        echo "<div class='col-6'>" . htmlspecialchars($edition->description) . "</div>";
-        echo "<div class='col-2'>";
+        echo "<div class='col-2'><b>" . htmlspecialchars($edition->name) . "</b></div>";
+        echo "<div class='col-3'>" . htmlspecialchars($edition->description) . "</div>";
+        echo "<div class='col-3'><b>" . $article_count . "</b> ongeplaatste stukje(s)</div>";
+        echo "<div class='col-4'>";
         if ($role === 3) {
-            echo "<a href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
+            echo "<a class='btn btn-primary py-1 ml-1 my-1 float-right' href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
+        }
+        if (!$edition->active && $article_count > 0) {
+            echo "<a class='btn btn-info py-1 ml-1 my-1 float-right' href='?action=migrate_edition&edition=" . $edition->id . "'>Stukjes overzetten</a>";
+        } elseif ($edition->active) {
+            echo "<span class='btn btn-success py-1 ml-1 my-1 float-right'>Actief</span>";
         }
         echo "</div>";
         echo "</div>\n";

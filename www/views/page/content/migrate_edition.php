@@ -1,0 +1,101 @@
+<?php
+
+use Model\Article;
+use Model\Category;
+use Model\Edition;
+use Model\User;
+
+/**
+ * @var Edition $from_edition
+ * @var Edition $to_edition
+ * @var Article[] $articles
+ */
+
+/** @var Category[] $from_categories */
+$from_categories = array_values(Category::getAll($from_edition));
+
+/** @var Category[] $to_categories */
+$to_categories = array_values(Category::getAll($to_edition));
+?>
+<h2>Stukjes overzetten</h2>
+
+<?php
+if (count($to_categories) == 0) :
+?>
+    <p class="text-danger">
+        Editie <i><?php echo $to_edition->name; ?></i> moet tenminste &eacute;&eacute;n categorie hebben om stukjes over te kunnen zetten.
+    </p>
+    <a class='btn btn-info' href='?action=editions'>Terug</a>
+<?php
+elseif (count($articles) == 0) :
+?>
+    <p class="text-danger">
+        Editie <i><?php echo $to_edition->name; ?></i> moet tenminste &eacute;&eacute;n ongeplaatst stukje hebben om over te kunnen zetten.
+    </p>
+    <a class='btn btn-info' href='?action=editions'>Terug</a>
+<?php
+else:
+?>
+
+<p>
+    Stukjes overzetten van <i><?php echo $from_edition->name; ?></i> naar <i><?php echo $to_edition->name; ?></i>.
+    Geef eerst aan welke categorie in de ene editie naar welke categorie in de andere editie moet worden overgezet:
+</p>
+
+<form method='post' action="?action=editions">
+
+    <div class="row">
+        <div class="col-md-4"><i>Categorie (<?php echo $from_edition->name; ?>)</i></div>
+        <div class="col-md-8"><i>Categorie (<?php echo $to_edition->name; ?>)</i></div>
+    </div>
+    <?php
+        foreach ($from_categories as $idx => $category) {
+            $idx_to = $idx > (count($to_categories) - 1) ? 0 : $idx;
+            echo "<div class='form-row'>";
+            echo "<label for='category-" . $idx . "' class='col-md-3 col-form-label font-weight-bold'>";
+            echo $category->name;
+            echo "</label>";
+            echo "<div class='col-md-1'>&rarr;</div>";
+            echo "<div class='form-group col-md-4'>";
+            echo "<input type='hidden' value='" . $category->id ."' name='from_edition_categories[]'>";
+            echo "<select id='category-" . $idx . "' name='to_edition_categories[]' class='form-control'>";
+            foreach ($to_categories as $to_idx => $to_category) {
+                echo "<option value='" . $to_category->id . "' " . ($idx_to == $to_idx ? 'selected' : '') . ">" . $to_category->name . "</option>";
+            }
+            echo "</select>";
+            echo "</div>";
+            echo "</div>";
+        }
+    ?>
+
+    <p>Selecteer alle stukjes die overgezet moeten worden:</p>
+    <div class='px-3 mx-auto my-3'>
+    <?php
+    $row = true;
+    foreach ($articles as $article) {
+        $color = $row ? '#AAAAAA' : '#DDDDDD';
+        $row = !$row;
+
+        $authors = htmlspecialchars(implode(', ', array_map(
+            static function (User $author): string {
+                return $author->username;
+            },
+            $article->authors
+        )));
+        echo "<div style='background-color: " . $color . "' class='row form-row'>\n";
+        echo "<div class='col-1'><div class='form-check'><input name='migrate_articles[]' type='checkbox' value='" . $article->id . "' checked></div></div>";
+        echo "<div class='col-3'><a target='_blank' href='?action=read&stukje=" . $article->id . "&source=editions'>" . htmlspecialchars($article->title) . "</a></div>";
+        echo "<div class='col-3'>" . htmlspecialchars($article->category->name) . "</a></div>";
+        echo "<div class='col-3'>" . $authors . "</div>";
+        echo "<div class='col-2'><b>" . strlen($article->contents) . "</b> tekens</div>";
+        echo "</div\n>";
+    }
+    ?>
+    </div>
+    <input class='btn btn-primary' type='submit' value='Overzetten'/>
+    <a class='btn btn-info' href='?action=editions'>Terug</a>
+</form>
+
+<?php
+endif;
+?>

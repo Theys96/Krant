@@ -81,6 +81,7 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 (6, '%s heeft het stukje als geplaatst gemarkeerd.', 0),
 (7, '%s heeft de categorie van het stukje verwijderd.', 0),
 (8, '%s heeft het stukje teruggeplaatst.', 0);
+(9, '%s heeft het stukje overgezet.', 0);
 
 -- --------------------------------------------------------
 

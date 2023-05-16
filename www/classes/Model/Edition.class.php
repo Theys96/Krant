@@ -82,6 +82,26 @@ class Edition
     }
 
     /**
+     * @param string|null $status
+     * @return int
+     */
+    public function countArticles(?string $status = null): int
+    {
+        $query = "SELECT COUNT(*) AS count FROM articles WHERE category IN (SELECT id FROM categories WHERE edition = ?)"
+            . ($status !== null ? " AND status = ?" : "");
+        Database::instance()->storeQuery($query);
+        $stmt = Database::instance()->prepareStoredQuery();
+        if ($status === null) {
+            $stmt->bind_param('i', $this->id);
+        } else {
+            $stmt->bind_param('is', $this->id, $status);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return (int) $result['count'];
+    }
+
+    /**
      * @param int $id
      * @return Edition|null
      */

@@ -39,12 +39,13 @@ $edition_name = $edition === null ? "" : $edition->name . " | ";
                 <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Beheer</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="?action=overview">Overzicht</a>
                     <a class="dropdown-item" href="?action=categories">Categorieën</a>
-                    <a class="dropdown-item" href="?action=editions">Edities</a>
                     <a class="dropdown-item" href="?action=drafts">Drafts</a>
                     <a class="dropdown-item" href="?action=bin">Prullenbak</a>
                     <a class="dropdown-item" href="?action=placed">Geplaatst</a>
                     <?php if ($role == 3) : ?>
+                        <a class="dropdown-item" href="?action=editions">Edities</a>
                         <a class="dropdown-item" href="?action=users">Gebruikers</a>
                         <a class="dropdown-item" href="?action=feedbacklist">Feedback</a>
                     <?php endif; ?>

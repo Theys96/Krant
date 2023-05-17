@@ -18,6 +18,6 @@ class Bin extends ArticleList
 
     public function allowed_roles(): array
     {
-        return [3];
+        return [1, 2, 3];
     }
 }

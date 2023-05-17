@@ -38,6 +38,7 @@ class Router
         'editions' => LoggedIn\Editions::class,
         'edit_edition' => LoggedIn\EditEdition::class,
         'migrate_edition' => LoggedIn\MigrateEdition::class,
+        'overview' => LoggedIn\Overview::class,
     ];
 
     /**

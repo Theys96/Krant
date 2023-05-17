@@ -19,17 +19,21 @@ use Model\Edition;
 
         $article_count = $edition->countArticles(Article::STATUS_OPEN);
         echo "<div style='background-color: " . $color . "' class='row'>\n";
-        echo "<div class='col-2'><b>" . htmlspecialchars($edition->name) . "</b></div>";
-        echo "<div class='col-3'>" . htmlspecialchars($edition->description) . "</div>";
-        echo "<div class='col-3'><b>" . $article_count . "</b> ongeplaatste stukje(s)</div>";
-        echo "<div class='col-4'>";
-        if ($role === 3) {
-            echo "<a class='btn btn-primary py-1 ml-1 my-1 float-right' href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
+        echo "<div class='col-1'>";
+        if ($edition->active) {
+            echo "<span class='badge badge-success my-1 float-right'>Actief</span>";
         }
+        echo "</div>";
+        echo "<div class='col-3'><b>" . htmlspecialchars($edition->name) . "</b></div>";
+        echo "<div class='col-3'>" . htmlspecialchars($edition->description) . "</div>";
         if (!$edition->active && $article_count > 0) {
-            echo "<a class='btn btn-info py-1 ml-1 my-1 float-right' href='?action=migrate_edition&edition=" . $edition->id . "'>Stukjes overzetten</a>";
-        } elseif ($edition->active) {
-            echo "<span class='btn btn-success py-1 ml-1 my-1 float-right'>Actief</span>";
+            echo "<div class='col-3'><a data-toggle='tooltip' data-placement='top' title='Klik om stukjes over te zetten' href='?action=migrate_edition&edition=" . $edition->id . "'>" . $article_count . " ongeplaatste stukje(s)</a></div>";
+        } else {
+            echo "<div class='col-3'>" . $article_count . " ongeplaatste stukje(s)</div>";
+        }
+        echo "<div class='col-2'>";
+        if ($role === 3) {
+            echo "<a href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
         }
         echo "</div>";
         echo "</div>\n";
@@ -41,19 +45,7 @@ use Model\Edition;
 if ($role == 3) :
 ?>
 <form method='post' action='?action=editions'>
-    <h3>Editie toevoegen</h3>
-    <div class='form-group'>
-        <label for='name'>Naam</label>
-        <input id='name' name='new_name' class='form-control' type='text' />
-    </div>
-    <div class='form-group'>
-        <label for='description'>Beschrijving</label>
-        <input id='description' name='new_description' class='form-control' type='text' />
-    </div>
-    <input type='submit' class='btn btn-primary' value='Toevoegen' />
-</form>
-<form method='post' action='?action=editions'>
-    <h3 class="mt-5">Huidige editie</h3>
+    <h3>Huidige editie</h3>
     <div class='form-group'>
         <select name='active_edition' id='active_edition' class='form-control'>
             <?php
@@ -64,6 +56,18 @@ if ($role == 3) :
         </select>
     </div>
     <input type='submit' class='btn btn-primary' value='Wijzigen' />
+</form>
+<form method='post' action='?action=editions'>
+    <h3 class="mt-5">Editie toevoegen</h3>
+    <div class='form-group'>
+        <label for='name'>Naam</label>
+        <input id='name' name='new_name' class='form-control' type='text' />
+    </div>
+    <div class='form-group'>
+        <label for='description'>Beschrijving</label>
+        <input id='description' name='new_description' class='form-control' type='text' />
+    </div>
+    <input type='submit' class='btn btn-primary' value='Toevoegen' />
 </form>
 <?php
 endif;

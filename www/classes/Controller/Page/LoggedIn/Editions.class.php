@@ -75,6 +75,6 @@ class Editions extends LoggedIn
      */
     public function allowed_roles(): array
     {
-        return [1, 2, 3];
+        return [3];
     }
 }

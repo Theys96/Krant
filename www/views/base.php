@@ -26,6 +26,11 @@ $alt_css = Session::instance()->getUser()?->alt_css === true;
 
         <!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
     </head>
     <body>
 

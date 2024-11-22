@@ -73,6 +73,7 @@ class Session
             $_SESSION[self::SESSION_NAMESPACE]['role'] : null;
     }
 
+
     /**
      * @param bool $logged_in Whether the user is logged in.
      * @return void
@@ -99,6 +100,7 @@ class Session
     {
         $_SESSION[self::SESSION_NAMESPACE]['role'] = $role;
     }
+
 
     /**
      * Empties the session attributes.

@@ -1,0 +1,16 @@
+@font-face {
+font-family: 'InstalledComicSans';
+src: url(ComicSans.ttf);
+}
+
+body {
+	font-family: InstalledComicSans, "Comic Sans MS";
+	background-image: url('banana-dance.gif');
+	background-size: 30px 30px;
+	background-color: #ff7f00;
+}
+
+#footer {
+	color: blue;
+	text-shadow: 0px 0px 3px white;
+}

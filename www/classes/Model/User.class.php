@@ -32,16 +32,16 @@ class User
     public bool $active;
 
     /** @var bool */
-    public bool $alt_css;
+    public int $alt_css;
 
     /**
      * @param int $id
      * @param string $username
      * @param int $perm_level
      * @param bool $active
-     * @param bool $alt_css
+     * @param int $alt_css
      */
-    public function __construct(int $id, string $username, int $perm_level, bool $active, bool $alt_css)
+    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css)
     {
         $this->id = $id;
         $this->username = $username;
@@ -133,10 +133,10 @@ class User
      * @param string $name
      * @param int $perm_level
      * @param bool $active
-     * @param bool $alt_css
+     * @param int $alt_css
      * @return User|null
      */
-    public function update(string $name, int $perm_level, bool $active, bool $alt_css): ?User
+    public function update(string $name, int $perm_level, bool $active, int $alt_css): ?User
     {
         if ($this->id === 1) {
             if ($active === false) {

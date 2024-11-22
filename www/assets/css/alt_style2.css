@@ -1,0 +1,44 @@
+body {
+	font-family: 'Times New Roman', Times, serif;
+	background-image: none;
+	background-color: hotpink;
+}
+
+#body {
+	background-color: lightpink;
+	color: white;
+}
+
+.role {
+	color: white;
+}
+
+.btn {
+	color: white;
+}
+
+.btn:hover {
+	color: white;
+}
+
+.card {
+	background-color: lavenderblush;
+}
+
+.text-grey {
+	color: whitesmoke;
+}
+
+.form-control {
+	background-color: lavenderblush;
+}
+
+.form-control:focus {
+	background-color: lavenderblush;
+}
+
+
+.form-control:disabled {
+	background-color: mistyrose;
+}
+

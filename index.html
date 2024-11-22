@@ -1,0 +1,17 @@
+<br />
+<b>Warning</b>:  mysqli::__construct(): php_network_getaddresses: getaddrinfo failed: Name or service not known in <b>/var/www/html/classes/Util/Singleton/Database.class.php</b> on line <b>45</b><br />
+<br />
+<b>Warning</b>:  mysqli::__construct(): (HY000/2002): php_network_getaddresses: getaddrinfo failed: Name or service not known in <b>/var/www/html/classes/Util/Singleton/Database.class.php</b> on line <b>45</b><br />
+<center><h1>Oeps!</h1><p>Als je dit leest is er iets helemaal misgegaan (heeft Thijs dus iets verprutst). De foutmelding is:</p><xmp>Database verbinding mislukt: php_network_getaddresses: getaddrinfo failed: Name or service not known</xmp><p>(/var/www/html/classes/Util/Singleton/Database.class.php:48)</p><br />
+<b>Warning</b>:  mysqli::__construct(): php_network_getaddresses: getaddrinfo failed: Name or service not known in <b>/var/www/html/classes/Util/Singleton/Database.class.php</b> on line <b>45</b><br />
+<br />
+<b>Warning</b>:  mysqli::__construct(): (HY000/2002): php_network_getaddresses: getaddrinfo failed: Name or service not known in <b>/var/www/html/classes/Util/Singleton/Database.class.php</b> on line <b>45</b><br />
+<br />
+<b>Fatal error</b>:  Uncaught Exception: Database verbinding mislukt: php_network_getaddresses: getaddrinfo failed: Name or service not known in /var/www/html/classes/Util/Singleton/Database.class.php:48
+Stack trace:
+#0 /var/www/html/classes/Util/Singleton/Database.class.php(30): Util\Singleton\Database-&gt;__construct()
+#1 /var/www/html/classes/Util/Singleton/ErrorHandler.class.php(70): Util\Singleton\Database::instance()
+#2 /var/www/html/classes/Util/Singleton/ErrorHandler.class.php(46): Util\Singleton\ErrorHandler-&gt;throwFatal('Database verbin...', '/var/www/html/c...', 48)
+#3 [internal function]: Util\Singleton\ErrorHandler::exceptionHandler(Object(Exception))
+#4 {main}
+  thrown in <b>/var/www/html/classes/Util/Singleton/Database.class.php</b> on line <b>48</b><br />

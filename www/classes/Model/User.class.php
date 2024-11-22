@@ -89,7 +89,7 @@ class User
      */
     public static function getAll(): array
     {
-        return User::getAllByQuery("SELECT * FROM users");
+        return User::getAllByQuery("SELECT * FROM users ORDER BY username");
     }
 
     /**
@@ -97,7 +97,7 @@ class User
      */
     public static function getAllActive(): array
     {
-        return User::getAllByQuery("SELECT * FROM users WHERE active = 1");
+        return User::getAllByQuery("SELECT * FROM users WHERE active = 1 ORDER BY username");
     }
 
     /**

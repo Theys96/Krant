@@ -80,7 +80,7 @@ INSERT INTO `article_update_types` (`id`, `description`, `author`) VALUES
 (5, '%s heeft het stukje naar de prullenbak verplaatst.', 0),
 (6, '%s heeft het stukje als geplaatst gemarkeerd.', 0),
 (7, '%s heeft de categorie van het stukje verwijderd.', 0),
-(8, '%s heeft het stukje teruggeplaatst.', 0);
+(8, '%s heeft het stukje teruggeplaatst.', 0),
 (9, '%s heeft het stukje overgezet.', 0);
 
 -- --------------------------------------------------------
@@ -152,7 +152,7 @@ CREATE TABLE `users` (
   `username` text NOT NULL,
   `perm_level` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `alt_css` tinyint(1) NOT NULL DEFAULT '0'
+  `alt_css` tinyint(2) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

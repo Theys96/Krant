@@ -1,0 +1,36 @@
+body {
+	font-family: 'Times New Roman', Times, serif;
+	background-image: url(gold.jpg);
+	background-size: 30px 20px;
+	background-color: goldenrod;
+}
+
+#body {
+	background-color: goldenrod;
+	color: white;
+	box-shadow: -5px -5px 20px darkgoldenrod;
+}
+
+.role {
+	color: white;
+}
+
+.btn {
+	color: white;
+}
+
+.btn:hover {
+	color: white;
+}
+
+.card {
+	background-color: white;
+}
+
+.text-grey {
+	color: whitesmoke;
+}
+
+.stukje {
+	background-color: darkgoldenrod;
+}

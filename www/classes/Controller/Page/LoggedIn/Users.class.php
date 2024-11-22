@@ -22,7 +22,7 @@ class Users extends LoggedIn
                 $edit_name = $_POST['edit_name'];
                 $edit_perm_level = $_POST['edit_perm_level'];
                 $edit_active = isset($_POST['edit_active']) && $_POST['edit_active'] === '1';
-                $edit_alt_css = isset($_POST['edit_alt_css']) && $_POST['edit_alt_css'] === '1';
+                $edit_alt_css = $_POST['edit_alt_css'];
                 $edit_user = User::getById($edit_user_id);
                 if ($edit_user !== null) {
                     $edit_user->update($edit_name, $edit_perm_level, $edit_active, $edit_alt_css);

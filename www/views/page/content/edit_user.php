@@ -34,12 +34,12 @@ use Model\User;
     </div>
 
     <div class='form-group'>
-        <label class="custom-control custom-checkbox">
-            <input type='checkbox' name='edit_alt_css' value='1'
-                   class="custom-control-input" <?php echo $user->alt_css === true ? ' checked' : ''; ?>/>
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Comic Sans</span>
-        </label>
+        <label for='alt_css'>Style</label>
+        <select name='edit_alt_css' id='alt_css' class='form-control'>
+            <option value='0' <?php echo $user->alt_css === 0 ? 'selected' : ''; ?>>Normaal</option>
+            <option value='1' <?php echo $user->alt_css === 1 ? 'selected' : ''; ?>>Comic Sans</option>
+            <option value='2' <?php echo $user->alt_css === 2 ? 'selected' : ''; ?>>Roze</option>
+        </select>
     </div>
 
     <input class='btn btn-primary' type='submit' value='Opslaan'/>

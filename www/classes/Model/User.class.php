@@ -31,17 +31,17 @@ class User
     /** @var bool */
     public bool $active;
 
-    /** @var bool */
-    public bool $alt_css;
+    /** @var int */
+    public int $alt_css;
 
     /**
      * @param int $id
      * @param string $username
      * @param int $perm_level
      * @param bool $active
-     * @param bool $alt_css
+     * @param int $alt_css
      */
-    public function __construct(int $id, string $username, int $perm_level, bool $active, bool $alt_css)
+    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css)
     {
         $this->id = $id;
         $this->username = $username;
@@ -89,7 +89,7 @@ class User
      */
     public static function getAll(): array
     {
-        return User::getAllByQuery("SELECT * FROM users");
+        return User::getAllByQuery("SELECT * FROM users ORDER BY username");
     }
 
     /**
@@ -97,7 +97,7 @@ class User
      */
     public static function getAllActive(): array
     {
-        return User::getAllByQuery("SELECT * FROM users WHERE active = 1");
+        return User::getAllByQuery("SELECT * FROM users WHERE active = 1 ORDER BY username");
     }
 
     /**
@@ -133,10 +133,10 @@ class User
      * @param string $name
      * @param int $perm_level
      * @param bool $active
-     * @param bool $alt_css
+     * @param int $alt_css
      * @return User|null
      */
-    public function update(string $name, int $perm_level, bool $active, bool $alt_css): ?User
+    public function update(string $name, int $perm_level, bool $active, int $alt_css): ?User
     {
         if ($this->id === 1) {
             if ($active === false) {

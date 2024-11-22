@@ -3,6 +3,8 @@ namespace Util;
 
 /**
  * Configuration holder.
+ *
+ * Copy this file to Config.class.php and fill in the correct values.
  */
 class Config
 {

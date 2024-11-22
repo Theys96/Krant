@@ -74,14 +74,13 @@ class Session
     }
 
     /**
-     * @return int|null The user's gold value.
+     * @return bool The user's gold value.
      */
     public function getGold(): bool
     {
         return key_exists('gold', $_SESSION[self::SESSION_NAMESPACE]) ?
-            $_SESSION[self::SESSION_NAMESPACE]['gold'] : False;
+            $_SESSION[self::SESSION_NAMESPACE]['gold'] : false;
     }
-
 
     /**
      * @param bool $logged_in Whether the user is logged in.
@@ -117,7 +116,6 @@ class Session
     {
         $_SESSION[self::SESSION_NAMESPACE]['gold'] = rand(0,500) == 5;
     }
-
 
     /**
      * Empties the session attributes.
@@ -165,7 +163,7 @@ class Session
             $this->setUser(User::getById($user_id));
             $this->setRole($role);
             $this->setLoggedIn(true);
-     	    $this->setgold();
+            $this->setGold();
             Log::logInfo('Ingelogd.');
         } else {
             ErrorHandler::instance()->addError('Onjuist wachtwoord.');

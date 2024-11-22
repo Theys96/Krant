@@ -35,7 +35,7 @@ use Model\User;
 
     <div class='form-group'>
         <label for='alt_css'>Style</label>
- 	<select name='edit_alt_css' id='alt_css' class='form-control'>
+        <select name='edit_alt_css' id='alt_css' class='form-control'>
             <option value='0' <?php echo $user->alt_css === 0 ? 'selected' : ''; ?>>Normaal</option>
             <option value='1' <?php echo $user->alt_css === 1 ? 'selected' : ''; ?>>Comic Sans</option>
             <option value='2' <?php echo $user->alt_css === 2 ? 'selected' : ''; ?>>Roze</option>

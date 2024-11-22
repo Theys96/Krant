@@ -21,11 +21,11 @@ $gold = Session::instance()->getGold();
 
         <!-- Krant CSS -->
         <link href="assets/css/style.css" rel="stylesheet">
-       	<?php if (!$gold && $alt_css > 0): ?>
+        <?php if (!$gold && $alt_css > 0): ?>
         <?php echo "<link href='assets/css/alt_style${alt_css}.css' rel='stylesheet'>"?>
         <?php endif; ?>
-	<?php if ($gold): ?>
-	<link href="assets/css/gold.css" rel="stylesheet">
+        <?php if ($gold): ?>
+        <link href="assets/css/gold.css" rel="stylesheet">
         <?php endif; ?>
         <!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>

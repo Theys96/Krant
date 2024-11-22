@@ -31,7 +31,7 @@ class User
     /** @var bool */
     public bool $active;
 
-    /** @var bool */
+    /** @var int */
     public int $alt_css;
 
     /**

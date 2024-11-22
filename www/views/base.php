@@ -6,6 +6,7 @@ use Util\Singleton\Session;
  */
 
 $alt_css = Session::instance()->getUser()?->alt_css;
+$gold = Session::instance()->getGold();
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -20,8 +21,11 @@ $alt_css = Session::instance()->getUser()?->alt_css;
 
         <!-- Krant CSS -->
         <link href="assets/css/style.css" rel="stylesheet">
-       	<?php if ($alt_css > 0): ?>
+       	<?php if (!$gold && $alt_css > 0): ?>
         <?php echo "<link href='assets/css/alt_style${alt_css}.css' rel='stylesheet'>"?>
+        <?php endif; ?>
+	<?php if ($gold): ?>
+	<link href="assets/css/gold.css" rel="stylesheet">
         <?php endif; ?>
         <!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>

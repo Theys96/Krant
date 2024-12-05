@@ -46,15 +46,12 @@ if ($role > 1) {
 if(isset($_GET['filtercat'])){
     $categories = Category::getAll();
     echo "<div class='w-100 text-right'>";
-    echo "<form method='post' action='?action=list";
-    echo isset($filter) ? "&filter=$filter" : "";
-    echo "'>";
+    echo "<form method='post' action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
     echo "<div class='form-group'>";
     echo " <input type='hidden' name='filters[]' value='0'>";
     foreach ($categories as $cat) {
-	echo " <input type='checkbox' name='filters[]' value='$cat->id'";
-	echo (in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '';
-	echo "/>";
+	echo " <input type='checkbox' name='filters[]' value='$cat->id'", 
+		(in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '', "/>";
 	echo " <label for='$cat->id'> $cat->name </label> ";
     }
     echo " <input class='btn btn-primary' type='submit' value='Filter'/> ";

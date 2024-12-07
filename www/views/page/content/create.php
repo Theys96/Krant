@@ -39,7 +39,18 @@ $ready = $article?->ready;
 
     <div class='form-group'>
         <label for='user'>Auteur</label>
-        <input type='text' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
+	<div class='form-control input'>
+	<?php
+	if ($article != null) {
+    	    foreach ($article->authors as $author) {
+		echo " $author->username ";
+	    }
+	} else {
+	    echo $username;
+	}
+	?>
+	</div>
+        <input type='hidden' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
     </div>
 
     <div class='form-group'>

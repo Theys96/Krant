@@ -40,7 +40,16 @@ $authors = htmlspecialchars(implode(', ', array_map(
     <div class='col-sm-4'><b>Categorie</b></div>
     <div class='col-sm-8'><?php echo $article->category?->name; ?></div>
 </div>
-<?php echo nl2br(htmlspecialchars($article->contents)); ?>
+<div class='row'>
+    <div class='col-sm-12 tekst'><?php echo nl2br(htmlspecialchars($article->contents)); ?></div>
+</div>
+<?php
+if ($article->context != ""){
+    echo "<div class='row'>";
+    echo "<div class='col-sm-12'><b>Context</b></div>";
+    echo "<div class='col-sm-12 text-grey'>" . nl2br(htmlspecialchars($article->context)) . "</div>";
+    echo "</div>";
+} ?>
 <div class='row'>
     <div class='col-sm-4'><b>Klaar</b></div>
     <div class='col-sm-8'><?php echo ($article->ready == 1) ? 'Ja' : 'Nee'; ?></div>

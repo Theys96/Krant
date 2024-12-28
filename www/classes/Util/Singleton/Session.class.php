@@ -77,12 +77,12 @@ class Session
     }
 
     /**
-     * @return int|bool The user's gold value.
+     * @return bool The user's gold value.
      */
     public function getGold(): bool
     {
         return key_exists('gold', $_SESSION[self::SESSION_NAMESPACE]) ?
-            $_SESSION[self::SESSION_NAMESPACE]['gold'] : False;
+            $_SESSION[self::SESSION_NAMESPACE]['gold'] : false;
     }
 
     /**

@@ -8,7 +8,6 @@ font-family: 'InstalledMyriad';
 src: url(myriad-pro.otf);
 }
 
-
 body {
 font-family: IntalledMyriad, sans-serif;
 font-size: 18px;
@@ -78,6 +77,10 @@ textarea.text {
 height: 200px;
 }
 
+textarea#context {
+height: 100px;
+}
+
 .custom-control-indicator {
 	background-color: white;
 	border: 1px solid rgba(0,0,0,.15);
@@ -141,4 +144,9 @@ margin-bottom: 10px;
 table.diff-wrapper {
 	width: 100%;
 	font-size: 0.8em;
+}
+
+.tekst {
+	padding-top: 10px;
+	padding-bottom: 10px;
 }

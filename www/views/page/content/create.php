@@ -1,6 +1,7 @@
 <?php
 use Model\Article;
 use Model\Category;
+use Util\Config;
 
 /**
  * @var Category[] $categories
@@ -20,7 +21,9 @@ function printButtons($chars): void
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
 $contents = $article?->contents;
+$context = $article?->context;
 $ready = $article?->ready;
+$mail = Config::MAIL;
 ?>
 <h2><?php echo $title; ?></h2>
 
@@ -73,6 +76,11 @@ $ready = $article?->ready;
         <textarea id='text' class='form-control text input' name='text'><?php echo $contents; ?></textarea>
         <small class='float-right' id='charcount'></small>
     </div>
+    <div class='form-group'>
+	<label for='context'>Context</label>
+        <textarea id='context' class='form-control text input' name='context'><?php echo $context; ?></textarea>
+    </div>
+
 
 
     <div class="btn-group my-1" role="group" aria-label="Basic example">

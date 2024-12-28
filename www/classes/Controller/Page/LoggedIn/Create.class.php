@@ -24,6 +24,7 @@ class Create extends LoggedIn
                     $article_change->article->status,
                     $_POST['title'],
                     $_POST['text'],
+                    $_POST['context'],
                     $_POST['category'],
                     isset($_POST['done'])
                 );
@@ -31,6 +32,8 @@ class Create extends LoggedIn
 //                $differ = new Differ(
 //                    explode(PHP_EOL, $article_change->article->contents),
 //                    explode(PHP_EOL, $article_change->changed_contents)
+//                    explode(PHP_EOL, $article_change->article->context),
+//                    explode(PHP_EOL, $article_change->changed_context)
 //                );
 //                $renderer = RendererFactory::make('Inline'); // or your own renderer object
 //                $this->diff = $renderer->render($differ);

@@ -32,7 +32,7 @@ if ($role > 1) {
     echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
     echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
     if ($role == 2) {
-    	echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & nog niet nagekeken</a> ";
+    	echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & kan ik nakijken</a> ";
     }
     if ($role == 3) {
 	echo "<a class='" . ($filter == 3 ? 'text-success' : '') . "' href='?action=list&filter=3'>klaar & nagekeken</a> | ";

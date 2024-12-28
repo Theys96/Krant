@@ -1,7 +1,7 @@
 <?php
 use Model\Article;
 use Model\Category;
-use Util\Config;
+use Model\User;
 
 /**
  * @var Category[] $categories
@@ -23,7 +23,6 @@ $category_id = $article?->category?->id;
 $contents = $article?->contents;
 $context = $article?->context;
 $ready = $article?->ready;
-$mail = Config::MAIL;
 ?>
 <h2><?php echo $title; ?></h2>
 
@@ -43,15 +42,12 @@ $mail = Config::MAIL;
     <div class='form-group'>
         <label for='user'>Auteur</label>
 	<div class='form-control input'>
-	<?php
-	if ($article != null) {
-    	    foreach ($article->authors as $author) {
-		echo " $author->username ";
-	    }
-	} else {
-	    echo $username;
-	}
-	?>
+	<?php echo $article == null ? $username : htmlspecialchars(
+		implode(', ', array_map(static function (User $author): string {
+        		return $author->username;
+    		},
+    		$article->authors
+	))); ?>
 	</div>
         <input type='hidden' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
     </div>
@@ -78,7 +74,7 @@ $mail = Config::MAIL;
     </div>
     <div class='form-group'>
 	<label for='context'>Context</label>
-        <textarea id='context' class='form-control text input' name='context'><?php echo $context; ?></textarea>
+        <textarea id='context' class='form-control text input' name='context' placeholder='Schrijf hier een toelichting op het stukje als dat handig is. Dit komt niet in de krant.'><?php echo $context; ?></textarea>
     </div>
 
 

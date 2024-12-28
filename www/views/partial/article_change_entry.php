@@ -37,11 +37,23 @@ if ($previous_article_change === null || $article_change->changed_contents !== $
         preg_split("/(?<=\.)\s/ui", $previous_article_change === null ? '' : $previous_article_change->changed_contents),
         preg_split("/(?<=\.)\s/ui", $article_change->changed_contents)
     , ['context' => Differ::CONTEXT_ALL]);
-    $updates[] = "<hr />" . $diff_renderer->render($differ);
+    $updates[] = "<hr />Tekst" . $diff_renderer->render($differ);
 }
 if ($previous_article_change === null || $article_change->changed_contents !== $previous_article_change->changed_contents) {
     //$updates[] = "<a class='text-info' data-toggle='collapse' href='#collapsedContents-" . $article_change->id . "' role='button' aria-expanded='false' aria-controls='collapsedContents-" . $article_change->id . "'>Aanpassingen in het stukje bekijken.</a><br />";
 }
+
+if ($previous_article_change === null || $article_change->changed_context !== $previous_article_change->changed_context) {
+    $differ = new Differ(
+        preg_split("/(?<=\.)\s/ui", $previous_article_change === null ? '' : $previous_article_change->changed_context),
+        preg_split("/(?<=\.)\s/ui", $article_change->changed_context)
+    , ['context' => Differ::CONTEXT_ALL]);
+    $updates[] = "<hr />Context" . $diff_renderer->render($differ);
+}
+if ($previous_article_change === null || $article_change->changed_context !== $previous_article_change->changed_context) {
+    //$updates[] = "<a class='text-info' data-toggle='collapse' href='#collapsedContents-" . $article_change->id . "' role='button' aria-expanded='false' aria-controls='collapsedContents-" . $article_change->id . "'>Aanpassingen in het stukje bekijken.</a><br />";
+}
+
 ?>
 
 <?php

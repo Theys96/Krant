@@ -2,7 +2,6 @@
 
 namespace Model;
 
-use Controller\Page\LoggedIn\Edit;
 use DateTime;
 use Exception;
 use Util\Singleton\Database;

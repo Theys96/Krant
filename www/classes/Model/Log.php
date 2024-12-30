@@ -5,7 +5,6 @@ namespace Model;
 use DateTime;
 use Exception;
 use Util\Singleton\Database;
-use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 
 /**

@@ -52,14 +52,19 @@ if ($article->context != "") {
 
 <center>
     <?php if ($role === 3 && $article->status === Article::STATUS_OPEN && $article->ready): ?>
-        <form method="post" action="?action=list&place_article=<?php echo $_GET['stukje']; ?>">
+        <form class="d-inline" method="post" action="?action=list&place_article=<?php echo $_GET['stukje']; ?>">
             <input class='btn btn-primary my-2 px-5' type='submit' value='Plaats'/>
-            <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
         </form>
-    <?php else: ?>
-        <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
     <?php endif; ?>
+    <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
+    <input class='btn btn-dark' id='emoji-button' type='button' value='😃' />
 </center>
+
+<hr />
+
+<input type="hidden" id="article_id" value="<?php echo $article->id; ?>" />
+<div id='emoji-reactions'></div>
+<div class='pop-up-bg'><emoji-picker class="emoji-pop-up light"></emoji-picker></div>
 
 <hr />
 
@@ -78,3 +83,5 @@ for ($i = 0; $i < count($ids); $i++) {
     ]);
 }
 ?>
+
+<script src='assets/js/emoji-react.js'></script>

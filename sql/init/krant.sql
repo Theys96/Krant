@@ -288,6 +288,22 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `log`
   ADD CONSTRAINT `log_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+
+
+CREATE TABLE `article_reactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `reaction` VARCHAR(8) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `article_reactions`
+  ADD CONSTRAINT `article_reactions_unique_user_article` UNIQUE (`article_id`, `user_id`),
+  ADD CONSTRAINT `article_reactions_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
+  ADD CONSTRAINT `article_reactions_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

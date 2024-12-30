@@ -5,6 +5,8 @@ namespace Util;
 use Controller\API\Draft\NewDraft;
 use Controller\API\Draft\UpdateDraft;
 use Controller\API\ExceptionResponse;
+use Controller\API\Reactions\AddReaction;
+use Controller\API\Reactions\FetchReactions;
 use Controller\LoggedIn;
 use Controller\Page\LoggedIn\ArticleList\Bin;
 use Controller\Page\LoggedIn\ArticleList\Drafts;
@@ -109,6 +111,8 @@ class Router
         return match ($_REQUEST['action']) {
             'new_draft' => new NewDraft(),
             'update_draft' => new UpdateDraft(),
+            'add_reaction' => new AddReaction(),
+            'fetch_reactions' => new FetchReactions(),
             default => new ExceptionResponse(500, 'Action not found.'),
         };
     }

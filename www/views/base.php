@@ -35,6 +35,7 @@ $gold = Session::instance()->getGold();
                 $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
+        <script type="module" src="assets/js/emoji-picker-element-1.26.0/index.js"></script>
     </head>
     <body>
 

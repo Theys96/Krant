@@ -156,3 +156,37 @@ table.diff-wrapper {
 	width: 40px;
 	margin-right: 10px;
 }
+
+.pop-up-bg {
+	position: fixed;
+	background-color: rgba(0,0,0,0.8);
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 2000;
+	display: none;
+}
+
+.emoji-pop-up {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 200px;
+	display: none;
+	z-index: 2001;
+}
+
+.emoji-reaction {
+	border-radius: 5px;
+	border: 1px solid gray;
+	padding: 3px;
+	background-color: white;
+	font-size: 1.2rem;
+	color: gray;
+	line-height: 1.2rem;
+	cursor: pointer;
+	user-select: none;
+	display: inline-block;
+	margin-left: 1px;
+	margin-right: 1px;
+}

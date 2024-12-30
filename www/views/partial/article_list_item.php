@@ -22,6 +22,7 @@ $authors_ids = array_map(
     },
     $article->authors
 );
+$reactions = \Model\ArticleReaction::getByArticleIdGrouped($article->id);
 ?>
 
 <div class='stukje my-2 mx-1 row pt-1'>
@@ -57,5 +58,15 @@ if ($role == 2 && $article->status === Article::STATUS_OPEN && $article->ready =
             <?php endif; ?>
             <div class='col-4 px-1 text-center'><a class='btn btn-primary py-1 my-1 w-100' href='?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>'>Lezen</a></div>
         </div>
+    </div>
+    <div class='col-12 pb-1'>
+        <?php
+        foreach ($reactions as $reaction) {
+            echo "<div class=\"emoji-reaction\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"" . implode(', ', $reaction['users']) . "\">
+				<span>" . $reaction['reaction'] . "</span>
+				<span>" . (count($reaction['users']) > 1 ? count($reaction['users']) : '') . "</span>
+			</div>";
+        }
+?>
     </div>
 </div>

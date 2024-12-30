@@ -1,6 +1,7 @@
 <?php
 use Model\Article;
 use Model\Category;
+use Model\User;
 
 /**
  * @var Category[] $categories
@@ -20,6 +21,7 @@ function printButtons($chars): void
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
 $contents = $article?->contents;
+$context = $article?->context;
 $ready = $article?->ready;
 ?>
 <h2><?php echo $title; ?></h2>
@@ -39,7 +41,10 @@ $ready = $article?->ready;
 
     <div class='form-group'>
         <label for='user'>Auteur</label>
-        <input type='text' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
+	<div class='form-control input'>
+	<?php echo $article == null ? $username : $article->getAuthorsString(); ?>
+	</div>
+        <input type='hidden' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
     </div>
 
     <div class='form-group'>
@@ -62,6 +67,11 @@ $ready = $article?->ready;
         <textarea id='text' class='form-control text input' name='text'><?php echo $contents; ?></textarea>
         <small class='float-right' id='charcount'></small>
     </div>
+    <div class='form-group'>
+	<label for='context'>Context</label>
+        <textarea id='context' class='form-control text input' name='context' placeholder='Schrijf hier een toelichting op het stukje als dat handig is. Dit komt niet in de krant.'><?php echo $context; ?></textarea>
+    </div>
+
 
 
     <div class="btn-group my-1" role="group" aria-label="Basic example">

@@ -37,6 +37,9 @@ class Session
         if (!isset($_SESSION[self::SESSION_NAMESPACE])) {
             $_SESSION[self::SESSION_NAMESPACE] = array();
         }
+	if (isset($_POST['filters'])) {
+	    $this->setFilter($_POST['filters']);
+	}
     }
 
     /**
@@ -83,6 +86,17 @@ class Session
     }
 
     /**
+     * @return array array containing the filter
+     */
+    public function getFilter(): array
+    {
+         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
+            $_SESSION[self::SESSION_NAMESPACE]['filter'] : array();
+    }
+
+
+
+    /**
      * @param bool $logged_in Whether the user is logged in.
      * @return void
      */
@@ -116,6 +130,16 @@ class Session
     {
         $_SESSION[self::SESSION_NAMESPACE]['gold'] = rand(0, 500) == 5;
     }
+
+    /**
+     * @return void
+     */
+    public function setFilter(array $filters): void
+    {
+	$filters = array_diff($filters, [0]);
+        $_SESSION[self::SESSION_NAMESPACE]['filter'] = $filters; 
+    }
+
 
     /**
      * Empties the session attributes.
@@ -163,7 +187,7 @@ class Session
             $this->setUser(User::getById($user_id));
             $this->setRole($role);
             $this->setLoggedIn(true);
-            $this->setGold();
+     	    $this->setGold();
             Log::logInfo('Ingelogd.');
         } else {
             ErrorHandler::instance()->addError('Onjuist wachtwoord.');

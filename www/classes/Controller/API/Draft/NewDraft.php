@@ -29,6 +29,7 @@ class NewDraft extends APIResponse
                 $article->status,
                 $_REQUEST['title'] ?? $article->title,
                 $_REQUEST['contents'] ?? $article->contents,
+                $_REQUEST['context'] ?? $article->context,
                 is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : $article->category->id,
                 is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : $article->ready,
                 Session::instance()->getUser()->id

@@ -55,6 +55,9 @@ class ArticleChange
     /** @var string */
     public string $changed_contents;
 
+    /** @var string */
+    public string $changed_context;
+
     /** @var int|null */
     public ?int $changed_category_id;
 
@@ -78,6 +81,7 @@ class ArticleChange
      * @param string $changed_status
      * @param string $changed_title
      * @param string $changed_contents
+     * @param string $changed_context
      * @param int|null $changed_category_id
      * @param bool $changed_ready
      * @param int $user_id
@@ -91,6 +95,7 @@ class ArticleChange
         string $changed_status,
         string $changed_title,
         string $changed_contents,
+        string $changed_context,
         ?int    $changed_category_id,
         bool   $changed_ready,
         int     $user_id,
@@ -103,6 +108,7 @@ class ArticleChange
         $this->changed_status = $changed_status;
         $this->changed_title = $changed_title;
         $this->changed_contents = $changed_contents;
+        $this->changed_context = $changed_context;
         $this->changed_category_id = $changed_category_id;
         $this->changed_ready = $changed_ready;
         $this->user_id = $user_id;
@@ -138,6 +144,7 @@ class ArticleChange
      * @param string|null $changed_status
      * @param string|null $changed_title
      * @param string|null $changed_contents
+     * @param string|null $changed_context
      * @param int|null $changed_category_id
      * @param bool|null $changed_ready
      * @param int $user_id
@@ -149,21 +156,23 @@ class ArticleChange
         ?string $changed_status,
         ?string $changed_title,
         ?string $changed_contents,
+        ?string $changed_context,
         ?int    $changed_category_id,
         ?bool   $changed_ready,
         int     $user_id
     ): ?ArticleChange {
         Database::instance()->storeQuery(
-            "INSERT INTO `article_updates` (article_id, update_type, changed_status, changed_title, changed_contents, changed_category, changed_ready, user) VALUES (?,?,?,?,?,?,?,?)"
+            "INSERT INTO `article_updates` (article_id, update_type, changed_status, changed_title, changed_contents, changed_context, changed_category, changed_ready, user) VALUES (?,?,?,?,?,?,?,?,?)"
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'iisssiii',
+            'iissssiii',
             $article_id,
             $update_type,
             $changed_status,
             $changed_title,
             $changed_contents,
+            $changed_context,
             $changed_category_id,
             $changed_ready,
             $user_id
@@ -179,6 +188,7 @@ class ArticleChange
      * @param string $changed_status
      * @param string $changed_title
      * @param string $changed_contents
+     * @param string $changed_context
      * @param int|null $changed_category_id
      * @param bool $changed_ready
      * @return ArticleChange
@@ -187,18 +197,20 @@ class ArticleChange
         string $changed_status,
         string $changed_title,
         string $changed_contents,
+        string $changed_context,
         ?int    $changed_category_id,
         bool   $changed_ready
     ): ArticleChange {
         Database::instance()->storeQuery(
-            "UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?"
+            "UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_context = ?, changed_category = ?, changed_ready = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?"
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'sssiii',
+            'ssssiii',
             $changed_status,
             $changed_title,
             $changed_contents,
+            $changed_context,
             $changed_category_id,
             $changed_ready,
             $this->id
@@ -247,6 +259,7 @@ class ArticleChange
                 $change_data['changed_status'],
                 $change_data['changed_title'],
                 $change_data['changed_contents'],
+                $change_data['changed_context'],
                 $change_data['changed_category'],
                 $change_data['changed_ready'],
                 $change_data['user'],
@@ -278,6 +291,7 @@ class ArticleChange
                 $change_data['changed_status'],
                 $change_data['changed_title'],
                 $change_data['changed_contents'],
+                $change_data['changed_context'],
                 $change_data['changed_category'],
                 $change_data['changed_ready'],
                 $change_data['user'],

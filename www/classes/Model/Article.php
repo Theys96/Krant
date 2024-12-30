@@ -29,6 +29,9 @@ class Article
     /** @var string */
     public string $contents;
 
+    /** @var string */
+    public string $context;
+
     /** @var int|null */
     protected ?int $category_id;
 
@@ -64,16 +67,18 @@ class Article
      * @param string $status
      * @param string $title
      * @param string $contents
+     * @param string $context
      * @param int|null $category_id
      * @param bool $ready
      * @param string $last_updated
      */
-    public function __construct(int $id, string $status, string $title, string $contents, ?int $category_id, bool $ready, string $last_updated)
+    public function __construct(int $id, string $status, string $title, string $contents, string $context, ?int $category_id, bool $ready, string $last_updated)
     {
         $this->id = $id;
         $this->status = $status;
         $this->title = $title;
         $this->contents = $contents;
+	$this->context = $context;
         $this->category_id = $category_id;
         $this->ready = $ready;
         try {
@@ -114,13 +119,14 @@ class Article
     {
         $timestamp = $change->timestamp->format('Y-m-d H:i:s');
 
-        Database::instance()->storeQuery("UPDATE articles SET status = ?, title = ?, contents = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?");
+        Database::instance()->storeQuery("UPDATE articles SET status = ?, title = ?, contents = ?, context = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'sssiisi',
+            'ssssiisi',
             $change->changed_status,
             $change->changed_title,
             $change->changed_contents,
+	    $change->changed_context,
             $change->changed_category_id,
             $change->changed_ready,
             $timestamp,
@@ -136,7 +142,7 @@ class Article
      */
     public static function createNew(): ?Article
     {
-        Database::instance()->storeQuery("INSERT INTO `articles` (title, contents) VALUES ('', '')");
+        Database::instance()->storeQuery("INSERT INTO `articles` (title, contents, context) VALUES ('', '', '')");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         if ($stmt->insert_id) {
@@ -162,6 +168,7 @@ class Article
                 $article_data['status'],
                 $article_data['title'],
                 $article_data['contents'],
+		$article_data['context'],
                 $article_data['category'],
                 $article_data['ready'],
                 $article_data['last_updated']
@@ -188,6 +195,7 @@ class Article
                 $article_data['status'],
                 $article_data['title'],
                 $article_data['contents'],
+		$article_data['context'],
                 $article_data['category'],
                 $article_data['ready'],
                 $article_data['last_updated']
@@ -252,6 +260,14 @@ class Article
     public static function getAllByEdition(Edition $edition): array
     {
         return Article::getAllByQuery("SELECT * FROM articles WHERE category IN (SELECT id FROM categories WHERE edition = " . ((int)$edition->id) . ")");
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorsString(): string
+    {
+	return htmlspecialchars(implode(', ', array_map(static function (User $author): string { return $author->username; }, $this->getAuthors())));
     }
 
     /**
@@ -321,6 +337,7 @@ class Article
             static::STATUS_BIN,
             $this->title,
             $this->contents,
+	    $this->context,
             $this->category->id,
             $this->ready,
             Session::instance()->getUser()->id
@@ -343,6 +360,7 @@ class Article
             static::STATUS_PLACED,
             $this->title,
             $this->contents,
+	    $this->context,
             $this->category->id,
             $this->ready,
             Session::instance()->getUser()->id
@@ -365,6 +383,7 @@ class Article
             static::STATUS_OPEN,
             $this->title,
             $this->contents,
+	    $this->context,
             $this->category->id,
             $this->ready,
             Session::instance()->getUser()->id
@@ -388,6 +407,7 @@ class Article
             $this->status,
             $this->title,
             $this->contents,
+            $this->context,
             $category_id,
             $this->ready,
             Session::instance()->getUser()->id

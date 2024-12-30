@@ -93,18 +93,24 @@ printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
         </label>
     </div>
 
-    <?php
-    if ($check_mode) {
-        echo "<input class='btn btn-primary' type='submit' value='Nagekeken' /> ";
-        echo "<a class='btn btn-secondary' href='?action=list'>Niet nagekeken</a><br />";
-    } else {
-        echo "<input class='btn btn-primary' type='submit' value='Opslaan'/><br/>";
-    }
+<?php
+if ($check_mode) {
+    echo "<input class='btn btn-primary' type='submit' value='Nagekeken' /> ";
+    echo "<a class='btn btn-secondary' href='?action=list'>Niet nagekeken</a>";
+} else {
+    echo "<input class='btn btn-primary' type='submit' value='Opslaan'/>";
+}
+if ($article !== null) {
+    echo " <input class='btn btn-dark' id='emoji-button' type='button' value='😃' /> ";
+    echo "<hr /><div id='emoji-reactions'></div>";
+    echo "<div class='pop-up-bg'><emoji-picker class=\"emoji-pop-up light\"></emoji-picker></div>";
+}
 ?>
     <span id='info'></span>
 </form>
 <script src='assets/js/draft.js'></script>
 <script src='assets/js/editor.js'></script>
+<script src='assets/js/emoji-react.js'></script>
 <script>
     $(function () {
         Draft.init('.input');

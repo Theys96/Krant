@@ -78,7 +78,7 @@ class Article
         $this->status = $status;
         $this->title = $title;
         $this->contents = $contents;
-	$this->context = $context;
+        $this->context = $context;
         $this->category_id = $category_id;
         $this->ready = $ready;
         try {
@@ -126,7 +126,7 @@ class Article
             $change->changed_status,
             $change->changed_title,
             $change->changed_contents,
-	    $change->changed_context,
+            $change->changed_context,
             $change->changed_category_id,
             $change->changed_ready,
             $timestamp,
@@ -168,7 +168,7 @@ class Article
                 $article_data['status'],
                 $article_data['title'],
                 $article_data['contents'],
-		$article_data['context'],
+                $article_data['context'],
                 $article_data['category'],
                 $article_data['ready'],
                 $article_data['last_updated']
@@ -195,7 +195,7 @@ class Article
                 $article_data['status'],
                 $article_data['title'],
                 $article_data['contents'],
-		$article_data['context'],
+                $article_data['context'],
                 $article_data['category'],
                 $article_data['ready'],
                 $article_data['last_updated']
@@ -267,7 +267,7 @@ class Article
      */
     public function getAuthorsString(): string
     {
-	return htmlspecialchars(implode(', ', array_map(static function (User $author): string { return $author->username; }, $this->getAuthors())));
+        return htmlspecialchars(implode(', ', array_map(static function (User $author): string { return $author->username; }, $this->getAuthors())));
     }
 
     /**
@@ -337,7 +337,7 @@ class Article
             static::STATUS_BIN,
             $this->title,
             $this->contents,
-	    $this->context,
+            $this->context,
             $this->category->id,
             $this->ready,
             Session::instance()->getUser()->id
@@ -360,7 +360,7 @@ class Article
             static::STATUS_PLACED,
             $this->title,
             $this->contents,
-	    $this->context,
+            $this->context,
             $this->category->id,
             $this->ready,
             Session::instance()->getUser()->id
@@ -383,7 +383,7 @@ class Article
             static::STATUS_OPEN,
             $this->title,
             $this->contents,
-	    $this->context,
+            $this->context,
             $this->category->id,
             $this->ready,
             Session::instance()->getUser()->id

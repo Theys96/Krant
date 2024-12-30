@@ -37,9 +37,9 @@ class Session
         if (!isset($_SESSION[self::SESSION_NAMESPACE])) {
             $_SESSION[self::SESSION_NAMESPACE] = array();
         }
-	if (isset($_POST['filters'])) {
-	    $this->setFilter($_POST['filters']);
-	}
+        if (isset($_POST['filters'])) {
+            $this->setFilter($_POST['filters']);
+        }
     }
 
     /**
@@ -90,8 +90,8 @@ class Session
      */
     public function getFilter(): array
     {
-         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
-            $_SESSION[self::SESSION_NAMESPACE]['filter'] : array();
+        return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
+           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array();
     }
 
 
@@ -136,8 +136,8 @@ class Session
      */
     public function setFilter(array $filters): void
     {
-	$filters = array_diff($filters, [0]);
-        $_SESSION[self::SESSION_NAMESPACE]['filter'] = $filters; 
+        $filters = array_diff($filters, [0]);
+        $_SESSION[self::SESSION_NAMESPACE]['filter'] = $filters;
     }
 
 
@@ -187,7 +187,7 @@ class Session
             $this->setUser(User::getById($user_id));
             $this->setRole($role);
             $this->setLoggedIn(true);
-     	    $this->setGold();
+            $this->setGold();
             Log::logInfo('Ingelogd.');
         } else {
             ErrorHandler::instance()->addError('Onjuist wachtwoord.');

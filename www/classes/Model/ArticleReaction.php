@@ -43,14 +43,11 @@ class ArticleReaction
     /**
      * @param int $article_id
      * @param string $reaction
+     * @param int $user_id
      * @return ArticleReaction|null
      */
-    public static function createNew(int $article_id, string $reaction): ?ArticleReaction
+    public static function createNew(int $article_id, string $reaction, int $user_id): ?ArticleReaction
     {
-        $user_id = Session::instance()->getUser()?->id;
-        if ($user_id === null) {
-            return null;
-        }
         Database::instance()->storeQuery("INSERT INTO `article_reactions` (article_id, user_id, reaction) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE reaction = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('iiss', $article_id, $user_id, $reaction, $reaction);

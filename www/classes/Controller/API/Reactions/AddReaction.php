@@ -13,7 +13,8 @@ class AddReaction extends APIResponse
         if (Session::instance()->isLoggedIn()) {
             if (isset($_REQUEST['article_id']) && $_REQUEST['article_id'] !== ''
                 && isset($_REQUEST['reaction']) && $_REQUEST['reaction'] !== '') {
-                ArticleReaction::createNew($_REQUEST['article_id'], $_REQUEST['reaction']);
+                $user_id = Session::instance()->getUser()?->id;
+                ArticleReaction::createNew($_REQUEST['article_id'], $_REQUEST['reaction'], $user_id);
                 return ArticleReaction::getByArticleIdGrouped($_REQUEST['article_id']);
             }
         }

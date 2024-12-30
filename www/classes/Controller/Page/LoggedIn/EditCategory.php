@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Article;
 use Model\Category;
 use Util\Singleton\ErrorHandler;
@@ -12,7 +12,7 @@ use Util\ViewRenderer;
 /**
  * Categorie aanpassen.
  */
-class EditCategory extends LoggedIn
+class EditCategory extends LoggedInPage
 {
     /** @var Category */
     protected Category $category;

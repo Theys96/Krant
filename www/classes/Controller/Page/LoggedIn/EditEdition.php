@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Article;
 use Model\Category;
 use Model\Edition;
@@ -13,7 +13,7 @@ use Util\ViewRenderer;
 /**
  * Editie aanpassen.
  */
-class EditEdition extends LoggedIn
+class EditEdition extends LoggedInPage
 {
     /** @var Edition */
     protected Edition $edition;

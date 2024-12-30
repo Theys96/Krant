@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Category;
 use Model\User;
 use Util\Singleton\ErrorHandler;
@@ -12,7 +12,7 @@ use Util\ViewRenderer;
 /**
  * Gebruikers pagina.
  */
-class Users extends LoggedIn
+class Users extends LoggedInPage
 {
     public function __construct()
     {

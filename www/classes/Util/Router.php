@@ -5,7 +5,26 @@ namespace Util;
 use Controller\API\Draft\NewDraft;
 use Controller\API\Draft\UpdateDraft;
 use Controller\API\ExceptionResponse;
-use Controller\Page\LoggedIn;
+use Controller\LoggedIn;
+use Controller\Page\LoggedIn\ArticleList\Bin;
+use Controller\Page\LoggedIn\ArticleList\Drafts;
+use Controller\Page\LoggedIn\ArticleList\Open;
+use Controller\Page\LoggedIn\ArticleList\Placed;
+use Controller\Page\LoggedIn\Categories;
+use Controller\Page\LoggedIn\Check;
+use Controller\Page\LoggedIn\Create;
+use Controller\Page\LoggedIn\Edit;
+use Controller\Page\LoggedIn\EditCategory;
+use Controller\Page\LoggedIn\EditEdition;
+use Controller\Page\LoggedIn\Editions;
+use Controller\Page\LoggedIn\EditUser;
+use Controller\Page\LoggedIn\Feedback;
+use Controller\Page\LoggedIn\FeedbackList;
+use Controller\Page\LoggedIn\MigrateEdition;
+use Controller\Page\LoggedIn\Overview;
+use Controller\Page\LoggedIn\Read;
+use Controller\Page\LoggedIn\Schrijfregels;
+use Controller\Page\LoggedIn\Users;
 use Controller\Page\Login;
 use Controller\Page\Logout;
 use Controller\Response;
@@ -20,25 +39,25 @@ class Router
 {
     /** @var string[] */
     private array $actions = [
-        'categories' => LoggedIn\Categories::class,
-        'create' => LoggedIn\Create::class,
-        'edit' => LoggedIn\Edit::class,
-        'check' => LoggedIn\Check::class,
-        'list' => LoggedIn\ArticleList\Open::class,
-        'read' => LoggedIn\Read::class,
-        'drafts' => LoggedIn\ArticleList\Drafts::class,
-        'placed' => LoggedIn\ArticleList\Placed::class,
-        'bin' => LoggedIn\ArticleList\Bin::class,
-        'schrijfregels' => LoggedIn\Schrijfregels::class,
-        'feedback' => LoggedIn\Feedback::class,
-        'edit_category' => LoggedIn\EditCategory::class,
-        'users' => LoggedIn\Users::class,
-        'edit_user' => LoggedIn\EditUser::class,
-        'feedbacklist' => LoggedIn\FeedbackList::class,
-        'editions' => LoggedIn\Editions::class,
-        'edit_edition' => LoggedIn\EditEdition::class,
-        'migrate_edition' => LoggedIn\MigrateEdition::class,
-        'overview' => LoggedIn\Overview::class,
+        'categories' => Categories::class,
+        'create' => Create::class,
+        'edit' => Edit::class,
+        'check' => Check::class,
+        'list' => Open::class,
+        'read' => Read::class,
+        'drafts' => Drafts::class,
+        'placed' => Placed::class,
+        'bin' => Bin::class,
+        'schrijfregels' => Schrijfregels::class,
+        'feedback' => Feedback::class,
+        'edit_category' => EditCategory::class,
+        'users' => Users::class,
+        'edit_user' => EditUser::class,
+        'feedbacklist' => FeedbackList::class,
+        'editions' => Editions::class,
+        'edit_edition' => EditEdition::class,
+        'migrate_edition' => MigrateEdition::class,
+        'overview' => Overview::class,
     ];
 
     /**
@@ -58,14 +77,14 @@ class Router
                             $response->allowed_roles()
                         )) {
                         ErrorHandler::instance()->addWarning('Deze pagina is niet toegankelijk voor deze rol.');
-                        $response = new LoggedIn\ArticleList\Open();
+                        $response = new Open();
                     }
                 } else {
                     ErrorHandler::instance()->addWarning('Pagina niet gevonden.');
-                    $response = new LoggedIn\ArticleList\Open();
+                    $response = new Open();
                 }
             } else {
-                $response = new LoggedIn\ArticleList\Open();
+                $response = new Open();
             }
         } else {
             $response = new Login();

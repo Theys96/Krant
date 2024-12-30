@@ -1,14 +1,14 @@
 <?php
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 
 /**
  * Schrijfregels pagina.
  */
-class Schrijfregels extends LoggedIn
+class Schrijfregels extends LoggedInPage
 {
     /**
      * @return string

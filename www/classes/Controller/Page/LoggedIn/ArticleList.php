@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Article;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
@@ -11,7 +11,7 @@ use Util\ViewRenderer;
 /**
  * Lijst pagina.
  */
-abstract class ArticleList extends LoggedIn
+abstract class ArticleList extends LoggedInPage
 {
     /** @var Article[] $articles */
     protected array $articles = [];

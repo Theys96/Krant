@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Article;
 use Model\Edition;
 use Util\Singleton\ErrorHandler;
@@ -11,7 +11,7 @@ use Util\ViewRenderer;
 /**
  * Editie stukjes migreren.
  */
-class MigrateEdition extends LoggedIn
+class MigrateEdition extends LoggedInPage
 {
     /** @var Edition */
     protected Edition $edition;

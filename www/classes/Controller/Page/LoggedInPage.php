@@ -1,6 +1,7 @@
 <?php
 namespace Controller\Page;
 
+use Controller\LoggedIn;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
@@ -8,17 +9,12 @@ use Util\ViewRenderer;
 /**
  * Basis voor elke pagina na login.
  */
-abstract class LoggedIn extends BasePage
+abstract class LoggedInPage extends BasePage implements LoggedIn
 {
     /**
      * @return string
      */
     abstract public function get_content(): string;
-
-    /**
-     * @return int[]
-     */
-    abstract public function allowed_roles(): array;
 
     /**
      * @return string

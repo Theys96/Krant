@@ -1,7 +1,7 @@
 <?php
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\ArticleChange;
 use Model\Category;
 use Util\Singleton\Session;
@@ -10,7 +10,7 @@ use Util\ViewRenderer;
 /**
  * Nieuw stukje.
  */
-class Create extends LoggedIn
+class Create extends LoggedInPage
 {
     /**
      * @param int $article_change_type

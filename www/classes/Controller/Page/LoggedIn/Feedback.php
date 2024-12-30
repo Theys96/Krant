@@ -1,16 +1,15 @@
 <?php
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Log;
 use Util\Singleton\ErrorHandler;
-use Util\Singleton\Session;
 use Util\ViewRenderer;
 
 /**
  * Feedback pagina.
  */
-class Feedback extends LoggedIn
+class Feedback extends LoggedInPage
 {
     public function __construct()
     {

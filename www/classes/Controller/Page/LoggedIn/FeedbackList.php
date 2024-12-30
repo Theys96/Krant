@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Category;
 use Model\Log;
 use Model\User;
@@ -13,7 +13,7 @@ use Util\ViewRenderer;
 /**
  * Feedback overzicht pagina.
  */
-class FeedbackList extends LoggedIn
+class FeedbackList extends LoggedInPage
 {
     /**
      * @return string

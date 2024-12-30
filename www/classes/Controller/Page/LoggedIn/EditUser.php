@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\User;
 use Util\Singleton\ErrorHandler;
 use Util\ViewRenderer;
@@ -10,7 +10,7 @@ use Util\ViewRenderer;
 /**
  * Gebruiker aanpassen.
  */
-class EditUser extends LoggedIn
+class EditUser extends LoggedInPage
 {
     /** @var User */
     protected User $user;

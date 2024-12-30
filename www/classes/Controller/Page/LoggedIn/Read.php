@@ -2,7 +2,7 @@
 
 namespace Controller\Page\LoggedIn;
 
-use Controller\Page\LoggedIn;
+use Controller\Page\LoggedInPage;
 use Model\Article;
 use Model\ArticleChange;
 use Util\Singleton\ErrorHandler;
@@ -12,7 +12,7 @@ use Util\ViewRenderer;
 /**
  * Stukje lezen.
  */
-class Read extends LoggedIn
+class Read extends LoggedInPage
 {
     /** @var Article */
     protected Article $article;

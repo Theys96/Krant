@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\Page;
 
 use Controller\LoggedIn;
@@ -26,6 +27,6 @@ abstract class LoggedInPage extends BasePage implements LoggedIn
             'role' => Session::instance()->getRole(),
             'content' => $this->get_content(),
             'errors' => ErrorHandler::instance()->printAllToString()
-        ]); 
+        ]);
     }
 }

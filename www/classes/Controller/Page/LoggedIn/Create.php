@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedInPage;
@@ -28,12 +29,12 @@ class Create extends LoggedInPage
                     isset($_POST['done'])
                 );
                 $article_change = $article_change->openDraft($article_change_type);
-//                $differ = new Differ(
-//                    explode(PHP_EOL, $article_change->article->contents),
-//                    explode(PHP_EOL, $article_change->changed_contents)
-//                );
-//                $renderer = RendererFactory::make('Inline'); // or your own renderer object
-//                $this->diff = $renderer->render($differ);
+                //                $differ = new Differ(
+                //                    explode(PHP_EOL, $article_change->article->contents),
+                //                    explode(PHP_EOL, $article_change->changed_contents)
+                //                );
+                //                $renderer = RendererFactory::make('Inline'); // or your own renderer object
+                //                $this->diff = $renderer->render($differ);
                 $article_change->article->applyChange($article_change);
             }
             header('location: ?action=list');
@@ -59,6 +60,6 @@ class Create extends LoggedInPage
      */
     public function allowed_roles(): array
     {
-       return [1,3];
+        return [1,3];
     }
 }

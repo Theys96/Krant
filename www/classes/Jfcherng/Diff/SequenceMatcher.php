@@ -14,21 +14,21 @@ namespace Jfcherng\Diff;
 final class SequenceMatcher
 {
     /** @var int 0, opcode: no operation */
-    const OP_NOP = 0;
+    public const OP_NOP = 0;
 
     /** @var int 1, opcode: equal */
-    const OP_EQ = 1 << 0;
+    public const OP_EQ = 1 << 0;
 
     /** @var int 2, opcode: delete */
-    const OP_DEL = 1 << 1;
+    public const OP_DEL = 1 << 1;
 
     /** @var int 4, opcode: insert */
-    const OP_INS = 1 << 2;
+    public const OP_INS = 1 << 2;
 
     /** @var int 8, opcode: replace */
-    const OP_REP = 1 << 3;
+    public const OP_REP = 1 << 3;
 
-    const OP_INT_TO_STR_MAP = [
+    public const OP_INT_TO_STR_MAP = [
         self::OP_NOP => 'nop',
         self::OP_EQ => 'eq',
         self::OP_DEL => 'del',
@@ -36,7 +36,7 @@ final class SequenceMatcher
         self::OP_REP => 'rep',
     ];
 
-    const OP_STR_TO_INT_MAP = [
+    public const OP_STR_TO_INT_MAP = [
         'nop' => self::OP_NOP,
         'eq' => self::OP_EQ,
         'del' => self::OP_DEL,
@@ -50,7 +50,7 @@ final class SequenceMatcher
      *
      * @var string
      */
-    const APPENDED_HELPER_LINE = "\u{fcf28}\u{fc232}";
+    public const APPENDED_HELPER_LINE = "\u{fcf28}\u{fc232}";
 
     /**
      * @var null|callable either a string or an array containing a callback function to determine if a line is "junk" or not

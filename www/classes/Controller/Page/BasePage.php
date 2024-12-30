@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\Page;
 
 use Controller\Response;
@@ -14,7 +15,7 @@ abstract class BasePage implements Response
      *
      * @return string
      */
-    abstract function get_body(): string;
+    abstract public function get_body(): string;
 
     /**
      * @return string

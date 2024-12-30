@@ -13,46 +13,46 @@ use Model\Edition;
 <div class='px-3 mx-auto my-5'>
     <?php
     $row = true;
-    foreach ($editions as $edition) {
-        $color = $row ? '#AAAAAA' : '#DDDDDD';
-        $row = !$row;
+foreach ($editions as $edition) {
+    $color = $row ? '#AAAAAA' : '#DDDDDD';
+    $row = !$row;
 
-        $article_count = $edition->countArticles(Article::STATUS_OPEN);
-        echo "<div style='background-color: " . $color . "' class='row'>\n";
-        echo "<div class='col-1'>";
-        if ($edition->active) {
-            echo "<span class='badge badge-success my-1 float-right'>Actief</span>";
-        }
-        echo "</div>";
-        echo "<div class='col-3'><b>" . htmlspecialchars($edition->name) . "</b></div>";
-        echo "<div class='col-3'>" . htmlspecialchars($edition->description) . "</div>";
-        if (!$edition->active && $article_count > 0) {
-            echo "<div class='col-3'><a data-toggle='tooltip' data-placement='top' title='Klik om stukjes over te zetten' href='?action=migrate_edition&edition=" . $edition->id . "'>" . $article_count . " ongeplaatste stukje(s)</a></div>";
-        } else {
-            echo "<div class='col-3'>" . $article_count . " ongeplaatste stukje(s)</div>";
-        }
-        echo "<div class='col-2'>";
-        if ($role === 3) {
-            echo "<a href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
-        }
-        echo "</div>";
-        echo "</div>\n";
+    $article_count = $edition->countArticles(Article::STATUS_OPEN);
+    echo "<div style='background-color: " . $color . "' class='row'>\n";
+    echo "<div class='col-1'>";
+    if ($edition->active) {
+        echo "<span class='badge badge-success my-1 float-right'>Actief</span>";
     }
-    ?>
+    echo "</div>";
+    echo "<div class='col-3'><b>" . htmlspecialchars($edition->name) . "</b></div>";
+    echo "<div class='col-3'>" . htmlspecialchars($edition->description) . "</div>";
+    if (!$edition->active && $article_count > 0) {
+        echo "<div class='col-3'><a data-toggle='tooltip' data-placement='top' title='Klik om stukjes over te zetten' href='?action=migrate_edition&edition=" . $edition->id . "'>" . $article_count . " ongeplaatste stukje(s)</a></div>";
+    } else {
+        echo "<div class='col-3'>" . $article_count . " ongeplaatste stukje(s)</div>";
+    }
+    echo "<div class='col-2'>";
+    if ($role === 3) {
+        echo "<a href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
+    }
+    echo "</div>";
+    echo "</div>\n";
+}
+?>
 </div>
 
 <?php
 if ($role == 3) :
-?>
+    ?>
 <form method='post' action='?action=editions'>
     <h3>Huidige editie</h3>
     <div class='form-group'>
         <select name='active_edition' id='active_edition' class='form-control'>
             <?php
-            foreach ($editions as $edition) {
-                echo "<option value='" . $edition->id . ($edition->active ? "' selected" : "'") . ">" . htmlspecialchars($edition->name) . "</option>\n";
-            }
-            ?>
+                foreach ($editions as $edition) {
+                    echo "<option value='" . $edition->id . ($edition->active ? "' selected" : "'") . ">" . htmlspecialchars($edition->name) . "</option>\n";
+                }
+    ?>
         </select>
     </div>
     <input type='submit' class='btn btn-primary' value='Wijzigen' />

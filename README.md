@@ -38,3 +38,9 @@ php phpstan.phar
 ```
 
 The analysis level is set in `phpstan.neon`, and should be increased over time.
+
+Code style fixer:
+
+```bash
+php php-cs-fixer-v3.phar fix
+```

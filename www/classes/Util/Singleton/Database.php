@@ -1,4 +1,5 @@
 <?php
+
 namespace Util\Singleton;
 
 use Exception;
@@ -11,8 +12,8 @@ use Util\Config;
  */
 class Database
 {
-	/** @var Database|null Singleton instance. */
-	private static ?Database $instance = null;
+    /** @var Database|null Singleton instance. */
+    private static ?Database $instance = null;
 
     /** @var Mysqli Database connection. */
     public Mysqli $con;
@@ -21,24 +22,24 @@ class Database
     private ?string $query = null;
 
     /**
-	 * Returns the singleton instance.
-	 * @return Database
-	 */
-	public static function instance(): Database
-	{
-		if (self::$instance === null) {
-			self::$instance = new Database();
-		}
-		return self::$instance;
-	}
+     * Returns the singleton instance.
+     * @return Database
+     */
+    public static function instance(): Database
+    {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
+        return self::$instance;
+    }
 
     /**
      * Sets up the Database object.
      * @throws Exception
      */
     public function __construct()
-	{
-		$this->con = new Mysqli(
+    {
+        $this->con = new Mysqli(
             Config::MYSQL_HOST,
             Config::MYSQL_USER,
             Config::MYSQL_PASSWORD,

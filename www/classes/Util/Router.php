@@ -73,9 +73,9 @@ class Router
                 } elseif (array_key_exists($_GET['action'], $this->actions)) {
                     $response = new $this->actions[$_GET['action']]();
                     if ($response instanceof LoggedIn && !in_array(
-                            Session::instance()->getRole(),
-                            $response->allowed_roles()
-                        )) {
+                        Session::instance()->getRole(),
+                        $response->allowed_roles()
+                    )) {
                         ErrorHandler::instance()->addWarning('Deze pagina is niet toegankelijk voor deze rol.');
                         $response = new Open();
                     }

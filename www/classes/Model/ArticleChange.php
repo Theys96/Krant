@@ -95,8 +95,7 @@ class ArticleChange
         bool   $changed_ready,
         int     $user_id,
         string  $timestamp
-    )
-    {
+    ) {
         $this->id = $id;
         $this->article_id = $article_id;
         $this->update_type_id = $update_type_id;
@@ -153,8 +152,7 @@ class ArticleChange
         ?int    $changed_category_id,
         ?bool   $changed_ready,
         int     $user_id
-    ): ?ArticleChange
-    {
+    ): ?ArticleChange {
         Database::instance()->storeQuery(
             "INSERT INTO `article_updates` (article_id, update_type, changed_status, changed_title, changed_contents, changed_category, changed_ready, user) VALUES (?,?,?,?,?,?,?,?)"
         );
@@ -191,8 +189,7 @@ class ArticleChange
         string $changed_contents,
         ?int    $changed_category_id,
         bool   $changed_ready
-    ): ArticleChange
-    {
+    ): ArticleChange {
         Database::instance()->storeQuery(
             "UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_category = ?, changed_ready = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?"
         );
@@ -241,7 +238,7 @@ class ArticleChange
         $stmt->execute();
         $result = $stmt->get_result();
         $article_changes = [];
-        while ( ($change_data = $result->fetch_assoc()) != false) {
+        while (($change_data = $result->fetch_assoc()) != false) {
             $article_changes[$change_data['id']] = new ArticleChange(
                 $change_data['id'],
                 $change_data['article_id'],

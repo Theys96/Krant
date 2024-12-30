@@ -114,7 +114,7 @@ class Session
      */
     public function setGold(): void
     {
-        $_SESSION[self::SESSION_NAMESPACE]['gold'] = rand(0,500) == 5;
+        $_SESSION[self::SESSION_NAMESPACE]['gold'] = rand(0, 500) == 5;
     }
 
     /**
@@ -122,7 +122,7 @@ class Session
      *
      * @return void
      */
-    function reset(): void
+    public function reset(): void
     {
         $_SESSION[self::SESSION_NAMESPACE] = array();
     }

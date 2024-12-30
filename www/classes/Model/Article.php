@@ -259,7 +259,8 @@ class Article
      */
     private function getAuthors(): array
     {
-        Database::instance()->storeQuery(<<<SQL
+        Database::instance()->storeQuery(
+            <<<SQL
             SELECT * FROM users WHERE id IN (
                 SELECT DISTINCT(user) AS author FROM `article_updates` 
                     LEFT JOIN `article_update_types` ON article_updates.update_type = article_update_types.id
@@ -285,7 +286,8 @@ class Article
     private function getCheckers(): array
     {
         $check_change = ArticleChange::CHANGE_TYPE_CHECK;
-        Database::instance()->storeQuery(<<<SQL
+        Database::instance()->storeQuery(
+            <<<SQL
             SELECT * FROM users WHERE users.id IN (
                 SELECT DISTINCT(au.user) AS author FROM `article_updates` au WHERE au.`article_id` = ? AND au.update_type = ?
                     AND au.id > (

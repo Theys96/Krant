@@ -20,6 +20,6 @@ class Check extends Edit
      */
     public function allowed_roles(): array
     {
-       return [2];
+        return [2];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\API;
 
 /**
@@ -16,7 +17,7 @@ class ExceptionResponse extends APIResponse
      * @param int $code
      * @param string $message
      */
-    function __construct(int $code, string $message)
+    public function __construct(int $code, string $message)
     {
         $this->code = $code;
         $this->message = $message;

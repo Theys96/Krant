@@ -83,7 +83,7 @@ class ErrorHandler
      * @param string $message
      * @return void
      */
-    function addError(string $message): void
+    public function addError(string $message): void
     {
         $this->errors[] = $message;
         Log::logError($message);
@@ -93,7 +93,7 @@ class ErrorHandler
      * @param string $message
      * @return void
      */
-    function addWarning(string $message): void
+    public function addWarning(string $message): void
     {
         $this->warnings[] = $message;
         Log::logWarning($message);
@@ -103,7 +103,7 @@ class ErrorHandler
      * @param string $message
      * @return void
      */
-    function addMessage(string $message): void
+    public function addMessage(string $message): void
     {
         $this->messages[] = $message;
     }
@@ -111,7 +111,7 @@ class ErrorHandler
     /**
      * @return int
      */
-    function numErrors(): int
+    public function numErrors(): int
     {
         return count($this->errors);
     }
@@ -119,7 +119,7 @@ class ErrorHandler
     /**
      * @return int
      */
-    function numWarnings(): int
+    public function numWarnings(): int
     {
         return count($this->warnings);
     }
@@ -127,7 +127,7 @@ class ErrorHandler
     /**
      * @return int
      */
-    function numMessages(): int
+    public function numMessages(): int
     {
         return count($this->messages);
     }
@@ -135,7 +135,7 @@ class ErrorHandler
     /**
      * @return void
      */
-    function printErrors(): void
+    public function printErrors(): void
     {
         echo "<center><h2 class='text-danger'>Error</h2>\n";
         echo "<p class='text-danger'>" . implode("<br />\n", $this->errors) . "</p>\n";
@@ -146,7 +146,7 @@ class ErrorHandler
     /**
      * @return void
      */
-    function printWarnings(): void
+    public function printWarnings(): void
     {
         echo "<center><h2 class='text-warning'>Error</h2>\n";
         echo "<p class='text-warning'>" . implode("<br />\n", $this->warnings) . "</p>\n";
@@ -157,7 +157,7 @@ class ErrorHandler
     /**
      * @return void
      */
-    function printMessages(): void
+    public function printMessages(): void
     {
         echo "<center>";
         echo "<p class='text-success'>" . implode("<br />\n", $this->messages) . "</p>\n";
@@ -168,7 +168,7 @@ class ErrorHandler
     /**
      * @return void
      */
-    function printAll(): void
+    public function printAll(): void
     {
         if ($this->numErrors()) {
             $this->printErrors();
@@ -184,7 +184,7 @@ class ErrorHandler
     /**
      * @return string
      */
-    function printAllToString(): string
+    public function printAllToString(): string
     {
         ob_start();
         $this->printAll();

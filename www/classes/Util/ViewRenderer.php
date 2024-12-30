@@ -1,4 +1,5 @@
 <?php
+
 namespace Util;
 
 /**
@@ -11,7 +12,7 @@ class ViewRenderer
      * @param array $data
      * @return string
      */
-    static function render_view(string $view, array $data): string
+    public static function render_view(string $view, array $data): string
     {
         extract($data);
         ob_start();

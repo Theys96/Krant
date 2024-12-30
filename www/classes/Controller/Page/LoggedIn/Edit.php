@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller\Page\LoggedIn;
 
 use Model\Article;

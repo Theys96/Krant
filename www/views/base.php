@@ -44,7 +44,7 @@ $gold = Session::instance()->getGold();
 
 <?php
 if ($show_easter_egg) {
-    echo "<a target=\"_blank\" href=\"?action=minigame\"><img src=\"/assets/img/MHN.png\" alt=\"MHN Minigame\" class=\"easter-egg\"></a>";
+    echo "<a target=\"_blank\" href=\"?action=minigame\"><img src=\"assets/img/MHN.png\" alt=\"MHN Minigame\" class=\"easter-egg\"></a>";
 }
 ?>
 

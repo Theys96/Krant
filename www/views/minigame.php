@@ -46,7 +46,7 @@
 
   // Speler afbeelding
   const playerImage = new Image();
-  playerImage.src = "/assets/img/thijs.png"; // Vervang door jouw eigen spelerafbeelding!
+  playerImage.src = "assets/img/thijs.png"; // Vervang door jouw eigen spelerafbeelding!
 
   // Array voor vijanden en lasers
   let enemies = [];
@@ -54,7 +54,7 @@
 
   // Vijand afbeelding
   const enemyImage = new Image();
-  enemyImage.src = "/assets/img/MHN.png"; // Vervang door je eigen vijandafbeelding!
+  enemyImage.src = "assets/img/MHN.png"; // Vervang door je eigen vijandafbeelding!
 
   // Functie om een nieuwe vijand toe te voegen
   function addEnemy() {

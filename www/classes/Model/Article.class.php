@@ -264,6 +264,14 @@ class Article
     }
 
     /**
+     * @return string
+     */
+    public function getAuthorsString(): string
+    {
+	return htmlspecialchars(implode(', ', array_map(static function (User $author): string { return $author->username; }, $this->getAuthors())));
+    }
+
+    /**
      * @return User[]
      */
     private function getAuthors(): array

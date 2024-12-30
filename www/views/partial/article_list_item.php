@@ -9,12 +9,7 @@ use Util\Singleton\Session;
  * @var string $list_type
  */
 
-$authors = htmlspecialchars(implode(', ', array_map(
-    static function (User $author): string {
-        return $author->username;
-    },
-    $article->authors
-)));
+$authors = $article->getAuthorsString();
 $checkers = htmlspecialchars(implode(', ', array_map(
     static function (User $author): string {
         return $author->username;

@@ -42,12 +42,7 @@ $ready = $article?->ready;
     <div class='form-group'>
         <label for='user'>Auteur</label>
 	<div class='form-control input'>
-	<?php echo $article == null ? $username : htmlspecialchars(
-		implode(', ', array_map(static function (User $author): string {
-        		return $author->username;
-    		},
-    		$article->authors
-	))); ?>
+	<?php echo $article == null ? $username : $article->getAuthorsString(); ?>
 	</div>
         <input type='hidden' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
     </div>

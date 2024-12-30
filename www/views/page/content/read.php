@@ -19,12 +19,7 @@ $checkers = array_map(
     },
     $article->checkers
 );
-$authors = htmlspecialchars(implode(', ', array_map(
-    static function (User $author): string {
-        return $author->username;
-    },
-    $article->authors
-)));
+$authors = $article->getAuthorsString();
 ?>
 <h2 class='mb-3'>Stukje lezen</h2>
 <div class='row'>

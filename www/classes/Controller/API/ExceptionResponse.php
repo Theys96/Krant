@@ -1,8 +1,6 @@
 <?php
 namespace Controller\API;
 
-use JetBrains\PhpStorm\ArrayShape;
-
 /**
  * API exception.
  */
@@ -27,7 +25,7 @@ class ExceptionResponse extends APIResponse
     /**
      * @return object|array
      */
-    #[ArrayShape(['code' => "int", 'message' => "string"])] protected function get_response_object(): object|array
+    protected function get_response_object(): object|array
     {
         return [
             'code' => $this->code,

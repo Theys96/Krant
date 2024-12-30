@@ -7,7 +7,6 @@ error_reporting(E_ALL);
 /**
  * @param $class_name
  * @return string
- * @throws Exception
  */
 function get_class_path($class_name): string
 {

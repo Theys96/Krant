@@ -1,0 +1,7 @@
+parameters:
+	level: 1 # Doel: stapsgewijs verhogen naar 8
+	paths:
+		- www
+	excludePaths:
+	    analyse:
+	        - www/classes/Jfcherng/*

@@ -4,7 +4,7 @@ This project's front-end is in **dutch**. This repository accepts dutch besides 
 
 ## Getting started
 
-Configuration is done in `Util/Config.class.php`. Create this file by renaming `Util/Config.example.class.php`. If
+Configuration is done in `Util/Config.php`. Create this file by renaming `Util/Config.example.php`. If
 necessary, the database connection can be configured here. The default configuration should work for the docker-compose
 setup.
 
@@ -22,7 +22,19 @@ docker-compose up
 
 Depending on your installation of Docker Compose, use `docker compose` instead of `docker-compose`.
 
+The deployment is now available at `http://localhost:80`. PHPMyAdmin is available at `http://localhost:8000`.
+
 ### Resetting the database
  - First stop all containers.
  - `docker rm krant-db-1 && docker volume rm krant_persistent`
  - Start the containers again.
+
+## Tests
+
+PHPStan tests:
+
+```bash
+php phpstan.phar
+```
+
+The analysis level is set in `phpstan.neon`, and should be increased over time.

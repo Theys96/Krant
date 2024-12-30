@@ -28,7 +28,7 @@ if ($role > 1) {
      * 1 - alle stukjes die klaar zijn
      * 2 - alle stukjes die klaar zijn & nog niet nagekeken
      */
-    echo "<div class='w-100 text-right'>Filter: ";
+    echo "<div class='w-100 text-right'>";
     echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
     echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
     if ($role == 2) {
@@ -45,16 +45,19 @@ if ($role > 1) {
 <?php
 if(isset($_GET['filtercat'])){
     $categories = Category::getAll();
-    echo "<div class='w-100 text-right'>";
+    echo "<div class='w-100 text-right pt-2'>";
     echo "<form method='post' action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
     echo "<div class='form-group'>";
-    echo " <input type='hidden' name='filters[]' value='0'>";
+    echo "<input type='hidden' name='filters[]' value='0'>";
+    $first = true;
     foreach ($categories as $cat) {
-	echo " <input type='checkbox' name='filters[]' value='$cat->id'", 
-		(in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '', "/>";
-	echo " <label for='$cat->id'> $cat->name </label> ";
+        if (!$first) { echo "&nbsp;&nbsp;"; }
+        $first = false;
+        echo "<input id='cat-filter-$cat->id' type='checkbox' name='filters[]' value='$cat->id'",
+            (in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '', "/>";
+        echo "&nbsp;<label for='cat-filter-$cat->id'> $cat->name </label> ";
     }
-    echo " <input class='btn btn-primary' type='submit' value='Filter'/> ";
+    echo "&nbsp;&nbsp;<input class='btn btn-primary py-1' type='submit' value='Filter'/> ";
     echo "</form>";
     echo "</div>\n";
 }

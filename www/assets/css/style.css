@@ -150,3 +150,9 @@ table.diff-wrapper {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+
+.easter-egg {
+	float: right;
+	width: 40px;
+	margin-right: 10px;
+}

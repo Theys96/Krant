@@ -26,4 +26,12 @@ class Schrijfregels extends LoggedInPage
     {
         return [1,2,3];
     }
+
+    /**
+     * @return bool
+     */
+    protected function showEasterEgg(): bool
+    {
+        return true;
+    }
 }

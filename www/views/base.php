@@ -3,6 +3,7 @@ use Util\Singleton\Session;
 
 /**
  * @var string $body
+ * @var bool|null $show_easter_egg
  */
 
 $alt_css = Session::instance()->getUser()?->alt_css;
@@ -40,6 +41,12 @@ $gold = Session::instance()->getGold();
         <div class="container">
             <?php echo $body; ?>
         </div>
+
+<?php
+if ($show_easter_egg) {
+    echo "<a target=\"_blank\" href=\"?action=minigame\"><img src=\"/assets/img/MHN.png\" alt=\"MHN Minigame\" class=\"easter-egg\"></a>";
+}
+?>
 
         <div id="footer">
             &copy; <?php echo date("Y"); ?> Thijs Havinga

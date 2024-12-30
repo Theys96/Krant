@@ -23,7 +23,16 @@ abstract class BasePage implements Response
     public function render(): string
     {
         return ViewRenderer::render_view('base', [
-            'body' => $this->get_body()
+            'body' => $this->get_body(),
+            'show_easter_egg' => $this->showEasterEgg(),
         ]);
+    }
+
+    /**
+     * @return false
+     */
+    protected function showEasterEgg(): bool
+    {
+        return false;
     }
 }

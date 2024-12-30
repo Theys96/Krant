@@ -27,6 +27,7 @@ use Controller\Page\LoggedIn\Schrijfregels;
 use Controller\Page\LoggedIn\Users;
 use Controller\Page\Login;
 use Controller\Page\Logout;
+use Controller\Page\Minigame;
 use Controller\Response;
 use Exception;
 use Util\Singleton\ErrorHandler;
@@ -58,6 +59,7 @@ class Router
         'edit_edition' => EditEdition::class,
         'migrate_edition' => MigrateEdition::class,
         'overview' => Overview::class,
+        'minigame' => Minigame::class,
     ];
 
     /**

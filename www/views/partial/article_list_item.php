@@ -44,7 +44,8 @@ $authors_ids = array_map(
         <div class='row justify-content-center'>
             <?php if ($role != 2 && $article->status === Article::STATUS_OPEN): ?>
                 <div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=edit&stukje=<?php echo $article->id; ?>'>Wijzigen</a></div>
-            <?php endif; if ($role == 2 && $article->status === Article::STATUS_OPEN && $article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids)): ?>
+            <?php endif;
+if ($role == 2 && $article->status === Article::STATUS_OPEN && $article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids)): ?>
                 <div class='col-4 px-1 text-center'><a class='btn btn-warning py-1 my-1 w-100' href='?action=check&stukje=<?php echo $article->id; ?>'>Nakijken</a></div>
             <?php endif; ?>
             <?php if ($role == 3): ?>

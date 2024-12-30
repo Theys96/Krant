@@ -32,7 +32,7 @@ $ready = $article?->ready;
     if ($article !== null) {
         echo "<input type='hidden' name='article_id' id='article_id' value='" . $article->id . "'/>";
     }
-    ?>
+?>
 
     <div class='form-group'>
         <label for='title'>Titel</label>
@@ -51,15 +51,15 @@ $ready = $article?->ready;
         <label for='category'>Categorie</label>
         <select name='category' id='category' class='form-control'>
             <?php
-            foreach ($categories as $category) {
-                if ($category->id === $category_id) {
-                    $selected = true;
-                } else {
-                    $selected = false;
-                }
-                echo "<option value='" . $category->id . ($selected ? "' selected" : "'") . ">" . htmlspecialchars($category->name) . "</option>\n";
+        foreach ($categories as $category) {
+            if ($category->id === $category_id) {
+                $selected = true;
+            } else {
+                $selected = false;
             }
-            ?>
+            echo "<option value='" . $category->id . ($selected ? "' selected" : "'") . ">" . htmlspecialchars($category->name) . "</option>\n";
+        }
+?>
         </select>
     </div>
 
@@ -77,12 +77,12 @@ $ready = $article?->ready;
     <div class="btn-group my-1" role="group" aria-label="Basic example">
         <?php
         printButtons(array('&euml;', '&eacute;', '&egrave'));
-        ?>
+?>
     </div>
     <div class="btn-group my-1" role="group" aria-label="Basic example">
         <?php
-        printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
-        ?>
+printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
+?>
     </div>
 
     <div class='mt-3 form-group'>
@@ -100,7 +100,7 @@ $ready = $article?->ready;
     } else {
         echo "<input class='btn btn-primary' type='submit' value='Opslaan'/><br/>";
     }
-    ?>
+?>
     <span id='info'></span>
 </form>
 <script src='assets/js/draft.js'></script>

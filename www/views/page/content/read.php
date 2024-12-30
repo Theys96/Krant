@@ -27,7 +27,7 @@ $authors = $article->getAuthorsString();
     if (count($checkers) > 0) {
         echo "<div class='col-sm-12'>Nagekeken door " . htmlspecialchars(implode(", ", $checkers)) . ".</div>";
     }
-    ?>
+?>
     <div class='col-sm-4'><b>Titel</b></b></div>
     <div class='col-sm-8'><?php echo htmlspecialchars($article->title); ?></div>
     <div class='col-sm-4'><b>Auteur</b></div>

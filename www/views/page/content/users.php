@@ -10,23 +10,23 @@ use Model\User;
 <h2>Gebruikers</h2>
 
 <div class='px-3 mx-auto my-5'>
-    <?php
-    $row = true;
-    foreach ($users as $user) {
-        $color = $row ? '#AAAAAA' : '#DDDDDD';
-        $row = !$row;
+<?php
+$row = true;
+foreach ($users as $user) {
+    $color = $row ? '#AAAAAA' : '#DDDDDD';
+    $row = !$row;
 
-        echo "<div style='background-color: " . $color . "' class='row'>\n";
-        echo "<div class='col-4 " . ($user->active ? '' : 'text-grey font-italic') . "'><b>" . htmlspecialchars($user->username) . "</b></div>";
-        echo "<div class='col-6 " . ($user->active ? '' : 'text-grey font-italic') . "'>" . $user->getPermLevelName() . "</div>";
-        echo "<div class='col-2'>";
-        if ($role === 3) {
-            echo "<a href='?action=edit_user&user=" . $user->id . "'>Aanpassen</a>";
-        }
-        echo "</div>";
-        echo "</div>\n";
+    echo "<div style='background-color: " . $color . "' class='row'>\n";
+    echo "<div class='col-4 " . ($user->active ? '' : 'text-grey font-italic') . "'><b>" . htmlspecialchars($user->username) . "</b></div>";
+    echo "<div class='col-6 " . ($user->active ? '' : 'text-grey font-italic') . "'>" . $user->getPermLevelName() . "</div>";
+    echo "<div class='col-2'>";
+    if ($role === 3) {
+        echo "<a href='?action=edit_user&user=" . $user->id . "'>Aanpassen</a>";
     }
-    ?>
+    echo "</div>";
+    echo "</div>\n";
+}
+?>
 </div>
 
 <?php

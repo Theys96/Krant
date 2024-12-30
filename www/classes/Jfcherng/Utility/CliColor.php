@@ -13,11 +13,11 @@ namespace Jfcherng\Utility;
  */
 final class CliColor
 {
-    const COLOR_BEGIN = "\033[";
-    const COLOR_END = 'm';
+    public const COLOR_BEGIN = "\033[";
+    public const COLOR_END = 'm';
 
-    const COLOR_BEGIN_REGEX = "\033\\[";
-    const COLOR_END_REGEX = 'm';
+    public const COLOR_BEGIN_REGEX = "\033\\[";
+    public const COLOR_END_REGEX = 'm';
 
     /**
      * @var array the color map

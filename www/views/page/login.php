@@ -34,9 +34,10 @@ function setRole(setRole)
 			$('#role1').fadeIn();
 			$('[name="role"]').val('1');
 			<?php
-			if (isset($passwords[1]))
-				echo "$('#password').fadeIn();";
-			?>
+            if (isset($passwords[1])) {
+                echo "$('#password').fadeIn();";
+            }
+?>
 			
 		break;
 		case 2:
@@ -44,9 +45,10 @@ function setRole(setRole)
 			$('#role2').fadeIn();
 			$('[name="role"]').val('2');
 			<?php
-			if (isset($passwords[2]))
-				echo "$('#password').fadeIn();";
-			?>
+if (isset($passwords[2])) {
+    echo "$('#password').fadeIn();";
+}
+?>
 			
 		break;
 		case 3:
@@ -54,9 +56,10 @@ function setRole(setRole)
 			$('#role3').fadeIn();
 			$('[name="role"]').val('3');
 			<?php
-			if (isset($passwords[3]))
-				echo "$('#password').fadeIn();";
-			?>
+if (isset($passwords[3])) {
+    echo "$('#password').fadeIn();";
+}
+?>
 			
 		break;
 		}
@@ -87,12 +90,12 @@ function setRole(setRole)
                 <label for='user1'>Kies je naam:</label>
                 <select name='user[1]' id='user1' class='username form-control w-50'>
                     <?php
-                    foreach ($users as $user) {
-                        if ($user->perm_level >= 1) {
-                            echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
-                        }
-                    }
-                    ?>
+        foreach ($users as $user) {
+            if ($user->perm_level >= 1) {
+                echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+            }
+        }
+?>
                 </select>
             </div>
 
@@ -101,12 +104,12 @@ function setRole(setRole)
                 <label for='user2'>Kies je naam:</label>
                 <select name='user[2]' id='user2' class='username form-control w-50'>
                     <?php
-                    foreach ($users as $user) {
-                        if ($user->perm_level >= 2) {
-                            echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
-                        }
-                    }
-                    ?>
+foreach ($users as $user) {
+    if ($user->perm_level >= 2) {
+        echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+    }
+}
+?>
                 </select>
             </div>
 
@@ -115,12 +118,12 @@ function setRole(setRole)
                 <label for='user3'>Kies je naam:</label>
                 <select name='user[3]' id='user3' class='username form-control w-50'>
                     <?php
-                    foreach ($users as $user) {
-                        if ($user->perm_level >= 3) {
-                            echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
-                        }
-                    }
-                    ?>
+foreach ($users as $user) {
+    if ($user->perm_level >= 3) {
+        echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+    }
+}
+?>
                 </select>
             </div>
 
@@ -139,5 +142,5 @@ function setRole(setRole)
     </center>
     <?php
     echo $errors;
-    ?>
+?>
 </div>

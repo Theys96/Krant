@@ -21,21 +21,21 @@ $to_categories = array_values(Category::getAll($to_edition));
 
 <?php
 if (count($to_categories) == 0) :
-?>
+    ?>
     <p class="text-danger">
         Editie <i><?php echo $to_edition->name; ?></i> moet tenminste &eacute;&eacute;n categorie hebben om stukjes over te kunnen zetten.
     </p>
     <a class='btn btn-info' href='?action=editions'>Terug</a>
 <?php
 elseif (count($articles) == 0) :
-?>
+    ?>
     <p class="text-danger">
         Editie <i><?php echo $to_edition->name; ?></i> moet tenminste &eacute;&eacute;n ongeplaatst stukje hebben om over te kunnen zetten.
     </p>
     <a class='btn btn-info' href='?action=editions'>Terug</a>
 <?php
 else:
-?>
+    ?>
 
 <p>
     Stukjes overzetten van <i>"<?php echo $from_edition->name; ?>"</i> naar <i>"<?php echo $to_edition->name; ?>"</i>.
@@ -46,23 +46,23 @@ else:
 
 <form method='post' action="?action=editions">
     <?php
-        foreach ($from_categories as $idx => $category) {
-            $idx_to = $idx > (count($to_categories) - 1) ? 0 : $idx;
-            echo "<div class='form-row'>";
-            echo "<label for='category-" . $idx . "' class='col-md-3 col-form-label font-weight-bold'>";
-            echo $category->name;
-            echo "</label>";
-            echo "<div class='col-md-1'>&rarr;</div>";
-            echo "<div class='form-group mb-0 col-md-4'>";
-            echo "<input type='hidden' value='" . $category->id ."' name='from_edition_categories[]'>";
-            echo "<select id='category-" . $idx . "' name='to_edition_categories[]' class='form-control form-control-sm'>";
-            foreach ($to_categories as $to_idx => $to_category) {
-                echo "<option value='" . $to_category->id . "' " . ($idx_to == $to_idx ? 'selected' : '') . ">" . $to_category->name . "</option>";
-            }
-            echo "</select>";
-            echo "</div>";
-            echo "</div>";
+    foreach ($from_categories as $idx => $category) {
+        $idx_to = $idx > (count($to_categories) - 1) ? 0 : $idx;
+        echo "<div class='form-row'>";
+        echo "<label for='category-" . $idx . "' class='col-md-3 col-form-label font-weight-bold'>";
+        echo $category->name;
+        echo "</label>";
+        echo "<div class='col-md-1'>&rarr;</div>";
+        echo "<div class='form-group mb-0 col-md-4'>";
+        echo "<input type='hidden' value='" . $category->id ."' name='from_edition_categories[]'>";
+        echo "<select id='category-" . $idx . "' name='to_edition_categories[]' class='form-control form-control-sm'>";
+        foreach ($to_categories as $to_idx => $to_category) {
+            echo "<option value='" . $to_category->id . "' " . ($idx_to == $to_idx ? 'selected' : '') . ">" . $to_category->name . "</option>";
         }
+        echo "</select>";
+        echo "</div>";
+        echo "</div>";
+    }
     ?>
 
     <p class="mt-4">Selecteer alle stukjes die overgezet moeten worden:</p>

@@ -10,6 +10,7 @@ Draft = {
 	title: $($('[name="title"]')[0]),
 	category: $($('[name="category"]')[0]),
 	text: $($('[name="text"]')[0]),
+	context: $($('[name="context"]')[0]),
 	done: $($('[name="done"]')[0]),
 	draftIDinput: $($('#draftid')[0]),
 
@@ -38,7 +39,7 @@ Draft = {
 		klaar = Draft.done.is(':checked') ? 1 : 0;
 		
 		/* Post action */
-		console.log(action, Draft.draftID, Draft.title.val(), Draft.category.val(), Draft.text.val(), klaar);
+		console.log(action, Draft.draftID, Draft.title.val(), Draft.category.val(), Draft.text.val(), Draft.context.val(), klaar);
 		console.log(Draft);
 		post = $.getJSON(Draft.server, {
 			action: action,
@@ -47,6 +48,7 @@ Draft = {
 			title: Draft.title.val(),
 			category_id: Draft.category.val(),
 			contents: Draft.text.val(),
+			context: Draft.context.val(),
 			ready: klaar
 		}).done(function(data) {
 			/* Get a Draft ID  */

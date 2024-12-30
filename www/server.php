@@ -12,7 +12,7 @@ switch($_REQUEST['action']) {
 	case 'createdraft':
 		if ($Session->logged == true)
 			{
-			$stukje = $Stukjes->draft($Session->username, $_REQUEST['titel'], $_REQUEST['cat'], $_REQUEST['tekst'], $_REQUEST['klaar'], $Error);
+			$stukje = $Stukjes->draft($Session->username, $_REQUEST['titel'], $_REQUEST['cat'], $_REQUEST['tekst'], $_REQUEST['context'], $_REQUEST['klaar'], $Error);
 			$json = $Error->arrayAll();
 			$json['draftID'] = $stukje;
 			echo json_encode($json);
@@ -22,7 +22,7 @@ switch($_REQUEST['action']) {
 	case 'updatedraft':
 		if ($Session->logged == true)
 			{
-			$stukje = $Stukjes->updatedraft($_REQUEST['id'], $_REQUEST['titel'], $_REQUEST['cat'], $_REQUEST['tekst'], $_REQUEST['klaar'], $Error);
+			$stukje = $Stukjes->updatedraft($_REQUEST['id'], $_REQUEST['titel'], $_REQUEST['cat'], $_REQUEST['tekst'], $_REQUEST['context'], $_REQUEST['klaar'], $Error);
 			$json = $Error->arrayAll();
 			echo json_encode($json);
 			}

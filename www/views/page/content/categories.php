@@ -10,8 +10,8 @@ use Model\Category;
 <h2>Categorieën</h2>
 
 <div class='px-3 mx-auto my-5'>
-    <?php
-    $row = true;
+<?php
+$row = true;
 foreach ($categories as $category) {
     $color = $row ? '#AAAAAA' : '#DDDDDD';
     $row = !$row;

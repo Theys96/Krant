@@ -9,7 +9,7 @@ necessary, the database connection can be configured here. The default configura
 setup.
 
 ## Deployment (Apache)
-Copy the `www/` folder to a webserver with PHP ≥ 5 and MySQL installed.
+Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed.
 
 To set up the database, use `krant.sql` (this defines all the required tables).
 
@@ -31,7 +31,7 @@ The deployment is now available at `http://localhost:80`. PHPMyAdmin is availabl
 
 ## Tests
 
-PHPStan tests:
+Make sure you have PHP 8.0 installed. PHPStan tests:
 
 ```bash
 php phpstan.phar

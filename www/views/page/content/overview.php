@@ -21,8 +21,8 @@ use Model\Category;
         <div class='col-3'><i>Klaar</i></div>
         <div class='col-3'></div>
     </div>
-    <?php
-    $row = true;
+<?php
+$row = true;
 foreach ($categories as $category) {
 
     $counts = [

@@ -10,8 +10,8 @@ use Model\User;
 <h2>Gebruikers</h2>
 
 <div class='px-3 mx-auto my-5'>
-    <?php
-    $row = true;
+<?php
+$row = true;
 foreach ($users as $user) {
     $color = $row ? '#AAAAAA' : '#DDDDDD';
     $row = !$row;

@@ -78,6 +78,7 @@ class Category
                 $article->status,
                 $article->title,
                 $article->contents,
+                $article->context,
                 null,
                 $article->ready,
                 Session::instance()->getUser()->id

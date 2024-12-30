@@ -39,7 +39,7 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-12 tekst'><?php echo nl2br(htmlspecialchars($article->contents)); ?></div>
 </div>
 <?php
-if ($article->context != ""){
+if ($article->context != "") {
     echo "<div class='row'>";
     echo "<div class='col-sm-12'><b>Context</b></div>";
     echo "<div class='col-sm-12 text-grey'>" . nl2br(htmlspecialchars($article->context)) . "</div>";

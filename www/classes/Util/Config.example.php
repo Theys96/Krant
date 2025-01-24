@@ -19,4 +19,5 @@ class Config
         2 => null,
         3 => "printer"
     ];
+    public const MAIL = null;
 }

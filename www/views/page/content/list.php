@@ -2,7 +2,6 @@
 
 use Model\Article;
 use Model\Category;
-use Model\User;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 
@@ -22,7 +21,7 @@ function cap($text, $len)
     return substr($text, 0, $len) . (strlen($text) > $len ? "..." : "");
 }
 
-if ($role > 1) {
+if ($role > 1 && $_GET['action'] != "drafts") {
     $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     /* 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn

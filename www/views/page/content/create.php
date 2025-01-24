@@ -115,9 +115,6 @@ if ($article !== null) {
 <script src='assets/js/draft.js'></script>
 <script src='assets/js/editor.js'></script>
 <script src='assets/js/emoji-react.js'></script>
-<script src='assets/js/mail.js'>
-    var mail = $mail
-</script>
 <script>
     $(function () {
         Draft.init('.input');

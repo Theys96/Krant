@@ -2,7 +2,6 @@
 
 use Model\Article;
 use Model\Category;
-use Model\User;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 
@@ -13,6 +12,7 @@ use Util\ViewRenderer;
  * @var string $list_type
  */
 $catFilter = Session::instance()->getFilter();
+$categories = Category::getAll();
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -40,11 +40,23 @@ if ($role > 1) {
     }
     echo "</div>\n";
 }
+
+if ($role == 1) {
+    $filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
+    echo "<form action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
+    echo "<select id='filtercat' selected='3' name='filtercat'>";
+    echo "<option value='0'>Geen Filter</option>";
+    foreach ($categories as $cat) {
+        echo "<option " . ($filtercat == $cat->id ? 'selected' : '') . " value='$cat->id'>$cat->name</option>";
+    }
+    echo "</select>";
+    echo "<input class='" . ($filtercat != 0 ? 'text-success' : '') ."' type='submit'value='Filter op categorie'>";
+    echo "</form>";
+}
 ?>
 
 <?php
-if (isset($_GET['filtercat'])) {
-    $categories = Category::getAll();
+if ($role == 3 && isset($_GET['filtercat'])) {
     echo "<div class='w-100 text-right pt-2'>";
     echo "<form method='post' action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
     echo "<div class='form-group'>";
@@ -75,6 +87,9 @@ foreach ($articles as $article) {
     $filtered = false;
     if (!empty($catFilter)) {
         $filtered = $filtered || !(in_array($article->category_id, $catFilter));
+    }
+    if ($role == 1 && $filtercat != 0) {
+        $filtered = $filtered || $article->category_id != $filtercat;
     }
     if (isset($filter)) {
         if ($filter >= 1) {

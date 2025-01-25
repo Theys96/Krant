@@ -12,7 +12,6 @@ use Util\ViewRenderer;
  * @var string $list_type
  */
 $catFilter = Session::instance()->getFilter();
-$action = isset($_GET['action']) ? $_GET['action'] : 'list';
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -22,7 +21,7 @@ function cap($text, $len)
     return substr($text, 0, $len) . (strlen($text) > $len ? "..." : "");
 }
 
-if ($role > 1 && $action == "list") {
+if ($role > 1) {
     $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     /* 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn

@@ -13,6 +13,7 @@ use Util\ViewRenderer;
  */
 $catFilter = Session::instance()->getFilter();
 $categories = Category::getAll();
+$action = isset($_GET['action']) ? $_GET['action'] : 'list';
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -23,42 +24,49 @@ function cap($text, $len)
 }
 
 if ($role > 1) {
-    $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     /* 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn
      * 2 - alle stukjes die klaar zijn & nog niet nagekeken
      */
+    $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     echo "<div class='w-100 text-right'>";
-    echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
-    echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
-    if ($role == 2) {
-        echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & kan ik nakijken</a> ";
+    if ($action == "list"){
+        echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
+        echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
+        if ($role == 2) {
+            echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & kan ik nakijken</a> ";
+        }
+        if ($role == 3) {
+            echo "<a class='" . ($filter == 3 ? 'text-success' : '') . "' href='?action=list&filter=3'>klaar & nagekeken</a> | ";
+        }
     }
     if ($role == 3) {
-        echo "<a class='" . ($filter == 3 ? 'text-success' : '') . "' href='?action=list&filter=3'>klaar & nagekeken</a> | ";
-        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=list&filter=$filter&filtercat=1'>Filter op categorie</a>";
+        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=$action&filter=$filter&filtercat=1'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }
 
 if ($role == 1) {
+    echo "<div class='w-100 text-right'>";
     $filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
-    echo "<form action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
-    echo "<select id='filtercat' selected='3' name='filtercat'>";
+    echo "<form>";
+    echo "<input hidden id='action' name='action' value='$action'>";
+    echo "<select id='filtercat' name='filtercat'>";
     echo "<option value='0'>Geen Filter</option>";
     foreach ($categories as $cat) {
         echo "<option " . ($filtercat == $cat->id ? 'selected' : '') . " value='$cat->id'>$cat->name</option>";
     }
-    echo "</select>";
+    echo "</select> ";
     echo "<input class='" . ($filtercat != 0 ? 'text-success' : '') ."' type='submit'value='Filter op categorie'>";
     echo "</form>";
+    echo "</div>\n";
 }
 ?>
 
 <?php
 if ($role == 3 && isset($_GET['filtercat'])) {
     echo "<div class='w-100 text-right pt-2'>";
-    echo "<form method='post' action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
+    echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : "", "'>";
     echo "<div class='form-group'>";
     echo "<input type='hidden' name='filters[]' value='0'>";
     $first = true;
@@ -91,7 +99,7 @@ foreach ($articles as $article) {
     if ($role == 1 && $filtercat != 0) {
         $filtered = $filtered || $article->category_id != $filtercat;
     }
-    if (isset($filter)) {
+    if (isset($filter) && $action == "list") {
         if ($filter >= 1) {
             $filtered = $filtered || $article->ready === false;
         }

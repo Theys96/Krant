@@ -13,6 +13,9 @@ use Util\ViewRenderer;
  */
 $catFilter = Session::instance()->getFilter();
 $categories = Category::getAll();
+if(sizeof($catFilter) == sizeof($categories)) {
+    $catFilter = [];
+}
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 ?>
 
@@ -49,15 +52,15 @@ if ($role > 1) {
 if ($role == 1) {
     echo "<div class='w-100 text-right'>";
     $filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
-    echo "<form>";
+    echo "<form class='form-group'>";
     echo "<input hidden id='action' name='action' value='$action'>";
-    echo "<select id='filtercat' name='filtercat'>";
+    echo "<select class='form-drop' id='filtercat' name='filtercat'>";
     echo "<option value='0'>Geen Filter</option>";
     foreach ($categories as $cat) {
         echo "<option " . ($filtercat == $cat->id ? 'selected' : '') . " value='$cat->id'>$cat->name</option>";
     }
     echo "</select> ";
-    echo "<input class='" . ($filtercat != 0 ? 'text-success' : '') ."' type='submit'value='Filter op categorie'>";
+    echo "<input class='btn btn-secondary' type='submit'value='Filter op categorie'>";
     echo "</form>";
     echo "</div>\n";
 }
@@ -79,7 +82,7 @@ if ($role == 3 && isset($_GET['filtercat'])) {
         (in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '', "/>";
         echo "&nbsp;<label for='cat-filter-$cat->id'> $cat->name </label> ";
     }
-    echo "&nbsp;&nbsp;<input class='btn btn-primary py-1' type='submit' value='Filter'/> ";
+    echo "&nbsp;&nbsp;<input class='btn btn-secondary py-1' type='submit' value='Filter'/> ";
     echo "</form>";
     echo "</div>\n";
 }
@@ -121,7 +124,7 @@ foreach ($articles as $article) {
         ]);
     }
 }
-if (isset($filter) && $n == 0 && count($articles) > 0) {
+if ((isset($filter) || isset($filtercat)) && $n == 0 && count($articles) > 0) {
     echo "<div class='mt-3 text-center text-grey'><i>Er zijn geen stukjes die voldoen aan het huidige filter.</div>\n";
 }
 ?>

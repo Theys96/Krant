@@ -73,12 +73,12 @@ $mail = Config::MAIL;
     <div class="btn-group my-1" role="group" aria-label="Basic example">
         <?php
         printButtons(array('&euml;', '&eacute;', '&egrave'));
-        ?>
+?>
     </div>
     <div class="btn-group my-1" role="group" aria-label="Basic example">
         <?php
-        printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
-        ?>
+printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
+?>
     </div>
 
     <div class='form-group'>

@@ -13,7 +13,7 @@ use Util\ViewRenderer;
  */
 $catFilter = Session::instance()->getFilter();
 $categories = Category::getAll();
-if(sizeof($catFilter) == sizeof($categories)) {
+if (sizeof($catFilter) == sizeof($categories)) {
     $catFilter = [];
 }
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
@@ -33,7 +33,7 @@ if ($role > 1) {
      */
     $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     echo "<div class='w-100 text-right'>";
-    if ($action == "list"){
+    if ($action == "list") {
         echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
         echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
         if ($role == 2) {

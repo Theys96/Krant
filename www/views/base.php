@@ -36,6 +36,7 @@ $gold = Session::instance()->getGold();
             })
         </script>
         <script type="module" src="assets/js/emoji-picker-element-1.26.0/index.js"></script>
+        <script src='assets/js/emoji-react.js'></script>
     </head>
     <body>
 

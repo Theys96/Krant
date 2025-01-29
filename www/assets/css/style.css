@@ -176,6 +176,11 @@ table.diff-wrapper {
 	z-index: 2001;
 }
 
+.emoji-reactions {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
 .emoji-reaction {
 	border-radius: 5px;
 	border: 1px solid gray;
@@ -189,4 +194,6 @@ table.diff-wrapper {
 	display: inline-block;
 	margin-left: 1px;
 	margin-right: 1px;
+	min-width: 30px;
+	text-align: center;
 }

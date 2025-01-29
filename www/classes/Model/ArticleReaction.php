@@ -3,7 +3,6 @@
 namespace Model;
 
 use Util\Singleton\Database;
-use Util\Singleton\Session;
 
 /**
  * Artikel reactie model.
@@ -96,7 +95,7 @@ class ArticleReaction
     /**
      * @param int $article_id
      * @param int $user_id
-     * @return array
+     * @return ArticleReaction|null
      */
     public static function getByArticleIdAndUserId(int $article_id, int $user_id): ?ArticleReaction
     {

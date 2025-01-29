@@ -51,7 +51,6 @@ function handleEmoji(emoji, article_id) {
 $(function() {
 	$('body').append('<div class="pop-up-bg"><emoji-picker class="emoji-pop-up light"></emoji-picker></div>');
 	$('.emoji-reactions').each(function() {
-		console.log($(this))
 		fetchEmojiReactions($(this).data('article-id'), $(this))
 	})
 	$('.pop-up-bg').click(hideEmojiPopup)

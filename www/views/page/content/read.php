@@ -57,14 +57,12 @@ if ($article->context != "") {
         </form>
     <?php endif; ?>
     <a class='btn btn-info px-5' href='?action=<?php echo $source; ?>'>Terug</a>
-    <input class='btn btn-dark' id='emoji-button' type='button' value='😃' />
 </center>
 
 <hr />
 
 <input type="hidden" id="article_id" value="<?php echo $article->id; ?>" />
-<div id='emoji-reactions'></div>
-<div class='pop-up-bg'><emoji-picker class="emoji-pop-up light"></emoji-picker></div>
+<div class='emoji-reactions' data-article-id="<?php echo $article->id; ?>"></div>
 
 <hr />
 
@@ -83,5 +81,3 @@ for ($i = 0; $i < count($ids); $i++) {
     ]);
 }
 ?>
-
-<script src='assets/js/emoji-react.js'></script>

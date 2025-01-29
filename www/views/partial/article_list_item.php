@@ -60,13 +60,8 @@ if ($role == 2 && $article->status === Article::STATUS_OPEN && $article->ready =
         </div>
     </div>
     <div class='col-12 pb-1'>
-        <?php
-        foreach ($reactions as $reaction) {
-            echo "<div class=\"emoji-reaction\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"" . implode(', ', $reaction['users']) . "\">
-				<span>" . $reaction['reaction'] . "</span>
-				<span>" . (count($reaction['users']) > 1 ? count($reaction['users']) : '') . "</span>
-			</div>";
-        }
-?>
+        <div class="row justify-content-left">
+            <div class='emoji-reactions' data-article-id="<?php echo $article->id; ?>"></div>
+        </div>
     </div>
 </div>

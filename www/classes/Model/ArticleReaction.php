@@ -3,7 +3,6 @@
 namespace Model;
 
 use Util\Singleton\Database;
-use Util\Singleton\Session;
 
 /**
  * Artikel reactie model.

@@ -1,7 +1,6 @@
 <?php
 use Model\Article;
 use Model\Category;
-use Model\User;
 
 /**
  * @var Category[] $categories

@@ -20,6 +20,7 @@ use Controller\Page\LoggedIn\EditCategory;
 use Controller\Page\LoggedIn\EditEdition;
 use Controller\Page\LoggedIn\Editions;
 use Controller\Page\LoggedIn\EditUser;
+use Controller\Page\LoggedIn\EditVariables;
 use Controller\Page\LoggedIn\Feedback;
 use Controller\Page\LoggedIn\FeedbackList;
 use Controller\Page\LoggedIn\MigrateEdition;
@@ -62,6 +63,7 @@ class Router
         'migrate_edition' => MigrateEdition::class,
         'overview' => Overview::class,
         'minigame' => Minigame::class,
+        'variabelen' => EditVariables::class,
     ];
 
     /**

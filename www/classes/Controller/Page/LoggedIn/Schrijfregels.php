@@ -3,7 +3,6 @@
 namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedInPage;
-use Util\Singleton\Session;
 use Util\ViewRenderer;
 
 /**

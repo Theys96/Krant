@@ -7,6 +7,7 @@ use Model\Article;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
+use Model\SingleVariables;
 
 /**
  * Lijst pagina.
@@ -79,6 +80,7 @@ abstract class ArticleList extends LoggedInPage
             'articles' => $this->articles,
             'title' => $this->title,
             'list_type' => $this->list_type,
+            'checks' => SingleVariables::instance()->min_checks,
             'role' => Session::instance()->getRole()
         ]);
     }

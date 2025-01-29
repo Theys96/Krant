@@ -3,7 +3,6 @@
 namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedInPage;
-use Model\Category;
 use Model\User;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;

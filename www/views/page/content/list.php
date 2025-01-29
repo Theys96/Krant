@@ -2,7 +2,6 @@
 
 use Model\Article;
 use Model\Category;
-use Model\User;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 
@@ -11,6 +10,7 @@ use Util\ViewRenderer;
  * @var int $role
  * @var string $title
  * @var string $list_type
+ * @var int $checks
  */
 $catFilter = Session::instance()->getFilter();
 ?>
@@ -82,10 +82,10 @@ foreach ($articles as $article) {
         }
         if ($filter == 2) {
             $user =  Session::instance()->getUser();
-            $filtered = $filtered || count($article->checkers) > 2 || in_array($user, $article->checkers) ||  in_array($user, $article->authors);
+            $filtered = $filtered || count($article->checkers) >= $checks || in_array($user, $article->checkers) ||  in_array($user, $article->authors);
         }
         if ($filter == 3) {
-            $filtered = $filtered || count($article->checkers) < 3;
+            $filtered = $filtered || count($article->checkers) < $checks;
         }
 
     }

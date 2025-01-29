@@ -17,8 +17,8 @@ class SingleVariables
     /** @var int */
     public int $min_checks;
 
-    /** @var string */
-    public string $mail_address;
+    /** @var string|null */
+    public string|null $mail_address;
 
     /**
      * Returns the singleton instance.
@@ -50,7 +50,7 @@ class SingleVariables
      * @param ArticleChange $change
      * @return Article
      */
-    public function update(string $schrijfregels, int $min_checks, string $mail_address): SingleVariables
+    public function update(string $schrijfregels, int $min_checks, string|null $mail_address): SingleVariables
     {
         $this->schrijfregels = $schrijfregels;
         $this->min_checks = $min_checks;

@@ -4,9 +4,6 @@ namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedInPage;
 use Model\Category;
-use Model\Edition;
-use Util\Singleton\ErrorHandler;
-use Util\Singleton\Session;
 use Util\ViewRenderer;
 
 /**

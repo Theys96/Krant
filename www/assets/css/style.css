@@ -190,3 +190,7 @@ table.diff-wrapper {
 	margin-left: 1px;
 	margin-right: 1px;
 }
+
+.schrijfregels {
+    white-space: pre-wrap;
+}

@@ -2,7 +2,6 @@
 
 use Model\Article;
 use Model\Category;
-use Model\User;
 use Util\Singleton\Session;
 use Util\ViewRenderer;
 

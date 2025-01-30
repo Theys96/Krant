@@ -68,17 +68,17 @@ $mail = Config::MAIL;
     <div class='form-group'>
         <textarea id='text' class='form-control text input' name='text'><?php echo $contents; ?></textarea>
         <small class='float-right' id='charcount'></small>
-    </div>
 
-    <div class="btn-group my-1" role="group" aria-label="Basic example">
-        <?php
-        printButtons(array('&euml;', '&eacute;', '&egrave'));
+        <div class="btn-group my-2" role="group" aria-label="Basic example">
+            <?php
+            printButtons(array('&euml;', '&eacute;', '&egrave'));
 ?>
-    </div>
-    <div class="btn-group my-1" role="group" aria-label="Basic example">
-        <?php
-printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
+        </div>
+        <div class="btn-group my-1" role="group" aria-label="Basic example">
+            <?php
+        printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
 ?>
+        </div>
     </div>
 
     <div class='form-group'>

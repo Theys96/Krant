@@ -33,7 +33,7 @@ class Article
     public string $context;
 
     /** @var int|null */
-    protected ?int $category_id;
+    public ?int $category_id;
 
     /** @var User[]|null */
     protected ?array $authors = null;

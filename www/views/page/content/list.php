@@ -11,12 +11,13 @@ use Util\ViewRenderer;
  * @var string $title
  * @var string $list_type
  */
+$action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
+$filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
 $categories = Category::getAll();
 if (sizeof($catFilter) == sizeof($categories)) {
     $catFilter = [];
 }
-$action = isset($_GET['action']) ? $_GET['action'] : 'list';
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -44,32 +45,31 @@ if ($role > 1) {
         }
     }
     if ($role == 3) {
-        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=$action&filter=$filter&filtercat=1'>Filter op categorie</a>";
+        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=$action&filter=$filter" . (isset($_GET['show_filter_options']) ? "" : "&show_filter_options=1") . "'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }
 
 if ($role == 1) {
     echo "<div class='w-100 text-right'>";
-    $filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
     echo "<form class='form-group'>";
+    echo "<label for='filtercat'>Filter op categorie</label>&nbsp;";
     echo "<input hidden id='action' name='action' value='$action'>";
-    echo "<select class='form-drop' id='filtercat' name='filtercat'>";
+    echo "<select onchange=submit() class='form-drop' id='filtercat' name='filtercat'>";
     echo "<option value='0'>Geen Filter</option>";
     foreach ($categories as $cat) {
         echo "<option " . ($filtercat == $cat->id ? 'selected' : '') . " value='$cat->id'>$cat->name</option>";
     }
     echo "</select> ";
-    echo "<input class='btn btn-secondary' type='submit'value='Filter op categorie'>";
     echo "</form>";
     echo "</div>\n";
 }
 ?>
 
 <?php
-if ($role == 3 && isset($_GET['filtercat'])) {
+if ($role == 3 && isset($_GET['show_filter_options'])) {
     echo "<div class='w-100 text-right pt-2'>";
-    echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : "", "'>";
+    echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : "", isset($_GET['show_filter_options']) ? "&show_filter_options=1" : "", "'>";
     echo "<div class='form-group'>";
     echo "<input type='hidden' name='filters[]' value='0'>";
     $first = true;
@@ -78,11 +78,10 @@ if ($role == 3 && isset($_GET['filtercat'])) {
             echo "&nbsp;&nbsp;";
         }
         $first = false;
-        echo "<input id='cat-filter-$cat->id' type='checkbox' name='filters[]' value='$cat->id'",
+        echo "<input id='cat-filter-$cat->id' onchange=submit() type='checkbox' name='filters[]' value='$cat->id'",
         (in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '', "/>";
         echo "&nbsp;<label for='cat-filter-$cat->id'> $cat->name </label> ";
     }
-    echo "&nbsp;&nbsp;<input class='btn btn-secondary py-1' type='submit' value='Filter'/> ";
     echo "</form>";
     echo "</div>\n";
 }
@@ -124,7 +123,7 @@ foreach ($articles as $article) {
         ]);
     }
 }
-if ((isset($filter) || isset($filtercat)) && $n == 0 && count($articles) > 0) {
+if ($n == 0 && count($articles) > 0) {
     echo "<div class='mt-3 text-center text-grey'><i>Er zijn geen stukjes die voldoen aan het huidige filter.</div>\n";
 }
 ?>

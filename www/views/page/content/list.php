@@ -83,6 +83,7 @@ if ($role == 3 && isset($_GET['show_filter_options'])) {
         echo "&nbsp;<label for='cat-filter-$cat->id'> $cat->name </label> ";
     }
     echo "</form>";
+    echo "</div>";
     echo "</div>\n";
 }
 ?>

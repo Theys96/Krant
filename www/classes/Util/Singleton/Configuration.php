@@ -1,6 +1,7 @@
 <?php
 
 namespace Util\Singleton;
+
 use Util\Singleton\Database;
 
 /**
@@ -41,10 +42,10 @@ class Configuration
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $variables = $stmt->get_result()->fetch_assoc();
-        if($variables) {
+        if ($variables) {
             $this->schrijfregels = $variables["schrijfregels"];
             $this->min_checks = $variables["min_checks"];
-            $this->mail_address= $variables["mail_address"];
+            $this->mail_address = $variables["mail_address"];
             $this->passwords = [null, $variables["password_1"], $variables["password_2"], $variables["password_3"]];
         }
     }

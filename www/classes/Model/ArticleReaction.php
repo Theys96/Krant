@@ -93,6 +93,24 @@ class ArticleReaction
     }
 
     /**
+     * @param int $article_id
+     * @param int $user_id
+     * @return ArticleReaction|null
+     */
+    public static function getByArticleIdAndUserId(int $article_id, int $user_id): ?ArticleReaction
+    {
+        Database::instance()->storeQuery("SELECT * FROM article_reactions WHERE article_id = ? AND user_id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $article_id, $user_id);
+        $stmt->execute();
+        $reaction_data = $stmt->get_result()->fetch_assoc();
+        if ($reaction_data) {
+            return new ArticleReaction($reaction_data['id'], $reaction_data['article_id'], $reaction_data['user_id'], $reaction_data['reaction']);
+        }
+        return null;
+    }
+
+    /**
      * @param int $id
      * @return array
      */
@@ -106,10 +124,22 @@ class ArticleReaction
             }
             $grouped[$reaction->reaction][] = $reaction->user?->username ?? '?';
         }
+        ksort($grouped);
         $response = [];
         foreach ($grouped as $reaction => $users) {
             $response[] = ['reaction' => $reaction, 'users' => $users];
         }
         return $response;
+    }
+
+    /**
+     * @return void
+     */
+    public function delete(): void
+    {
+        Database::instance()->storeQuery("DELETE FROM article_reactions WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $this->id);
+        $stmt->execute();
     }
 }

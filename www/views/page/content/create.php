@@ -1,6 +1,8 @@
 <?php
 use Model\Article;
 use Model\Category;
+use Model\User;
+use Util\Config;
 
 /**
  * @var Category[] $categories
@@ -22,6 +24,7 @@ $category_id = $article?->category?->id;
 $contents = $article?->contents;
 $context = $article?->context;
 $ready = $article?->ready;
+$mail = Config::MAIL;
 ?>
 <h2><?php echo $title; ?></h2>
 
@@ -65,23 +68,22 @@ $ready = $article?->ready;
     <div class='form-group'>
         <textarea id='text' class='form-control text input' name='text'><?php echo $contents; ?></textarea>
         <small class='float-right' id='charcount'></small>
+
+        <div class="btn-group my-2" role="group" aria-label="Basic example">
+            <?php
+            printButtons(array('&euml;', '&eacute;', '&egrave'));
+?>
+        </div>
+        <div class="btn-group my-1" role="group" aria-label="Basic example">
+            <?php
+        printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
+?>
+        </div>
     </div>
+
     <div class='form-group'>
 	<label for='context'>Context</label>
         <textarea id='context' class='form-control text input' name='context' placeholder='Schrijf hier een toelichting op het stukje als dat handig is. Dit komt niet in de krant.'><?php echo $context; ?></textarea>
-    </div>
-
-
-
-    <div class="btn-group my-1" role="group" aria-label="Basic example">
-        <?php
-        printButtons(array('&euml;', '&eacute;', '&egrave'));
-?>
-    </div>
-    <div class="btn-group my-1" role="group" aria-label="Basic example">
-        <?php
-printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
-?>
     </div>
 
     <div class='mt-3 form-group'>
@@ -97,19 +99,19 @@ if ($check_mode) {
     echo "<input class='btn btn-primary' type='submit' value='Nagekeken' /> ";
     echo "<a class='btn btn-secondary' href='?action=list'>Niet nagekeken</a>";
 } else {
-    echo "<input class='btn btn-primary' type='submit' value='Opslaan'/>";
+    echo "<input class='btn btn-primary' type='submit' value='Opslaan'/> ";
+    if ($mail != null) {
+        echo "<button class='btn btn-secondary' type='button' id='mailbtn' value='$mail' onclick='sendMail()'>Mail Foto's</button>";
+    }
 }
 if ($article !== null) {
-    echo " <input class='btn btn-dark' id='emoji-button' type='button' value='😃' /> ";
-    echo "<hr /><div id='emoji-reactions'></div>";
-    echo "<div class='pop-up-bg'><emoji-picker class=\"emoji-pop-up light\"></emoji-picker></div>";
+    echo "<hr /><div class='emoji-reactions' data-article-id='" . $article->id . "'></div>";
 }
 ?>
     <span id='info'></span>
 </form>
 <script src='assets/js/draft.js'></script>
 <script src='assets/js/editor.js'></script>
-<script src='assets/js/emoji-react.js'></script>
 <script>
     $(function () {
         Draft.init('.input');

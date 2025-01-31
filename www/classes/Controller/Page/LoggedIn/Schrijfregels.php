@@ -4,6 +4,7 @@ namespace Controller\Page\LoggedIn;
 
 use Controller\Page\LoggedInPage;
 use Util\ViewRenderer;
+use Util\Singleton\Configuration;
 
 /**
  * Schrijfregels pagina.
@@ -15,7 +16,8 @@ class Schrijfregels extends LoggedInPage
      */
     public function get_content(): string
     {
-        return ViewRenderer::render_view('page.content.schrijfregels', []);
+        return ViewRenderer::render_view('page.content.schrijfregels', [
+        'schrijfregels' => Configuration::instance()->schrijfregels]);
     }
 
     /**

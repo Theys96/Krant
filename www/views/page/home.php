@@ -48,7 +48,7 @@ $edition_name = $edition === null ? "" : $edition->name . " | ";
                         <a class="dropdown-item" href="?action=editions">Edities</a>
                         <a class="dropdown-item" href="?action=users">Gebruikers</a>
                         <a class="dropdown-item" href="?action=feedbacklist">Feedback</a>
-                        <a class="dropdown-item" href="?action=variabelen">Variabelen</a>
+                        <a class="dropdown-item" href="?action=configuratie">Configuratie</a>
                     <?php endif; ?>
                 </div>
             </li>

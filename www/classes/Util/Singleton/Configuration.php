@@ -1,15 +1,15 @@
 <?php
 
-namespace Model;
+namespace Util\Singleton;
 use Util\Singleton\Database;
 
 /**
  * Model voor de single variables.
  */
-class SingleVariables
+class Configuration
 {
-    /** @var SingleVariables|null Singleton instance. */
-    private static ?SingleVariables $instance = null;
+    /** @var Configuration|null Singleton instance. */
+    private static ?Configuration $instance = null;
 
     /** @var string */
     public string $schrijfregels;
@@ -20,21 +20,24 @@ class SingleVariables
     /** @var string|null */
     public string|null $mail_address;
 
+    /** @var (string|null)[] */
+    public array $passwords = [];
+
     /**
      * Returns the singleton instance.
-     * @return SingleVariables
+     * @return Configuration
      */
-    public static function instance(): SingleVariables
+    public static function instance(): Configuration
     {
         if (self::$instance === null) {
-            self::$instance = new SingleVariables();
+            self::$instance = new Configuration();
         }
         return self::$instance;
     }
 
     public function __construct()
     {
-        Database::instance()->storeQuery("SELECT * FROM single_variables WHERE id = 1");
+        Database::instance()->storeQuery("SELECT * FROM configuration WHERE id = 1");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
         $variables = $stmt->get_result()->fetch_assoc();
@@ -42,26 +45,34 @@ class SingleVariables
             $this->schrijfregels = $variables["schrijfregels"];
             $this->min_checks = $variables["min_checks"];
             $this->mail_address= $variables["mail_address"];
+            $this->passwords = [null, $variables["password_1"], $variables["password_2"], $variables["password_3"]];
         }
     }
 
 
     /**
-     * @param ArticleChange $change
-     * @return Article
+     * @param $schrijfregels
+     * @param $min_checks
+     * @param $mail_address
+     * @param $passwords
+     * @return Configuration
      */
-    public function update(string $schrijfregels, int $min_checks, string|null $mail_address): SingleVariables
+    public function update(string $schrijfregels, int $min_checks, string|null $mail_address, array $passwords): Configuration
     {
         $this->schrijfregels = $schrijfregels;
         $this->min_checks = $min_checks;
         $this->mail_address = $mail_address;
-        Database::instance()->storeQuery("UPDATE single_variables SET schrijfregels = ?, min_checks = ?, mail_address = ? WHERE id = 1");
+        $this->passwords = $passwords;
+        Database::instance()->storeQuery("UPDATE configuration SET schrijfregels = ?, min_checks = ?, mail_address = ?, password_1 = ?, password_2 = ?, password_3 = ? WHERE id = 1");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'sis',
+            'sissss',
             $schrijfregels,
             $min_checks,
             $mail_address,
+            $passwords[1],
+            $passwords[2],
+            $passwords[3]
         );
         $stmt->execute();
 

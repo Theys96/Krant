@@ -3,7 +3,7 @@
 namespace Controller\Page;
 
 use Model\User;
-use Util\Config;
+use Util\Singleton\Configuration;
 use Util\Singleton\ErrorHandler;
 use Util\ViewRenderer;
 
@@ -19,7 +19,7 @@ class Login extends BasePage
     {
         return ViewRenderer::render_view('page.login', [
             'users' => User::getAllActive(),
-            'passwords' => Config::PASSWORDS,
+            'passwords' => Configuration::instance()->passwords,
             'errors' => ErrorHandler::instance()->printAllToString()
         ]);
     }

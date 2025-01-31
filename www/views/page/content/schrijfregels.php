@@ -1,6 +1,7 @@
 <?php
-use Model\SingleVariables;
-$schrijfregels = SingleVariables::instance()->schrijfregels;
+/**
+ * @var string $schrijfregels
+ * */
 ?>
 <h2>Schrijfregels</h2>
 <div class='schrijfregels'>

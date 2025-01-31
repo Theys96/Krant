@@ -43,11 +43,31 @@ class Configuration
         $stmt->execute();
         $variables = $stmt->get_result()->fetch_assoc();
         if ($variables) {
-            $this->schrijfregels = $variables["schrijfregels"];
-            $this->min_checks = $variables["min_checks"];
-            $this->mail_address = $variables["mail_address"];
-            $this->passwords = [null, $variables["password_1"], $variables["password_2"], $variables["password_3"]];
+            $this->schrijfregels = $this->getValue("schrijfregels");
+            $this->min_checks = (Int)$this->getValue("min_checks");
+            $this->mail_address = $this->getValue("mail_address");
+            $this->passwords = explode(",",$this->getValue("passwords"));
+            $this->passwords[0] = $this->passwords[0] == "" ? null : $this->passwords[0];
+            $this->passwords[1] = $this->passwords[1] == "" ? null : $this->passwords[1];
+            $this->passwords[2] = $this->passwords[2] == "" ? null : $this->passwords[2];
         }
+    }
+
+    /**
+     * @param $name
+     * @return string|null
+     * */
+    protected function getValue(string $name): string|null
+    {
+        Database::instance()->storeQuery("SELECT * FROM configuration WHERE name = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param(
+            's',
+            $name
+        );
+        $stmt->execute();
+        $config_data = $stmt->get_result()->fetch_assoc();
+        return $config_data ? $config_data['value'] : null;
     }
 
 
@@ -58,25 +78,28 @@ class Configuration
      * @param $passwords
      * @return Configuration
      */
-    public function update(string $schrijfregels, int $min_checks, string|null $mail_address, array $passwords): Configuration
+    public function updateAll(string $schrijfregels, int $min_checks, string|null $mail_address, array $passwords): Configuration
     {
-        $this->schrijfregels = $schrijfregels;
-        $this->min_checks = $min_checks;
-        $this->mail_address = $mail_address;
-        $this->passwords = $passwords;
-        Database::instance()->storeQuery("UPDATE configuration SET schrijfregels = ?, min_checks = ?, mail_address = ?, password_1 = ?, password_2 = ?, password_3 = ? WHERE id = 1");
+        $this->schrijfregels = $this->update("schrijfregels", $schrijfregels);
+        $this->min_checks = (string)$this->update("min_checks", $min_checks);
+        $this->mail_address = $this->update("mail_address", $mail_address);
+        $this->passwords = explode(",", $this->update("passwords", implode(",",array: $passwords)));
+        $this->passwords[0] = $this->passwords[0] == "" ? null : $this->passwords[0];
+        $this->passwords[1] = $this->passwords[1] == "" ? null : $this->passwords[1];
+        $this->passwords[2] = $this->passwords[2] == "" ? null : $this->passwords[2];
+        return $this;
+    }
+
+    protected function update(string $name, string|null $value): string|null
+    {
+        Database::instance()->storeQuery("UPDATE configuration SET value = ? WHERE name = ?");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'sissss',
-            $schrijfregels,
-            $min_checks,
-            $mail_address,
-            $passwords[1],
-            $passwords[2],
-            $passwords[3]
+            'ss',
+            $value,
+            $name
         );
         $stmt->execute();
-
-        return $this;
+        return $this->getValue($name);
     }
 }

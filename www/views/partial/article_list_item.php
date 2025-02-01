@@ -35,7 +35,7 @@ $reactions = \Model\ArticleReaction::getByArticleIdGrouped($article->id);
             <div class="d-flex justify-content-between">
                 <p class="mb-0">
                 <?php if ($article->ready === true): ?>
-                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s): <?php echo (count($article->checkers) == 0 ? "" : ": ") . $checkers; ?>
+                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s)<?php echo (count($article->checkers) == 0 ? "" : ": ") . $checkers; ?>
                 <?php else: ?>
                     <span class='badge badge-warning'>Niet klaar</span>
                 <?php endif; ?>

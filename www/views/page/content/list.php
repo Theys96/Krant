@@ -11,7 +11,13 @@ use Util\ViewRenderer;
  * @var string $title
  * @var string $list_type
  */
+$action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
+$filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
+$categories = Category::getAll();
+if (sizeof($catFilter) == sizeof($categories)) {
+    $catFilter = [];
+}
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -22,30 +28,48 @@ function cap($text, $len)
 }
 
 if ($role > 1) {
-    $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     /* 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn
      * 2 - alle stukjes die klaar zijn & nog niet nagekeken
      */
+    $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     echo "<div class='w-100 text-right'>";
-    echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
-    echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
-    if ($role == 2) {
-        echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & kan ik nakijken</a> ";
+    if ($action == "list") {
+        echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
+        echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
+        if ($role == 2) {
+            echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & kan ik nakijken</a> ";
+        }
+        if ($role == 3) {
+            echo "<a class='" . ($filter == 3 ? 'text-success' : '') . "' href='?action=list&filter=3'>klaar & nagekeken</a> | ";
+        }
     }
     if ($role == 3) {
-        echo "<a class='" . ($filter == 3 ? 'text-success' : '') . "' href='?action=list&filter=3'>klaar & nagekeken</a> | ";
-        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=list&filter=$filter&filtercat=1'>Filter op categorie</a>";
+        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=$action&filter=$filter" . (isset($_GET['show_filter_options']) ? "" : "&show_filter_options=1") . "'>Filter op categorie</a>";
     }
+    echo "</div>\n";
+}
+
+if ($role == 1) {
+    echo "<div class='w-100 text-right'>";
+    echo "<form class='form-group'>";
+    echo "<label for='filtercat'>Filter op categorie</label>&nbsp;";
+    echo "<input hidden id='action' name='action' value='$action'>";
+    echo "<select onchange=submit() class='form-drop' id='filtercat' name='filtercat'>";
+    echo "<option value='0'>Geen Filter</option>";
+    foreach ($categories as $cat) {
+        echo "<option " . ($filtercat == $cat->id ? 'selected' : '') . " value='$cat->id'>$cat->name</option>";
+    }
+    echo "</select> ";
+    echo "</form>";
     echo "</div>\n";
 }
 ?>
 
 <?php
-if (isset($_GET['filtercat'])) {
-    $categories = Category::getAll();
+if ($role == 3 && isset($_GET['show_filter_options'])) {
     echo "<div class='w-100 text-right pt-2'>";
-    echo "<form method='post' action='?action=list", isset($filter) ? "&filter=$filter" : "", "'>";
+    echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : "", isset($_GET['show_filter_options']) ? "&show_filter_options=1" : "", "'>";
     echo "<div class='form-group'>";
     echo "<input type='hidden' name='filters[]' value='0'>";
     $first = true;
@@ -54,12 +78,12 @@ if (isset($_GET['filtercat'])) {
             echo "&nbsp;&nbsp;";
         }
         $first = false;
-        echo "<input id='cat-filter-$cat->id' type='checkbox' name='filters[]' value='$cat->id'",
+        echo "<input id='cat-filter-$cat->id' onchange=submit() type='checkbox' name='filters[]' value='$cat->id'",
         (in_array($cat->id, $catFilter)) || empty($catFilter) ? ' checked' : '', "/>";
         echo "&nbsp;<label for='cat-filter-$cat->id'> $cat->name </label> ";
     }
-    echo "&nbsp;&nbsp;<input class='btn btn-primary py-1' type='submit' value='Filter'/> ";
     echo "</form>";
+    echo "</div>";
     echo "</div>\n";
 }
 ?>
@@ -75,7 +99,10 @@ foreach ($articles as $article) {
     if (!empty($catFilter)) {
         $filtered = $filtered || !(in_array($article->category_id, $catFilter));
     }
-    if (isset($filter)) {
+    if ($role == 1 && $filtercat != 0) {
+        $filtered = $filtered || $article->category_id != $filtercat;
+    }
+    if (isset($filter) && $action == "list") {
         if ($filter >= 1) {
             $filtered = $filtered || $article->ready === false;
         }
@@ -97,7 +124,7 @@ foreach ($articles as $article) {
         ]);
     }
 }
-if (isset($filter) && $n == 0 && count($articles) > 0) {
+if ($n == 0 && count($articles) > 0) {
     echo "<div class='mt-3 text-center text-grey'><i>Er zijn geen stukjes die voldoen aan het huidige filter.</div>\n";
 }
 ?>

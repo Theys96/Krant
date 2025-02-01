@@ -60,7 +60,9 @@ $edition_name = $edition === null ? "" : $edition->name . " | ";
     </div>
 </nav>
 
-<div class='jumbotron' id='body'>
-    <?php echo $errors; ?>
-    <?php echo $content; ?>
+<div class='jumbotron jumbotron-fluid' id='body'>
+    <div id="content-container">
+        <?php echo $errors; ?>
+        <?php echo $content; ?>
+    </div>
 </div>

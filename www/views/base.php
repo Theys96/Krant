@@ -40,9 +40,7 @@ $gold = Session::instance()->getGold();
     </head>
     <body>
 
-        <div class="container">
-            <?php echo $body; ?>
-        </div>
+    <?php echo $body; ?>
 
 <?php
 if ($show_easter_egg) {
@@ -51,7 +49,7 @@ if ($show_easter_egg) {
 ?>
 
         <div id="footer">
-            &copy; <?php echo date("Y"); ?> Thijs Havinga
+            &copy; <?php echo date("Y"); ?> Thijs Havinga & Foppe Dijkstra
         </div>
 
         <!-- Bootstrap core JavaScript

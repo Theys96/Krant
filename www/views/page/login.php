@@ -66,29 +66,21 @@ if (isset($passwords[3])) {
 	}
 </script>
 
-<div id='body' class='jumbotron'>
-    <center>
+<div id='body' class='jumbotron jumbotron-fluid mb-1'>
+    <div id="content-container">
         <form method='post' action='index.php'>
-            <div id='navDiv'>
+            <div id='navDiv' class="text-center">
                 <h1 class='mb-3'>Kies wat je gaat doen</h1>
-                <div class='row'>
-                    <div class='col-md-4'>
-                        <a class='role m-2' onClick='setRole(1)' href='#'>Schrijven</a>
-                    </div>
-                    <div class='col-md-4'>
-                        <a class='role m-2' onClick='setRole(2)' href='#'>Nakijken</a>
-                    </div>
-                    <div class='col-md-4'>
-                        <a class='role m-2' onClick='setRole(3)' href='#'>Beheren</a>
-                    </div>
-                </div>
+                <a class='role mt-4' onClick='setRole(1)' href='#'>Schrijven</a>
+                <a class='role mt-4' onClick='setRole(2)' href='#'>Nakijken</a>
+                <a class='role mt-4' onClick='setRole(3)' href='#'>Beheren</a>
                 <input type='hidden' name='role' value='none'>
             </div>
 
-            <div class='step2 form-group' id='role1'>
+            <div class='step2 form-group text-center' id='role1'>
                 <h1>Schrijven</h1>
                 <label for='user1'>Kies je naam:</label>
-                <select name='user[1]' id='user1' class='username form-control w-50'>
+                <select name='user[1]' id='user1' class='username form-control w-50 mx-auto'>
                     <?php
         foreach ($users as $user) {
             if ($user->perm_level >= 1) {
@@ -99,10 +91,10 @@ if (isset($passwords[3])) {
                 </select>
             </div>
 
-            <div class='step2 form-group' id='role2'>
+            <div class='step2 form-group text-center' id='role2'>
                 <h1>Nakijken</h1>
                 <label for='user2'>Kies je naam:</label>
-                <select name='user[2]' id='user2' class='username form-control w-50'>
+                <select name='user[2]' id='user2' class='username form-control w-50 mx-auto'>
                     <?php
 foreach ($users as $user) {
     if ($user->perm_level >= 2) {
@@ -113,10 +105,10 @@ foreach ($users as $user) {
                 </select>
             </div>
 
-            <div class='step2 form-group' id='role3'>
+            <div class='step2 form-group text-center' id='role3'>
                 <h1>Beheren</h1>
                 <label for='user3'>Kies je naam:</label>
-                <select name='user[3]' id='user3' class='username form-control w-50'>
+                <select name='user[3]' id='user3' class='username form-control w-50 mx-auto'>
                     <?php
 foreach ($users as $user) {
     if ($user->perm_level >= 3) {
@@ -127,20 +119,18 @@ foreach ($users as $user) {
                 </select>
             </div>
 
-            <div id='password' class='form-group'>
+            <div id='password' class='form-group text-center'>
                 <p>Vul je wachtwoord in:</p>
-                <input type='password' class='form-control w-50' name='password' />
+                <input type='password' class='form-control w-50 mx-auto' name='password' />
             </div>
 
-            <br />
-
-            <div id='submit'>
+            <div id='submit' class="text-center">
                 <input type='submit' class='btn btn-primary' value='Ok' />
-                <p class='m-3'><a onClick='unsetRole()' href='#'>Terug</a></p>
+                <a onClick='unsetRole()' class="btn btn-secondary" href='#'>Terug</a>
             </div>
         </form>
-    </center>
     <?php
     echo $errors;
 ?>
+    </div>
 </div>

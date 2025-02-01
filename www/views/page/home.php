@@ -11,7 +11,7 @@ use Model\Edition;
 $edition = Edition::getActive();
 $edition_name = $edition === null ? "" : $edition->name . " | ";
 ?>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="?action=list"><?php echo $edition_name . $username; ?></a>
     <button
             class="navbar-toggler"
@@ -60,7 +60,7 @@ $edition_name = $edition === null ? "" : $edition->name . " | ";
     </div>
 </nav>
 
-<div class='jumbotron jumbotron-fluid' id='body'>
+<div class='jumbotron jumbotron-fluid mb-1' id='body'>
     <div id="content-container">
         <?php echo $errors; ?>
         <?php echo $content; ?>

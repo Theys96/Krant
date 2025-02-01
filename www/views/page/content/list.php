@@ -33,27 +33,26 @@ if ($role > 1) {
      * 2 - alle stukjes die klaar zijn & nog niet nagekeken
      */
     $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
-    echo "<div class='w-100 text-right'>";
+    echo "<div class='w-100 text-center'>";
     if ($action == "list") {
-        echo "<a class='" . ($filter == 0 ? 'text-success' : '') . "' href='?action=list&filter=0'>alles</a> | ";
-        echo "<a class='" . ($filter == 1 ? 'text-success' : '') . "' href='?action=list&filter=1'>klaar</a> | ";
+        echo "<a class='btn mx-1 " . ($filter == 0 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=0'>Alles</a>";
+        echo "<a class='btn mx-1 " . ($filter == 1 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=1'>Klaar</a>";
         if ($role == 2) {
-            echo "<a class='" . ($filter == 2 ? 'text-success' : '') . "' href='?action=list&filter=2'>klaar & kan ik nakijken</a> ";
+            echo "<a class='btn mx-1 " . ($filter == 2 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=2'>Klaar & kan ik nakijken</a>";
         }
         if ($role == 3) {
-            echo "<a class='" . ($filter == 3 ? 'text-success' : '') . "' href='?action=list&filter=3'>klaar & nagekeken</a> | ";
+            echo "<a class='btn mx-1 " . ($filter == 3 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=3'>Klaar & nagekeken</a>";
         }
     }
     if ($role == 3) {
-        echo "<a class='" . (!empty($catFilter) ? 'text-success' : '') ."' href='?action=$action&filter=$filter" . (isset($_GET['show_filter_options']) ? "" : "&show_filter_options=1") . "'>Filter op categorie</a>";
+        echo "<a class='btn mx-1 " . (!empty($catFilter) ? 'btn-success' : 'btn-secondary') ."' href='?action=$action&filter=$filter" . (isset($_GET['show_filter_options']) ? "" : "&show_filter_options=1") . "'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }
 
 if ($role == 1) {
-    echo "<div class='w-100 text-right'>";
+    echo "<div class='w-100 text-center'>";
     echo "<form class='form-group'>";
-    echo "<label for='filtercat'>Filter op categorie</label>&nbsp;";
     echo "<input hidden id='action' name='action' value='$action'>";
     echo "<select onchange=submit() class='form-drop' id='filtercat' name='filtercat'>";
     echo "<option value='0'>Geen Filter</option>";
@@ -68,7 +67,7 @@ if ($role == 1) {
 
 <?php
 if ($role == 3 && isset($_GET['show_filter_options'])) {
-    echo "<div class='w-100 text-right pt-2'>";
+    echo "<div class='w-100 text-center pt-2'>";
     echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : "", isset($_GET['show_filter_options']) ? "&show_filter_options=1" : "", "'>";
     echo "<div class='form-group'>";
     echo "<input type='hidden' name='filters[]' value='0'>";

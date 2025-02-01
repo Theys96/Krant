@@ -9,24 +9,20 @@ src: url(myriad-pro.otf);
 }
 
 body {
-font-family: IntalledMyriad, sans-serif;
-font-size: 18px;
-background-image: url('tex.jpg');
-padding-bottom: 50px;
+	font-family: IntalledMyriad, sans-serif;
+	font-size: 18px;
+	background-color: white;
 }
 
 .nav-link, .navbar-brand {
-	font-size: 1.2em;
 	cursor: pointer;
 }
 
 #body {
-	margin-top: 30px;
-	padding: 60px;
-	min-height: 400px;
-	background-color: #fff5e6;
-	box-shadow: -5px -5px 20px #888888;
+	padding: 90px 60px;
+	background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(245,232,204,1) 100%);
 	width: 100%;
+	min-height: calc(100vh - 50px);
 }
 
 #content-container {
@@ -50,6 +46,9 @@ h2 {
 	color: white;
 	padding: 20px;
 	border-radius: 10px;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .role:hover {
@@ -106,12 +105,13 @@ text-decoration: none;
 }
 
 #footer {
-position: absolute;
-width: 100%;
-text-align: center;
-font-size: 0.8em;
-z-index: -1;
-color: #036;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 0.8em;
+	z-index: -1;
+	color: #036;
+	padding: 10px;
 }
 
 .filter {

@@ -33,12 +33,14 @@ $reactions = \Model\ArticleReaction::getByArticleIdGrouped($article->id);
     <ul class="list-group list-group-flush">
         <li class="list-group-item p-2">
             <div class="d-flex justify-content-between">
+                <p class="mb-0">
                 <?php if ($article->ready === true): ?>
-                    <span><span class='badge badge-success'>Klaar</span> <b><?php echo count($article->checkers); ?></b> check(s): <?php echo (count($article->checkers) == 0 ? "" : ": ") . $checkers; ?></span>
+                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s): <?php echo (count($article->checkers) == 0 ? "" : ": ") . $checkers; ?>
                 <?php else: ?>
                     <span class='badge badge-warning'>Niet klaar</span>
                 <?php endif; ?>
-                <span><p class="mb-0"><span class='badge badge-secondary'><?php echo htmlspecialchars($article->category?->name); ?></span></p></span>
+                </p>
+                <p class="mb-0"><span class='badge badge-secondary'><?php echo htmlspecialchars($article->category?->name); ?></span></p>
             </div>
         </li>
         <li class="list-group-item p-2">

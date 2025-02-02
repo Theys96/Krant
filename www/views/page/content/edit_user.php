@@ -24,6 +24,15 @@ use Model\User;
         </select>
     </div>
 
+    <div class='form-group'>
+        <label for='alt_css'>Style</label>
+	    <select name='edit_alt_css' id='alt_css' class='form-control'>
+            <option value='0' <?php echo $user->alt_css === 0 ? 'selected' : ''; ?>>Normaal</option>
+            <option value='1' <?php echo $user->alt_css === 1 ? 'selected' : ''; ?>>Comic Sans</option>
+            <option value='2' <?php echo $user->alt_css === 2 ? 'selected' : ''; ?>>Roze</option>
+        </select>
+    </div>
+
     <div class='mt-3 form-group'>
         <label class="custom-control custom-checkbox">
             <input type='checkbox' name='edit_active' value='1'
@@ -31,15 +40,6 @@ use Model\User;
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">Actief</span>
         </label>
-    </div>
-
-    <div class='form-group'>
-        <label for='alt_css'>Style</label>
-	<select name='edit_alt_css' id='alt_css' class='form-control'>
-            <option value='0' <?php echo $user->alt_css === 0 ? 'selected' : ''; ?>>Normaal</option>
-            <option value='1' <?php echo $user->alt_css === 1 ? 'selected' : ''; ?>>Comic Sans</option>
-            <option value='2' <?php echo $user->alt_css === 2 ? 'selected' : ''; ?>>Roze</option>
-        </select>
     </div>
 
     <input class='btn btn-primary' type='submit' value='Opslaan'/>

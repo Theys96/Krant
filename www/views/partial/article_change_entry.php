@@ -11,6 +11,8 @@ use Jfcherng\Diff\Renderer\AbstractRenderer;
  * @var AbstractRenderer $diff_renderer
  */
 
+$diff_split_pattern = "/(?<=[.?])\s/ui";
+
 $updates = [];
 if ($previous_article_change !== null) {
     if ($article_change->changed_title !== $previous_article_change->changed_title) {
@@ -37,8 +39,8 @@ if ($previous_article_change !== null) {
 
 if ($previous_article_change === null || $article_change->changed_contents !== $previous_article_change->changed_contents) {
     $differ = new Differ(
-        preg_split("/(?<=\.)\s/ui", $previous_article_change === null ? '' : $previous_article_change->changed_contents),
-        preg_split("/(?<=\.)\s/ui", $article_change->changed_contents),
+        preg_split($diff_split_pattern, $previous_article_change === null ? '' : $previous_article_change->changed_contents),
+        preg_split($diff_split_pattern, $article_change->changed_contents),
         ['context' => Differ::CONTEXT_ALL]
     );
     $updates[] = "<hr />Tekst" . $diff_renderer->render($differ);
@@ -46,8 +48,8 @@ if ($previous_article_change === null || $article_change->changed_contents !== $
 
 if ($previous_article_change === null || $article_change->changed_context !== $previous_article_change->changed_context) {
     $differ = new Differ(
-        preg_split("/(?<=\.)\s/ui", $previous_article_change === null ? '' : $previous_article_change->changed_context),
-        preg_split("/(?<=\.)\s/ui", $article_change->changed_context),
+        preg_split($diff_split_pattern, $previous_article_change === null ? '' : $previous_article_change->changed_context),
+        preg_split($diff_split_pattern, $article_change->changed_context),
         ['context' => Differ::CONTEXT_ALL]
     );
     $updates[] = "<hr />Context" . $diff_renderer->render($differ);

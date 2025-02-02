@@ -7,12 +7,9 @@ use Model\Edition;
  * @var string $errors
  * @var string $content
  */
-
-$edition = Edition::getActive();
-$edition_name = $edition === null ? "" : $edition->name . " | ";
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="?action=list"><?php echo $edition_name . $username; ?></a>
+    <a class="navbar-brand" href="?action=list"><?php echo $username; ?></a>
     <button
             class="navbar-toggler"
             type="button"

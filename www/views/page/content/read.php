@@ -34,8 +34,10 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-8'><?php echo $authors; ?></div>
     <div class='col-sm-4'><b>Categorie</b></div>
     <div class='col-sm-8'><?php echo $article->category?->name; ?></div>
+    <div class='col-sm-4'><b>Klaar</b></div>
+    <div class='col-sm-8'><?php echo ($article->ready == 1) ? 'Ja' : 'Nee'; ?></div>
 </div>
-<div class='row'>
+<div class='row mt-4'>
     <div class='col-sm-12 tekst'><?php echo nl2br(htmlspecialchars($article->contents)); ?></div>
 </div>
 <?php
@@ -45,10 +47,6 @@ if ($article->context != "") {
     echo "<div class='col-sm-12 text-grey'>" . nl2br(htmlspecialchars($article->context)) . "</div>";
     echo "</div>";
 } ?>
-<div class='row'>
-    <div class='col-sm-4'><b>Klaar</b></div>
-    <div class='col-sm-8'><?php echo ($article->ready == 1) ? 'Ja' : 'Nee'; ?></div>
-</div>
 
 <center>
     <?php if ($role === 3 && $article->status === Article::STATUS_OPEN && $article->ready): ?>

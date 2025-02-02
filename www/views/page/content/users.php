@@ -14,7 +14,8 @@ use Model\User;
  * @param bool $active
  * @return void
  */
-function printUserList(array $users, int $role, bool $active): void {
+function printUserList(array $users, int $role, bool $active): void
+{
     $row = true;
     foreach ($users as $user) {
         $color = $row ? '#AAAAAA' : '#DDDDDD';
@@ -30,7 +31,7 @@ function printUserList(array $users, int $role, bool $active): void {
         }
         if ($role === 3 && $active) {
             echo "<a class='p-1 btn btn-sm btn-danger mr-1 my-1' href='?action=users&deactivate=" . $user->id . "'>Deactiveren</a>";
-        } else if ($role === 3 && !$active) {
+        } elseif ($role === 3 && !$active) {
             echo "<a class='p-1 btn btn-sm btn-success mr-1 my-1' href='?action=users&activate=" . $user->id . "'>Activeren</a>";
         }
         echo "</div>";

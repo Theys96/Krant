@@ -141,7 +141,6 @@ margin-bottom: 10px;
 }
 
 .stukje {
-    border-radius: 10px;
     background: #ffffff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;

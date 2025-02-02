@@ -35,17 +35,17 @@ if ($role > 1) {
     $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     echo "<div class='w-100 text-center'>";
     if ($action == "list") {
-        echo "<a class='btn mx-1 " . ($filter == 0 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=0'>Alles</a>";
-        echo "<a class='btn mx-1 " . ($filter == 1 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=1'>Klaar</a>";
+        echo "<a class='btn m-1 " . ($filter == 0 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=0'>Alles</a>";
+        echo "<a class='btn m-1 " . ($filter == 1 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=1'>Klaar</a>";
         if ($role == 2) {
-            echo "<a class='btn mx-1 " . ($filter == 2 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=2'>Klaar & kan ik nakijken</a>";
+            echo "<a class='btn m-1 " . ($filter == 2 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=2'>Klaar & kan ik nakijken</a>";
         }
         if ($role == 3) {
-            echo "<a class='btn mx-1 " . ($filter == 3 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=3'>Klaar & nagekeken</a>";
+            echo "<a class='btn m-1 " . ($filter == 3 ? 'btn-success' : 'btn-secondary') . "' href='?action=list&filter=3'>Klaar & nagekeken</a>";
         }
     }
     if ($role == 3) {
-        echo "<a class='btn mx-1 " . (!empty($catFilter) ? 'btn-success' : 'btn-secondary') ."' href='?action=$action&filter=$filter" . (isset($_GET['show_filter_options']) ? "" : "&show_filter_options=1") . "'>Filter op categorie</a>";
+        echo "<a class='btn m-1 " . (!empty($catFilter) ? 'btn-success' : 'btn-secondary') ."' href='?action=$action&filter=$filter" . (isset($_GET['show_filter_options']) ? "" : "&show_filter_options=1") . "'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }

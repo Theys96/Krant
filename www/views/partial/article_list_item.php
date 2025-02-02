@@ -55,17 +55,17 @@ $reactions = \Model\ArticleReaction::getByArticleIdGrouped($article->id);
     </ul>
     <div class="card-footer d-flex justify-content-between">
         <?php if ($role != 2 && $article->status === Article::STATUS_OPEN): ?>
-            <a class="btn btn-warning px-5" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
+            <a class="btn btn-primary" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
         <?php endif;
 if ($role == 2 && $article->status === Article::STATUS_OPEN && $article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids)): ?>
-            <a class="btn btn-warning px-5" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
+            <a class="btn btn-primary" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
         <?php endif; ?>
-        <a class="btn btn-primary px-5" href="?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>">Lezen</a>
+        <a class="btn btn-primary" href="?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>">Lezen</a>
         <?php if ($role == 3): ?>
             <?php if ($article->status === Article::STATUS_OPEN): ?>
-               <a class="btn btn-danger px-5" href="?action=<?php echo $list_type; ?>&remove_article=<?php echo $article->id; ?>">Verwijderen</a>
+               <a class="btn btn-danger" href="?action=<?php echo $list_type; ?>&remove_article=<?php echo $article->id; ?>">Verwijderen</a>
             <?php elseif ($article->status !== Article::STATUS_DRAFT):?>
-               <a class="btn btn-danger px-5" href="?action=<?php echo $list_type; ?>&open_article=<?php echo $article->id; ?>">Terugzetten</a>
+               <a class="btn btn-warning" href="?action=<?php echo $list_type; ?>&open_article=<?php echo $article->id; ?>">Terugzetten</a>
             <?php endif; ?>
         <?php endif; ?>
     </div>

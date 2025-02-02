@@ -27,6 +27,8 @@ body {
 
 #content-container {
 	max-width: 900px;
+	padding-left: 15px;
+	padding-right: 15px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -235,4 +237,41 @@ table.diff-wrapper {
 	border-radius: .25rem;
 	font-size: 1rem;
 	line-height: 1.25;
+}
+
+@media (max-width: 768px) {
+	.stukje {
+		display: flex;
+		margin: -5px;
+		border-radius: 0;
+	}
+
+	#body {
+		padding: 90px 5px;
+	}
+
+	body {
+		font-size: .9em;
+	}
+
+	.card-header {
+		padding: 8px;
+	}
+
+	.card-header h5 {
+		font-size: 1em;
+	}
+
+	.btn {
+		font-size: .9em;
+	}
+
+	#content-container {
+		padding: 0;
+	}
+
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }

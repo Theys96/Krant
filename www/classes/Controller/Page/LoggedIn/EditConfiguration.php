@@ -38,7 +38,7 @@ class EditConfiguration extends LoggedInPage
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.edit_configuration', [
-            'variables' => Configuration::instance(),
+            'variables' => Configuration::instance()->getComplete(),
         ]);
     }
 

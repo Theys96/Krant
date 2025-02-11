@@ -7,21 +7,22 @@
  * @param string $schrijfregels
  * @return void
  */
-function printSchrijfregels(string $schrijfregels): void{
+function printSchrijfregels(string $schrijfregels): void
+{
     $regels = explode("\n", str_replace("- ", "", $schrijfregels));
-    $double = False;
+    $double = false;
     echo "<ul>";
     foreach ($regels as $regel) {
-        if(ltrim($regel) == $regel) {
+        if (ltrim($regel) == $regel) {
             if ($double) {
                 echo "</ul>";
-                $double = False;
+                $double = false;
             }
             echo "<li>$regel</li>";
         } else {
             if (!$double) {
                 echo "<ul>";
-                $double = True;
+                $double = true;
             }
             echo "<li>" . ltrim($regel) . "</li>";
         }

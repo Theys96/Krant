@@ -9,7 +9,7 @@ use Util\Singleton\Session;
 use Util\ViewRenderer;
 
 /**
- * Categorieën pagina.
+ * Configuration pagina.
  */
 class EditConfiguration extends LoggedInPage
 {

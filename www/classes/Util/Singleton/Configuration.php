@@ -90,10 +90,10 @@ class Configuration
 
 
     /**
-     * @param $schrijfregels
-     * @param $min_checks
-     * @param $mail_address
-     * @param $passwords
+     * @param string $schrijfregels
+     * @param int $min_checks
+     * @param string|null $mail_address
+     * @param array $passwords
      * @return Configuration
      */
     public function updateAll(string $schrijfregels, int $min_checks, string|null $mail_address, array $passwords): Configuration
@@ -105,6 +105,11 @@ class Configuration
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param string|null $value
+     * @return mixed
+     */
     protected function update(string $name, string|null $value)
     {
         Database::instance()->storeQuery("UPDATE configuration SET value = ? WHERE name = ?");

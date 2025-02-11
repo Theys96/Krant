@@ -17,7 +17,7 @@ class Schrijfregels extends LoggedInPage
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.schrijfregels', [
-        'schrijfregels' => Configuration::instance()->schrijfregels]);
+            'schrijfregels' => Configuration::instance()->schrijfregels]);
     }
 
     /**

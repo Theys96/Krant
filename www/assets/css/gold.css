@@ -1,12 +1,12 @@
 body {
 	font-family: 'Times New Roman', Times, serif;
-	background-image: url(gold.jpg);
-	background-size: 30px 20px;
 	background-color: goldenrod;
 }
 
 #body {
 	background-color: goldenrod;
+	background-image: url(gold.jpg);
+	background-size: 690px 460px;
 	color: white;
 	box-shadow: -5px -5px 20px darkgoldenrod;
 }
@@ -27,10 +27,30 @@ body {
 	background-color: white;
 }
 
-.text-grey {
-	color: whitesmoke;
+.stukje {
+	background-color: goldenrod;
 }
 
-.stukje {
-	background-color: darkgoldenrod;
+.list-group {
+	color: black;
+}
+
+.row {
+	background-color: white;
+	color: black;
+	border-radius: .25rem;
+}
+
+p {
+	background-color: white;
+	color: black;
+	border-radius: .25rem;
+	padding: .5rem;
+}
+
+.schrijfregels {
+	background-color: white;
+	color: black;
+	border-radius: .25rem;
+	padding: .5rem;
 }

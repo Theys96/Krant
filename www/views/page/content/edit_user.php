@@ -59,7 +59,7 @@ use Model\User;
                 echo "<option value='$user2->id'>$user2->username</option>";
             }
         }
-        ?>
+?>
         </select>
     </div>
     <input class='btn btn-primary' type='submit' value='Merge'/>

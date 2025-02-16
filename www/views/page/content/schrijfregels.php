@@ -18,13 +18,13 @@ function printSchrijfregels(string $schrijfregels): void
                 echo "</ul>";
                 $double = false;
             }
-            echo "<li>$regel</li>";
+            echo "<li>". htmlspecialchars($regel) . "</li>";
         } else {
             if (!$double) {
                 echo "<ul>";
                 $double = true;
             }
-            echo "<li>" . ltrim($regel) . "</li>";
+            echo "<li>" . htmlspecialchars(ltrim($regel)) . "</li>";
         }
     }
     echo "</ul>";

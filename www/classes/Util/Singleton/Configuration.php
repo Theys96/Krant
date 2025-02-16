@@ -47,9 +47,9 @@ class Configuration
             $this->min_checks = (int)$this->getValue("min_checks");
             $this->mail_address = $this->getValue("mail_address");
             $this->passwords = explode(",", $this->getValue("passwords"));
-            $this->passwords[0] = $this->passwords[0] == "" ? null : $this->passwords[0];
             $this->passwords[1] = $this->passwords[1] == "" ? null : $this->passwords[1];
             $this->passwords[2] = $this->passwords[2] == "" ? null : $this->passwords[2];
+            $this->passwords[3] = $this->passwords[3] == "" ? null : $this->passwords[3];
         }
     }
 

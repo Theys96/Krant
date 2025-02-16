@@ -92,13 +92,15 @@ class Configuration
      */
     public function updateAll(string $schrijfregels, int $min_checks, string|null $mail_address, array $passwords): Configuration
     {
-        $this->schrijfregels = $this->update("schrijfregels", $schrijfregels);
-        $this->min_checks = (int)$this->update("min_checks", $min_checks);
-        $this->mail_address = $this->update("mail_address", $mail_address);
-        $this->passwords = explode(",", $this->update("passwords", implode(",", array: $passwords)));
-        $this->passwords[0] = $this->passwords[0] == "" ? null : $this->passwords[0];
-        $this->passwords[1] = $this->passwords[1] == "" ? null : $this->passwords[1];
-        $this->passwords[2] = $this->passwords[2] == "" ? null : $this->passwords[2];
+        $this-> schrijfregels = $this->schrijfregels == $schrijfregels ? $schrijfregels : $this->update("schrijfregels", $schrijfregels);
+        $this->min_checks = $this->min_checks == $min_checks ? $min_checks : (int)$this->update("min_checks", $min_checks);
+        $this->mail_address = $this->mail_address == $mail_address ? $mail_address : $this->update("mail_address", $mail_address);
+        if ($this->passwords != $passwords) {
+            $this->passwords = explode(",", $this->update("passwords", implode(",", array: $passwords)));
+            $this->passwords[1] = $this->passwords[1] == "" ? null : $this->passwords[1];
+            $this->passwords[2] = $this->passwords[2] == "" ? null : $this->passwords[2];
+            $this->passwords[3] = $this->passwords[3] == "" ? null : $this->passwords[3];
+        }
         return $this;
     }
 

@@ -155,6 +155,39 @@ class User
         return User::getById($this->id);
     }
 
+    public function combineUsers(User $user1): ?User
+    {
+        if ($user1->perm_level == 3) {
+            ErrorHandler::instance()->addError(sprintf('Kan beheerder \'%s\' niet mergen.', $user1->username));
+            return null;
+        }
+        Database::instance()->storeQuery("UPDATE article_reactions SET user_id = ? WHERE user_id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $user1->id);
+        $stmt->execute();
+        if ($stmt->errno != 0) {
+            ErrorHandler::instance()->addError(sprintf('Kan \'%s\' niet mergen, conflict in reacties', $user1->username));
+            return null;
+        }
+        Database::instance()->storeQuery("UPDATE article_updates SET user = ? WHERE user = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $user1->id);
+        $stmt->execute();
+        Database::instance()->storeQuery("UPDATE log SET user = ? WHERE user = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $user1->id);
+        $stmt->execute();
+        Database::instance()->storeQuery("DELETE FROM users WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $user1->id);
+        $stmt->execute();
+        if ($stmt->errno != 0) {
+            ErrorHandler::instance()->addError(sprintf('Kan \'%s\' niet mergen.', $user1->username));
+            return null;
+        }
+        return User::getById($this->id);
+    }
+
     /**
      * @return string
      */

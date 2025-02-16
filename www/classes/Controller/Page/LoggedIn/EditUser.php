@@ -35,6 +35,7 @@ class EditUser extends LoggedInPage
     {
         return ViewRenderer::render_view('page.content.edit_user', [
             'user' => $this->user,
+            'users' => User::getAll(),
         ]);
     }
 

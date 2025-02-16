@@ -38,18 +38,31 @@ class Configuration
 
     public function __construct()
     {
-        Database::instance()->storeQuery("SELECT * FROM configuration WHERE id = 1");
+        Database::instance()->storeQuery("SELECT * FROM configuration");
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->execute();
-        $variables = $stmt->get_result()->fetch_assoc();
-        if ($variables) {
-            $this->schrijfregels = $this->getValue("schrijfregels");
-            $this->min_checks = (int)$this->getValue("min_checks");
-            $this->mail_address = $this->getValue("mail_address");
-            $this->passwords = explode(",", $this->getValue("passwords"));
-            $this->passwords[0] = $this->passwords[0] == "" ? null : $this->passwords[0];
-            $this->passwords[1] = $this->passwords[1] == "" ? null : $this->passwords[1];
-            $this->passwords[2] = $this->passwords[2] == "" ? null : $this->passwords[2];
+        $result = $stmt->get_result();
+
+        while ($result !== false && ($variables = $result->fetch_assoc()) !== null) {
+            switch ($variables['name']) {
+                case "schrijfregels":
+                    $this->schrijfregels = $variables['value'];
+                    break;
+                case "min_checks":
+                    $this->min_checks = (int)$variables['value'];
+                    break;
+                case "mail_address":
+                    $this->mail_address = $variables['value'];
+                    break;
+                case "passwords":
+                    $this->passwords = array_map(
+                        static function (string $password): string|null {
+                            return $password == "" ? null : $password;
+                        },
+                        explode(",", $variables['value'])
+                    );
+                    break;
+            }
         }
     }
 

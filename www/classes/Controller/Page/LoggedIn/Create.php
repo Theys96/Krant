@@ -6,6 +6,7 @@ use Controller\Page\LoggedInPage;
 use Model\ArticleChange;
 use Model\Category;
 use Util\Singleton\Session;
+use Util\Singleton\Configuration;
 use Util\ViewRenderer;
 
 /**
@@ -46,7 +47,8 @@ class Create extends LoggedInPage
             'username' => Session::instance()->getUser()->username,
             'article' => null,
             'check_mode' => false,
-            'title' => 'Nieuw stukje'
+            'title' => 'Nieuw stukje',
+            'mail' => Configuration::instance()->mail_address
         ]);
     }
 

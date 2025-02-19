@@ -166,6 +166,26 @@ INSERT INTO `users` (`id`, `username`, `perm_level`, `active`, `alt_css`) VALUES
 (2, 'Renske', 3, 1, 0);
 
 --
+-- Table structure for table `single_variables`
+--
+
+CREATE TABLE `configuration` (
+  `id` int NOT NULL,
+  `name` text NOT NULL,
+  `value` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `single_variables`
+--
+
+INSERT INTO `configuration` (`id`, `name`, `value`) VALUES
+(1, 'schrijfregels', 'Dit zijn de schrijfregels'),
+(2, 'min_checks', '3'),
+(3, 'mail_address', null),
+(4, 'passwords', ',,,printer');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -216,6 +236,12 @@ ALTER TABLE `log`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `single_variables`
+--
+ALTER TABLE `configuration`
   ADD PRIMARY KEY (`id`);
 
 --

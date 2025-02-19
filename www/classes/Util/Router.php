@@ -17,6 +17,7 @@ use Controller\Page\LoggedIn\Check;
 use Controller\Page\LoggedIn\Create;
 use Controller\Page\LoggedIn\Edit;
 use Controller\Page\LoggedIn\EditCategory;
+use Controller\Page\LoggedIn\EditConfiguration;
 use Controller\Page\LoggedIn\EditEdition;
 use Controller\Page\LoggedIn\Editions;
 use Controller\Page\LoggedIn\EditUser;
@@ -62,6 +63,7 @@ class Router
         'migrate_edition' => MigrateEdition::class,
         'overview' => Overview::class,
         'minigame' => Minigame::class,
+        'configuratie' => EditConfiguration::class,
     ];
 
     /**

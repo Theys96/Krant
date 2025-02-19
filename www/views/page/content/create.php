@@ -1,8 +1,6 @@
 <?php
 use Model\Article;
 use Model\Category;
-use Model\User;
-use Util\Config;
 
 /**
  * @var Category[] $categories
@@ -10,6 +8,7 @@ use Util\Config;
  * @var Article|null $article
  * @var string $title
  * @var bool $check_mode
+ * @var string|null $mail
  */
 
 function printButtons($chars): void
@@ -24,7 +23,6 @@ $category_id = $article?->category?->id;
 $contents = $article?->contents;
 $context = $article?->context;
 $ready = $article?->ready;
-$mail = Config::MAIL;
 ?>
 <h2><?php echo $title; ?></h2>
 

@@ -228,6 +228,10 @@ table.diff-wrapper {
 	text-align: center;
 }
 
+.schrijfregels {
+    white-space: pre-wrap;
+}
+
 .form-drop {
 	color: black;
 	font-weight: 400;

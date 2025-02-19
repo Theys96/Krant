@@ -4,7 +4,7 @@ namespace Util\Singleton;
 
 use Model\Log;
 use Model\User;
-use Util\Config;
+use Util\Singleton\Configuration;
 
 /**
  * Session wrapper.
@@ -183,7 +183,7 @@ class Session
         if ($user->perm_level < $role) {
             ErrorHandler::instance()->addError('Deze gebruiker mag deze rol niet gebruiken.');
         }
-        if (!isset(Config::PASSWORDS[$role]) || Config::PASSWORDS[$role] === $password) {
+        if (!isset(Configuration::instance()->passwords[$role]) || Configuration::instance()->passwords[$role] === $password) {
             $this->setUser(User::getById($user_id));
             $this->setRole($role);
             $this->setLoggedIn(true);

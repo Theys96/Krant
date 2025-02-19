@@ -10,6 +10,7 @@ use Util\ViewRenderer;
  * @var int $role
  * @var string $title
  * @var string $list_type
+ * @var int $checks
  */
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
@@ -107,10 +108,10 @@ foreach ($articles as $article) {
         }
         if ($filter == 2) {
             $user =  Session::instance()->getUser();
-            $filtered = $filtered || count($article->checkers) > 2 || in_array($user, $article->checkers) ||  in_array($user, $article->authors);
+            $filtered = $filtered || count($article->checkers) >= $checks || in_array($user, $article->checkers) ||  in_array($user, $article->authors);
         }
         if ($filter == 3) {
-            $filtered = $filtered || count($article->checkers) < 3;
+            $filtered = $filtered || count($article->checkers) < $checks;
         }
 
     }

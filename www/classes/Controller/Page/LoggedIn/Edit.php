@@ -7,6 +7,7 @@ use Model\ArticleChange;
 use Model\Category;
 use Util\Singleton\ErrorHandler;
 use Util\Singleton\Session;
+use Util\Singleton\Configuration;
 use Util\ViewRenderer;
 
 /**
@@ -59,7 +60,8 @@ class Edit extends Create
             'username' => Session::instance()->getUser()->username,
             'article' => $this->article,
             'check_mode' => $this->check_mode,
-            'title' => $this->title
+            'title' => $this->title,
+            'mail' => Configuration::instance()->mail_address
         ]);
     }
 }

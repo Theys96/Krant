@@ -7,12 +7,9 @@ use Model\Edition;
  * @var string $errors
  * @var string $content
  */
-
-$edition = Edition::getActive();
-$edition_name = $edition === null ? "" : $edition->name . " | ";
 ?>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="?action=list"><?php echo $edition_name . $username; ?></a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="?action=list"><?php echo $username; ?></a>
     <button
             class="navbar-toggler"
             type="button"
@@ -61,7 +58,9 @@ $edition_name = $edition === null ? "" : $edition->name . " | ";
     </div>
 </nav>
 
-<div class='jumbotron' id='body'>
-    <?php echo $errors; ?>
-    <?php echo $content; ?>
+<div class='jumbotron jumbotron-fluid mb-1' id='body'>
+    <div id="content-container">
+        <?php echo $errors; ?>
+        <?php echo $content; ?>
+    </div>
 </div>

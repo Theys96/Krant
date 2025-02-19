@@ -9,24 +9,28 @@ src: url(myriad-pro.otf);
 }
 
 body {
-font-family: IntalledMyriad, sans-serif;
-font-size: 18px;
-background-image: url('tex.jpg');
-padding-bottom: 50px;
+	font-family: IntalledMyriad, sans-serif;
+	font-size: 18px;
+	background-color: white;
 }
 
 .nav-link, .navbar-brand {
-	font-size: 1.2em;
 	cursor: pointer;
 }
 
 #body {
-margin-top: 30px;
-padding-top: 60px;
-min-height: 400px;
-border-radius: 10px;
-background-color: BlanchedAlmond;
-box-shadow: -5px -5px 20px #888888;
+	padding: 90px 60px;
+	background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(245,232,204,1) 100%);
+	width: 100%;
+	min-height: calc(100vh - 50px);
+}
+
+#content-container {
+	max-width: 900px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 h1, h2, h3 {
@@ -44,6 +48,9 @@ h2 {
 	color: white;
 	padding: 20px;
 	border-radius: 10px;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .role:hover {
@@ -100,12 +107,13 @@ text-decoration: none;
 }
 
 #footer {
-position: absolute;
-width: 100%;
-text-align: center;
-font-size: 0.8em;
-z-index: -1;
-color: #036;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 0.8em;
+	z-index: -1;
+	color: #036;
+	padding: 10px;
 }
 
 .filter {
@@ -133,8 +141,30 @@ margin-bottom: 10px;
 }
 
 .stukje {
-	background-color: rgba(50,100,150,0.3);
-	border-radius: 5px;
+    background: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.stukje:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.stukje .card-header {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.stukje .card-body {
+    font-size: 0.9rem;
+}
+
+.stukje .card-footer {
+    border-top: 1px solid #f1f1f1;
+    font-size: 0.85rem;
+	padding: 5px 10px;
 }
 
 .text-grey {
@@ -200,4 +230,51 @@ table.diff-wrapper {
 
 .schrijfregels {
     white-space: pre-wrap;
+}
+
+.form-drop {
+	color: black;
+	font-weight: 400;
+	border: 1px solid gray;
+	padding: .5rem .75rem;
+	border-radius: .25rem;
+	font-size: 1rem;
+	line-height: 1.25;
+}
+
+@media (max-width: 768px) {
+	.stukje {
+		display: flex;
+		margin: -5px;
+		border-radius: 0;
+	}
+
+	#body {
+		padding: 90px 5px;
+	}
+
+	body {
+		font-size: .9em;
+	}
+
+	.card-header {
+		padding: 8px;
+	}
+
+	.card-header h5 {
+		font-size: 1em;
+	}
+
+	.btn {
+		font-size: .9em;
+	}
+
+	#content-container {
+		padding: 0;
+	}
+
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }

@@ -16,6 +16,24 @@ class Users extends LoggedInPage
     public function __construct()
     {
         if (Session::instance()->getRole() === 3) {
+            if (isset($_GET['activate'])) {
+                $activate_user_id = (int)$_GET['activate'];
+                $activate_user = User::getById($activate_user_id);
+                if ($activate_user !== null) {
+                    $activate_user->update($activate_user->username, $activate_user->perm_level, true, $activate_user->alt_css);
+                } else {
+                    ErrorHandler::instance()->addError('Kon gebruiker niet activeren: Niet gevonden.');
+                }
+            }
+            if (isset($_GET['deactivate'])) {
+                $deactivate_user_id = (int)$_GET['deactivate'];
+                $deactivate_user = User::getById($deactivate_user_id);
+                if ($deactivate_user !== null) {
+                    $deactivate_user->update($deactivate_user->username, $deactivate_user->perm_level, false, $deactivate_user->alt_css);
+                } else {
+                    ErrorHandler::instance()->addError('Kon gebruiker niet deactiveren: Niet gevonden.');
+                }
+            }
             if (isset($_GET['edit_user'])) {
                 $edit_user_id = (int)$_GET['edit_user'];
                 $edit_name = $_POST['edit_name'];
@@ -45,8 +63,18 @@ class Users extends LoggedInPage
      */
     public function get_content(): string
     {
+        [$archived_users, $active_users] = [[], []];
+        foreach (User::getAll() as $user) {
+            if ($user->active) {
+                $active_users[] = $user;
+            } else {
+                $archived_users[] = $user;
+            }
+        }
+
         return ViewRenderer::render_view('page.content.users', [
-            'users' => User::getAll(),
+            'active_users' => $active_users,
+            'archived_users' => $archived_users,
             'role' => Session::instance()->getRole()
         ]);
     }

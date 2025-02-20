@@ -285,9 +285,8 @@ table.diff-wrapper {
 	text-align: left;
 	white-space: pre-wrap;
 	padding: 0px;
-	color: white;
 }
 
 .click-text:hover {
-	color: #e5e5e5;
+	color: #B5B5B5;
 }

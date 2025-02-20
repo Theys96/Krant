@@ -155,6 +155,11 @@ class User
         return User::getById($this->id);
     }
 
+    /**
+     * Alle gegevens van user1 worden overgezet naar deze gebruiker. Daarna wordt user1 verwijderd.
+     * @param \Model\User $user1
+     * @return User|null
+     */
     public function combineUsers(User $user1): ?User
     {
         if ($user1->perm_level == 3) {
@@ -166,8 +171,10 @@ class User
         $stmt->bind_param('ii', $this->id, $user1->id);
         $stmt->execute();
         if ($stmt->errno != 0) {
-            ErrorHandler::instance()->addError(sprintf('Kan \'%s\' niet mergen, conflict in reacties', $user1->username));
-            return null;
+            Database::instance()->storeQuery("DELETE FROM article_reactions WHERE user_id = ?");
+            $stmt = Database::instance()->prepareStoredQuery();
+            $stmt->bind_param('i', $user1->id);
+            $stmt->execute();
         }
         Database::instance()->storeQuery("UPDATE article_updates SET user = ? WHERE user = ?");
         $stmt = Database::instance()->prepareStoredQuery();

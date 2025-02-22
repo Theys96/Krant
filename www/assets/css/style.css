@@ -278,3 +278,13 @@ table.diff-wrapper {
 		margin-right: 0;
 	}
 }
+
+.click-text {
+	background: none;
+	border: none;
+	text-align: left;
+}
+
+.click-text:hover {
+	color: #B5B5B5;
+}

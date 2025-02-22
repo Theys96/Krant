@@ -21,6 +21,9 @@ $checkers = array_map(
 );
 $authors = $article->getAuthorsString();
 ?>
+
+<div class="alert alert-info fixed-bottom text-center" style="display: none" role="alert" id="copy-message"></div>
+
 <h2 class='mb-3'>Stukje lezen</h2>
 <div class='row'>
     <?php
@@ -28,8 +31,14 @@ $authors = $article->getAuthorsString();
         echo "<div class='col-sm-12'>Nagekeken door " . htmlspecialchars(implode(", ", $checkers)) . ".</div>";
     }
 ?>
-    <div class='col-sm-4'><b>Titel</b></b></div>
-    <div class='col-sm-8'><?php echo htmlspecialchars($article->title); ?></div>
+    <div class='col-sm-4'><b>Titel</b></></div>
+    <?php
+    if ($role == 3) {
+        echo "<div class='col-sm-8 click-text' title='copy' onclick='copyText(this, \"Titel gekopieerd.\")'>" . htmlspecialchars($article->title) . "</div>";
+    } else {
+        echo "<div class='col-sm-8'>" . htmlspecialchars($article->title) . "</div>";
+    }
+?>
     <div class='col-sm-4'><b>Auteur</b></div>
     <div class='col-sm-8'><?php echo $authors; ?></div>
     <div class='col-sm-4'><b>Categorie</b></div>
@@ -38,7 +47,13 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-8'><?php echo ($article->ready == 1) ? 'Ja' : 'Nee'; ?></div>
 </div>
 <div class='row mt-4'>
-    <div class='col-sm-12 tekst'><?php echo nl2br(htmlspecialchars($article->contents)); ?></div>
+    <?php
+if ($role == 3) {
+    echo "<div class='col-sm-12 tekst click-text' title='copy' onclick='copyText(this, \"Tekst gekopieerd.\")'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
+} else {
+    echo "<div class='col-sm-12 tekst'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
+}
+?>
 </div>
 <?php
 if ($article->context != "") {
@@ -79,3 +94,4 @@ for ($i = 0; $i < count($ids); $i++) {
     ]);
 }
 ?>
+<script src='assets/js/copy.js'></script>

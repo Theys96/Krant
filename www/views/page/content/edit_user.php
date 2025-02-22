@@ -50,7 +50,7 @@ use Model\User;
 <h2>Gebruiker samenvoegen</h2>
 <form method='post' action="?action=users&merge_user=<?php echo $user->id; ?>">
     <div class='form-group mt-3'>
-        <label for='user2'>Kies met welke gebruiker deze gebruiker samengevoegd moet worden<br>(Let op: Hiermee wordt deze gebruiker definitief verwijderd en worden alle stukjes en andere acties van de gebruiker in het systeem overgeplaatst naar de gekozen gebruiker.)</label>
+        <label for='user2'>Kies met welke gebruiker deze gebruiker samengevoegd moet worden.<br><b>Let op:</b> Hiermee wordt deze gebruiker definitief verwijderd en worden alle stukjes en andere acties van de gebruiker in het systeem overgeplaatst naar de gekozen gebruiker.</label>
         <select class='form-control' id='user2' name='user2' required>
         <option disabled selected hidden value=''>Selecteer een gebruiker</option>
         <?php

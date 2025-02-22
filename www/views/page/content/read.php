@@ -21,6 +21,9 @@ $checkers = array_map(
 );
 $authors = $article->getAuthorsString();
 ?>
+
+<div class="alert alert-info fixed-bottom text-center" style="display: none" role="alert" id="copy-message"></div>
+
 <h2 class='mb-3'>Stukje lezen</h2>
 <div class='row'>
     <?php
@@ -31,7 +34,7 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-4'><b>Titel</b></></div>
     <?php
     if ($role == 3) {
-        echo "<div class='col-sm-8 click-text' title='copy' onclick='copyText(\"" . htmlspecialchars($article->title) . "\")'>" . htmlspecialchars($article->title) . "</div>";
+        echo "<div class='col-sm-8 click-text' title='copy' onclick='copyText(this, \"Titel gekopieerd.\")'>" . htmlspecialchars($article->title) . "</div>";
     } else {
         echo "<div class='col-sm-8'>" . htmlspecialchars($article->title) . "</div>";
     }
@@ -46,7 +49,7 @@ $authors = $article->getAuthorsString();
 <div class='row mt-4'>
     <?php
 if ($role == 3) {
-    echo "<div class='col-sm-12 tekst click-text' title='copy' onclick='copyText(" . json_encode(htmlspecialchars($article->contents)) . ")'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
+    echo "<div class='col-sm-12 tekst click-text' title='copy' onclick='copyText(this, \"Tekst gekopieerd.\")'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
 } else {
     echo "<div class='col-sm-12 tekst'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
 }

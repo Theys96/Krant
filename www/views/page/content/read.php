@@ -31,7 +31,7 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-4'><b>Titel</b></></div>
     <?php
     if ($role == 3) {
-        echo "<div class='col-sm-8'><input type='button' class='click-text' value='" . htmlspecialchars($article->title) . "' onclick='copyText(this)'/></div>";
+        echo "<div class='col-sm-8 click-text' title='copy' onclick='copyText(\"" . htmlspecialchars($article->title) . "\")'>" . htmlspecialchars($article->title) . "</div>";
     } else {
         echo "<div class='col-sm-8'>" . htmlspecialchars($article->title) . "</div>";
     }
@@ -46,7 +46,7 @@ $authors = $article->getAuthorsString();
 <div class='row mt-4'>
     <?php
 if ($role == 3) {
-    echo "<div class='col-sm-12 tekst'><input type='button' class='click-text' value='" . htmlspecialchars($article->contents) . "' onclick='copyText(this)'/></div>";
+    echo "<div class='col-sm-12 tekst click-text' title='copy' onclick='copyText(" . json_encode(htmlspecialchars($article->contents)) . ")'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
 } else {
     echo "<div class='col-sm-12 tekst'>" . nl2br(htmlspecialchars($article->contents)) . "</div>";
 }

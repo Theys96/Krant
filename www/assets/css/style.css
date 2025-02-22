@@ -283,8 +283,6 @@ table.diff-wrapper {
 	background: none;
 	border: none;
 	text-align: left;
-	white-space: pre-wrap;
-	padding: 0px;
 }
 
 .click-text:hover {

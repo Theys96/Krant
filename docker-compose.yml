@@ -39,5 +39,17 @@ services:
             - ./www:/var/www/html/
         working_dir: /var/www/html
         command: /bin/true
+    php:
+        image: php:8.0-cli
+        volumes:
+            - ./www:/var/www/html/
+        working_dir: /var/www/html
+        command: /bin/true
+    composer:
+        image: composer:2
+        volumes:
+            - ./www:/var/www/html/
+        working_dir: /var/www/html
+        command: /bin/true
 volumes:
     persistent:

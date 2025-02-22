@@ -19,8 +19,8 @@ bin/install
 This downloads the dependencies and puts them in the right places.
 
 ## Deployment (Apache)
-Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed. The `node_modules` folder does not need to be
-copied. Running `bin/install` is still necessary to run first to download and install the dependencies.
+Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed. The `node_modules` and `vendor` folders do not 
+need to be copied. Running `bin/install` is still necessary to run first to download and install the dependencies.
 
 To set up the database, use `krant.sql` (this defines all the required tables).
 
@@ -40,16 +40,16 @@ The deployment is now available at `http://localhost:80`. PHPMyAdmin is availabl
 
 ## Tests
 
-Make sure you have PHP 8.0 installed. PHPStan tests:
+PHPStan tests:
 
 ```bash
-php phpstan.phar
+bin/phpstan
 ```
 
-The analysis level is set in `phpstan.neon`, and should be increased over time.
+The analysis level is set in `www/phpstan.neon`, and should be increased over time.
 
 Code style fixer:
 
 ```bash
-php php-cs-fixer-v3.phar fix
+bin/cs-fix
 ```

@@ -1,6 +1,6 @@
 <?php
 
-use Model\Log;
+use App\Model\Log;
 
 /**
  * @var Log[] $feedback

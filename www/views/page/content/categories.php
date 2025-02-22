@@ -1,6 +1,6 @@
 <?php
 
-use Model\Category;
+use App\Model\Category;
 
 /**
  * @var Category[] $categories

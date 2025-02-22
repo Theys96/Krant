@@ -1,6 +1,6 @@
 <?php
 
-use Model\User;
+use App\Model\User;
 
 /**
  * @var User $user

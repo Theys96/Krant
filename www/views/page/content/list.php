@@ -1,9 +1,9 @@
 <?php
 
-use Model\Article;
-use Model\Category;
-use Util\Singleton\Session;
-use Util\ViewRenderer;
+use App\Model\Article;
+use App\Model\Category;
+use App\Util\Singleton\Session;
+use App\Util\ViewRenderer;
 
 /**
  * @var Article[] $articles

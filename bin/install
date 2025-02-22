@@ -7,3 +7,4 @@ $DOCKER_COMPOSE pull
 $DOCKER_COMPOSE build
 ./npm install
 ./npm run copy-assets
+./composer install

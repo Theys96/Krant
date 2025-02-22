@@ -1,5 +1,6 @@
 <?php
-use Util\Singleton\Session;
+
+use App\Util\Singleton\Session;
 
 /**
  * @var string $body

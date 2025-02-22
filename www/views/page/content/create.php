@@ -1,6 +1,7 @@
 <?php
-use Model\Article;
-use Model\Category;
+
+use App\Model\Article;
+use App\Model\Category;
 
 /**
  * @var Category[] $categories

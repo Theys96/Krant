@@ -2,7 +2,7 @@
 
 require 'bootstrap.php';
 
-use Util\Router;
+use App\Util\Router;
 
 header("Content-Type: application/json;charset=utf-8");
 $controller = (new Router())->get_api_controller_instance();

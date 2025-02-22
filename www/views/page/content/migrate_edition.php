@@ -1,9 +1,9 @@
 <?php
 
-use Model\Article;
-use Model\Category;
-use Model\Edition;
-use Model\User;
+use App\Model\Article;
+use App\Model\Category;
+use App\Model\Edition;
+use App\Model\User;
 
 /**
  * @var Edition $from_edition

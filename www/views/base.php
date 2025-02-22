@@ -1,5 +1,6 @@
 <?php
-use Util\Singleton\Session;
+
+use App\Util\Singleton\Session;
 
 /**
  * @var string $body
@@ -18,7 +19,7 @@ $gold = Session::instance()->getGold();
         <title>Krant</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
         <!-- Krant CSS -->
         <link href="assets/css/style.css" rel="stylesheet">
@@ -29,13 +30,13 @@ $gold = Session::instance()->getGold();
         <link href="assets/css/gold.css" rel="stylesheet">
         <?php endif; ?>
         <!-- jQuery -->
-        <script src="assets/js/jquery-3.2.1.min.js"></script>
+        <script src="assets/vendor/jquery/jquery.js"></script>
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
-        <script type="module" src="assets/js/emoji-picker-element-1.26.0/index.js"></script>
+        <script type="module" src="assets/vendor/emoji-picker-element/index.js"></script>
         <script src='assets/js/emoji-react.js'></script>
     </head>
     <body>
@@ -55,7 +56,7 @@ if ($show_easter_egg) {
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/vendor/popper.js/umd/popper.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
     </body>
 </html>

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+
+./php vendor/bin/php-cs-fixer fix .

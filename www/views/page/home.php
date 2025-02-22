@@ -1,5 +1,4 @@
 <?php
-use Model\Edition;
 
 /**
  * @var string $username

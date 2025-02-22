@@ -1,6 +1,6 @@
 <?php
 
-use Model\User;
+use App\Model\User;
 
 /**
  * @var User $user
@@ -35,12 +35,11 @@ use Model\User;
     </div>
 
     <div class='mt-3 form-group'>
-        <label class="custom-control custom-checkbox">
-            <input type='checkbox' name='edit_active' value='1'
+        <div class="custom-control custom-checkbox">
+            <input type='checkbox' name='edit_active' value='1' id="active-checkbox"
                    class="custom-control-input" <?php echo $user->active === true ? ' checked' : ''; ?>/>
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Actief</span>
-        </label>
+            <label class="custom-control-label" for="active-checkbox">Actief</label>
+        </div>
     </div>
 
     <input class='btn btn-primary' type='submit' value='Opslaan'/>

@@ -1,6 +1,6 @@
 <?php
 
-use Util\Singleton\Configuration;
+use App\Util\Singleton\Configuration;
 
 /**
  * @var Configuration $variables

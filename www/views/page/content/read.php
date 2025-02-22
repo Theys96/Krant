@@ -1,10 +1,10 @@
 <?php
 
-use Jfcherng\Diff\Factory\RendererFactory;
-use Model\Article;
-use Model\ArticleChange;
-use Model\User;
-use Util\ViewRenderer;
+use App\Jfcherng\Diff\Factory\RendererFactory;
+use App\Model\Article;
+use App\Model\ArticleChange;
+use App\Model\User;
+use App\Util\ViewRenderer;
 
 /**
  * @var Article $article

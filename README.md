@@ -8,8 +8,19 @@ Configuration is done in `Util/Config.php`. Create this file by renaming `Util/C
 necessary, the database connection can be configured here. The default configuration should work for the docker-compose
 setup.
 
+## Install
+
+Run:
+
+```bash
+bin/install
+```
+
+This downloads the dependencies and puts them in the right places.
+
 ## Deployment (Apache)
-Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed.
+Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed. The `node_modules` and `vendor` folders do not 
+need to be copied. Running `bin/install` is still necessary to run first to download and install the dependencies.
 
 To set up the database, use `krant.sql` (this defines all the required tables).
 
@@ -17,10 +28,8 @@ To set up the database, use `krant.sql` (this defines all the required tables).
 The repository is ready to deploy with docker compose (from the repository root). Just run:
 
 ```bash
-docker-compose up
+bin/start
 ```
-
-Depending on your installation of Docker Compose, use `docker compose` instead of `docker-compose`.
 
 The deployment is now available at `http://localhost:80`. PHPMyAdmin is available at `http://localhost:8000`.
 
@@ -31,16 +40,16 @@ The deployment is now available at `http://localhost:80`. PHPMyAdmin is availabl
 
 ## Tests
 
-Make sure you have PHP 8.0 installed. PHPStan tests:
+PHPStan tests:
 
 ```bash
-php phpstan.phar
+bin/phpstan
 ```
 
-The analysis level is set in `phpstan.neon`, and should be increased over time.
+The analysis level is set in `www/phpstan.neon`, and should be increased over time.
 
 Code style fixer:
 
 ```bash
-php php-cs-fixer-v3.phar fix
+bin/cs-fix
 ```

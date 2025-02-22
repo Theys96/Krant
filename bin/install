@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ./detect_docker_compose
+
+$DOCKER_COMPOSE pull
+$DOCKER_COMPOSE build
+./npm install
+./npm run copy-assets
+./composer install

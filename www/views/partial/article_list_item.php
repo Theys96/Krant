@@ -1,7 +1,9 @@
 <?php
-use Model\Article;
-use Model\User;
-use Util\Singleton\Session;
+
+use App\Model\Article;
+use App\Model\ArticleReaction;
+use App\Model\User;
+use App\Util\Singleton\Session;
 
 /**
  * @var Article $article
@@ -22,7 +24,7 @@ $authors_ids = array_map(
     },
     $article->authors
 );
-$reactions = \Model\ArticleReaction::getByArticleIdGrouped($article->id);
+$reactions = ArticleReaction::getByArticleIdGrouped($article->id);
 ?>
 
 <div class="stukje card mt-3 shadow-sm border-1">

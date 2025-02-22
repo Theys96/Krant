@@ -1,6 +1,6 @@
 <?php
 
-use Model\Edition;
+use App\Model\Edition;
 
 /**
  * @var Edition $edition

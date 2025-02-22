@@ -1,9 +1,8 @@
 <?php
 
-use Jfcherng\Diff\Differ;
-use Jfcherng\Diff\Factory\RendererFactory;
-use Model\ArticleChange;
-use Jfcherng\Diff\Renderer\AbstractRenderer;
+use App\Jfcherng\Diff\Differ;
+use App\Jfcherng\Diff\Renderer\AbstractRenderer;
+use App\Model\ArticleChange;
 
 /**
  * @var ArticleChange $article_change;

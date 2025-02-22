@@ -1,7 +1,7 @@
 <?php
 
-use Model\Article;
-use Model\Edition;
+use App\Model\Article;
+use App\Model\Edition;
 
 /**
  * @var Edition[] $editions

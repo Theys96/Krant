@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "emoji-picker-element": "^1.26.0",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.14.3"
+  },
+  "name": "krant",
+  "version": "1.0.0",
+  "description": "Article CMS for an amateur newspaper",
+  "main": "index.php",
+  "scripts": {
+    "copy:bootstrap": "cp -R node_modules/bootstrap/dist assets/vendor/bootstrap",
+    "copy:jquery": "cp -R node_modules/jquery/dist assets/vendor/jquery",
+    "copy:popper": "cp -R node_modules/popper.js/dist assets/vendor/popper.js",
+    "copy:emoji-picker-element": "cp -R node_modules/emoji-picker-element assets/vendor/emoji-picker-element",
+    "copy-assets": "rm -R assets/vendor/*/ || true && npm run copy:bootstrap && npm run copy:jquery && npm run copy:popper && npm run copy:emoji-picker-element"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Theys96/Krant.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Theys96/Krant/issues"
+  },
+  "homepage": "https://github.com/Theys96/Krant#readme"
+}

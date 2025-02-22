@@ -1,4 +1,3 @@
-version: "2"
 services:
     www:
         build: docker
@@ -34,5 +33,11 @@ services:
             MYSQL_USER: thijs
             MYSQL_PASSWORD: krant
             MYSQL_ROOT_PASSWORD: krant
+    npm:
+        image: node:22
+        volumes:
+            - ./www:/var/www/html/
+        working_dir: /var/www/html
+        command: /bin/true
 volumes:
     persistent:

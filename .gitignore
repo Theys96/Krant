@@ -1,2 +1,9 @@
+
+# npm
+www/assets/vendor/*
+!www/assets/vendor/.gitkeep
+www/node_modules
+
+# PHP
 www/classes/Util/Config.php
 .php-cs-fixer.cache

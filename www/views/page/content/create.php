@@ -85,11 +85,10 @@ $ready = $article?->ready;
     </div>
 
     <div class='mt-3 form-group'>
-        <label class="custom-control custom-checkbox">
-            <input type='checkbox' name='done' value='1' class="custom-control-input" <?php echo $ready === true ? ' checked' : ''; ?>/>
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Dit stukje is klaar</span>
-        </label>
+        <div class="custom-control custom-checkbox">
+            <input type='checkbox' name='done' value='1' id="done-checkbox" class="custom-control-input" <?php echo $ready === true ? ' checked' : ''; ?>/>
+            <label class="custom-control-label" for="done-checkbox">Dit stukje is klaar</label>
+        </div>
     </div>
 
 <?php

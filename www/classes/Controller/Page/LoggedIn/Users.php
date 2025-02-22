@@ -47,6 +47,19 @@ class Users extends LoggedInPage
                     ErrorHandler::instance()->addError('Kon gebruiker niet aanpassen: Niet gevonden.');
                 }
             }
+            if (isset($_GET['merge_user'])) {
+                $user1_id = (int)$_GET['merge_user'];
+                $user2_id = (int)$_POST['user2'];
+                if ($user2_id != 0) {
+                    $combine_user1 = User::getById($user1_id);
+                    $combine_user2 = User::getById($user2_id);
+                    if ($combine_user1 != null && $combine_user2 != null) {
+                        $combine_user2->combineUsers($combine_user1);
+                    } else {
+                        ErrorHandler::instance()->addError('Kon de gebruikers niet mergen: Niet gevonden.');
+                    }
+                }
+            }
             if (isset($_POST['new_name']) && isset($_POST['new_perm_level'])) {
                 $new_name = $_POST['new_name'];
                 $new_perm_level = $_POST['new_perm_level'];

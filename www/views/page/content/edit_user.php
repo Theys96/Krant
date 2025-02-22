@@ -4,6 +4,7 @@ use Model\User;
 
 /**
  * @var User $user
+ * @var User[] $users
  */
 ?>
 <h2>Gebruiker aanpassen</h2>
@@ -43,5 +44,24 @@ use Model\User;
     </div>
 
     <input class='btn btn-primary' type='submit' value='Opslaan'/>
+    <a class='btn btn-info' href='?action=users'>Terug</a>
+</form>
+<br>
+<h2>Gebruiker samenvoegen</h2>
+<form method='post' action="?action=users&merge_user=<?php echo $user->id; ?>">
+    <div class='form-group mt-3'>
+        <label for='user2'>Kies met welke gebruiker deze gebruiker samengevoegd moet worden.<br><b>Let op:</b> Hiermee wordt deze gebruiker definitief verwijderd en worden alle stukjes en andere acties van de gebruiker in het systeem overgeplaatst naar de gekozen gebruiker.</label>
+        <select class='form-control' id='user2' name='user2' required>
+        <option disabled selected hidden value=''>Selecteer een gebruiker</option>
+        <?php
+        foreach ($users as $user2) {
+            if ($user != $user2) {
+                echo "<option value='$user2->id'>$user2->username</option>";
+            }
+        }
+?>
+        </select>
+    </div>
+    <input class='btn btn-primary' type='submit' value='Merge'/>
     <a class='btn btn-info' href='?action=users'>Terug</a>
 </form>

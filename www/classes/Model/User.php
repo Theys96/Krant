@@ -156,6 +156,49 @@ class User
     }
 
     /**
+     * Alle gegevens van user1 worden overgezet naar deze gebruiker. Daarna wordt user1 verwijderd.
+     * @param \Model\User $user1
+     * @return User|null
+     */
+    public function combineUsers(User $user1): ?User
+    {
+        if ($user1->perm_level == 3) {
+            ErrorHandler::instance()->addError(sprintf('Kan beheerder \'%s\' niet mergen.', $user1->username));
+            return null;
+        }
+        //zet de reacties over als dat mogelijk is.
+        Database::instance()->storeQuery("UPDATE IGNORE article_reactions SET user_id = ? WHERE user_id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $user1->id);
+        $stmt->execute();
+        //verwijder de reacties die niet over gezet kunnen worden.
+        Database::instance()->storeQuery("DELETE FROM article_reactions WHERE user_id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $user1->id);
+        $stmt->execute();
+        //zet de wijzegingen in de stukjes over.
+        Database::instance()->storeQuery("UPDATE article_updates SET user = ? WHERE user = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $user1->id);
+        $stmt->execute();
+        //zet de logs over.
+        Database::instance()->storeQuery("UPDATE log SET user = ? WHERE user = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $this->id, $user1->id);
+        $stmt->execute();
+        //verwijder user1.
+        Database::instance()->storeQuery("DELETE FROM users WHERE id = ?");
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('i', $user1->id);
+        $stmt->execute();
+        if ($stmt->errno != 0) {
+            ErrorHandler::instance()->addError(sprintf('Kan \'%s\' niet mergen.', $user1->username));
+            return null;
+        }
+        return User::getById($this->id);
+    }
+
+    /**
      * @return string
      */
     public function getPermLevelName(): string

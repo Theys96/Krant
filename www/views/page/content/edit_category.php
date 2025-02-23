@@ -2,7 +2,7 @@
 
 use App\Model\Category;
 
-/*
+/**
  * @var Category $category
  */
 ?>

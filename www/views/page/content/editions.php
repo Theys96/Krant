@@ -3,9 +3,9 @@
 use App\Model\Article;
 use App\Model\Edition;
 
-/*
+/**
  * @var Edition[] $editions
- * @var int $role
+ * @var int       $role
  */
 ?>
 <h2>Edities</h2>

@@ -2,9 +2,9 @@
 
 use App\Model\Category;
 
-/*
+/**
  * @var Category[] $categories
- * @var int $role
+ * @var int        $role
  */
 ?>
 <h2>Categorieën</h2>

@@ -30,10 +30,10 @@ function printUserList(array $users, int $role, bool $active): void
     }
 }
 
-/*
+/**
  * @var User[] $active_users
  * @var User[] $archived_users
- * @var int $role
+ * @var int    $role
  */
 ?>
 <h2>Gebruikers</h2>

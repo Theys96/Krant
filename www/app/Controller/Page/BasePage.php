@@ -23,9 +23,6 @@ abstract class BasePage implements Response
         ]);
     }
 
-    /**
-     * @return false
-     */
     protected function showEasterEgg(): bool
     {
         return false;

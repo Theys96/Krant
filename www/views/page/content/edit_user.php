@@ -2,8 +2,8 @@
 
 use App\Model\User;
 
-/*
- * @var User $user
+/**
+ * @var User   $user
  * @var User[] $users
  */
 ?>

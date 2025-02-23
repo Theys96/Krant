@@ -3,7 +3,7 @@
 use App\Model\Article;
 use App\Model\Category;
 
-/*
+/**
  * @var Category[] $categories
  */
 ?>

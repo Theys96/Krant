@@ -2,7 +2,7 @@
 
 use App\Model\Edition;
 
-/*
+/**
  * @var Edition $edition
  */
 ?>

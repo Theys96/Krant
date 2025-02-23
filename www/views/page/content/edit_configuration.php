@@ -2,7 +2,7 @@
 
 use App\Util\Singleton\Configuration;
 
-/*
+/**
  * @var Configuration $variables
  */
 ?>

@@ -2,7 +2,7 @@
 
 use App\Model\Log;
 
-/*
+/**
  * @var Log[] $feedback
  */
 ?>

@@ -2,9 +2,9 @@
 
 use App\Model\User;
 
-/*
+/**
  * @var User[] $users
- * @var array $passwords
+ * @var array  $passwords
  * @var string $errors
  */
 ?>

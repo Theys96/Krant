@@ -10,11 +10,14 @@
 	},
     "autoload": {
         "psr-4": {
-            "App\\": "classes/App/"
+            "App\\": "app/"
         }
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
         "friendsofphp/php-cs-fixer": "^3.69"
+    },
+    "require": {
+        "jfcherng/php-diff": "^6"
     }
 }

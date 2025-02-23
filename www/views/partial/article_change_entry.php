@@ -1,7 +1,7 @@
 <?php
 
-use App\Jfcherng\Diff\Differ;
-use App\Jfcherng\Diff\Renderer\AbstractRenderer;
+use Jfcherng\Diff\Differ;
+use Jfcherng\Diff\Renderer\AbstractRenderer;
 use App\Model\ArticleChange;
 
 /**

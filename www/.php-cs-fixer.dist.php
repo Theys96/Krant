@@ -1,10 +1,7 @@
 <?php
 
 $finder = (new PhpCsFixer\Finder())
-    ->in('classes')
-    ->exclude([
-        'classes/App/Jfcherng',
-    ])
+    ->in(['app', 'views'])
 ;
 
 return (new PhpCsFixer\Config())

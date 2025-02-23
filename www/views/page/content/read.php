@@ -1,6 +1,6 @@
 <?php
 
-use App\Jfcherng\Diff\Factory\RendererFactory;
+use Jfcherng\Diff\Factory\RendererFactory;
 use App\Model\Article;
 use App\Model\ArticleChange;
 use App\Model\User;
@@ -83,7 +83,11 @@ if ($article->context != "") {
 <?php
 $ids = array_keys($article_changes);
 $diff_renderer = RendererFactory::make('SideBySide', $rendererOptions = [
-    'language' => 'dut',
+    'language' => [
+        "old_version" => "Oud",
+        "new_version" => "Nieuw",
+        "differences" => "Verschillen"
+    ],
     'lineNumbers' => false,
 ]);
 for ($i = 0; $i < count($ids); $i++) {

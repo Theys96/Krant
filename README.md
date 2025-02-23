@@ -1,10 +1,10 @@
 # Krant
 Article CMS for an amateur newspaper.
-This project's front-end is in **dutch**. This repository accepts dutch besides english.
+This project's front-end is in **Dutch**. This repository accepts Dutch besides English.
 
 ## Getting started
 
-Configuration is done in `Util/Config.php`. Create this file by renaming `Util/Config.example.php`. If
+Configuration is done in `www/app/Util/Config.php`. Create this file by copying `www/app/Util/Config.example.php`. If
 necessary, the database connection can be configured here. The default configuration should work for the docker-compose
 setup.
 
@@ -18,14 +18,8 @@ bin/install
 
 This downloads the dependencies and puts them in the right places.
 
-## Deployment (Apache)
-Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed. The `node_modules` and `vendor` folders do not 
-need to be copied. Running `bin/install` is still necessary to run first to download and install the dependencies.
-
-To set up the database, use `krant.sql` (this defines all the required tables).
-
-## Deployment (Docker compose)
-The repository is ready to deploy with docker compose (from the repository root). Just run:
+## Run (Docker compose)
+The project is ready to run with docker compose (from the repository root). Just run:
 
 ```bash
 bin/start
@@ -53,3 +47,15 @@ Code style fixer:
 ```bash
 bin/cs-fix
 ```
+
+## Deployment (Apache)
+
+First run:
+
+```bash
+bin/install-prod
+```
+
+Then copy the contents of the `www/` folder to a webserver with PHP 8 and MySQL installed.
+
+To set up the database, use `krant.sql` (this defines all the required tables).

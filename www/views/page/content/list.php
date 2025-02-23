@@ -23,7 +23,7 @@ if (sizeof($catFilter) == sizeof($categories)) {
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
 <?php
-function cap($text, $len)
+function cap(string $text, int $len): string
 {
     return substr($text, 0, $len).(strlen($text) > $len ? '...' : '');
 }

@@ -7,6 +7,9 @@ namespace App\Util;
  */
 class ViewRenderer
 {
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function render_view(string $view, array $data): string
     {
         extract($data);

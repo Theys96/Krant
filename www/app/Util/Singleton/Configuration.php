@@ -61,7 +61,7 @@ class Configuration
         }
     }
 
-    private function getValue($name): ?string
+    private function getValue(string $name): ?string
     {
         Database::instance()->storeQuery('SELECT * FROM configuration WHERE name = ?');
         $stmt = Database::instance()->prepareStoredQuery();
@@ -75,10 +75,15 @@ class Configuration
         return $config_data ? $config_data['value'] : null;
     }
 
+    /**
+     * @param array<int, string> $passwords
+     *
+     * @return $this
+     */
     public function updateAll(string $schrijfregels, int $min_checks, ?string $mail_address, array $passwords): Configuration
     {
         $this->schrijfregels = $this->schrijfregels == $schrijfregels ? $schrijfregels : $this->update('schrijfregels', $schrijfregels);
-        $this->min_checks = $this->min_checks == $min_checks ? $min_checks : (int) $this->update('min_checks', $min_checks);
+        $this->min_checks = $this->min_checks == $min_checks ? $min_checks : (int) $this->update('min_checks', (string) $min_checks);
         $this->mail_address = $this->mail_address == $mail_address ? $mail_address : $this->update('mail_address', $mail_address);
         if ($this->passwords != $passwords) {
             $this->passwords = explode(',', $this->update('passwords', implode(',', array: $passwords)));
@@ -90,7 +95,7 @@ class Configuration
         return $this;
     }
 
-    protected function update(string $name, ?string $value)
+    protected function update(string $name, ?string $value): ?string
     {
         Database::instance()->storeQuery('UPDATE configuration SET value = ? WHERE name = ?');
         $stmt = Database::instance()->prepareStoredQuery();

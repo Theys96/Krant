@@ -87,6 +87,12 @@ class ArticleReaction
         return null;
     }
 
+    /**
+     * @return array<int, array{
+     *     'reaction': string,
+     *     'users': string[]
+     * }>
+     */
     public static function getByArticleIdGrouped(int $id): array
     {
         $reactions = ArticleReaction::getByArticleId($id);

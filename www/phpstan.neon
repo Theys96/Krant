@@ -1,5 +1,5 @@
 parameters:
-	level: 4 # Doel: stapsgewijs verhogen naar 8
+	level: 6 # Doel: stapsgewijs verhogen naar 8
 	paths:
 		- app
 		- views

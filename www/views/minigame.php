@@ -28,6 +28,7 @@
 
   // Variabelen voor vijandgrootte, spawnmarge en spelerafmetingen
   const enemySize = 120;        // Basisgrootte van vijand
+  const friendSize = 120;        // Basisgrootte van vrienden
   const spawnMargin = 50;      // Marge van rand voor vijanden
   const playerSize = 90;       // Basisgrootte van de spelerafbeelding
 
@@ -48,18 +49,23 @@
   const playerImage = new Image();
   playerImage.src = "assets/img/thijs.png"; // Vervang door jouw eigen spelerafbeelding!
 
-  // Array voor vijanden en lasers
+  // Array voor vijanden en lasers en vrienden
   let enemies = [];
   let lasers = [];
+  let friends = [];
 
   // Vijand afbeelding
   const enemyImage = new Image();
   enemyImage.src = "assets/img/MHN.png"; // Vervang door je eigen vijandafbeelding!
 
+  // Vijand afbeelding
+  const friendImage = new Image();
+  friendImage.src = "assets/img/NHW.png"; // Vervang door je eigen vriendafbeelding!
+
   // Functie om een nieuwe vijand toe te voegen
   function addEnemy() {
     const spawnChance = Math.random();
-    const enemyCountToAdd = spawnChance < 0.03 ? 6 : spawnChance < 0.14 ? 2 : 1; // 1% kans op 5 vijanden, 9% kans op 2 vijanden
+    const enemyCountToAdd = spawnChance < 0.03 ? 4 : spawnChance < 0.14 ? 2 : 1; // 1% kans op 5 vijanden, 9% kans op 2 vijanden
 
     for (let i = 0; i < enemyCountToAdd; i++) {
       const enemy = {
@@ -73,6 +79,36 @@
     }
 
     enemyCount = enemies.length; // Update het aantal vijanden op het speelveld
+  }
+
+  // Functie om een nieuwe vrienden toe te voegen
+  function addFriend() {
+    const spawnChance = Math.random();
+    const friendCountToAdd = spawnChance < 0.03 ? 2 : spawnChance < 0.14 ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
+
+    for (let i = 0; i < friendCountToAdd; i++) {
+      const friend = {
+        x: spawnMargin + Math.random() * (canvas.width - 2 * spawnMargin),
+        y: spawnMargin + Math.random() * (canvas.height - 2 * spawnMargin),
+        width: friendSize,
+        height: friendSize * (friendImage.height / friendImage.width), // Houdt de verhoudingen
+        alive: true,
+      };
+      friends.push(friend);
+    }
+  }
+
+  // Functie om een vrienden te verwijderen
+  function removeFriend() {
+    const removeChance = Math.random();
+    const friendCountToRemove = removeChance < 0.15 ? 2 : removeChance < 0.4 ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
+
+    for (let i = 0; i < friendCountToRemove; i++) {
+      if(friends.length > 0) {
+        let index = Math.floor(Math.random() * friends.length);
+        friends[index].alive = false;
+      }
+    }
   }
 
   // Zorg dat er altijd minstens één vijand is
@@ -113,20 +149,37 @@
         clickY < enemy.y + enemy.height / 2;
 
       if (isHit) {
-        shootLaser(enemy);
+        shootLaser(enemy, 0);
+        break; // Stop met het controleren van andere vijanden na het raken
+      }
+    }
+    for (let i = friends.length - 1; i >= 0; i--) {
+      const friend = friends[i];
+      const isHit =
+        clickX > friend.x - friend.width / 2 &&
+        clickX < friend.x + friend.width / 2 &&
+        clickY > friend.y - friend.height / 2 &&
+        clickY < friend.y + friend.height / 2;
+
+      if (isHit) {
+        shootLaser(friend, 1);
         break; // Stop met het controleren van andere vijanden na het raken
       }
     }
   });
 
   // Functie om laser te schieten en kill counter bij te werken
-  function shootLaser(enemy) {
-    lasers.push({ x: enemy.x, y: enemy.y, timestamp: Date.now() });
-    enemy.alive = false;
-    killCount++; // Verhoog de kill counter
+  function shootLaser(target, int) {
+    lasers.push({ x: target.x, y: target.y, timestamp: Date.now() });
+    target.alive = false;
+    if (int == 0) {
+      killCount++; // Verhoog de kill counter
+    } else {
+      killCount = killCount - 5;
+    }
 
     // Zorg ervoor dat er direct een nieuwe vijand verschijnt
-    ensureMinimumEnemies(0);
+    //ensureMinimumEnemies(0);
   }
 
   // Functie om willekeurige spawn-tijden te krijgen tussen 0,7 en 2 seconden
@@ -135,10 +188,12 @@
   }
 
   // Spawn vijanden met willekeurige intervallen
-  function startEnemySpawning() {
+  function startSpawning() {
     setTimeout(() => {
       addEnemy();
-      startEnemySpawning(); // Herstart de spawnfunctie na een willekeurige tijd
+      removeFriend();
+      addFriend();
+      startSpawning(); // Herstart de spawnfunctie na een willekeurige tijd
     }, randomSpawnTime());
   }
 
@@ -177,7 +232,20 @@
         enemy.height
       );
     });
+    
     enemyCount = enemies.length; // Update de vijandenteller
+
+    // Tekent vijanden als afbeeldingen met behoud van verhouding
+    friends = friends.filter(friend => friend.alive);
+    friends.forEach(friend => {
+      ctx.drawImage(
+        friendImage,
+        friend.x - friend.width / 2,
+        friend.y - friend.height / 2,
+        friend.width,
+        friend.height
+      );
+    });
 
     // Tekent lasers
     ctx.strokeStyle = "red";
@@ -192,14 +260,14 @@
     });
 
     // Zorg ervoor dat er altijd minstens één vijand is
-    ensureMinimumEnemies();
+    //ensureMinimumEnemies();
 
     requestAnimationFrame(updateGame);
   }
 
   // Start het spel
   updateGame();
-  startEnemySpawning(); // Start vijand spawning met willekeurige intervallen
+  startSpawning(); // Start vijand spawning met willekeurige intervallen
 
 </script>
 

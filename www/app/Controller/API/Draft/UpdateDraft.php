@@ -40,7 +40,7 @@ class UpdateDraft extends APIResponse
             );
             if (count($live_drafters) > 0) {
                 $names = implode(', ', array_column($live_drafters, 'username'));
-                $warning = htmlspecialchars($names) . (count($live_drafters) > 1 ? ' werken ' : ' werkt ') . 'nu ook aan dit stukje.';
+                $warning = UpdateDraft . phphtmlspecialchars($names) . (count($live_drafters) > 1 ? ' werken ' : ' werkt ') . 'nu ook aan dit stukje.';
             }
 
             return [

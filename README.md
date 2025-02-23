@@ -18,14 +18,8 @@ bin/install
 
 This downloads the dependencies and puts them in the right places.
 
-## Deployment (Apache)
-Copy the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed. The `node_modules` and `vendor` folders do not 
-need to be copied. Running `bin/install` is still necessary to run first to download and install the dependencies.
-
-To set up the database, use `krant.sql` (this defines all the required tables).
-
-## Deployment (Docker compose)
-The repository is ready to deploy with docker compose (from the repository root). Just run:
+## Run (Docker compose)
+The project is ready to run with docker compose (from the repository root). Just run:
 
 ```bash
 bin/start
@@ -53,3 +47,16 @@ Code style fixer:
 ```bash
 bin/cs-fix
 ```
+
+## Deployment (Apache)
+
+First run:
+
+```bash
+bin/install-prod
+```
+
+Copy the contents of the `www/` folder to a webserver with PHP ≥ 8 and MySQL installed. Only the folders and the `.php`
+files are required.
+
+To set up the database, use `krant.sql` (this defines all the required tables).

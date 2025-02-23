@@ -1,0 +1,32 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+
+if ! test -f ../.env; then
+  echo "Make sure to fill in the FTP configuration in the .env file"
+  exit 1
+fi
+if ! test -f ../Config.production.php; then
+  echo "Make sure to fill in the production configuration in the Config.production.php file"
+  exit 1
+fi
+
+# Install the necessary NPM dependencies
+./npm install
+./npm run copy-assets
+rm -R ../www/node_modules
+
+# Install the necessary PHP dependencies
+rm -R ../www/vendor
+./composer install --no-dev
+
+# Sync only the necessary files
+source ../.env
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; mirror -R ../www/app $FTP_PATH/app; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; mirror -R ../www/assets $FTP_PATH/assets; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; mirror -R ../www/vendor $FTP_PATH/vendor; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; mirror -R ../www/views $FTP_PATH/views; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; put ../www/index.php -o $FTP_PATH/index.php; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; put ../www/api.php -o $FTP_PATH/api.php; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; put ../www/bootstrap.php -o $FTP_PATH/bootstrap.php; quit"
+lftp -u "$FTP_USERNAME","$FTP_PASSWORD" ftp://"$FTP_HOST" -e "set ftp:ssl-allow no; put ../Config.production.php -o $FTP_PATH/app/Util/Config.php; quit"

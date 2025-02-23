@@ -37,6 +37,9 @@
   let killCount = 0;
   let enemyCount = 0;
 
+  //gamestate
+  let gameActive = true;
+
   // Speler object met afbeelding
   const player = {
     x: canvas.width / 2,
@@ -79,6 +82,9 @@
     }
 
     enemyCount = enemies.length; // Update het aantal vijanden op het speelveld
+    if (enemyCount > 5) {
+      gameActive = false;
+    }
   }
 
   // Functie om een nieuwe vrienden toe te voegen
@@ -108,13 +114,6 @@
         let index = Math.floor(Math.random() * friends.length);
         friends[index].alive = false;
       }
-    }
-  }
-
-  // Zorg dat er altijd minstens één vijand is
-  function ensureMinimumEnemies() {
-    if (enemies.length === 0) {
-      addEnemy();
     }
   }
 
@@ -148,7 +147,7 @@
         clickY > enemy.y - enemy.height / 2 &&
         clickY < enemy.y + enemy.height / 2;
 
-      if (isHit) {
+      if (isHit && gameActive) {
         shootLaser(enemy, 0);
         break; // Stop met het controleren van andere vijanden na het raken
       }
@@ -161,9 +160,27 @@
         clickY > friend.y - friend.height / 2 &&
         clickY < friend.y + friend.height / 2;
 
-      if (isHit) {
+      if (isHit && gameActive) {
         shootLaser(friend, 1);
         break; // Stop met het controleren van andere vijanden na het raken
+      }
+    }
+
+    //retry knop om te herstarten
+    if (!gameActive) {
+      const retry =
+        clickX > (canvas.width / 2) - 100 && 
+        clickX < ((canvas.width / 2) - 100) + 200 &&
+        clickY > (canvas.height / 2) + 20 &&
+        clickY < ((canvas.height / 2) + 20) + 50;
+
+      if (retry) {
+        enemies = [];
+        friends = [];
+        killCount = 0;
+        gameActive = true;
+        updateGame();
+        startSpawning();
       }
     }
   });
@@ -173,13 +190,10 @@
     lasers.push({ x: target.x, y: target.y, timestamp: Date.now() });
     target.alive = false;
     if (int == 0) {
-      killCount++; // Verhoog de kill counter
+      killCount++; // vijand geraakt, Verhoog de kill counter
     } else {
-      killCount = killCount - 5;
+      killCount = killCount - 5; //vriend geraakt, verlaag counter
     }
-
-    // Zorg ervoor dat er direct een nieuwe vijand verschijnt
-    //ensureMinimumEnemies(0);
   }
 
   // Functie om willekeurige spawn-tijden te krijgen tussen 0,7 en 2 seconden
@@ -193,7 +207,9 @@
       addEnemy();
       removeFriend();
       addFriend();
-      startSpawning(); // Herstart de spawnfunctie na een willekeurige tijd
+      if (gameActive) {
+        startSpawning(); // Herstart de spawnfunctie na een willekeurige tijd
+      }
     }, randomSpawnTime());
   }
 
@@ -259,8 +275,20 @@
       ctx.stroke();
     });
 
-    // Zorg ervoor dat er altijd minstens één vijand is
-    //ensureMinimumEnemies();
+    //game over overlay
+    if (!gameActive) {
+      ctx.fillStyle = "rgb(32,32,32,0.4)";
+      ctx.fillRect(0 , 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.fillRect((canvas.width / 2) - 102, (canvas.height / 2) + 18, 204, 54);
+      ctx.fillStyle = "gray";
+      ctx.fillRect((canvas.width / 2) - 100, (canvas.height / 2) + 20, 200, 50);
+      ctx.fillStyle = "white";
+      ctx.font = "65px Arial bold";
+      ctx.fillText("GAME OVER", (canvas.width / 2) - 195, (canvas.height / 2) - 10);
+      ctx.font = "50px Arial bold";
+      ctx.fillText("retry", (canvas.width / 2) - 50, (canvas.height / 2) + 57);
+    }
 
     requestAnimationFrame(updateGame);
   }

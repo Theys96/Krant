@@ -7,8 +7,5 @@ namespace App\Controller;
  */
 interface Response
 {
-    /**
-     * @return string
-     */
     public function render(): string;
 }

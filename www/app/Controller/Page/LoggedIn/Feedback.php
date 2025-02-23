@@ -17,16 +17,13 @@ class Feedback extends LoggedInPage
         if (isset($_POST['text'])) {
             $result = Log::logFeedback($_POST['text']);
             if ($result) {
-                ErrorHandler::instance()->addMessage("Feedback verzonden.");
+                ErrorHandler::instance()->addMessage('Feedback verzonden.');
             } else {
-                ErrorHandler::instance()->addError("Er is iets misgegaan bij het verzenden van de feedback.");
+                ErrorHandler::instance()->addError('Er is iets misgegaan bij het verzenden van de feedback.');
             }
         }
     }
 
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.feedback', []);
@@ -37,6 +34,6 @@ class Feedback extends LoggedInPage
      */
     public function allowed_roles(): array
     {
-        return [1,2,3];
+        return [1, 2, 3];
     }
 }

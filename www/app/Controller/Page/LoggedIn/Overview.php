@@ -15,9 +15,6 @@ class Overview extends LoggedInPage
     {
     }
 
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.overview', [

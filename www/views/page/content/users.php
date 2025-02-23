@@ -4,9 +4,6 @@ use App\Model\User;
 
 /**
  * @param User[] $users
- * @param int $role
- * @param bool $active
- * @return void
  */
 function printUserList(array $users, int $role, bool $active): void
 {
@@ -15,26 +12,25 @@ function printUserList(array $users, int $role, bool $active): void
         $color = $row ? '#AAAAAA' : '#DDDDDD';
         $row = !$row;
 
-        echo "<div style='background-color: " . $color . "' class='row'>\n";
-        echo "<div class='col-sm-8 d-flex justify-content-between py-2 pl-3'><span><b>" . htmlspecialchars($user->username) . "</b></span>";
-        echo "<span>" . $user->getPermLevelName() . "</span>";
-        echo "</div>";
+        echo "<div style='background-color: ".$color."' class='row'>\n";
+        echo "<div class='col-sm-8 d-flex justify-content-between py-2 pl-3'><span><b>".htmlspecialchars($user->username).'</b></span>';
+        echo '<span>'.$user->getPermLevelName().'</span>';
+        echo '</div>';
         echo "<div class='col-sm-4 d-flex justify-content-end'>";
-        if ($role === 3) {
-            echo "<a class='p-1 btn btn-sm btn-primary mr-1 my-1' href='?action=edit_user&user=" . $user->id . "'>Aanpassen</a>";
+        if (3 === $role) {
+            echo "<a class='p-1 btn btn-sm btn-primary mr-1 my-1' href='?action=edit_user&user=".$user->id."'>Aanpassen</a>";
             if ($active) {
-                echo "<a class='p-1 btn btn-sm btn-danger mr-1 my-1' href='?action=users&deactivate=" . $user->id . "'>Deactiveren</a>";
-
+                echo "<a class='p-1 btn btn-sm btn-danger mr-1 my-1' href='?action=users&deactivate=".$user->id."'>Deactiveren</a>";
             } else {
-                echo "<a class='p-1 btn btn-sm btn-success mr-1 my-1' href='?action=users&activate=" . $user->id . "'>Activeren</a>";
+                echo "<a class='p-1 btn btn-sm btn-success mr-1 my-1' href='?action=users&activate=".$user->id."'>Activeren</a>";
             }
         }
-        echo "</div>";
+        echo '</div>';
         echo "</div>\n";
     }
 }
 
-/**
+/*
  * @var User[] $active_users
  * @var User[] $archived_users
  * @var int $role
@@ -49,7 +45,7 @@ printUserList($active_users, $role, true);
 </div>
 
 <?php
-if ($role == 3) :
+if (3 == $role) {
     ?>
     <form method='post'>
         <h3>Gebruiker toevoegen</h3>
@@ -68,7 +64,7 @@ if ($role == 3) :
         <input type='submit' class='btn btn-primary' value='Toevoegen'/>
     </form>
 <?php
-endif;
+}
 ?>
 
 <h3 class="mt-5">Gedeactiveerde gebruikers</h3>

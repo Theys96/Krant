@@ -13,10 +13,9 @@ class NewDraft extends APIResponse
     protected function get_response_object(): object|array
     {
         if (Session::instance()->isLoggedIn()) {
-
-            if (isset($_REQUEST['article_id']) && $_REQUEST['article_id'] !== '') {
+            if (isset($_REQUEST['article_id']) && '' !== $_REQUEST['article_id']) {
                 $article = Article::getById($_REQUEST['article_id']);
-                if ($article === null) {
+                if (null === $article) {
                     $article = Article::createNew();
                 }
             } else {
@@ -35,7 +34,7 @@ class NewDraft extends APIResponse
                 Session::instance()->getUser()->id
             );
 
-            if ($article->status === Article::STATUS_DRAFT) {
+            if (Article::STATUS_DRAFT === $article->status) {
                 $article->applyChange($new_article_change);
             }
 
@@ -48,15 +47,15 @@ class NewDraft extends APIResponse
             );
             if (count($live_drafters) > 0) {
                 $names = implode(', ', array_column($live_drafters, 'username'));
-                $warning = htmlspecialchars($names) . (count($live_drafters) > 1 ? ' werken ' : ' werkt ') . 'nu ook aan dit stukje.';
+                $warning = htmlspecialchars($names).(count($live_drafters) > 1 ? ' werken ' : ' werkt ').'nu ook aan dit stukje.';
             }
 
             return [
                 'draft_id' => $new_article_change->id,
-                'warning' => $warning
+                'warning' => $warning,
             ];
-
         }
+
         return [];
     }
 }

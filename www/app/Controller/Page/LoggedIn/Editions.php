@@ -16,13 +16,13 @@ class Editions extends LoggedInPage
 {
     public function __construct()
     {
-        if (Session::instance()->getRole() === 3) {
+        if (3 === Session::instance()->getRole()) {
             if (isset($_GET['edit_edition'])) {
-                $edit_edition_id = (int)$_GET['edit_edition'];
+                $edit_edition_id = (int) $_GET['edit_edition'];
                 $edit_name = $_POST['edit_name'];
                 $edit_description = $_POST['edit_description'];
                 $edit_edition = Edition::getById($edit_edition_id);
-                if ($edit_edition !== null) {
+                if (null !== $edit_edition) {
                     $edit_edition->update($edit_name, $edit_description);
                 } else {
                     ErrorHandler::instance()->addError('Kon editie niet aanpassen: Niet gevonden.');
@@ -32,13 +32,13 @@ class Editions extends LoggedInPage
                 $new_name = $_POST['new_name'];
                 $new_description = $_POST['new_description'];
                 $new_edition = Edition::createNew($new_name, $new_description);
-                if ($new_edition !== null) {
+                if (null !== $new_edition) {
                     ErrorHandler::instance()->addMessage('Editie aangemaakt.');
                 }
             }
             if (isset($_POST['active_edition'])) {
                 $edit_edition = Edition::getById((int) $_POST['active_edition']);
-                if ($edit_edition !== null) {
+                if (null !== $edit_edition) {
                     $edit_edition->setActive();
                 } else {
                     ErrorHandler::instance()->addError('Kon editie niet activeren: Niet gevonden.');
@@ -59,14 +59,11 @@ class Editions extends LoggedInPage
         }
     }
 
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.editions', [
             'editions' => Edition::getAll(),
-            'role' => Session::instance()->getRole()
+            'role' => Session::instance()->getRole(),
         ]);
     }
 

@@ -13,25 +13,21 @@ use App\Util\ViewRenderer;
  */
 class MigrateEdition extends LoggedInPage
 {
-    /** @var Edition */
     protected Edition $edition;
 
     public function __construct()
     {
         if (isset($_GET['edition'])) {
-            $edition = Edition::getById((int)$_GET['edition']);
-            if ($edition !== null) {
+            $edition = Edition::getById((int) $_GET['edition']);
+            if (null !== $edition) {
                 $this->edition = $edition;
+
                 return;
             }
         }
         ErrorHandler::instance()->addError('Editie niet gevonden.');
     }
 
-
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.migrate_edition', [
@@ -40,9 +36,9 @@ class MigrateEdition extends LoggedInPage
             'articles' => array_filter(
                 Article::getAllByEdition($this->edition),
                 static function (Article $article) {
-                    return $article->status === Article::STATUS_OPEN;
+                    return Article::STATUS_OPEN === $article->status;
                 }
-            )
+            ),
         ]);
     }
 

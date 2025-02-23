@@ -1,12 +1,11 @@
 <?php
 
-$finder = (new PhpCsFixer\Finder())
-    ->in(['app', 'views'])
-;
-
 return (new PhpCsFixer\Config())
     ->setRules([
-        '@PSR12' => true,
+        '@Symfony' => true,
     ])
-    ->setFinder($finder)
+    ->setFinder(
+         (new PhpCsFixer\Finder())
+            ->in(['app', 'views'])
+    )
 ;

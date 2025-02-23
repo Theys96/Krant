@@ -7,10 +7,9 @@ use App\Util\Singleton\Session;
 
 /**
  * @var Article $article
- * @var int $role
- * @var string $list_type
+ * @var int     $role
+ * @var string  $list_type
  */
-
 $authors = $article->getAuthorsString();
 $checkers = htmlspecialchars(implode(', ', array_map(
     static function (User $author): string {
@@ -36,11 +35,11 @@ $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
         <li class="list-group-item p-2">
             <div class="d-flex justify-content-between">
                 <p class="mb-0">
-                <?php if ($article->ready === true): ?>
-                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s)<?php echo (count($article->checkers) == 0 ? "" : ": ") . $checkers; ?>
-                <?php else: ?>
+                <?php if (true === $article->ready) { ?>
+                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s)<?php echo (0 == count($article->checkers) ? '' : ': ').$checkers; ?>
+                <?php } else { ?>
                     <span class='badge badge-warning'>Niet klaar</span>
-                <?php endif; ?>
+                <?php } ?>
                 </p>
                 <p class="mb-0"><span class='badge badge-secondary'><?php echo htmlspecialchars($article->category?->name); ?></span></p>
             </div>
@@ -56,19 +55,19 @@ $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
         </li>
     </ul>
     <div class="card-footer d-flex justify-content-between">
-        <?php if ($role != 2 && $article->status === Article::STATUS_OPEN): ?>
+        <?php if (2 != $role && Article::STATUS_OPEN === $article->status) { ?>
             <a class="btn btn-primary" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
-        <?php endif;
-if ($role == 2 && $article->status === Article::STATUS_OPEN && $article->ready === true && !in_array(Session::instance()->getUser()->id, $authors_ids)): ?>
+        <?php }
+        if (2 == $role && Article::STATUS_OPEN === $article->status && true === $article->ready && !in_array(Session::instance()->getUser()->id, $authors_ids)) { ?>
             <a class="btn btn-primary" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
-        <?php endif; ?>
+        <?php } ?>
         <a class="btn btn-primary" href="?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>">Lezen</a>
-        <?php if ($role == 3): ?>
-            <?php if ($article->status === Article::STATUS_OPEN): ?>
+        <?php if (3 == $role) { ?>
+            <?php if (Article::STATUS_OPEN === $article->status) { ?>
                <a class="btn btn-danger" href="?action=<?php echo $list_type; ?>&remove_article=<?php echo $article->id; ?>">Verwijderen</a>
-            <?php elseif ($article->status !== Article::STATUS_DRAFT):?>
+            <?php } elseif (Article::STATUS_DRAFT !== $article->status) { ?>
                <a class="btn btn-warning" href="?action=<?php echo $list_type; ?>&open_article=<?php echo $article->id; ?>">Terugzetten</a>
-            <?php endif; ?>
-        <?php endif; ?>
+            <?php } ?>
+        <?php } ?>
     </div>
 </div>

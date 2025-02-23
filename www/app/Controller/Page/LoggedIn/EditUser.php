@@ -12,25 +12,21 @@ use App\Util\ViewRenderer;
  */
 class EditUser extends LoggedInPage
 {
-    /** @var User */
     protected User $user;
 
     public function __construct()
     {
         if (isset($_GET['user'])) {
-            $user = User::getById((int)$_GET['user']);
-            if ($user !== null) {
+            $user = User::getById((int) $_GET['user']);
+            if (null !== $user) {
                 $this->user = $user;
+
                 return;
             }
         }
         ErrorHandler::instance()->addError('Gebruiker niet gevonden.');
     }
 
-
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.edit_user', [

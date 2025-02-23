@@ -3,7 +3,7 @@
 use App\Model\Article;
 use App\Model\Edition;
 
-/**
+/*
  * @var Edition[] $editions
  * @var int $role
  */
@@ -18,31 +18,31 @@ foreach ($editions as $edition) {
     $row = !$row;
 
     $article_count = $edition->countArticles(Article::STATUS_OPEN);
-    echo "<div style='background-color: " . $color . "' class='row'>\n";
+    echo "<div style='background-color: ".$color."' class='row'>\n";
     echo "<div class='col-1'>";
     if ($edition->active) {
         echo "<span class='badge badge-success my-1 float-right'>Actief</span>";
     }
-    echo "</div>";
-    echo "<div class='col-3'><b>" . htmlspecialchars($edition->name) . "</b></div>";
-    echo "<div class='col-3'>" . htmlspecialchars($edition->description) . "</div>";
+    echo '</div>';
+    echo "<div class='col-3'><b>".htmlspecialchars($edition->name).'</b></div>';
+    echo "<div class='col-3'>".htmlspecialchars($edition->description).'</div>';
     if (!$edition->active && $article_count > 0) {
-        echo "<div class='col-3'><a data-toggle='tooltip' data-placement='top' title='Klik om stukjes over te zetten' href='?action=migrate_edition&edition=" . $edition->id . "'>" . $article_count . " ongeplaatste stukje(s)</a></div>";
+        echo "<div class='col-3'><a data-toggle='tooltip' data-placement='top' title='Klik om stukjes over te zetten' href='?action=migrate_edition&edition=".$edition->id."'>".$article_count.' ongeplaatste stukje(s)</a></div>';
     } else {
-        echo "<div class='col-3'>" . $article_count . " ongeplaatste stukje(s)</div>";
+        echo "<div class='col-3'>".$article_count.' ongeplaatste stukje(s)</div>';
     }
     echo "<div class='col-2'>";
-    if ($role === 3) {
-        echo "<a href='?action=edit_edition&edition=" . $edition->id . "'>Aanpassen</a>";
+    if (3 === $role) {
+        echo "<a href='?action=edit_edition&edition=".$edition->id."'>Aanpassen</a>";
     }
-    echo "</div>";
+    echo '</div>';
     echo "</div>\n";
 }
 ?>
 </div>
 
 <?php
-if ($role == 3) :
+if (3 == $role) {
     ?>
 <form method='post' action='?action=editions'>
     <h3>Huidige editie</h3>
@@ -50,7 +50,7 @@ if ($role == 3) :
         <select name='active_edition' id='active_edition' class='form-control'>
             <?php
                 foreach ($editions as $edition) {
-                    echo "<option value='" . $edition->id . ($edition->active ? "' selected" : "'") . ">" . htmlspecialchars($edition->name) . "</option>\n";
+                    echo "<option value='".$edition->id.($edition->active ? "' selected" : "'").'>'.htmlspecialchars($edition->name)."</option>\n";
                 }
     ?>
         </select>
@@ -70,5 +70,5 @@ if ($role == 3) :
     <input type='submit' class='btn btn-primary' value='Toevoegen' />
 </form>
 <?php
-endif;
+}
 ?>

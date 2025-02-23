@@ -3,24 +3,20 @@
 use App\Model\Article;
 use App\Model\Category;
 
-/**
- * @param $chars
- * @return void
- */
 function printButtons($chars): void
 {
     foreach ($chars as $char) {
-        echo "<input type='button' class='px-4 btn btn-secondary' value='" . $char . "' onclick='insertChar(this)' />";
+        echo "<input type='button' class='px-4 btn btn-secondary' value='".$char."' onclick='insertChar(this)' />";
     }
 }
 
 /**
- * @var Category[] $categories
- * @var string $username
+ * @var Category[]   $categories
+ * @var string       $username
  * @var Article|null $article
- * @var string $title
- * @var bool $check_mode
- * @var string|null $mail
+ * @var string       $title
+ * @var bool         $check_mode
+ * @var string|null  $mail
  */
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
@@ -33,8 +29,8 @@ $ready = $article?->ready;
 <form method='post' onSubmit='return Draft.plaats(this)'>
     <input type='hidden' name='draftid' id='draftid'/>
     <?php
-    if ($article !== null) {
-        echo "<input type='hidden' name='article_id' id='article_id' value='" . $article->id . "'/>";
+    if (null !== $article) {
+        echo "<input type='hidden' name='article_id' id='article_id' value='".$article->id."'/>";
     }
 ?>
 
@@ -46,7 +42,7 @@ $ready = $article?->ready;
     <div class='form-group'>
         <label for='user'>Auteur</label>
 	<div class='form-control input'>
-	<?php echo $article == null ? $username : $article->getAuthorsString(); ?>
+	<?php echo null == $article ? $username : $article->getAuthorsString(); ?>
 	</div>
         <input type='hidden' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
     </div>
@@ -61,7 +57,7 @@ $ready = $article?->ready;
             } else {
                 $selected = false;
             }
-            echo "<option value='" . $category->id . ($selected ? "' selected" : "'") . ">" . htmlspecialchars($category->name) . "</option>\n";
+            echo "<option value='".$category->id.($selected ? "' selected" : "'").'>'.htmlspecialchars($category->name)."</option>\n";
         }
 ?>
         </select>
@@ -73,12 +69,12 @@ $ready = $article?->ready;
 
         <div class="btn-group my-2" role="group" aria-label="Basic example">
             <?php
-            printButtons(array('&euml;', '&eacute;', '&egrave'));
+            printButtons(['&euml;', '&eacute;', '&egrave']);
 ?>
         </div>
         <div class="btn-group my-1" role="group" aria-label="Basic example">
             <?php
-        printButtons(array('&iuml;', '&auml;', '&ouml;', '&uuml;'));
+        printButtons(['&iuml;', '&auml;', '&ouml;', '&uuml;']);
 ?>
         </div>
     </div>
@@ -90,7 +86,7 @@ $ready = $article?->ready;
 
     <div class='mt-3 form-group'>
         <div class="custom-control custom-checkbox">
-            <input type='checkbox' name='done' value='1' id="done-checkbox" class="custom-control-input" <?php echo $ready === true ? ' checked' : ''; ?>/>
+            <input type='checkbox' name='done' value='1' id="done-checkbox" class="custom-control-input" <?php echo true === $ready ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="done-checkbox">Dit stukje is klaar</label>
         </div>
     </div>
@@ -101,12 +97,12 @@ if ($check_mode) {
     echo "<a class='btn btn-secondary' href='?action=list'>Niet nagekeken</a>";
 } else {
     echo "<input class='btn btn-primary' type='submit' value='Opslaan'/> ";
-    if ($mail != null) {
+    if (null != $mail) {
         echo "<button class='btn btn-secondary' type='button' id='mailbtn' value='$mail' onclick='sendMail()'>Mail Foto's</button>";
     }
 }
-if ($article !== null) {
-    echo "<hr /><div class='emoji-reactions' data-article-id='" . $article->id . "'></div>";
+if (null !== $article) {
+    echo "<hr /><div class='emoji-reactions' data-article-id='".$article->id."'></div>";
 }
 ?>
     <span id='info'></span>

@@ -14,14 +14,11 @@ use App\Util\ViewRenderer;
  */
 class Create extends LoggedInPage
 {
-    /**
-     * @param int $article_change_type
-     */
     public function __construct(int $article_change_type = ArticleChange::CHANGE_TYPE_NEW_ARTICLE)
     {
         if (isset($_POST['draftid'])) {
             $article_change = ArticleChange::getById((int) $_POST['draftid']);
-            if ($article_change !== null && $article_change->article !== null) {
+            if (null !== $article_change && null !== $article_change->article) {
                 $article_change = $article_change->updateFields(
                     $article_change->article->status,
                     $_POST['title'],
@@ -37,9 +34,6 @@ class Create extends LoggedInPage
         }
     }
 
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.create', [
@@ -48,7 +42,7 @@ class Create extends LoggedInPage
             'article' => null,
             'check_mode' => false,
             'title' => 'Nieuw stukje',
-            'mail' => Configuration::instance()->mail_address
+            'mail' => Configuration::instance()->mail_address,
         ]);
     }
 
@@ -57,6 +51,6 @@ class Create extends LoggedInPage
      */
     public function allowed_roles(): array
     {
-        return [1,3];
+        return [1, 3];
     }
 }

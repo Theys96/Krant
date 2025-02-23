@@ -3,10 +3,9 @@
 use App\Util\Singleton\Session;
 
 /**
- * @var string $body
+ * @var string    $body
  * @var bool|null $show_easter_egg
  */
-
 $alt_css = Session::instance()->getUser()?->alt_css;
 $gold = Session::instance()->getGold();
 ?>
@@ -23,12 +22,12 @@ $gold = Session::instance()->getGold();
 
         <!-- Krant CSS -->
         <link href="assets/css/style.css" rel="stylesheet">
-        <?php if (!$gold && $alt_css > 0): ?>
-        <?php echo "<link href='assets/css/alt_style${alt_css}.css' rel='stylesheet'>"?>
-        <?php endif; ?>
-        <?php if ($gold): ?>
+        <?php if (!$gold && $alt_css > 0) { ?>
+        <?php echo "<link href='assets/css/alt_style{$alt_css}.css' rel='stylesheet'>"; ?>
+        <?php } ?>
+        <?php if ($gold) { ?>
         <link href="assets/css/gold.css" rel="stylesheet">
-        <?php endif; ?>
+        <?php } ?>
         <!-- jQuery -->
         <script src="assets/vendor/jquery/jquery.js"></script>
         <script>
@@ -45,12 +44,12 @@ $gold = Session::instance()->getGold();
 
 <?php
 if ($show_easter_egg) {
-    echo "<a target=\"_blank\" href=\"?action=minigame\"><img src=\"assets/img/MHN.png\" alt=\"MHN Minigame\" class=\"easter-egg\"></a>";
+    echo '<a target="_blank" href="?action=minigame"><img src="assets/img/MHN.png" alt="MHN Minigame" class="easter-egg"></a>';
 }
 ?>
 
         <div id="footer">
-            &copy; <?php echo date("Y"); ?> Thijs Havinga & Foppe Dijkstra
+            &copy; <?php echo date('Y'); ?> Thijs Havinga & Foppe Dijkstra
         </div>
 
         <!-- Bootstrap core JavaScript

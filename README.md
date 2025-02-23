@@ -2,12 +2,6 @@
 Article CMS for an amateur newspaper.
 This project's front-end is in **Dutch**. This repository accepts Dutch besides English.
 
-## Getting started
-
-Configuration is done in `www/app/Util/Config.php`. Create this file by copying `www/app/Util/Config.example.php`. If
-necessary, the database connection can be configured here. The default configuration should work for the docker-compose
-setup.
-
 ## Install
 
 Run:

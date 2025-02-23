@@ -11,9 +11,6 @@ use App\Util\ViewRenderer;
  */
 class Schrijfregels extends LoggedInPage
 {
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.schrijfregels', [
@@ -25,12 +22,9 @@ class Schrijfregels extends LoggedInPage
      */
     public function allowed_roles(): array
     {
-        return [1,2,3];
+        return [1, 2, 3];
     }
 
-    /**
-     * @return bool
-     */
     protected function showEasterEgg(): bool
     {
         return true;

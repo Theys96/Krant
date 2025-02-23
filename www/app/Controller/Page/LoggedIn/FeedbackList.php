@@ -11,13 +11,10 @@ use App\Util\ViewRenderer;
  */
 class FeedbackList extends LoggedInPage
 {
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.feedbacklist', [
-            'feedback' => Log::getByType(Log::TYPE_FEEDBACK)
+            'feedback' => Log::getByType(Log::TYPE_FEEDBACK),
         ]);
     }
 

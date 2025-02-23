@@ -34,7 +34,6 @@ use App\Controller\Page\Minigame;
 use App\Controller\Response;
 use App\Util\Singleton\ErrorHandler;
 use App\Util\Singleton\Session;
-use Exception;
 
 /**
  * Controller router.
@@ -67,14 +66,13 @@ class Router
     ];
 
     /**
-     * @return Response
-     * @throws Exception
+     * @throws \Exception
      */
     public function get_page_controller_instance(): Response
     {
         if (Session::instance()->isLoggedIn()) {
             if (isset($_GET['action'])) {
-                if ($_GET['action'] === 'logout') {
+                if ('logout' === $_GET['action']) {
                     $response = new Logout();
                 } elseif (array_key_exists($_GET['action'], $this->actions)) {
                     $response = new $this->actions[$_GET['action']]();
@@ -97,19 +95,18 @@ class Router
         }
 
         if (!is_a($response, Response::class)) {
-            throw new Exception('Pagina kon niet worden geladen.');
+            throw new \Exception('Pagina kon niet worden geladen.');
         }
+
         return $response;
     }
 
-    /**
-     * @return Response
-     */
     public function get_api_controller_instance(): Response
     {
         if (!array_key_exists('action', $_REQUEST)) {
             return new ExceptionResponse(500, 'Action not found.');
         }
+
         return match ($_REQUEST['action']) {
             'new_draft' => new NewDraft(),
             'update_draft' => new UpdateDraft(),

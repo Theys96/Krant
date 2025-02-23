@@ -11,15 +11,10 @@ use App\Util\ViewRenderer;
 abstract class BasePage implements Response
 {
     /**
-     * Inhoud (<body>)
-     *
-     * @return string
+     * Inhoud (<body>).
      */
     abstract public function get_body(): string;
 
-    /**
-     * @return string
-     */
     public function render(): string
     {
         return ViewRenderer::render_view('base', [
@@ -28,9 +23,6 @@ abstract class BasePage implements Response
         ]);
     }
 
-    /**
-     * @return false
-     */
     protected function showEasterEgg(): bool
     {
         return false;

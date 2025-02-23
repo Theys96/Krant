@@ -4,7 +4,7 @@ use App\Model\User;
 
 /**
  * @var User[] $users
- * @var array $passwords
+ * @var array  $passwords
  * @var string $errors
  */
 ?>
@@ -85,7 +85,7 @@ if (isset($passwords[3])) {
                     <?php
         foreach ($users as $user) {
             if ($user->perm_level >= 1) {
-                echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+                echo "<option value='".$user->id."'>".$user->username."</option>\n";
             }
         }
 ?>
@@ -99,7 +99,7 @@ if (isset($passwords[3])) {
                     <?php
 foreach ($users as $user) {
     if ($user->perm_level >= 2) {
-        echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+        echo "<option value='".$user->id."'>".$user->username."</option>\n";
     }
 }
 ?>
@@ -113,7 +113,7 @@ foreach ($users as $user) {
                     <?php
 foreach ($users as $user) {
     if ($user->perm_level >= 3) {
-        echo "<option value='" . $user->id . "'>" . $user->username . "</option>\n";
+        echo "<option value='".$user->id."'>".$user->username."</option>\n";
     }
 }
 ?>

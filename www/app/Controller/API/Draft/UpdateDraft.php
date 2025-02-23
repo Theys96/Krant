@@ -13,8 +13,8 @@ class UpdateDraft extends APIResponse
     protected function get_response_object(): object|array
     {
         if (Session::instance()->isLoggedIn() && isset($_REQUEST['draft_id'])) {
-            $article_change = ArticleChange::getById((int)$_REQUEST['draft_id']);
-            if ($article_change === null) {
+            $article_change = ArticleChange::getById((int) $_REQUEST['draft_id']);
+            if (null === $article_change) {
                 return [];
             }
 
@@ -27,7 +27,7 @@ class UpdateDraft extends APIResponse
                 is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : $article_change->article->ready,
             );
 
-            if ($new_article_change->article->status === Article::STATUS_DRAFT) {
+            if (Article::STATUS_DRAFT === $new_article_change->article->status) {
                 $new_article_change->article->applyChange($new_article_change);
             }
 
@@ -40,14 +40,15 @@ class UpdateDraft extends APIResponse
             );
             if (count($live_drafters) > 0) {
                 $names = implode(', ', array_column($live_drafters, 'username'));
-                $warning = htmlspecialchars($names) . (count($live_drafters) > 1 ? ' werken ' : ' werkt ') . 'nu ook aan dit stukje.';
+                $warning = htmlspecialchars($names).(count($live_drafters) > 1 ? ' werken ' : ' werkt ').'nu ook aan dit stukje.';
             }
 
             return [
                 'draft_id' => $new_article_change->id,
-                'warning' => $warning
+                'warning' => $warning,
             ];
         }
+
         return [];
     }
 }

@@ -15,13 +15,13 @@ class Categories extends LoggedInPage
 {
     public function __construct()
     {
-        if (Session::instance()->getRole() === 3) {
+        if (3 === Session::instance()->getRole()) {
             if (isset($_GET['edit_category'])) {
-                $edit_category_id = (int)$_GET['edit_category'];
+                $edit_category_id = (int) $_GET['edit_category'];
                 $edit_name = $_POST['edit_name'];
                 $edit_description = $_POST['edit_description'];
                 $edit_category = Category::getById($edit_category_id);
-                if ($edit_category !== null) {
+                if (null !== $edit_category) {
                     $edit_category->update($edit_name, $edit_description);
                 } else {
                     ErrorHandler::instance()->addError('Kon categorie niet aanpassen: Niet gevonden.');
@@ -31,14 +31,14 @@ class Categories extends LoggedInPage
                 $new_name = $_POST['new_name'];
                 $new_description = $_POST['new_description'];
                 $new_category = Category::createNew($new_name, $new_description);
-                if ($new_category !== null) {
+                if (null !== $new_category) {
                     ErrorHandler::instance()->addMessage('Categorie aangemaakt.');
                 }
             }
             if (isset($_GET['remove_category'])) {
-                $remove_category_id = (int)$_GET['remove_category'];
+                $remove_category_id = (int) $_GET['remove_category'];
                 $remove_category = Category::getById($remove_category_id);
-                if ($remove_category !== null) {
+                if (null !== $remove_category) {
                     if ($remove_category->remove()) {
                         ErrorHandler::instance()->addMessage('Categorie verwijderd.');
                     } else {
@@ -51,14 +51,11 @@ class Categories extends LoggedInPage
         }
     }
 
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.categories', [
             'categories' => Category::getAll(),
-            'role' => Session::instance()->getRole()
+            'role' => Session::instance()->getRole(),
         ]);
     }
 

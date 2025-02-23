@@ -4,41 +4,29 @@ namespace App\Model;
 
 use App\Util\Singleton\Database;
 use App\Util\Singleton\Session;
-use DateTime;
-use Exception;
 
 /**
  * Model voor log entries.
- *
  */
 class Log
 {
-    /** @var int */
     public int $id;
 
-    /** @var string */
     public string $type;
 
-    /** @var string */
     public string $message;
 
-    /** @var int|null */
     public ?int $user_id;
 
-    /** @var int|null */
     public ?int $role;
 
-    /** @var User|null */
     public ?User $user = null;
 
-    /** @var string */
     public string $address;
 
-    /** @var string */
     public string $request;
 
-    /** @var DateTime|null */
-    public ?DateTime $timestamp;
+    public ?\DateTime $timestamp;
 
     /** @var string */
     public const TYPE_INFO = 'info';
@@ -52,16 +40,6 @@ class Log
     /** @var string */
     public const TYPE_FEEDBACK = 'feedback';
 
-    /**
-     * @param int $id
-     * @param string $type
-     * @param int|null $user_id
-     * @param int|null $role
-     * @param string $timestamp
-     * @param string $address
-     * @param string $request
-     * @param string $message
-     */
     public function __construct(int $id, string $type, ?int $user_id, ?int $role, string $timestamp, string $address, string $request, string $message)
     {
         $this->id = $id;
@@ -71,44 +49,34 @@ class Log
         $this->address = $address;
         $this->request = $request;
         $this->message = $message;
-        if ($user_id !== null) {
+        if (null !== $user_id) {
             $this->user = User::getById($user_id);
         }
         try {
-            $this->timestamp = new DateTime($timestamp);
-        } catch (Exception) {
+            $this->timestamp = new \DateTime($timestamp);
+        } catch (\Exception) {
             $this->timestamp = null;
         }
     }
 
-    /**
-     * @param string $type
-     * @param int|null $user_id
-     * @param int|null $role
-     * @param string $message
-     * @return Log|null
-     */
     public static function createNew(string $type, ?int $user_id, ?int $role, string $message): ?Log
     {
         $address = $_SERVER['REMOTE_ADDR'];
-        $request = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        Database::instance()->storeQuery("INSERT INTO `log` (type, user, role, address, request, message) VALUES (?, ?, ?, ?, ?, ?)");
+        $request = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        Database::instance()->storeQuery('INSERT INTO `log` (type, user, role, address, request, message) VALUES (?, ?, ?, ?, ?, ?)');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('siisss', $type, $user_id, $role, $address, $request, $message);
         $stmt->execute();
         if ($stmt->insert_id) {
             return Log::getById($stmt->insert_id);
         }
+
         return null;
     }
 
-    /**
-     * @param int $id
-     * @return Log|null
-     */
     public static function getById(int $id): ?Log
     {
-        Database::instance()->storeQuery("SELECT * FROM log WHERE id = ?");
+        Database::instance()->storeQuery('SELECT * FROM log WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -125,23 +93,23 @@ class Log
                 $log_data['message']
             );
         }
+
         return null;
     }
 
     /**
-     * @param string $type
      * @return Log[]
      */
     public static function getByType(string $type): array
     {
-        Database::instance()->storeQuery("SELECT * FROM log WHERE type = ?");
+        Database::instance()->storeQuery('SELECT * FROM log WHERE type = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('s', $type);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $logs = [];
-        while (($log_data = $result->fetch_assoc())) {
+        while ($log_data = $result->fetch_assoc()) {
             $logs[$log_data['id']] = new Log(
                 $log_data['id'],
                 $log_data['type'],
@@ -153,14 +121,10 @@ class Log
                 $log_data['message']
             );
         }
+
         return $logs;
     }
 
-    /**
-     * @param string $type
-     * @param string $message
-     * @return Log|null
-     */
     public static function log(string $type, string $message): ?Log
     {
         return self::createNew(
@@ -171,37 +135,21 @@ class Log
         );
     }
 
-    /**
-     * @param string $message
-     * @return Log|null
-     */
     public static function logFeedback(string $message): ?Log
     {
         return self::log(self::TYPE_FEEDBACK, $message);
     }
 
-    /**
-     * @param string $message
-     * @return Log|null
-     */
     public static function logInfo(string $message): ?Log
     {
         return self::log(self::TYPE_INFO, $message);
     }
 
-    /**
-     * @param string $message
-     * @return Log|null
-     */
     public static function logWarning(string $message): ?Log
     {
         return self::log(self::TYPE_WARNING, $message);
     }
 
-    /**
-     * @param string $message
-     * @return Log|null
-     */
     public static function logError(string $message): ?Log
     {
         return self::log(self::TYPE_ERROR, $message);

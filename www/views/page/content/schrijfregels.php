@@ -1,36 +1,32 @@
 <?php
-/**
- * @var string $schrijfregels
- * */
-
-/**
- * @param string $schrijfregels
- * @return void
- */
 function printSchrijfregels(string $schrijfregels): void
 {
-    $regels = explode("\n", str_replace("- ", "", $schrijfregels));
+    $regels = explode("\n", str_replace('- ', '', $schrijfregels));
     $double = false;
-    echo "<ul>";
+    echo '<ul>';
     foreach ($regels as $regel) {
         if (ltrim($regel) == $regel) {
             if ($double) {
-                echo "</ul>";
+                echo '</ul>';
                 $double = false;
             }
-            echo "<li>". htmlspecialchars($regel) . "</li>";
+            echo '<li>'.htmlspecialchars($regel).'</li>';
         } else {
             if (!$double) {
-                echo "<ul>";
+                echo '<ul>';
                 $double = true;
             }
-            echo "<li>" . htmlspecialchars(ltrim($regel)) . "</li>";
+            echo '<li>'.htmlspecialchars(ltrim($regel)).'</li>';
         }
     }
-    echo "</ul>";
+    echo '</ul>';
 }
+
+/**
+ * @var string $schrijfregels
+ */
 ?>
 <h2>Schrijfregels</h2>
 <div class='schrijfregels'>
-<?php printSchrijfregels($schrijfregels) ?>
+<?php printSchrijfregels($schrijfregels); ?>
 </div>

@@ -5,34 +5,26 @@ namespace App\Model;
 use App\Util\Singleton\Database;
 use App\Util\Singleton\ErrorHandler;
 use App\Util\Singleton\Session;
-use DateTime;
-use Exception;
 
 /**
  * Model voor stukjes.
  *
  * @property Category|null $category
- * @property User[] $authors
- * @property User[] $checkers
+ * @property User[]        $authors
+ * @property User[]        $checkers
  */
 class Article
 {
-    /** @var int */
     public int $id;
 
-    /** @var string */
     public string $status;
 
-    /** @var string */
     public string $title;
 
-    /** @var string */
     public string $contents;
 
-    /** @var string */
     public string $context;
 
-    /** @var int|null */
     public ?int $category_id;
 
     /** @var User[]|null */
@@ -41,11 +33,9 @@ class Article
     /** @var User[]|null */
     protected ?array $checkers = null;
 
-    /** @var bool */
     public bool $ready;
 
-    /** @var DateTime|null */
-    public ?DateTime $last_updated;
+    public ?\DateTime $last_updated;
 
     /** @var string */
     public const STATUS_DRAFT = 'draft';
@@ -62,16 +52,6 @@ class Article
     /** @var string */
     private const ACTIVE_CATEGORY_WHERE_QUERY = '(category IS NULL OR category IN (SELECT categories.id FROM categories LEFT JOIN editions ON categories.edition = editions.id WHERE editions.active = 1 AND categories.active = 1))';
 
-    /**
-     * @param int $id
-     * @param string $status
-     * @param string $title
-     * @param string $contents
-     * @param string $context
-     * @param int|null $category_id
-     * @param bool $ready
-     * @param string $last_updated
-     */
     public function __construct(int $id, string $status, string $title, string $contents, string $context, ?int $category_id, bool $ready, string $last_updated)
     {
         $this->id = $id;
@@ -82,44 +62,41 @@ class Article
         $this->category_id = $category_id;
         $this->ready = $ready;
         try {
-            $this->last_updated = new DateTime($last_updated);
-        } catch (Exception) {
+            $this->last_updated = new \DateTime($last_updated);
+        } catch (\Exception) {
             $this->last_updated = null;
         }
     }
 
     /**
-     * @param $value
      * @return Category|null
      */
     public function __get($value)
     {
-        if ($value === 'category') {
-            if ($this->category_id === null) {
+        if ('category' === $value) {
+            if (null === $this->category_id) {
                 return null;
             }
+
             return Category::getById($this->category_id);
-        } elseif ($value === 'authors') {
-            if ($this->authors === null) {
+        } elseif ('authors' === $value) {
+            if (null === $this->authors) {
                 $this->authors = $this->getAuthors();
             }
-        } elseif ($value === 'checkers') {
-            if ($this->checkers === null) {
+        } elseif ('checkers' === $value) {
+            if (null === $this->checkers) {
                 $this->checkers = $this->getCheckers();
             }
         }
+
         return $this->$value;
     }
 
-    /**
-     * @param ArticleChange $change
-     * @return Article
-     */
     public function applyChange(ArticleChange $change): Article
     {
         $timestamp = $change->timestamp->format('Y-m-d H:i:s');
 
-        Database::instance()->storeQuery("UPDATE articles SET status = ?, title = ?, contents = ?, context = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?");
+        Database::instance()->storeQuery('UPDATE articles SET status = ?, title = ?, contents = ?, context = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
             'ssssiisi',
@@ -137,9 +114,6 @@ class Article
         return Article::getById($this->id);
     }
 
-    /**
-     * @return Article|null
-     */
     public static function createNew(): ?Article
     {
         Database::instance()->storeQuery("INSERT INTO `articles` (title, contents, context) VALUES ('', '', '')");
@@ -148,16 +122,13 @@ class Article
         if ($stmt->insert_id) {
             return Article::getById($stmt->insert_id);
         }
+
         return null;
     }
 
-    /**
-     * @param int $id
-     * @return Article|null
-     */
     public static function getById(int $id): ?Article
     {
-        Database::instance()->storeQuery("SELECT * FROM articles WHERE id = ?");
+        Database::instance()->storeQuery('SELECT * FROM articles WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -174,11 +145,11 @@ class Article
                 $article_data['last_updated']
             );
         }
+
         return null;
     }
 
     /**
-     * @param string $query
      * @return Article[]
      */
     protected static function getAllByQuery(string $query): array
@@ -189,7 +160,7 @@ class Article
         $result = $stmt->get_result();
 
         $articles = [];
-        while (($article_data = $result->fetch_assoc())) {
+        while ($article_data = $result->fetch_assoc()) {
             $articles[$article_data['id']] = new Article(
                 $article_data['id'],
                 $article_data['status'],
@@ -201,6 +172,7 @@ class Article
                 $article_data['last_updated']
             );
         }
+
         return $articles;
     }
 
@@ -209,7 +181,7 @@ class Article
      */
     public static function getAll(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE " . self::ACTIVE_CATEGORY_WHERE_QUERY);
+        return Article::getAllByQuery('SELECT * FROM articles WHERE '.self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -217,7 +189,7 @@ class Article
      */
     public static function getAllDrafts(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_DRAFT . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='".static::STATUS_DRAFT."' AND ".self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -225,7 +197,7 @@ class Article
      */
     public static function getAllOpen(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_OPEN . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='".static::STATUS_OPEN."' AND ".self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -233,7 +205,7 @@ class Article
      */
     public static function getAllBinned(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_BIN . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='".static::STATUS_BIN."' AND ".self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
@@ -241,30 +213,25 @@ class Article
      */
     public static function getAllPlaced(): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE status='" . static::STATUS_PLACED . "' AND " . self::ACTIVE_CATEGORY_WHERE_QUERY);
+        return Article::getAllByQuery("SELECT * FROM articles WHERE status='".static::STATUS_PLACED."' AND ".self::ACTIVE_CATEGORY_WHERE_QUERY);
     }
 
     /**
-     * @param Category $category
      * @return Article[]
      */
     public static function getAllByCategory(Category $category): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE category = " . ((int)$category->id));
+        return Article::getAllByQuery('SELECT * FROM articles WHERE category = '.((int) $category->id));
     }
 
     /**
-     * @param Edition $edition
      * @return Article[]
      */
     public static function getAllByEdition(Edition $edition): array
     {
-        return Article::getAllByQuery("SELECT * FROM articles WHERE category IN (SELECT id FROM categories WHERE edition = " . ((int)$edition->id) . ")");
+        return Article::getAllByQuery('SELECT * FROM articles WHERE category IN (SELECT id FROM categories WHERE edition = '.((int) $edition->id).')');
     }
 
-    /**
-     * @return string
-     */
     public function getAuthorsString(): string
     {
         return htmlspecialchars(implode(', ', array_map(static function (User $author): string { return $author->username; }, $this->getAuthors())));
@@ -290,9 +257,10 @@ class Article
         $result = $stmt->get_result();
 
         $users = [];
-        while (($user_data = $result->fetch_assoc())) {
+        while ($user_data = $result->fetch_assoc()) {
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
         }
+
         return $users;
     }
 
@@ -320,15 +288,13 @@ class Article
         $result = $stmt->get_result();
 
         $users = [];
-        while (($user_data = $result->fetch_assoc())) {
+        while ($user_data = $result->fetch_assoc()) {
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
         }
+
         return $users;
     }
 
-    /**
-     * @return Article
-     */
     public function moveToBin(): Article
     {
         $article_change = ArticleChange::createNew(
@@ -342,16 +308,15 @@ class Article
             $this->ready,
             Session::instance()->getUser()->id
         );
-        if ($article_change === null) {
+        if (null === $article_change) {
             ErrorHandler::instance()->addError('Er is iets misgegaan bij het verwijderen van het stukje.');
+
             return $this;
         }
+
         return $this->applyChange($article_change);
     }
 
-    /**
-     * @return Article
-     */
     public function moveToPlaced(): Article
     {
         $article_change = ArticleChange::createNew(
@@ -365,16 +330,15 @@ class Article
             $this->ready,
             Session::instance()->getUser()->id
         );
-        if ($article_change === null) {
+        if (null === $article_change) {
             ErrorHandler::instance()->addError('Er is iets misgegaan bij het plaatsen van het stukje.');
+
             return $this;
         }
+
         return $this->applyChange($article_change);
     }
 
-    /**
-     * @return Article
-     */
     public function moveToOpen(): Article
     {
         $article_change = ArticleChange::createNew(
@@ -388,15 +352,16 @@ class Article
             $this->ready,
             Session::instance()->getUser()->id
         );
-        if ($article_change === null) {
+        if (null === $article_change) {
             ErrorHandler::instance()->addError('Er is iets misgegaan bij het plaatsen van het stukje.');
+
             return $this;
         }
+
         return $this->applyChange($article_change);
     }
 
     /**
-     * @param int $category_id
      * @return Article|$this
      */
     public function migrateToCategory(int $category_id): Article
@@ -412,10 +377,12 @@ class Article
             $this->ready,
             Session::instance()->getUser()->id
         );
-        if ($article_change === null) {
+        if (null === $article_change) {
             ErrorHandler::instance()->addError('Er is iets misgegaan bij het overzetten van het stukje.');
+
             return $this;
         }
+
         return $this->applyChange($article_change);
     }
 }

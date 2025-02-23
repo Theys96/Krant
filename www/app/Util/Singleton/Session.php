@@ -18,13 +18,13 @@ class Session
 
     /**
      * Returns the singleton instance.
-     * @return Session
      */
     public static function instance(): Session
     {
-        if (self::$instance === null) {
+        if (null === self::$instance) {
             self::$instance = new Session();
         }
+
         return self::$instance;
     }
 
@@ -34,7 +34,7 @@ class Session
     public function __construct()
     {
         if (!isset($_SESSION[self::SESSION_NAMESPACE])) {
-            $_SESSION[self::SESSION_NAMESPACE] = array();
+            $_SESSION[self::SESSION_NAMESPACE] = [];
         }
         if (isset($_POST['filters'])) {
             $this->setFilter($_POST['filters']);
@@ -42,23 +42,24 @@ class Session
     }
 
     /**
-     * @return bool Whether the user is logged in.
+     * @return bool whether the user is logged in
      */
     public function isLoggedIn(): bool
     {
-        if (!key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE]) ||
-            $_SESSION[self::SESSION_NAMESPACE]['logged_in'] !== true) {
+        if (!key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE])
+            || true !== $_SESSION[self::SESSION_NAMESPACE]['logged_in']) {
             $this->check_login();
         }
-        if ($this->getUser() === null) {
+        if (null === $this->getUser()) {
             return false;
         }
-        return key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE]) &&
-            $_SESSION[self::SESSION_NAMESPACE]['logged_in'] === true;
+
+        return key_exists('logged_in', $_SESSION[self::SESSION_NAMESPACE])
+            && true === $_SESSION[self::SESSION_NAMESPACE]['logged_in'];
     }
 
     /**
-     * @return User|null The user object.
+     * @return User|null the user object
      */
     public function getUser(): ?User
     {
@@ -67,7 +68,7 @@ class Session
     }
 
     /**
-     * @return int|null The user's role level.
+     * @return int|null the user's role level
      */
     public function getRole(): ?int
     {
@@ -76,7 +77,7 @@ class Session
     }
 
     /**
-     * @return bool The user's gold value.
+     * @return bool the user's gold value
      */
     public function getGold(): bool
     {
@@ -90,14 +91,11 @@ class Session
     public function getFilter(): array
     {
         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
-           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array();
+           $_SESSION[self::SESSION_NAMESPACE]['filter'] : [];
     }
 
-
-
     /**
-     * @param bool $logged_in Whether the user is logged in.
-     * @return void
+     * @param bool $logged_in whether the user is logged in
      */
     public function setLoggedIn(bool $logged_in): void
     {
@@ -105,8 +103,7 @@ class Session
     }
 
     /**
-     * @param User $user The user object.
-     * @return void
+     * @param User $user the user object
      */
     public function setUser(User $user): void
     {
@@ -114,51 +111,39 @@ class Session
     }
 
     /**
-     * @param int $role The user's role level.
-     * @return void
+     * @param int $role the user's role level
      */
     public function setRole(int $role): void
     {
         $_SESSION[self::SESSION_NAMESPACE]['role'] = $role;
     }
 
-    /**
-     * @return void
-     */
     public function setGold(): void
     {
-        $_SESSION[self::SESSION_NAMESPACE]['gold'] = rand(0, 500) == 5;
+        $_SESSION[self::SESSION_NAMESPACE]['gold'] = 5 == rand(0, 500);
     }
 
-    /**
-     * @return void
-     */
     public function setFilter(array $filters): void
     {
         $filters = array_diff($filters, [0]);
         $_SESSION[self::SESSION_NAMESPACE]['filter'] = $filters;
     }
 
-
     /**
      * Empties the session attributes.
-     *
-     * @return void
      */
     public function reset(): void
     {
-        $_SESSION[self::SESSION_NAMESPACE] = array();
+        $_SESSION[self::SESSION_NAMESPACE] = [];
     }
 
     /**
      * Try to log in if the required $_POST variables are available.
-     *
-     * @return void
      */
     public function check_login(): void
     {
         if (isset($_POST['role'])) {
-            $role = (int)$_POST['role'];
+            $role = (int) $_POST['role'];
             $user_id = $_POST['user'][$role];
             $this->login($role, $_POST['password'], $user_id);
             unset($_POST['role']);
@@ -167,16 +152,11 @@ class Session
 
     /**
      * Log in given a role, password and username.
-     *
-     * @param int $role
-     * @param string $password
-     * @param int $user_id
-     * @return void
      */
     public function login(int $role, string $password, int $user_id): void
     {
         $user = User::getById($user_id);
-        if ($user === null) {
+        if (null === $user) {
             ErrorHandler::instance()->addError('Gebruiker niet gevonden.');
         }
         if ($user->perm_level < $role) {

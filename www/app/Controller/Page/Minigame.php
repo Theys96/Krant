@@ -7,13 +7,10 @@ use App\Controller\Response;
 use App\Util\ViewRenderer;
 
 /**
- * Minigame "Thijs zijn nachtmerrie"
+ * Minigame "Thijs zijn nachtmerrie".
  */
 class Minigame implements Response, LoggedIn
 {
-    /**
-     * @return string
-     */
     public function render(): string
     {
         return ViewRenderer::render_view('minigame', []);

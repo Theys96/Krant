@@ -12,25 +12,21 @@ use App\Util\ViewRenderer;
  */
 class EditCategory extends LoggedInPage
 {
-    /** @var Category */
     protected Category $category;
 
     public function __construct()
     {
         if (isset($_GET['category'])) {
-            $category = Category::getById((int)$_GET['category']);
-            if ($category !== null) {
+            $category = Category::getById((int) $_GET['category']);
+            if (null !== $category) {
                 $this->category = $category;
+
                 return;
             }
         }
         ErrorHandler::instance()->addError('Categorie niet gevonden.');
     }
 
-
-    /**
-     * @return string
-     */
     public function get_content(): string
     {
         return ViewRenderer::render_view('page.content.edit_category', [

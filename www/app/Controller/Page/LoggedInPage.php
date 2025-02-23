@@ -12,21 +12,15 @@ use App\Util\ViewRenderer;
  */
 abstract class LoggedInPage extends BasePage implements LoggedIn
 {
-    /**
-     * @return string
-     */
     abstract public function get_content(): string;
 
-    /**
-     * @return string
-     */
     public function get_body(): string
     {
         return ViewRenderer::render_view('page.home', [
             'username' => Session::instance()->getUser()->username,
             'role' => Session::instance()->getRole(),
             'content' => $this->get_content(),
-            'errors' => ErrorHandler::instance()->printAllToString()
+            'errors' => ErrorHandler::instance()->printAllToString(),
         ]);
     }
 }

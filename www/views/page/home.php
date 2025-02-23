@@ -2,7 +2,7 @@
 
 /**
  * @var string $username
- * @var int $role
+ * @var int    $role
  * @var string $errors
  * @var string $content
  */
@@ -26,11 +26,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="?action=list">Stukjes</a>
             </li>
-            <?php if ($role == 1 || $role == 3) : ?>
+            <?php if (1 == $role || 3 == $role) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="?action=create">Schrijf</a>
                 </li>
-            <?php endif; ?>
+            <?php } ?>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="?action=admin" id="dropdown01" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Beheer</a>
@@ -40,12 +40,12 @@
                     <a class="dropdown-item" href="?action=drafts">Drafts</a>
                     <a class="dropdown-item" href="?action=bin">Prullenbak</a>
                     <a class="dropdown-item" href="?action=placed">Geplaatst</a>
-                    <?php if ($role == 3) : ?>
+                    <?php if (3 == $role) { ?>
                         <a class="dropdown-item" href="?action=editions">Edities</a>
                         <a class="dropdown-item" href="?action=users">Gebruikers</a>
                         <a class="dropdown-item" href="?action=feedbacklist">Feedback</a>
                         <a class="dropdown-item" href="?action=configuratie">Configuratie</a>
-                    <?php endif; ?>
+                    <?php } ?>
                 </div>
             </li>
         </ul>

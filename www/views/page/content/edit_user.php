@@ -3,7 +3,7 @@
 use App\Model\User;
 
 /**
- * @var User $user
+ * @var User   $user
  * @var User[] $users
  */
 ?>
@@ -19,25 +19,25 @@ use App\Model\User;
     <div class='form-group'>
         <label for='perm_level'>Rol</label>
         <select name='edit_perm_level' id='perm_level' class='form-control'>
-            <option value='1' <?php echo $user->perm_level === 1 ? 'selected' : ''; ?>>Schrijver</option>
-            <option value='2' <?php echo $user->perm_level === 2 ? 'selected' : ''; ?>>Nakijker</option>
-            <option value='3' <?php echo $user->perm_level === 3 ? 'selected' : ''; ?>>Beheerder</option>
+            <option value='1' <?php echo 1 === $user->perm_level ? 'selected' : ''; ?>>Schrijver</option>
+            <option value='2' <?php echo 2 === $user->perm_level ? 'selected' : ''; ?>>Nakijker</option>
+            <option value='3' <?php echo 3 === $user->perm_level ? 'selected' : ''; ?>>Beheerder</option>
         </select>
     </div>
 
     <div class='form-group'>
         <label for='alt_css'>Style</label>
 	    <select name='edit_alt_css' id='alt_css' class='form-control'>
-            <option value='0' <?php echo $user->alt_css === 0 ? 'selected' : ''; ?>>Normaal</option>
-            <option value='1' <?php echo $user->alt_css === 1 ? 'selected' : ''; ?>>Comic Sans</option>
-            <option value='2' <?php echo $user->alt_css === 2 ? 'selected' : ''; ?>>Roze</option>
+            <option value='0' <?php echo 0 === $user->alt_css ? 'selected' : ''; ?>>Normaal</option>
+            <option value='1' <?php echo 1 === $user->alt_css ? 'selected' : ''; ?>>Comic Sans</option>
+            <option value='2' <?php echo 2 === $user->alt_css ? 'selected' : ''; ?>>Roze</option>
         </select>
     </div>
 
     <div class='mt-3 form-group'>
         <div class="custom-control custom-checkbox">
             <input type='checkbox' name='edit_active' value='1' id="active-checkbox"
-                   class="custom-control-input" <?php echo $user->active === true ? ' checked' : ''; ?>/>
+                   class="custom-control-input" <?php echo true === $user->active ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="active-checkbox">Actief</label>
         </div>
     </div>

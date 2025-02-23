@@ -12,15 +12,12 @@ use App\Util\ViewRenderer;
  */
 class Login extends BasePage
 {
-    /**
-     * @return string
-     */
     public function get_body(): string
     {
         return ViewRenderer::render_view('page.login', [
             'users' => User::getAllActive(),
             'passwords' => Configuration::instance()->passwords,
-            'errors' => ErrorHandler::instance()->printAllToString()
+            'errors' => ErrorHandler::instance()->printAllToString(),
         ]);
     }
 }

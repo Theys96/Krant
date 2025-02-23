@@ -24,7 +24,6 @@ use App\Model\Category;
 <?php
 $row = true;
 foreach ($categories as $category) {
-
     $counts = [
         'open_not_ready' => [0, 0],
         'open_ready' => [0, 0],
@@ -32,23 +31,23 @@ foreach ($categories as $category) {
     ];
     foreach (Article::getAllByCategory($category) as $article) {
         $bin = null;
-        if ($article->status == Article::STATUS_OPEN) {
+        if (Article::STATUS_OPEN == $article->status) {
             $bin = $article->ready ? 'open_ready' : 'open_not_ready';
-        } elseif ($article->status == Article::STATUS_PLACED) {
+        } elseif (Article::STATUS_PLACED == $article->status) {
             $bin = 'placed';
         }
-        if ($bin !== null) {
-            $counts[$bin][0]++;
+        if (null !== $bin) {
+            ++$counts[$bin][0];
             $counts[$bin][1] += strlen($article->contents);
         }
     }
 
     $color = $row ? '#AAAAAA' : '#DDDDDD';
     $row = !$row;
-    echo "<div style='background-color: " . $color . "' class='row'>\n";
-    echo "<div class='col-3'>" . htmlspecialchars($category->name) . "</div>";
+    echo "<div style='background-color: ".$color."' class='row'>\n";
+    echo "<div class='col-3'>".htmlspecialchars($category->name).'</div>';
     foreach (['open_not_ready', 'open_ready', 'placed'] as $bin) {
-        echo "<div class='col-3'><span data-toggle='tooltip' data-placement='top' title='" . $counts[$bin][0] . " stukje(s), " . $counts[$bin][1] . " teken(s)' >" . $counts[$bin][0] . " / " . $counts[$bin][1] . "</span></div>";
+        echo "<div class='col-3'><span data-toggle='tooltip' data-placement='top' title='".$counts[$bin][0].' stukje(s), '.$counts[$bin][1]." teken(s)' >".$counts[$bin][0].' / '.$counts[$bin][1].'</span></div>';
     }
     echo "</div>\n";
 }

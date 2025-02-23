@@ -5,6 +5,6 @@ www/assets/vendor/*
 www/node_modules
 
 # PHP
-www/classes/Util/Config.php
+www/app/Util/Config.php
 www/vendor
 www/.php-cs-fixer.cache

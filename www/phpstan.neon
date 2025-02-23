@@ -1,7 +1,5 @@
 parameters:
 	level: 1 # Doel: stapsgewijs verhogen naar 8
 	paths:
-		- classes
-	excludePaths:
-	    analyse:
-	        - classes/App/Jfcherng/*
+		- app
+		- views

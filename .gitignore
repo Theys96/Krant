@@ -1,3 +1,4 @@
+.env
 
 # npm
 www/assets/vendor/*
@@ -7,3 +8,4 @@ www/node_modules
 # PHP
 www/vendor
 www/.php-cs-fixer.cache
+Config.production.php

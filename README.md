@@ -48,14 +48,25 @@ Code style fixer:
 bin/cs-fix
 ```
 
-## Deployment (Apache)
+## Deployment (Apache, FTP)
 
-First run:
+Make sure `lftp` is installed (`sudo apt-get install lftp`).
+
+Create a file `.env` in the root of the project and fill in the FTP configuration:
 
 ```bash
-bin/install-prod
+FTP_USERNAME=
+FTP_PASSWORD=
+FTP_HOST=
+FTP_PATH=
 ```
 
-Then copy the contents of the `www/` folder to a webserver with PHP 8 and MySQL installed.
+Create a copy of `www/app/Util/Config.example.php` in `Config.production.php` in the root of the project and fill in the production configuration.
+
+Then, to deploy, run: 
+
+```bash.
+bin/install-prod
+```
 
 To set up the database, use `krant.sql` (this defines all the required tables).

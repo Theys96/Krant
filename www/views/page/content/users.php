@@ -22,11 +22,12 @@ function printUserList(array $users, int $role, bool $active): void
         echo "<div class='col-sm-4 d-flex justify-content-end'>";
         if ($role === 3) {
             echo "<a class='p-1 btn btn-sm btn-primary mr-1 my-1' href='?action=edit_user&user=" . $user->id . "'>Aanpassen</a>";
-        }
-        if ($role === 3 && $active) {
-            echo "<a class='p-1 btn btn-sm btn-danger mr-1 my-1' href='?action=users&deactivate=" . $user->id . "'>Deactiveren</a>";
-        } elseif ($role === 3 && !$active) {
-            echo "<a class='p-1 btn btn-sm btn-success mr-1 my-1' href='?action=users&activate=" . $user->id . "'>Activeren</a>";
+            if ($active) {
+                echo "<a class='p-1 btn btn-sm btn-danger mr-1 my-1' href='?action=users&deactivate=" . $user->id . "'>Deactiveren</a>";
+
+            } else {
+                echo "<a class='p-1 btn btn-sm btn-success mr-1 my-1' href='?action=users&activate=" . $user->id . "'>Activeren</a>";
+            }
         }
         echo "</div>";
         echo "</div>\n";

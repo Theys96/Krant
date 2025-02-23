@@ -22,12 +22,7 @@ class EditConfiguration extends LoggedInPage
                 $edit_mail = $_POST['edit_mail'];
                 $passwords = $_POST['edit_passwords'];
                 $edit_mail = $edit_mail == "" ? null : $edit_mail;
-                $edit_variables = Configuration::instance();
-                if ($edit_variables !== null) {
-                    $edit_variables->updateAll($edit_schrijfregels, $edit_checks, $edit_mail, $passwords);
-                } else {
-                    ErrorHandler::instance()->addError('Kon losse variabelen niet aanpassen: Niet gevonden.');
-                }
+                Configuration::instance()->updateAll($edit_schrijfregels, $edit_checks, $edit_mail, $passwords);
             }
         }
     }

@@ -95,10 +95,7 @@ if (count($articles) == 0) {
 
 $n = 0;
 foreach ($articles as $article) {
-    $filtered = false;
-    if (!empty($catFilter)) {
-        $filtered = $filtered || !(in_array($article->category_id, $catFilter));
-    }
+    $filtered = !empty($catFilter) && !(in_array($article->category_id, $catFilter));
     if ($role == 1 && $filtercat != 0) {
         $filtered = $filtered || $article->category_id != $filtercat;
     }

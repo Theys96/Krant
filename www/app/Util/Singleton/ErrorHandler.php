@@ -68,13 +68,11 @@ class ErrorHandler
             $log_message .= PHP_EOL;
             echo ')</p>';
         }
-        if (Database::instance()) {
-            if (Database::instance()->getStoredQuery() !== null) {
-                echo '<p>Laatste query: </p><xmp>' . Database::instance()->getStoredQuery() . '</xmp>';
-                $log_message .= Database::instance()->getStoredQuery() . PHP_EOL;
-            }
-            Log::logError($log_message);
+        if (Database::instance()->getStoredQuery() !== null) {
+            echo '<p>Laatste query: </p><xmp>' . Database::instance()->getStoredQuery() . '</xmp>';
+            $log_message .= Database::instance()->getStoredQuery() . PHP_EOL;
         }
+        Log::logError($log_message);
         echo '</center>';
         exit();
     }

@@ -122,7 +122,7 @@ class ArticleReaction
             if (!array_key_exists($reaction->reaction, $grouped)) {
                 $grouped[$reaction->reaction] = [];
             }
-            $grouped[$reaction->reaction][] = $reaction->user?->username ?? '?';
+            $grouped[$reaction->reaction][] = $reaction->user->username ?? '?';
         }
         ksort($grouped);
         $response = [];

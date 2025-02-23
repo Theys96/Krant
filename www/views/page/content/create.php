@@ -3,7 +3,10 @@
 use App\Model\Article;
 use App\Model\Category;
 
-function printButtons($chars): void
+/**
+ * @param array<int, string> $chars
+ */
+function printButtons(array $chars): void
 {
     foreach ($chars as $char) {
         echo "<input type='button' class='px-4 btn btn-secondary' value='".$char."' onclick='insertChar(this)' />";

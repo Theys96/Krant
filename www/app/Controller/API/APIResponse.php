@@ -14,5 +14,8 @@ abstract class APIResponse implements Response
         return json_encode($this->get_response_object());
     }
 
+    /**
+     * @return object|array<mixed>
+     */
     abstract protected function get_response_object(): object|array;
 }

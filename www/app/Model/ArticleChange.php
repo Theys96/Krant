@@ -93,7 +93,7 @@ class ArticleChange
     /**
      * @return mixed|null
      */
-    public function __get($value)
+    public function __get(string $value)
     {
         if ('article' === $value) {
             return Article::getById($this->article_id);

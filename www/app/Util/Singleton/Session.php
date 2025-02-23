@@ -86,7 +86,7 @@ class Session
     }
 
     /**
-     * @return array array containing the filter
+     * @return array<int, int> array containing the filter
      */
     public function getFilter(): array
     {
@@ -123,6 +123,9 @@ class Session
         $_SESSION[self::SESSION_NAMESPACE]['gold'] = 5 == rand(0, 500);
     }
 
+    /**
+     * @param array<int, int> $filters
+     */
     public function setFilter(array $filters): void
     {
         $filters = array_diff($filters, [0]);

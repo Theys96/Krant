@@ -71,7 +71,7 @@ class Article
     /**
      * @return Category|null
      */
-    public function __get($value)
+    public function __get(string $value)
     {
         if ('category' === $value) {
             if (null === $this->category_id) {

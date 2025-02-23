@@ -3,12 +3,6 @@
 use App\Model\User;
 
 /**
- * @var User[] $active_users
- * @var User[] $archived_users
- * @var int $role
- */
-
-/**
  * @param User[] $users
  * @param int $role
  * @param bool $active
@@ -38,6 +32,12 @@ function printUserList(array $users, int $role, bool $active): void
         echo "</div>\n";
     }
 }
+
+/**
+ * @var User[] $active_users
+ * @var User[] $archived_users
+ * @var int $role
+ */
 ?>
 <h2>Gebruikers</h2>
 

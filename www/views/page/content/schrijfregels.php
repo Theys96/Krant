@@ -1,9 +1,5 @@
 <?php
 /**
- * @var string $schrijfregels
- * */
-
-/**
  * @param string $schrijfregels
  * @return void
  */
@@ -29,6 +25,10 @@ function printSchrijfregels(string $schrijfregels): void
     }
     echo "</ul>";
 }
+
+/**
+ * @var string $schrijfregels
+ * */
 ?>
 <h2>Schrijfregels</h2>
 <div class='schrijfregels'>

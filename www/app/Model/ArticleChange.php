@@ -62,7 +62,7 @@ class ArticleChange
     public ?int $changed_category_id;
 
     /** @var bool|null */
-    public bool $changed_ready;
+    public ?bool $changed_ready;
 
     /** @var int */
     protected int $user_id;

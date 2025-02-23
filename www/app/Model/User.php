@@ -157,7 +157,7 @@ class User
 
     /**
      * Alle gegevens van user1 worden overgezet naar deze gebruiker. Daarna wordt user1 verwijderd.
-     * @param \Model\User $user1
+     * @param User $user1
      * @return User|null
      */
     public function combineUsers(User $user1): ?User

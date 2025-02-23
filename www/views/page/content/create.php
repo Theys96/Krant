@@ -4,14 +4,9 @@ use App\Model\Article;
 use App\Model\Category;
 
 /**
- * @var Category[] $categories
- * @var string $username
- * @var Article|null $article
- * @var string $title
- * @var bool $check_mode
- * @var string|null $mail
+ * @param $chars
+ * @return void
  */
-
 function printButtons($chars): void
 {
     foreach ($chars as $char) {
@@ -19,6 +14,14 @@ function printButtons($chars): void
     }
 }
 
+/**
+ * @var Category[] $categories
+ * @var string $username
+ * @var Article|null $article
+ * @var string $title
+ * @var bool $check_mode
+ * @var string|null $mail
+ */
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
 $contents = $article?->contents;

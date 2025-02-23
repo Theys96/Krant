@@ -78,7 +78,7 @@ class Configuration
     public function updateAll(string $schrijfregels, int $min_checks, ?string $mail_address, array $passwords): Configuration
     {
         $this->schrijfregels = $this->schrijfregels == $schrijfregels ? $schrijfregels : $this->update('schrijfregels', $schrijfregels);
-        $this->min_checks = $this->min_checks == $min_checks ? $min_checks : (int) $this->update('min_checks', $min_checks);
+        $this->min_checks = $this->min_checks == $min_checks ? $min_checks : (int) $this->update('min_checks', (string) $min_checks);
         $this->mail_address = $this->mail_address == $mail_address ? $mail_address : $this->update('mail_address', $mail_address);
         if ($this->passwords != $passwords) {
             $this->passwords = explode(',', $this->update('passwords', implode(',', array: $passwords)));

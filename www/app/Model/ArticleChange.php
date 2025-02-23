@@ -211,7 +211,7 @@ class ArticleChange
                 $change_data['changed_contents'],
                 $change_data['changed_context'],
                 $change_data['changed_category'],
-                $change_data['changed_ready'],
+                (bool) $change_data['changed_ready'],
                 $change_data['user'],
                 $change_data['timestamp']
             );
@@ -240,7 +240,7 @@ class ArticleChange
                 $change_data['changed_contents'],
                 $change_data['changed_context'],
                 $change_data['changed_category'],
-                $change_data['changed_ready'],
+                (bool) $change_data['changed_ready'],
                 $change_data['user'],
                 $change_data['timestamp']
             );

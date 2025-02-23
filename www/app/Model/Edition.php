@@ -86,7 +86,7 @@ class Edition
         $stmt->execute();
         $edition_data = $stmt->get_result()->fetch_assoc();
         if ($edition_data) {
-            return new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], $edition_data['active']);
+            return new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], (bool) $edition_data['active']);
         }
 
         return null;
@@ -104,7 +104,7 @@ class Edition
 
         $editions = [];
         while ($edition_data = $result->fetch_assoc()) {
-            $editions[$edition_data['id']] = new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], $edition_data['active']);
+            $editions[$edition_data['id']] = new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], (bool) $edition_data['active']);
         }
 
         return $editions;
@@ -118,7 +118,7 @@ class Edition
         $result = $stmt->get_result();
 
         if ($edition_data = $result->fetch_assoc()) {
-            return new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], $edition_data['active']);
+            return new Edition($edition_data['id'], $edition_data['name'], $edition_data['description'], (bool) $edition_data['active']);
         }
 
         return null;

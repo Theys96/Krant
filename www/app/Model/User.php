@@ -46,7 +46,7 @@ class User
         $stmt->execute();
         $user_data = $stmt->get_result()->fetch_assoc();
         if ($user_data) {
-            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
+            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css']);
         }
 
         return null;
@@ -64,7 +64,7 @@ class User
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css']);
         }
 
         return $users;

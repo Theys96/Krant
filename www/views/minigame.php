@@ -32,13 +32,18 @@
   const spawnMargin = 50;      // Marge van rand voor vijanden
   const playerSize = 90;       // Basisgrootte van de spelerafbeelding
 
+  // Variabelen voor het geleidelijk moeilijker maken.
+  const scalar = 100;
 
   // Counters
   let killCount = 0;
   let enemyCount = 0;
+  let totalKills = 0;
 
   //gamestate
   let gameActive = true;
+  const enemyLimit = 10;
+  let highscore = 0;
 
   // Speler object met afbeelding
   const player = {
@@ -68,7 +73,7 @@
   // Functie om een nieuwe vijand toe te voegen
   function addEnemy() {
     const spawnChance = Math.random();
-    const enemyCountToAdd = spawnChance < 0.03 ? 4 : spawnChance < 0.14 ? 2 : 1; // 1% kans op 5 vijanden, 9% kans op 2 vijanden
+    const enemyCountToAdd = spawnChance < (0.03 * (1 + totalKills/scalar)) ? 4 : spawnChance < (0.14 * (1 + totalKills/scalar))? 2 : 1; // 1% kans op 5 vijanden, 9% kans op 2 vijanden
 
     for (let i = 0; i < enemyCountToAdd; i++) {
       const enemy = {
@@ -82,7 +87,7 @@
     }
 
     enemyCount = enemies.length; // Update het aantal vijanden op het speelveld
-    if (enemyCount > 5) {
+    if (enemyCount > enemyLimit) {
       gameActive = false;
     }
   }
@@ -90,7 +95,7 @@
   // Functie om een nieuwe vrienden toe te voegen
   function addFriend() {
     const spawnChance = Math.random();
-    const friendCountToAdd = spawnChance < 0.03 ? 2 : spawnChance < 0.14 ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
+    const friendCountToAdd = spawnChance < (0.03 * (1 + totalKills/scalar)) ? 2 : spawnChance < (0.14 * (1 + totalKills/scalar)) ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
 
     for (let i = 0; i < friendCountToAdd; i++) {
       const friend = {
@@ -107,7 +112,7 @@
   // Functie om een vrienden te verwijderen
   function removeFriend() {
     const removeChance = Math.random();
-    const friendCountToRemove = removeChance < 0.15 ? 2 : removeChance < 0.4 ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
+    const friendCountToRemove = removeChance < (0.1 * (1 + totalKills/scalar)) ? 2 : removeChance < (0.2 * (1 + totalKills/scalar)) ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
 
     for (let i = 0; i < friendCountToRemove; i++) {
       if(friends.length > 0) {
@@ -178,6 +183,7 @@
         enemies = [];
         friends = [];
         killCount = 0;
+        totalKills = 0;
         gameActive = true;
         updateGame();
         startSpawning();
@@ -194,11 +200,15 @@
     } else {
       killCount = killCount - 5; //vriend geraakt, verlaag counter
     }
+    totalKills++;
+    if (killCount > highscore) {
+      highscore = killCount;
+    }
   }
 
   // Functie om willekeurige spawn-tijden te krijgen tussen 0,7 en 2 seconden
   function randomSpawnTime() {
-    return Math.random() * (1600 - 700) + 700; // Geeft tijd in milliseconden
+    return Math.random() * (2400 - 700) * (scalar/(scalar + totalKills)) + 700; // Geeft tijd in milliseconden
   }
 
   // Spawn vijanden met willekeurige intervallen
@@ -220,8 +230,11 @@
     // Kill counter en vijandenteller weergeven
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
-    ctx.fillText("Kills: " + killCount, 10, 30);
-    ctx.fillText("Nachtmeries: " + enemyCount, 10, 60);
+    ctx.fillText("Krijg niet meer dan " + enemyLimit + " nachtmerries!", 10, 30);
+    ctx.fillText("Kills: " + killCount, 10, 60);
+    ctx.fillText("Nachtmeries: " + enemyCount, 10, 90);
+    ctx.fillText("Highscore:", canvas.width - 110, 30);
+    ctx.fillText(highscore, canvas.width - ctx.measureText(highscore).width - 15, 60);
 
     // Tekent speler als afbeelding met centrering
     ctx.save();

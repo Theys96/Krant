@@ -1,3 +1,12 @@
+<?php
+
+use App\Model\User;
+
+/**
+ * @var User $user
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -335,6 +344,5 @@
   startSpawning(); // Start vijand spawning met willekeurige intervallen
 
 </script>
-
 </body>
 </html>

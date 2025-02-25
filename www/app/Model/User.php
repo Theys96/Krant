@@ -29,13 +29,16 @@ class User
 
     public int $alt_css;
 
-    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css)
+    public int $highscore;
+
+    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css, int $highscore)
     {
         $this->id = $id;
         $this->username = $username;
         $this->perm_level = $perm_level;
         $this->active = $active;
         $this->alt_css = $alt_css;
+        $this->highscore = $highscore;
     }
 
     public static function getById(int $id): ?User
@@ -46,7 +49,7 @@ class User
         $stmt->execute();
         $user_data = $stmt->get_result()->fetch_assoc();
         if ($user_data) {
-            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
+            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
         }
 
         return null;
@@ -64,7 +67,7 @@ class User
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
         }
 
         return $users;
@@ -128,6 +131,21 @@ class User
         Database::instance()->storeQuery('UPDATE `users` SET username = ?, perm_level = ?, active = ?, alt_css = ? WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('siiii', $name, $perm_level, $active, $alt_css, $this->id);
+        $stmt->execute();
+
+        return User::getById($this->id);
+    }
+
+    /**
+     * Update de highscore
+     * @param int $highscore
+     * @return User|null
+     */
+    public function updateHighscore(int $highscore): ?User
+    {
+        Database::instance()->storeQuery('UPDATE `users` SET highscore = ? WHERE id = ?');
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $highscore, $this->id);
         $stmt->execute();
 
         return User::getById($this->id);

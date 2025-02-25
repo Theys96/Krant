@@ -143,6 +143,7 @@
   canvas.addEventListener("click", (event) => {
     const clickX = event.clientX;
     const clickY = event.clientY;
+    let hit = false;
 
     for (let i = enemies.length - 1; i >= 0; i--) {
       const enemy = enemies[i];
@@ -154,20 +155,23 @@
 
       if (isHit && gameActive) {
         shootLaser(enemy, 0);
+        hit = true;
         break; // Stop met het controleren van andere vijanden na het raken
       }
     }
-    for (let i = friends.length - 1; i >= 0; i--) {
-      const friend = friends[i];
-      const isHit =
-        clickX > friend.x - friend.width / 2 &&
-        clickX < friend.x + friend.width / 2 &&
-        clickY > friend.y - friend.height / 2 &&
-        clickY < friend.y + friend.height / 2;
+    if (!hit) {
+      for (let i = friends.length - 1; i >= 0; i--) {
+        const friend = friends[i];
+        const isHit =
+          clickX > friend.x - friend.width / 2 &&
+          clickX < friend.x + friend.width / 2 &&
+          clickY > friend.y - friend.height / 2 &&
+          clickY < friend.y + friend.height / 2;
 
-      if (isHit && gameActive) {
-        shootLaser(friend, 1);
-        break; // Stop met het controleren van andere vijanden na het raken
+        if (isHit && gameActive) {
+          shootLaser(friend, 1);
+          break; // Stop met het controleren van andere vijanden na het raken
+        }
       }
     }
 
@@ -251,6 +255,18 @@
     ctx.restore();
 
     // Tekent vijanden als afbeeldingen met behoud van verhouding
+    friends = friends.filter(friend => friend.alive);
+    friends.forEach(friend => {
+      ctx.drawImage(
+        friendImage,
+        friend.x - friend.width / 2,
+        friend.y - friend.height / 2,
+        friend.width,
+        friend.height
+      );
+    });
+
+    // Tekent vijanden als afbeeldingen met behoud van verhouding
     enemies = enemies.filter(enemy => enemy.alive);
     enemies.forEach(enemy => {
       ctx.drawImage(
@@ -263,18 +279,6 @@
     });
     
     enemyCount = enemies.length; // Update de vijandenteller
-
-    // Tekent vijanden als afbeeldingen met behoud van verhouding
-    friends = friends.filter(friend => friend.alive);
-    friends.forEach(friend => {
-      ctx.drawImage(
-        friendImage,
-        friend.x - friend.width / 2,
-        friend.y - friend.height / 2,
-        friend.width,
-        friend.height
-      );
-    });
 
     // Tekent lasers
     ctx.strokeStyle = "red";

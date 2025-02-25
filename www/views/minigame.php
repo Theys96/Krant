@@ -62,6 +62,14 @@
   let lasers = [];
   let friends = [];
 
+  //audio
+  const laserSounds = [
+    new Audio('assets/audio/laser1.mp3'),
+    new Audio('assets/audio/laser2.mp3'),
+    new Audio('assets/audio/laser3.mp3')
+  ];
+  let currentAudio = laserSounds[0];
+
   // Vijand afbeelding
   const enemyImage = new Image();
   enemyImage.src = "assets/img/MHN.png"; // Vervang door je eigen vijandafbeelding!
@@ -195,9 +203,21 @@
     }
   });
 
+  // speel een random geluid uit een array af.
+  function playSound(soundList) {
+    if (soundList.length > 0) {
+      const index = Math.floor(Math.random() * soundList.length);
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = soundList[index];
+      currentAudio.play();
+    }
+  }
+
   // Functie om laser te schieten en kill counter bij te werken
   function shootLaser(target, int) {
     lasers.push({ x: target.x, y: target.y, timestamp: Date.now() });
+    playSound(laserSounds);
     target.alive = false;
     if (int == 0) {
       killCount++; // vijand geraakt, Verhoog de kill counter

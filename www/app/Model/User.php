@@ -143,9 +143,9 @@ class User
      */
     public function updateHighscore(int $highscore): ?User
     {
-        Database::instance()->storeQuery('UPDATE `users` SET highscore = ? WHERE id = ?');
+        Database::instance()->storeQuery('UPDATE `users` SET highscore = ? WHERE id = ? && highscore < ?');
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('ii', $highscore, $this->id);
+        $stmt->bind_param('iii', $highscore, $this->id, $highscore);
         $stmt->execute();
 
         return User::getById($this->id);

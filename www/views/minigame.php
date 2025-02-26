@@ -1,9 +1,6 @@
 <?php
-
-use App\Model\User;
-
 /**
- * @var User $user
+ * @var int $highscore
  */
 ?>
 
@@ -26,7 +23,10 @@ use App\Model\User;
 <body>
 
 <canvas id="gameCanvas"></canvas>
-
+<?php
+echo "<input type='hidden' id='highscore' value='$highscore'/>"
+?>
+<script src="assets\vendor\jquery\jquery.min.js"></script>
 <script>
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
@@ -52,7 +52,8 @@ use App\Model\User;
   //gamestate
   let gameActive = true;
   const enemyLimit = 10;
-  let highscore = 0;
+  let highscore = document.getElementById("highscore").value;
+  let oldhighscore = highscore;
 
   // Speler object met afbeelding
   const player = {
@@ -256,6 +257,18 @@ use App\Model\User;
     }, randomSpawnTime());
   }
 
+  // Update highscore van de gebruiker totdat de request lukt
+  function updateHighscore() {
+    setTimeout(() => {
+      if(highscore > oldhighscore) {
+        $.post("?action=minigame", {highscore: highscore}, function(data) {
+          oldhighscore = highscore;
+        })
+        updateHighscore();
+      }
+    }, 3000);
+  }
+
   // Update-functie voor spel
   function updateGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -334,9 +347,16 @@ use App\Model\User;
       ctx.fillText("GAME OVER", (canvas.width / 2) - 195, (canvas.height / 2) - 10);
       ctx.font = "50px Arial bold";
       ctx.fillText("retry", (canvas.width / 2) - 50, (canvas.height / 2) + 57);
+      if (highscore > oldhighscore) {
+        $.post("?action=minigame", {highscore: highscore}, function(data) {
+          oldhighscore = highscore;
+        })
+        updateHighscore();
+      }
     }
-
-    requestAnimationFrame(updateGame);
+    if (gameActive) {
+      requestAnimationFrame(updateGame);
+    }
   }
 
   // Start het spel

@@ -31,6 +31,7 @@ use App\Model\User;
             <option value='0' <?php echo 0 === $user->alt_css ? 'selected' : ''; ?>>Normaal</option>
             <option value='1' <?php echo 1 === $user->alt_css ? 'selected' : ''; ?>>Comic Sans</option>
             <option value='2' <?php echo 2 === $user->alt_css ? 'selected' : ''; ?>>Roze</option>
+            <option value='3' <?php echo 3 === $user->alt_css ? 'selected' : ''; ?>>Disco</option>
         </select>
     </div>
 

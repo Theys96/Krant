@@ -1,0 +1,69 @@
+body {
+	font-family: 'Monospace', monospace;
+	background-color: black;
+    background-image: url(kakkerlak.gif);
+	background-size: 50px, 50px;
+}
+
+#body {
+	color: white;
+    animation: blinker 2.5s linear infinite;
+}
+
+.role {
+	color: white;
+}
+
+.btn {
+	color: white;
+}
+
+.btn:hover {
+	color: white;
+}
+
+.card {
+	background-color: white;
+}
+
+.stukje {
+	background-color: white;
+}
+
+.list-group {
+	color: black;
+}
+
+.row {
+	background-color: white;
+	color: black;
+	border-radius: .25rem;
+}
+
+p {
+	background-color: white;
+	color: black;
+	border-radius: .25rem;
+	padding: .5rem;
+}
+
+.schrijfregels {
+	background-color: white;
+	color: black;
+	border-radius: .25rem;
+	padding: .5rem;
+}
+  
+@keyframes blinker {
+    0% { background: rgba(0,0,0,0.0);}
+    10% { background: rgba(255, 0, 0, 0.7);}
+    20% { background: rgba(0,0,0,0.0);}
+    30% { background: rgba(255, 251, 0, 0.7);}
+    40% { background: rgba(0,0,0,0.0);}
+    50% { background: rgba(0, 255, 0, 0.7);}
+    60% { background: rgba(0,0,0,0.0);}
+    70% { background: rgba(0, 153, 255, 0.7);}
+    80% { background: rgba(0,0,0,0.0);}
+    90% { background: rgba(255, 1, 213, 0.7);}
+    100% { background: rgba(0,0,0,0.0);}
+}

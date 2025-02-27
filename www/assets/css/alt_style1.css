@@ -10,6 +10,10 @@ body {
 	background-color: #ff7f00;
 }
 
+#body {
+	background: linear-gradient(rgba(245,232,204,0.7) 90%, rgba(245,232,204,0.1) 100%);
+}
+
 #footer {
 	color: blue;
 	text-shadow: 0px 0px 3px white;

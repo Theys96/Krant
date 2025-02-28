@@ -1,6 +1,7 @@
 <?php
 /**
- * @var int $highscore
+ * @var int    $highscore
+ * @var string $topFive
  */
 ?>
 
@@ -23,9 +24,13 @@
 <body>
 
 <canvas id="gameCanvas"></canvas>
+
 <?php
-echo "<input type='hidden' id='highscore' value='$highscore'/>"
+// hidden input om deze variabelen in het js script te kunnen pakken
+echo "<input type='hidden' id='highscore' value='$highscore'/>";
+echo "<input type='hidden' id='topFive' value='$topFive'/>";
 ?>
+
 <script src="assets\vendor\jquery\jquery.min.js"></script>
 <script>
   const canvas = document.getElementById("gameCanvas");
@@ -54,6 +59,7 @@ echo "<input type='hidden' id='highscore' value='$highscore'/>"
   const enemyLimit = 10;
   let highscore = document.getElementById("highscore").value;
   let oldhighscore = highscore;
+  let topFive = JSON.parse(document.getElementById("topFive").value);
 
   // Speler object met afbeelding
   const player = {
@@ -198,17 +204,11 @@ echo "<input type='hidden' id='highscore' value='$highscore'/>"
       const retry =
         clickX > (canvas.width / 2) - 100 && 
         clickX < ((canvas.width / 2) - 100) + 200 &&
-        clickY > (canvas.height / 2) + 20 &&
-        clickY < ((canvas.height / 2) + 20) + 50;
+        clickY > (canvas.height / 2) + 128 &&
+        clickY < ((canvas.height / 2) + 128) + 50;
 
       if (retry) {
-        enemies = [];
-        friends = [];
-        killCount = 0;
-        totalKills = 0;
-        gameActive = true;
-        updateGame();
-        startSpawning();
+        location.reload();
       }
     }
   });
@@ -276,9 +276,10 @@ echo "<input type='hidden' id='highscore' value='$highscore'/>"
     // Kill counter en vijandenteller weergeven
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
-    ctx.fillText("Krijg niet meer dan " + enemyLimit + " nachtmerries!", 10, 30);
-    ctx.fillText("Kills: " + killCount, 10, 60);
-    ctx.fillText("Nachtmeries: " + enemyCount, 10, 90);
+    ctx.fillText("Krijg niet meer dan", 10, 30);
+    ctx.fillText(enemyLimit + " MHN nachtmerries!", 10, 60);
+    ctx.fillText("Kills: " + killCount, 10, 90);
+    ctx.fillText("Nachtmeries: " + enemyCount, 10, 120);
     ctx.fillText("Highscore:", canvas.width - 110, 30);
     ctx.fillText(highscore, canvas.width - ctx.measureText(highscore).width - 15, 60);
 
@@ -339,14 +340,15 @@ echo "<input type='hidden' id='highscore' value='$highscore'/>"
       ctx.fillStyle = "rgb(32,32,32,0.4)";
       ctx.fillRect(0 , 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
-      ctx.fillRect((canvas.width / 2) - 102, (canvas.height / 2) + 18, 204, 54);
+      ctx.fillRect((canvas.width / 2) - 102, (canvas.height / 2) + 128, 204, 54);
       ctx.fillStyle = "gray";
-      ctx.fillRect((canvas.width / 2) - 100, (canvas.height / 2) + 20, 200, 50);
+      ctx.fillRect((canvas.width / 2) - 100, (canvas.height / 2) + 130, 200, 50);
       ctx.fillStyle = "white";
       ctx.font = "65px Arial bold";
-      ctx.fillText("GAME OVER", (canvas.width / 2) - 195, (canvas.height / 2) - 10);
+      ctx.fillText("GAME OVER", (canvas.width / 2) - ctx.measureText("GAME OVER").width / 2, (canvas.height / 2) - 150);
       ctx.font = "50px Arial bold";
-      ctx.fillText("retry", (canvas.width / 2) - 50, (canvas.height / 2) + 57);
+      ctx.fillText("retry", (canvas.width / 2) - ctx.measureText("retry").width / 2, (canvas.height / 2) + 167);
+      renderScores();
       if (highscore > oldhighscore) {
         $.post("?action=minigame", {highscore: highscore}, function(data) {
           oldhighscore = highscore;
@@ -356,6 +358,30 @@ echo "<input type='hidden' id='highscore' value='$highscore'/>"
     }
     if (gameActive) {
       requestAnimationFrame(updateGame);
+    }
+  }
+
+  //tekent de top 5 highscores plus de gebruikers score op het midden van het scherm
+  function renderScores(){
+    ctx.font = "50px Arial bold";
+    ctx.fillText("Highscores", (canvas.width / 2) - ctx.measureText("Highscores").width / 2, (canvas.height / 2) - 90);
+    offset = -50;
+    j = 0;
+    text = "";
+    ctx.font = "20px Arial bold";
+    for (let i = 1; i < 6; i++) {
+      if (j==i - 1 && highscore > Number(topFive[j][1])) {
+        text = i + ". YOU: " + highscore;
+      } else {
+        text = i + ". " + topFive[j][0] + ": " + topFive[j][1];
+        j++;
+      }
+      ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
+      offset = offset + 30;
+    }
+    if (j == 5) {
+      text = "-  YOU: " + highscore;
+      ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
     }
   }
 

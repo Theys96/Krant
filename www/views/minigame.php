@@ -208,7 +208,13 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
         clickY < ((canvas.height / 2) + 128) + 50;
 
       if (retry) {
-        location.reload();
+        killCount = 0;
+        totalKills = 0;
+        enemies = [];
+        friends = [];
+        gameActive = true;
+        updateGame();
+        startSpawning();
       }
     }
   });

@@ -56,6 +56,8 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
 
   //gamestate
   let gameActive = true;
+  let soundOn = true;
+  let paused = false;
   const enemyLimit = 10;
   let highscore = document.getElementById("highscore").value;
   let oldhighscore = highscore;
@@ -85,6 +87,16 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     new Audio('assets/audio/laser3.mp3')
   ];
   let currentAudio = laserSounds[0];
+
+  //menu afbeeldingen
+  const pauseImage = new Image();
+  pauseImage.src = "assets/img/pause.png";
+  const playImage = new Image();
+  playImage.src = "assets/img/play.png";
+  const muteImage = new Image();
+  muteImage.src = "assets/img/Mute_Icon.png";
+  const soundImage = new Image();
+  soundImage.src = "assets/img/Speaker_Icon.png";
 
   // Vijand afbeelding
   const enemyImage = new Image();
@@ -177,7 +189,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
         clickY > enemy.y - enemy.height / 2 &&
         clickY < enemy.y + enemy.height / 2;
 
-      if (isHit && gameActive) {
+      if (isHit && gameActive && !paused) {
         shootLaser(enemy, 0);
         hit = true;
         break; // Stop met het controleren van andere vijanden na het raken
@@ -192,13 +204,29 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
           clickY > friend.y - friend.height / 2 &&
           clickY < friend.y + friend.height / 2;
 
-        if (isHit && gameActive) {
+        if (isHit && gameActive && !paused) {
           shootLaser(friend, 1);
           break; // Stop met het controleren van andere vijanden na het raken
         }
       }
     }
 
+    const togglesound = 
+        clickX > canvas.width - 50 && 
+        clickX < canvas.width &&
+        clickY < 30;
+
+    if (togglesound && gameActive) {
+      soundOn = soundOn == false;
+    }
+    const pause = 
+        clickX > canvas.width - 100 && 
+        clickX < canvas.width - 50 &&
+        clickY < 30;
+
+    if (pause && gameActive) {
+      paused = paused == false;
+    }
     //retry knop om te herstarten
     if (!gameActive) {
       const retry =
@@ -221,7 +249,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
 
   // speel een random geluid uit een array af.
   function playSound(soundList) {
-    if (soundList.length > 0) {
+    if (soundOn && soundList.length > 0) {
       const index = Math.floor(Math.random() * soundList.length);
       currentAudio.pause();
       currentAudio.currentTime = 0;
@@ -254,9 +282,11 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   // Spawn vijanden met willekeurige intervallen
   function startSpawning() {
     setTimeout(() => {
-      addEnemy();
-      removeFriend();
-      addFriend();
+      if (!paused) {
+        addEnemy();
+        removeFriend();
+        addFriend();
+      }
       if (gameActive) {
         startSpawning(); // Herstart de spawnfunctie na een willekeurige tijd
       }
@@ -286,8 +316,19 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     ctx.fillText(enemyLimit + " MHN nachtmerries!", 10, 60);
     ctx.fillText("Kills: " + killCount, 10, 90);
     ctx.fillText("Nachtmeries: " + enemyCount, 10, 120);
-    ctx.fillText("Highscore:", canvas.width - 110, 30);
-    ctx.fillText(highscore, canvas.width - ctx.measureText(highscore).width - 15, 60);
+    //dynamische knopjes voor pauzeren en geluid
+    if (paused) {
+      ctx.drawImage(playImage, canvas.width -100, 10, 25, 25);
+    } else {
+      ctx.drawImage(pauseImage, canvas.width -100, 10, 25, 25);
+    }
+    if (soundOn) {
+      ctx.drawImage(soundImage, canvas.width -50, 10, 25, 25);
+    } else {
+      ctx.drawImage(muteImage, canvas.width -50, 10, 25, 25);
+    }
+    ctx.fillText("Highscore:", canvas.width - 110, 60);
+    ctx.fillText(highscore, canvas.width - ctx.measureText(highscore).width - 15, 90);
 
     // Tekent speler als afbeelding met centrering
     ctx.save();
@@ -340,7 +381,14 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       ctx.lineTo(laser.x, laser.y);
       ctx.stroke();
     });
-
+    //game paused overlay
+    if (paused) {
+      ctx.fillStyle = "rgb(32,32,32,0.4)";
+      ctx.fillRect(0 , 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.font = "65px Arial bold";
+      ctx.fillText("GEPAUZEERD", (canvas.width / 2) - ctx.measureText("GEPAUZEERD").width / 2, (canvas.height / 2) - 100);
+    }
     //game over overlay
     if (!gameActive) {
       ctx.fillStyle = "rgb(32,32,32,0.4)";

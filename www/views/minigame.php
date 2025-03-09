@@ -50,14 +50,13 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   const scalar = 100;
 
   // Counters
-  let killCount = 0;
+  let score = 0;
   let enemyCount = 0;
-  let totalKills = 0;
+  let kills = 0;
 
   //gamestate
-  let gameActive = true;
+  let gameState = 0;  // 0 = active, 1 = paused, 2 = game over
   let soundOn = true;
-  let paused = false;
   const enemyLimit = 10;
   let highscore = document.getElementById("highscore").value;
   let oldhighscore = highscore;
@@ -109,7 +108,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   // Functie om een nieuwe vijand toe te voegen
   function addEnemy() {
     const spawnChance = Math.random();
-    const enemyCountToAdd = spawnChance < (0.03 * (1 + totalKills/scalar)) ? 4 : spawnChance < (0.14 * (1 + totalKills/scalar))? 2 : 1; // 1% kans op 5 vijanden, 9% kans op 2 vijanden
+    const enemyCountToAdd = spawnChance < (0.03 * (1 + kills/scalar)) ? 4 : spawnChance < (0.14 * (1 + kills/scalar))? 2 : 1; // 1% kans op 5 vijanden, 9% kans op 2 vijanden
 
     for (let i = 0; i < enemyCountToAdd; i++) {
       const enemy = {
@@ -124,14 +123,14 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
 
     enemyCount = enemies.length; // Update het aantal vijanden op het speelveld
     if (enemyCount > enemyLimit) {
-      gameActive = false;
+      gameState = 2;
     }
   }
 
   // Functie om een nieuwe vrienden toe te voegen
   function addFriend() {
     const spawnChance = Math.random();
-    const friendCountToAdd = spawnChance < (0.03 * (1 + totalKills/scalar)) ? 2 : spawnChance < (0.14 * (1 + totalKills/scalar)) ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
+    const friendCountToAdd = spawnChance < (0.02 * (1 + kills/scalar)) ? 2 : spawnChance < (0.1 * (1 + kills/scalar)) ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
 
     for (let i = 0; i < friendCountToAdd; i++) {
       const friend = {
@@ -148,7 +147,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   // Functie om een vrienden te verwijderen
   function removeFriend() {
     const removeChance = Math.random();
-    const friendCountToRemove = removeChance < (0.1 * (1 + totalKills/scalar)) ? 2 : removeChance < (0.2 * (1 + totalKills/scalar)) ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
+    const friendCountToRemove = removeChance < (0.1 * (1 + kills/scalar)) ? 2 : removeChance < (0.2 * (1 + kills/scalar)) ? 1 : 0; // 1% kans op 2 vrienden, 9% kans op 1 vriend
 
     for (let i = 0; i < friendCountToRemove; i++) {
       if(friends.length > 0) {
@@ -180,67 +179,72 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     const clickX = event.clientX;
     const clickY = event.clientY;
     let hit = false;
-
-    for (let i = enemies.length - 1; i >= 0; i--) {
-      const enemy = enemies[i];
-      const isHit =
-        clickX > enemy.x - enemy.width / 2 &&
-        clickX < enemy.x + enemy.width / 2 &&
-        clickY > enemy.y - enemy.height / 2 &&
-        clickY < enemy.y + enemy.height / 2;
-
-      if (isHit && gameActive && !paused) {
-        shootLaser(enemy, 0);
-        hit = true;
-        break; // Stop met het controleren van andere vijanden na het raken
-      }
-    }
-    if (!hit) {
-      for (let i = friends.length - 1; i >= 0; i--) {
-        const friend = friends[i];
+    
+    if (gameState == 0) {
+      for (let i = enemies.length - 1; i >= 0; i--) {
+        const enemy = enemies[i];
         const isHit =
-          clickX > friend.x - friend.width / 2 &&
-          clickX < friend.x + friend.width / 2 &&
-          clickY > friend.y - friend.height / 2 &&
-          clickY < friend.y + friend.height / 2;
+          clickX > enemy.x - enemy.width / 2 &&
+          clickX < enemy.x + enemy.width / 2 &&
+          clickY > enemy.y - enemy.height / 2 &&
+          clickY < enemy.y + enemy.height / 2;
 
-        if (isHit && gameActive && !paused) {
-          shootLaser(friend, 1);
+        if (isHit) {
+          shootLaser(enemy, 0);
+          hit = true;
           break; // Stop met het controleren van andere vijanden na het raken
+        }
+      }
+      if (!hit) {
+        for (let i = friends.length - 1; i >= 0; i--) {
+          const friend = friends[i];
+          const isHit =
+            clickX > friend.x - friend.width / 2 &&
+            clickX < friend.x + friend.width / 2 &&
+            clickY > friend.y - friend.height / 2 &&
+            clickY < friend.y + friend.height / 2;
+
+          if (isHit) {
+            shootLaser(friend, 1);
+            hit = true;
+            break; // Stop met het controleren van andere vijanden na het raken
+          }
         }
       }
     }
 
-    const togglesound = 
+    if (gameState != 2 && !hit) {
+      const togglesound = 
         clickX > canvas.width - 50 && 
         clickX < canvas.width &&
         clickY < 30;
 
-    if (togglesound && gameActive) {
-      soundOn = soundOn == false;
-    }
-    const pause = 
+      if (togglesound) {
+        soundOn = soundOn == false;
+      }
+      const pause = 
         clickX > canvas.width - 100 && 
         clickX < canvas.width - 50 &&
         clickY < 30;
 
-    if (pause && gameActive) {
-      paused = paused == false;
+      if (pause) {
+        gameState = gameState == 1 ? 0 : 1;
+      }
     }
     //retry knop om te herstarten
-    if (!gameActive) {
+    if (gameState == 2) {
       const retry =
         clickX > (canvas.width / 2) - 100 && 
         clickX < ((canvas.width / 2) - 100) + 200 &&
-        clickY > (canvas.height / 2) + 128 &&
-        clickY < ((canvas.height / 2) + 128) + 50;
+        clickY > (canvas.height / 2) + 148 &&
+        clickY < ((canvas.height / 2) + 148) + 50;
 
       if (retry) {
-        killCount = 0;
-        totalKills = 0;
+        score = 0;
+        kills = 0;
         enemies = [];
         friends = [];
-        gameActive = true;
+        gameState = 0;
         updateGame();
         startSpawning();
       }
@@ -264,30 +268,30 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     playSound(laserSounds);
     target.alive = false;
     if (int == 0) {
-      killCount++; // vijand geraakt, Verhoog de kill counter
+      score++; // vijand geraakt, Verhoog de kill counter
     } else {
-      killCount = killCount - 5; //vriend geraakt, verlaag counter
+      score = score - 5; //vriend geraakt, verlaag counter
     }
-    totalKills++;
-    if (killCount > highscore) {
-      highscore = killCount;
+    kills++;
+    if (score > highscore) {
+      highscore = score;
     }
   }
 
   // Functie om willekeurige spawn-tijden te krijgen tussen 0,7 en 2 seconden
   function randomSpawnTime() {
-    return Math.random() * (2400 - 700) * (scalar/(scalar + totalKills)) + 700; // Geeft tijd in milliseconden
+    return Math.random() * (2400 - 700) * (scalar/(scalar + kills)) + 700; // Geeft tijd in milliseconden
   }
 
   // Spawn vijanden met willekeurige intervallen
   function startSpawning() {
     setTimeout(() => {
-      if (!paused) {
+      if (gameState == 0) {
         addEnemy();
         removeFriend();
         addFriend();
       }
-      if (gameActive) {
+      if (gameState != 2) {
         startSpawning(); // Herstart de spawnfunctie na een willekeurige tijd
       }
     }, randomSpawnTime());
@@ -314,10 +318,10 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     ctx.font = "20px Arial";
     ctx.fillText("Krijg niet meer dan", 10, 30);
     ctx.fillText(enemyLimit + " MHN nachtmerries!", 10, 60);
-    ctx.fillText("Kills: " + killCount, 10, 90);
+    ctx.fillText("Score: " + score, 10, 90);
     ctx.fillText("Nachtmeries: " + enemyCount, 10, 120);
     //dynamische knopjes voor pauzeren en geluid
-    if (paused) {
+    if (gameState == 1) { //gepauzeerd
       ctx.drawImage(playImage, canvas.width -100, 10, 25, 25);
     } else {
       ctx.drawImage(pauseImage, canvas.width -100, 10, 25, 25);
@@ -382,7 +386,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       ctx.stroke();
     });
     //game paused overlay
-    if (paused) {
+    if (gameState == 1) {
       ctx.fillStyle = "rgb(32,32,32,0.4)";
       ctx.fillRect(0 , 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
@@ -390,18 +394,20 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       ctx.fillText("GEPAUZEERD", (canvas.width / 2) - ctx.measureText("GEPAUZEERD").width / 2, (canvas.height / 2) - 100);
     }
     //game over overlay
-    if (!gameActive) {
+    if (gameState == 2) {
       ctx.fillStyle = "rgb(32,32,32,0.4)";
       ctx.fillRect(0 , 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
-      ctx.fillRect((canvas.width / 2) - 102, (canvas.height / 2) + 128, 204, 54);
+      ctx.fillRect((canvas.width / 2) - 102, (canvas.height / 2) + 148, 204, 54);
       ctx.fillStyle = "gray";
-      ctx.fillRect((canvas.width / 2) - 100, (canvas.height / 2) + 130, 200, 50);
+      ctx.fillRect((canvas.width / 2) - 100, (canvas.height / 2) + 150, 200, 50);
       ctx.fillStyle = "white";
       ctx.font = "65px Arial bold";
-      ctx.fillText("GAME OVER", (canvas.width / 2) - ctx.measureText("GAME OVER").width / 2, (canvas.height / 2) - 150);
+      ctx.fillText("GAME OVER", (canvas.width / 2) - ctx.measureText("GAME OVER").width / 2, (canvas.height / 2) - 160);
+      ctx.font = "30px Arial bold";
+      ctx.fillText("Score: " + score, (canvas.width / 2) - ctx.measureText("Score: " + score).width / 2, (canvas.height / 2) - 120);
       ctx.font = "50px Arial bold";
-      ctx.fillText("retry", (canvas.width / 2) - ctx.measureText("retry").width / 2, (canvas.height / 2) + 167);
+      ctx.fillText("retry", (canvas.width / 2) - ctx.measureText("retry").width / 2, (canvas.height / 2) + 187);
       renderScores();
       if (highscore > oldhighscore) {
         $.post("?action=minigame", {highscore: highscore}, function(data) {
@@ -410,7 +416,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
         updateHighscore();
       }
     }
-    if (gameActive) {
+    if (gameState != 2) {
       requestAnimationFrame(updateGame);
     }
   }
@@ -418,8 +424,8 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   //tekent de top 5 highscores plus de gebruikers score op het midden van het scherm
   function renderScores(){
     ctx.font = "50px Arial bold";
-    ctx.fillText("Highscores", (canvas.width / 2) - ctx.measureText("Highscores").width / 2, (canvas.height / 2) - 90);
-    offset = -50;
+    ctx.fillText("Highscores", (canvas.width / 2) - ctx.measureText("Highscores").width / 2, (canvas.height / 2) - 60);
+    offset = -20;
     j = 0;
     text = "";
     ctx.font = "20px Arial bold";

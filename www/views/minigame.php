@@ -83,7 +83,9 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   const laserSounds = [
     new Audio('assets/audio/laser1.mp3'),
     new Audio('assets/audio/laser2.mp3'),
-    new Audio('assets/audio/laser3.mp3')
+    new Audio('assets/audio/laser3.mp3'),
+    new Audio('assets/audio/laser4.mp3'),
+    new Audio('assets/audio/laser5.mp3')
   ];
   let currentAudio = laserSounds[0];
 

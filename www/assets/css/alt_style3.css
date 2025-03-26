@@ -55,15 +55,15 @@ p {
 }
   
 @keyframes blinker {
-    0% { background: rgba(0,0,0,0.0);}
-    10% { background: rgba(255, 0, 0, 0.35);}
-    20% { background: rgba(0,0,0,0.0);}
-    30% { background: rgba(255, 251, 0, 0.35);}
-    40% { background: rgba(0,0,0,0.0);}
-    50% { background: rgba(0, 255, 0, 0.35);}
-    60% { background: rgba(0,0,0,0.0);}
-    70% { background: rgba(0, 153, 255, 0.35);}
-    80% { background: rgba(0,0,0,0.0);}
-    90% { background: rgba(255, 1, 213, 0.35);}
-    100% { background: rgba(0,0,0,0.0);}
+    0% { background: rgba(0,0,0,0.5);}
+    10% { background: rgba(255, 0, 0, 0.5);}
+    20% { background: rgba(0,0,0,0.5);}
+    30% { background: rgba(255, 251, 0, 0.5);}
+    40% { background: rgba(0,0,0,0.5);}
+    50% { background: rgba(0, 255, 0, 0.5);}
+    60% { background: rgba(0,0,0,0.5);}
+    70% { background: rgba(0, 153, 255, 0.5);}
+    80% { background: rgba(0,0,0,0.5);}
+    90% { background: rgba(255, 1, 213, 0.5);}
+    100% { background: rgba(0,0,0,0.5);}
 }

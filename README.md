@@ -60,7 +60,7 @@ Create a copy of `www/app/Util/Config.example.php` in `Config.production.php` in
 Then, to deploy, run: 
 
 ```bash.
-bin/install-prod
+bin/push-production
 ```
 
 To set up the database, use `krant.sql` (this defines all the required tables).

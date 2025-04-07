@@ -275,8 +275,10 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       score = score - 5; //vriend geraakt, verlaag counter
     }
     kills++;
-    if (score > highscore) {
+    if (score > oldhighscore) {
       highscore = score;
+    } else {
+      highscore = oldhighscore;
     }
   }
 

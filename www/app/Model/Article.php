@@ -258,9 +258,7 @@ class Article
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-          
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
-
         }
 
         return $users;
@@ -291,9 +289,7 @@ class Article
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-
             $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
-
         }
 
         return $users;

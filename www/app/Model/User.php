@@ -52,7 +52,7 @@ class User
         $stmt->execute();
         $user_data = $stmt->get_result()->fetch_assoc();
         if ($user_data) {
-            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
         }
 
         return null;
@@ -166,16 +166,20 @@ class User
 
     /**
      * Geeft een array met de naam en score van de 5 gebruikers met de hoogst highscore, de aangegeven gebruiker uitgesloten.
+     *
+     * @param $userid de user die moet worden buitengesloten
+     *
+     * @return array<array<string>>
      */
     public static function getTopFive(int $userid): array
     {
         $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.' ORDER BY highscore DESC LIMIT 5');
         $top = [];
         foreach ($users as $user) {
-            array_push($top, [$user->username, (string) $user->highscore]);
+            array_push($top, [(string) $user->username, (string) $user->highscore]);
         }
         while (count($top) < 5) {
-            array_push($top, ['--']);
+            array_push($top, ['--', '--']);
         }
 
         return $top;

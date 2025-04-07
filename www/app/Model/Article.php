@@ -71,7 +71,7 @@ class Article
     /**
      * @return Category|null
      */
-    public function __get($value)
+    public function __get(string $value)
     {
         if ('category' === $value) {
             if (null === $this->category_id) {
@@ -141,7 +141,7 @@ class Article
                 $article_data['contents'],
                 $article_data['context'],
                 $article_data['category'],
-                $article_data['ready'],
+                (bool) $article_data['ready'],
                 $article_data['last_updated']
             );
         }
@@ -168,7 +168,7 @@ class Article
                 $article_data['contents'],
                 $article_data['context'],
                 $article_data['category'],
-                $article_data['ready'],
+                (bool) $article_data['ready'],
                 $article_data['last_updated']
             );
         }
@@ -258,7 +258,9 @@ class Article
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+          
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+
         }
 
         return $users;
@@ -289,7 +291,9 @@ class Article
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+
         }
 
         return $users;

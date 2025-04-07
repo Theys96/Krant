@@ -93,7 +93,7 @@ class ArticleChange
     /**
      * @return mixed|null
      */
-    public function __get($value)
+    public function __get(string $value)
     {
         if ('article' === $value) {
             return Article::getById($this->article_id);
@@ -211,7 +211,7 @@ class ArticleChange
                 $change_data['changed_contents'],
                 $change_data['changed_context'],
                 $change_data['changed_category'],
-                $change_data['changed_ready'],
+                (bool) $change_data['changed_ready'],
                 $change_data['user'],
                 $change_data['timestamp']
             );
@@ -240,7 +240,7 @@ class ArticleChange
                 $change_data['changed_contents'],
                 $change_data['changed_context'],
                 $change_data['changed_category'],
-                $change_data['changed_ready'],
+                (bool) $change_data['changed_ready'],
                 $change_data['user'],
                 $change_data['timestamp']
             );

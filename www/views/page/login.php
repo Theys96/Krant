@@ -3,9 +3,9 @@
 use App\Model\User;
 
 /**
- * @var User[] $users
- * @var array  $passwords
- * @var string $errors
+ * @var User[]             $users
+ * @var array<int, string> $passwords
+ * @var string             $errors
  */
 ?>
 <script>

@@ -6,8 +6,12 @@
 body {
 	font-family: InstalledComicSans, "Comic Sans MS";
 	background-image: url('banana-dance.gif');
-	background-size: 30px 30px;
+	background-size: 40px 40px;
 	background-color: #ff7f00;
+}
+
+#body {
+	background: linear-gradient(rgba(245,232,204,0.6) 90%, rgba(245,232,204,0.1) 100%);
 }
 
 #footer {

@@ -1,7 +1,7 @@
 <?php
 /**
- * @var int    $highscore
- * @var string $topFive
+ * @var int                  $highscore
+ * @var array<array<string>> $topFive
  */
 ?>
 
@@ -28,7 +28,7 @@
 <?php
 // hidden input om deze variabelen in het js script te kunnen pakken
 echo "<input type='hidden' id='highscore' value='$highscore'/>";
-echo "<input type='hidden' id='topFive' value='$topFive'/>";
+echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
 ?>
 
 <script src="assets\vendor\jquery\jquery.min.js"></script>
@@ -87,6 +87,9 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     new Audio('assets/audio/laser4.mp3'),
     new Audio('assets/audio/laser5.mp3')
   ];
+  const friendHitSound = [
+    new Audio('assets/audio/wilhelm.mp3')
+  ]
   let currentAudio = laserSounds[0];
 
   //menu afbeeldingen
@@ -267,11 +270,12 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
   // Functie om laser te schieten en kill counter bij te werken
   function shootLaser(target, int) {
     lasers.push({ x: target.x, y: target.y, timestamp: Date.now() });
-    playSound(laserSounds);
     target.alive = false;
     if (int == 0) {
+      playSound(laserSounds);
       score++; // vijand geraakt, Verhoog de kill counter
     } else {
+      playSound(friendHitSound);
       score = score - 5; //vriend geraakt, verlaag counter
     }
     kills++;
@@ -322,8 +326,9 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
     ctx.font = "20px Arial";
     ctx.fillText("Krijg niet meer dan", 10, 30);
     ctx.fillText(enemyLimit + " MHN nachtmerries!", 10, 60);
-    ctx.fillText("Score: " + score, 10, 90);
-    ctx.fillText("Nachtmeries: " + enemyCount, 10, 120);
+    ctx.fillText("Raak geen NHW!", 10, 90);
+    ctx.fillText("Score: " + score, 10, 120);
+    ctx.fillText("Nachtmeries: " + enemyCount, 10, 150);
     //dynamische knopjes voor pauzeren en geluid
     if (gameState == 1) { //gepauzeerd
       ctx.drawImage(playImage, canvas.width -100, 10, 25, 25);
@@ -394,7 +399,7 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       ctx.fillStyle = "rgb(32,32,32,0.4)";
       ctx.fillRect(0 , 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
-      ctx.font = "65px Arial bold";
+      ctx.font = "65px Arial";
       ctx.fillText("GEPAUZEERD", (canvas.width / 2) - ctx.measureText("GEPAUZEERD").width / 2, (canvas.height / 2) - 100);
     }
     //game over overlay
@@ -406,12 +411,12 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       ctx.fillStyle = "gray";
       ctx.fillRect((canvas.width / 2) - 100, (canvas.height / 2) + 150, 200, 50);
       ctx.fillStyle = "white";
-      ctx.font = "65px Arial bold";
+      ctx.font = "65px Arial";
       ctx.fillText("GAME OVER", (canvas.width / 2) - ctx.measureText("GAME OVER").width / 2, (canvas.height / 2) - 160);
-      ctx.font = "30px Arial bold";
+      ctx.font = "30px Arial";
       ctx.fillText("Score: " + score, (canvas.width / 2) - ctx.measureText("Score: " + score).width / 2, (canvas.height / 2) - 120);
-      ctx.font = "50px Arial bold";
-      ctx.fillText("retry", (canvas.width / 2) - ctx.measureText("retry").width / 2, (canvas.height / 2) + 187);
+      ctx.font = "40px Arial";
+      ctx.fillText("Opnieuw", (canvas.width / 2) - ctx.measureText("Opnieuw").width / 2, (canvas.height / 2) + 187);
       renderScores();
       if (highscore > oldhighscore) {
         $.post("?action=minigame", {highscore: highscore}, function(data) {
@@ -427,15 +432,15 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
 
   //tekent de top 5 highscores plus de gebruikers score op het midden van het scherm
   function renderScores(){
-    ctx.font = "50px Arial bold";
+    ctx.font = "50px Arial";
     ctx.fillText("Highscores", (canvas.width / 2) - ctx.measureText("Highscores").width / 2, (canvas.height / 2) - 60);
     offset = -20;
     j = 0;
     text = "";
-    ctx.font = "20px Arial bold";
-    for (let i = 1; i < 6; i++) {
-      if (j==i - 1 && highscore > Number(topFive[j][1])) {
-        text = i + ". YOU: " + highscore;
+    ctx.font = "20px Arial";
+    for (let i = 1; i <= topFive.length; i++) {
+      if (j== i - 1 && highscore > Number(topFive[j][1])) {
+        text = i + ". JIJ: " + highscore;
       } else {
         text = i + ". " + topFive[j][0] + ": " + topFive[j][1];
         j++;
@@ -443,8 +448,12 @@ echo "<input type='hidden' id='topFive' value='$topFive'/>";
       ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
       offset = offset + 30;
     }
-    if (j == 5) {
-      text = "-  YOU: " + highscore;
+    if(j == topFive.length) {
+      if (topFive.Length < 5) {
+        text = j + ". JIJ: " + highscore;
+      } else {
+        text = "-  JIJ: " + highscore;
+      }
       ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
     }
   }

@@ -27,7 +27,7 @@ class Minigame implements Response, LoggedIn
 
         return ViewRenderer::render_view('minigame', [
             'highscore' => $user->highscore,
-            'topFive' => json_encode(User::getTopFive($user->id)),
+            'topFive' => User::getTopFive($user->id),
         ]);
     }
 

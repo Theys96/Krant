@@ -178,9 +178,6 @@ class User
         foreach ($users as $user) {
             array_push($top, [(string) $user->username, (string) $user->highscore]);
         }
-        while (count($top) < 5) {
-            array_push($top, ['--', '--']);
-        }
 
         return $top;
     }

@@ -173,7 +173,7 @@ class User
      */
     public static function getTopFive(int $userid): array
     {
-        $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.' ORDER BY highscore DESC LIMIT 5');
+        $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.' AND highscore > 0 ORDER BY highscore DESC LIMIT 5');
         $top = [];
         foreach ($users as $user) {
             $top[] = [$user->username, $user->highscore];

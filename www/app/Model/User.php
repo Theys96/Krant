@@ -29,15 +29,21 @@ class User
 
     public int $alt_css;
 
-    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css)
+    public int $highscore;
+
+    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css, int $highscore)
     {
         $this->id = $id;
         $this->username = $username;
         $this->perm_level = $perm_level;
         $this->active = $active;
         $this->alt_css = $alt_css;
+        $this->highscore = $highscore;
     }
 
+    /**
+     * Haalt een gebruiker uit de database aan de hand van de id.
+     */
     public static function getById(int $id): ?User
     {
         Database::instance()->storeQuery('SELECT * FROM users WHERE id = ?');
@@ -46,13 +52,15 @@ class User
         $stmt->execute();
         $user_data = $stmt->get_result()->fetch_assoc();
         if ($user_data) {
-            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css']);
+            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
         }
 
         return null;
     }
 
     /**
+     * Haalt alle gebruiker op aan de hand van de query.
+     *
      * @return User[]
      */
     protected static function getAllByQuery(string $query): array
@@ -64,13 +72,15 @@ class User
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
         }
 
         return $users;
     }
 
     /**
+     * Haalt alle gebruikers op uit de database.
+     *
      * @return User[]
      */
     public static function getAll(): array
@@ -79,6 +89,8 @@ class User
     }
 
     /**
+     * Haalt alle actieve gebruikers op uit de database.
+     *
      * @return User[]
      */
     public static function getAllActive(): array
@@ -98,6 +110,9 @@ class User
         );
     }
 
+    /**
+     * Maakt een nieuwe gebruiker in de database.
+     */
     public static function createNew(string $name, int $perm_level): ?User
     {
         Database::instance()->storeQuery('INSERT INTO `users` (username, perm_level) VALUES (?, ?)');
@@ -111,6 +126,9 @@ class User
         return null;
     }
 
+    /**
+     * update deze gebruiker in de database.
+     */
     public function update(string $name, int $perm_level, bool $active, int $alt_css): ?User
     {
         if (1 === $this->id) {
@@ -131,6 +149,37 @@ class User
         $stmt->execute();
 
         return User::getById($this->id);
+    }
+
+    /**
+     * Update de highscore.
+     */
+    public function updateHighscore(int $highscore): ?User
+    {
+        Database::instance()->storeQuery('UPDATE `users` SET highscore = ? WHERE id = ? && highscore < ?');
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('iii', $highscore, $this->id, $highscore);
+        $stmt->execute();
+
+        return User::getById($this->id);
+    }
+
+    /**
+     * Geeft een array met de naam en score van de 5 gebruikers met de hoogst highscore, de aangegeven gebruiker uitgesloten.
+     *
+     * @param int $userid de user die moet worden buitengesloten
+     *
+     * @return array<array{0: string, 1: int}>
+     */
+    public static function getTopFive(int $userid): array
+    {
+        $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.' ORDER BY highscore DESC LIMIT 5');
+        $top = [];
+        foreach ($users as $user) {
+            $top[] = [$user->username, $user->highscore];
+        }
+
+        return $top;
     }
 
     /**
@@ -177,6 +226,9 @@ class User
         return User::getById($this->id);
     }
 
+    /**
+     * Geeft de permissie level van de gebruiker terug.
+     */
     public function getPermLevelName(): string
     {
         switch ($this->perm_level) {

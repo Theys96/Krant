@@ -1,7 +1,7 @@
 <?php
 /**
- * @var int                  $highscore
- * @var array<array<string>> $topFive
+ * @var int                             $highscore
+ * @var array<array{0: string, 1: int}> $topFive
  */
 ?>
 
@@ -430,29 +430,32 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
     }
   }
 
-  //tekent de top 5 highscores plus de gebruikers score op het midden van het scherm
-  function renderScores(){
+  // Tekent de top 5 highscores plus de gebruikers score op het midden van het scherm
+  function renderScores() {
+    const newTopFive = topFive.slice()
+    const rank = newTopFive.findIndex(entry => highscore > entry[1]);
+    if (rank !== -1) {
+      newTopFive.splice(rank, 0, ['JIJ', highscore]);
+      if (newTopFive.length > 5) {
+        newTopFive.pop();
+      }
+    }
+
     ctx.font = "50px Arial";
     ctx.fillText("Highscores", (canvas.width / 2) - ctx.measureText("Highscores").width / 2, (canvas.height / 2) - 60);
-    offset = -20;
-    j = 0;
-    text = "";
+    let offset = -20;
+    let text = "";
     ctx.font = "20px Arial";
-    for (let i = 1; i <= topFive.length; i++) {
-      if (j== i - 1 && highscore > Number(topFive[j][1])) {
-        text = i + ". JIJ: " + highscore;
-      } else {
-        text = i + ". " + topFive[j][0] + ": " + topFive[j][1];
-        j++;
-      }
+    for (let i = 0; i < newTopFive.length; i++) {
+      text = (i + 1) + ". " + newTopFive[i][0] + ": " + newTopFive[i][1];
       ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
       offset = offset + 30;
     }
-    if(j == topFive.length) {
-      if (topFive.Length < 5) {
-        text = j + ". JIJ: " + highscore;
-      } else {
+    if (rank === -1) {
+      if (newTopFive.length === 5) {
         text = "-  JIJ: " + highscore;
+      } else {
+        text = (newTopFive.length + 1) + ". JIJ: " + highscore;
       }
       ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
     }

@@ -23,6 +23,7 @@ use App\Controller\Page\LoggedIn\Editions;
 use App\Controller\Page\LoggedIn\EditUser;
 use App\Controller\Page\LoggedIn\Feedback;
 use App\Controller\Page\LoggedIn\FeedbackList;
+use App\Controller\Page\LoggedIn\Groepen;
 use App\Controller\Page\LoggedIn\MigrateEdition;
 use App\Controller\Page\LoggedIn\Overview;
 use App\Controller\Page\LoggedIn\Read;
@@ -63,6 +64,7 @@ class Router
         'overview' => Overview::class,
         'minigame' => Minigame::class,
         'configuratie' => EditConfiguration::class,
+        'groepen' => Groepen::class,
     ];
 
     /**

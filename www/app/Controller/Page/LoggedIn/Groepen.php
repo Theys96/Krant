@@ -6,7 +6,7 @@ use App\Controller\Page\LoggedInPage;
 use App\Util\ViewRenderer;
 
 /**
- * Feedback overzicht pagina.
+ * Groepen overzicht pagina.
  */
 class Groepen extends LoggedInPage
 {

@@ -288,3 +288,7 @@ table.diff-wrapper {
 .click-text:hover {
 	color: #B5B5B5;
 }
+
+.pdf {
+	min-height: calc(70vh);
+}

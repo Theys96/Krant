@@ -23,7 +23,7 @@ class UpdateDraft extends APIResponse
                 $_REQUEST['title'] ?? $article_change->article->title,
                 $_REQUEST['contents'] ?? $article_change->article->contents,
                 $_REQUEST['context'] ?? $article_change->article->context,
-                is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : $article_change->article->category->id,
+                (isset($_REQUEST['category_id']) && null != $_REQUEST['category_id']) ? (is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : $article_change->article->category->id) : null,
                 is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : $article_change->article->ready,
             );
 

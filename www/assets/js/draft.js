@@ -46,7 +46,7 @@ Draft = {
 			article_id: Draft.article_id === '' ? null : Draft.article_id,
 			draft_id: Draft.draftID,
 			title: Draft.title.val(),
-			category_id: Draft.category.val(),
+			category_id: Draft.category.val() === '' ? null : Draft.category.val(),
 			contents: Draft.text.val(),
 			context: Draft.context.val(),
 			ready: klaar

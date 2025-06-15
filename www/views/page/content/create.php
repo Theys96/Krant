@@ -52,7 +52,8 @@ $ready = $article?->ready;
 
     <div class='form-group'>
         <label for='category'>Categorie</label>
-        <select name='category' id='category' class='form-control'>
+        <select required name='category' id='category' class='form-control'>
+            <option disabled hidden selected value=''>Kies een categorie</option>
             <?php
         foreach ($categories as $category) {
             if ($category->id === $category_id) {

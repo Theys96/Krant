@@ -25,6 +25,8 @@ class UpdateDraft extends APIResponse
                 $_REQUEST['context'] ?? $article_change->article->context,
                 (isset($_REQUEST['category_id']) && null != $_REQUEST['category_id']) ? (is_numeric($_REQUEST['category_id']) ? (int) $_REQUEST['category_id'] : $article_change->article->category->id) : null,
                 is_numeric($_REQUEST['ready']) ? (bool) $_REQUEST['ready'] : $article_change->article->ready,
+                is_numeric($_REQUEST['picture']) ? (bool) $_REQUEST['picture'] : $article_change->article->picture,
+                is_numeric($_REQUEST['wjd']) ? (bool) $_REQUEST['wjd'] : $article_change->article->wjd,
             );
 
             if (Article::STATUS_DRAFT === $new_article_change->article->status) {

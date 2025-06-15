@@ -25,7 +25,9 @@ class Create extends LoggedInPage
                     $_POST['text'],
                     $_POST['context'],
                     $_POST['category'],
-                    isset($_POST['done'])
+                    isset($_POST['done']),
+                    isset($_POST['picture']),
+                    isset($_POST['wjd'])
                 );
                 $article_change = $article_change->openDraft($article_change_type);
                 $article_change->article->applyChange($article_change);

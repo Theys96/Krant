@@ -12,6 +12,8 @@ Draft = {
 	text: $($('[name="text"]')[0]),
 	context: $($('[name="context"]')[0]),
 	done: $($('[name="done"]')[0]),
+	picture: $($('[name="picture"]')[0]),
+	wjd: $($('[name="wjd"]')[0]),
 	draftIDinput: $($('#draftid')[0]),
 
 	/* Start drafting */
@@ -37,6 +39,8 @@ Draft = {
 			}
 		
 		klaar = Draft.done.is(':checked') ? 1 : 0;
+		picture = Draft.picture.is(':checked') ? 1 : 0;
+		wjd = Draft.wjd.is(':checked') ? 1 : 0;
 		
 		/* Post action */
 		console.log(action, Draft.draftID, Draft.title.val(), Draft.category.val(), Draft.text.val(), Draft.context.val(), klaar);
@@ -49,7 +53,9 @@ Draft = {
 			category_id: Draft.category.val() === '' ? null : Draft.category.val(),
 			contents: Draft.text.val(),
 			context: Draft.context.val(),
-			ready: klaar
+			ready: klaar,
+			picture: picture,
+			wjd: wjd
 		}).done(function(data) {
 			/* Get a Draft ID  */
 			if (data.draft_id) {

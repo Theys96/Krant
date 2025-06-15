@@ -41,7 +41,25 @@ $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
                     <span class='badge badge-warning'>Niet klaar</span>
                 <?php } ?>
                 </p>
-                <p class="mb-0"><span class='badge badge-secondary'><?php echo htmlspecialchars($article->category?->name); ?></span></p>
+                <div class="d-flex">
+                <p class="mb-0">
+                    <?php
+                    if (true === $article->picture) {
+                        echo "<span class='badge badge-secondary'>Foto</span>";
+                    }
+?>
+                </p>
+                <p class="mb-0">
+                    <?php
+if (true === $article->wjd) {
+    echo "<span class='badge badge-secondary ml-1'>WJD</span>";
+}
+?>
+                </p>
+                <p class="mb-0">
+                    <span class='badge badge-secondary ml-1'><?php echo htmlspecialchars($article->category?->name); ?></span>
+                </p>
+                </div>
             </div>
         </li>
         <li class="list-group-item p-2">

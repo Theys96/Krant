@@ -35,6 +35,8 @@ CREATE TABLE `articles` (
   `category` int(11) DEFAULT NULL,
   `status` set('draft','open','placed','bin') NOT NULL DEFAULT 'draft',
   `ready` tinyint(1) NOT NULL DEFAULT '0',
+  `picture` tinyint(1) NOT NULL DEFAULT '0',
+  `wjd` tinyint(1) NOT NULL DEFAULT '0',
   `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -54,6 +56,8 @@ CREATE TABLE `article_updates` (
   `changed_context` text NOT NULL,
   `changed_category` int(11) DEFAULT NULL,
   `changed_ready` tinyint(1) NOT NULL,
+  `changed_picture` tinyint(1) NOT NULL,
+  `changed_wjd` tinyint(1) NOT NULL,
   `user` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -162,7 +166,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `perm_level`, `active`, `alt_css`) VALUES
+INSERT INTO `users` (`id`, `username`, `perm_level`, `active`, `alt_css`, `highscore`) VALUES
 (1, 'Thijs', 3, 1, 0, 0),
 (2, 'Renske', 3, 1, 0, 0);
 

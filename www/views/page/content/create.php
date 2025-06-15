@@ -26,6 +26,8 @@ $category_id = $article?->category?->id;
 $contents = $article?->contents;
 $context = $article?->context;
 $ready = $article?->ready;
+$picture = $article?->picture;
+$wjd = $article?->wjd;
 ?>
 <h2><?php echo $title; ?></h2>
 
@@ -92,6 +94,14 @@ $ready = $article?->ready;
         <div class="custom-control custom-checkbox">
             <input type='checkbox' name='done' value='1' id="done-checkbox" class="custom-control-input" <?php echo true === $ready ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="done-checkbox">Dit stukje is klaar</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type='checkbox' name='picture' value='1' id="picture-checkbox" class="custom-control-input" <?php echo true === $picture ? ' checked' : ''; ?>/>
+            <label class="custom-control-label" for="picture-checkbox">Dit stukje heeft een foto</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type='checkbox' name='wjd' value='1' id="wjd-checkbox" class="custom-control-input" onClick='checkWJD()' <?php echo true === $wjd ? ' checked' : ''; ?>/>
+            <label class="custom-control-label" for="wjd-checkbox">Dit zijn Wist je Datjes</label>
         </div>
     </div>
 

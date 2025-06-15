@@ -42,6 +42,8 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-8'><?php echo $authors; ?></div>
     <div class='col-sm-4'><b>Categorie</b></div>
     <div class='col-sm-8'><?php echo $article->category?->name; ?></div>
+    <div class='col-sm-4'><b>Foto</b></div>
+    <div class='col-sm-8'><?php echo (1 == $article->picture) ? 'Ja' : 'Nee'; ?></div>
     <div class='col-sm-4'><b>Klaar</b></div>
     <div class='col-sm-8'><?php echo (1 == $article->ready) ? 'Ja' : 'Nee'; ?></div>
 </div>

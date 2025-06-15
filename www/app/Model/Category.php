@@ -62,6 +62,8 @@ class Category
                 $article->context,
                 null,
                 $article->ready,
+                $article->picture,
+                $article->wjd,
                 Session::instance()->getUser()->id
             );
             $article->applyChange($article_change);

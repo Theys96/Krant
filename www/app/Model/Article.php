@@ -35,6 +35,10 @@ class Article
 
     public bool $ready;
 
+    public bool $picture;
+
+    public bool $wjd;
+
     public ?\DateTime $last_updated;
 
     /** @var string */
@@ -52,7 +56,7 @@ class Article
     /** @var string */
     private const ACTIVE_CATEGORY_WHERE_QUERY = '(category IS NULL OR category IN (SELECT categories.id FROM categories LEFT JOIN editions ON categories.edition = editions.id WHERE editions.active = 1 AND categories.active = 1))';
 
-    public function __construct(int $id, string $status, string $title, string $contents, string $context, ?int $category_id, bool $ready, string $last_updated)
+    public function __construct(int $id, string $status, string $title, string $contents, string $context, ?int $category_id, bool $ready, bool $picture, bool $wjd, string $last_updated)
     {
         $this->id = $id;
         $this->status = $status;
@@ -61,6 +65,8 @@ class Article
         $this->context = $context;
         $this->category_id = $category_id;
         $this->ready = $ready;
+        $this->picture = $picture;
+        $this->wjd = $wjd;
         try {
             $this->last_updated = new \DateTime($last_updated);
         } catch (\Exception) {
@@ -96,16 +102,18 @@ class Article
     {
         $timestamp = $change->timestamp->format('Y-m-d H:i:s');
 
-        Database::instance()->storeQuery('UPDATE articles SET status = ?, title = ?, contents = ?, context = ?, category = ?, ready = ?, last_updated = ? WHERE id = ?');
+        Database::instance()->storeQuery('UPDATE articles SET status = ?, title = ?, contents = ?, context = ?, category = ?, ready = ?, picture = ?, wjd = ?, last_updated = ? WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'ssssiisi',
+            'ssssiiiisi',
             $change->changed_status,
             $change->changed_title,
             $change->changed_contents,
             $change->changed_context,
             $change->changed_category_id,
             $change->changed_ready,
+            $change->changed_picture,
+            $change->changed_wjd,
             $timestamp,
             $this->id
         );
@@ -142,6 +150,8 @@ class Article
                 $article_data['context'],
                 $article_data['category'],
                 (bool) $article_data['ready'],
+                (bool) $article_data['picture'],
+                (bool) $article_data['wjd'],
                 $article_data['last_updated']
             );
         }
@@ -169,6 +179,8 @@ class Article
                 $article_data['context'],
                 $article_data['category'],
                 (bool) $article_data['ready'],
+                (bool) $article_data['picture'],
+                (bool) $article_data['wjd'],
                 $article_data['last_updated']
             );
         }
@@ -306,6 +318,8 @@ class Article
             $this->context,
             $this->category->id,
             $this->ready,
+            $this->picture,
+            $this->wjd,
             Session::instance()->getUser()->id
         );
         if (null === $article_change) {
@@ -328,6 +342,8 @@ class Article
             $this->context,
             $this->category->id,
             $this->ready,
+            $this->picture,
+            $this->wjd,
             Session::instance()->getUser()->id
         );
         if (null === $article_change) {
@@ -350,6 +366,8 @@ class Article
             $this->context,
             $this->category->id,
             $this->ready,
+            $this->picture,
+            $this->wjd,
             Session::instance()->getUser()->id
         );
         if (null === $article_change) {
@@ -375,6 +393,8 @@ class Article
             $this->context,
             $category_id,
             $this->ready,
+            $this->picture,
+            $this->wjd,
             Session::instance()->getUser()->id
         );
         if (null === $article_change) {

@@ -11,6 +11,7 @@ use App\Util\Singleton\Session;
  * @var string  $list_type
  */
 $authors = $article->getAuthorsString();
+$liveDrafters = User::getLiveDrafters($article->id);
 $checkers = htmlspecialchars(implode(', ', array_map(
     static function (User $author): string {
         return $author->username;
@@ -76,7 +77,7 @@ if (true === $article->wjd) {
         <?php if (2 != $role && Article::STATUS_OPEN === $article->status) { ?>
             <a class="btn btn-primary" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
         <?php }
-        if (2 == $role && Article::STATUS_OPEN === $article->status && true === $article->ready && !in_array(Session::instance()->getUser()->id, $authors_ids)) { ?>
+        if (2 == $role && Article::STATUS_OPEN === $article->status && count($liveDrafters) == 0 && true === $article->ready && !in_array(Session::instance()->getUser()->id, $authors_ids)) { ?>
             <a class="btn btn-primary" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
         <?php } ?>
         <a class="btn btn-primary" href="?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>">Lezen</a>

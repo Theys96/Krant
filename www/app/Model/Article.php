@@ -101,15 +101,18 @@ class Article
     public function applyChange(ArticleChange $change): Article
     {
         $timestamp = $change->timestamp->format('Y-m-d H:i:s');
+        $contents = rtrim($change->changed_contents);
+        $context = rtrim($change->changed_context);
+        $title = rtrim($change->changed_title);
 
         Database::instance()->storeQuery('UPDATE articles SET status = ?, title = ?, contents = ?, context = ?, category = ?, ready = ?, picture = ?, wjd = ?, last_updated = ? WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
             'ssssiiiisi',
             $change->changed_status,
-            $change->changed_title,
-            $change->changed_contents,
-            $change->changed_context,
+            $title,
+            $contents,
+            $context,
             $change->changed_category_id,
             $change->changed_ready,
             $change->changed_picture,

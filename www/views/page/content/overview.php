@@ -5,10 +5,10 @@ use App\Model\Category;
 
 /**
  * @var Category[] $categories
+ * @var int        $max_articles
+ * @var int        $max_pictures
+ * @var int        $max_wjd
  */
-$max_articles = 10;
-$max_pictures = 4;
-$max_wjd = 10;
 $maxes = [
     'articles' => $max_articles,
     'pictures' => $max_pictures,

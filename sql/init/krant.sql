@@ -188,7 +188,10 @@ INSERT INTO `configuration` (`id`, `name`, `value`) VALUES
 (1, 'schrijfregels', 'Dit zijn de schrijfregels'),
 (2, 'min_checks', '3'),
 (3, 'mail_address', null),
-(4, 'passwords', ',,,printer');
+(4, 'passwords', ',,,printer'),
+(5, 'max_articles', 10),
+(6, 'max_pictures', 4),
+(7, 'max_wjd', 10);
 
 --
 -- Indexes for dumped tables

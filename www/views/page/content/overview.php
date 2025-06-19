@@ -14,9 +14,20 @@ $maxes = [
     'pictures' => $max_pictures,
     'wjd' => $max_wjd,
 ];
+$filter = [
+    isset($_GET['notdone']) ? $_GET['notdone'] : 1,
+    isset($_GET['done']) ? $_GET['done'] : 1,
+    isset($_GET['placed']) ? $_GET['placed'] : 1,
+];
 ?>
 <h2>Overzicht</h2>
-<p class="text-center">Geplaatst: donkergroen, Klaar: groen, Niet klaar: geel</p>
+<?php
+echo "<div class='w-100 text-center'>";
+echo "<a class='btn m-1 ".(1 == $filter[2] ? 'btn-info' : 'btn-secondary')."' href='?action=overview&placed=".(1 == $filter[2] ? 0 : 1).'&done='.$filter[1].'&notdone='.$filter[0]."'>Geplaatst: donkergroen</a>";
+echo "<a class='btn m-1 ".(1 == $filter[1] ? 'btn-info' : 'btn-secondary')."' href='?action=overview&placed=".$filter[2].'&done='.(1 == $filter[1] ? 0 : 1).'&notdone='.$filter[0]."'>Klaar: groen</a>";
+echo "<a class='btn m-1 ".(1 == $filter[0] ? 'btn-info' : 'btn-secondary')."' href='?action=overview&placed=".$filter[2].'&done='.$filter[1].'&notdone='.(1 == $filter[0] ? 0 : 1)."'>Niet klaar: geel</a>";
+echo '</div>';
+?>
 <div class='px-3 mx-auto my-5'>
     <div style='background-color: #AAAAAA' class='row'>
         <div class='col-3'><b>Categorie</b></div>
@@ -39,6 +50,9 @@ foreach ($categories as $category) {
         } elseif (Article::STATUS_PLACED == $article->status) {
             $bin = 2;
         }
+        if (null !== $bin && 0 == $filter[$bin]) {
+            $bin = null;
+        }
         if (null !== $bin) {
             if ($article->wjd) {
                 $counts['wjd'][$bin] += substr_count(rtrim($article->contents), "\n") + 1;
@@ -53,11 +67,11 @@ foreach ($categories as $category) {
             }
         }
     }
-    
+
     $titles = [
-        'articles' =>  ($counts['articles'][0] +  $counts['articles'][1] +  $counts['articles'][2]) . ' stukje(s) \ ' . $counts['articles'][3] . ' tekens',
-        'pictures' => $counts['pictures'][3] . ' foto(s)',
-        'wjd' =>  ($counts['wjd'][0] +  $counts['wjd'][1] +  $counts['wjd'][2]) . ' wist je datje(s) \ ' . $counts['wjd'][3] . ' tekens',
+        'articles' => ($counts['articles'][0] + $counts['articles'][1] + $counts['articles'][2]).' stukje(s) | '.$counts['articles'][3].' tekens',
+        'pictures' => $counts['pictures'][3].' foto(s)',
+        'wjd' => ($counts['wjd'][0] + $counts['wjd'][1] + $counts['wjd'][2]).' wist je datje(s) | '.$counts['wjd'][3].' tekens',
     ];
 
     $color = $row ? '#DDDDDD' : '#AAAAAA';

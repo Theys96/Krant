@@ -53,13 +53,19 @@ foreach ($categories as $category) {
             }
         }
     }
+    
+    $titles = [
+        'articles' =>  ($counts['articles'][0] +  $counts['articles'][1] +  $counts['articles'][2]) . ' stukje(s) \ ' . $counts['articles'][3] . ' tekens',
+        'pictures' => $counts['pictures'][3] . ' foto(s)',
+        'wjd' =>  ($counts['wjd'][0] +  $counts['wjd'][1] +  $counts['wjd'][2]) . ' wist je datje(s) \ ' . $counts['wjd'][3] . ' tekens',
+    ];
 
     $color = $row ? '#DDDDDD' : '#AAAAAA';
     $row = !$row;
     echo "<div style='background-color: ".$color."' class='row'>\n";
     echo "<div class='col-3'>".htmlspecialchars($category->name).'</div>';
     foreach (['articles', 'pictures', 'wjd'] as $bin) {
-        echo "<div data-toggle='tooltip' data-placement='top' title='".$counts[$bin][3].''.('pictures' == $bin ? ' foto(s)' : ' tekens')."' class='col-3 align-self-start d-flex flex-wrap mb-2'>";
+        echo "<div data-toggle='tooltip' data-placement='top' title='".$titles[$bin]."' class='col-3 align-self-start d-flex flex-wrap mb-2'>";
         for ($i = 0; $i < $maxes[$bin]; ++$i) {
             if ($counts[$bin][2] > 0) {
                 --$counts[$bin][2];

@@ -31,6 +31,8 @@ class ArticleChange
     public const CHANGE_TYPE_TO_OPEN = 8;
     /** @var int */
     public const CHANGE_TYPE_MIGRATION = 9;
+    /** @var int */
+    public const CHANGE_TYPE_OPEN = 10;
 
     public int $id;
 
@@ -158,6 +160,7 @@ class ArticleChange
     }
 
     public function updateFields(
+        ?int $update_type,
         string $changed_status,
         string $changed_title,
         string $changed_contents,
@@ -168,11 +171,12 @@ class ArticleChange
         bool $changed_wjd,
     ): ArticleChange {
         Database::instance()->storeQuery(
-            'UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_context = ?, changed_category = ?, changed_ready = ?, changed_picture = ?, changed_wjd = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?'
+            'UPDATE `article_updates` SET update_type = ?, changed_status = ?, changed_title = ?, changed_contents = ?, changed_context = ?, changed_category = ?, changed_ready = ?, changed_picture = ?, changed_wjd = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?'
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'ssssiiiii',
+            'issssiiiii',
+            $update_type,
             $changed_status,
             $changed_title,
             $changed_contents,
@@ -209,7 +213,7 @@ class ArticleChange
     public static function getByArticleId(int $id): array
     {
         Database::instance()->storeQuery(
-            'SELECT article_updates.*, article_update_types.id AS update_type_id, article_update_types.description AS update_type_description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.article_id = ? ORDER BY article_updates.timestamp DESC'
+            'SELECT article_updates.*, article_update_types.id AS update_type_id, article_update_types.description AS update_type_description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.article_id = ? AND article_updates.update_type < 10 ORDER BY article_updates.timestamp DESC'
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);

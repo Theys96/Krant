@@ -2,6 +2,7 @@
 
 use App\Model\Article;
 use App\Model\Category;
+use App\Model\User;
 
 /**
  * @param array<int, string> $chars
@@ -21,6 +22,8 @@ function printButtons(array $chars): void
  * @var bool         $check_mode
  * @var string|null  $mail
  */
+$liveDrafters = null == $article ? [] : User::getLiveDrafters($article->id);
+$open = null == $liveDrafters;
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
 $contents = $article?->contents;
@@ -41,7 +44,7 @@ $wjd = $article?->wjd;
 
     <div class='form-group'>
         <label for='title'>Titel</label>
-        <input type='text' class='form-control input' name='title' id='title' value='<?php echo $article_title; ?>'/>
+        <input type='text' <?php echo $open ? '' : 'disabled'; ?>  class='form-control input' name='title' id='title' value='<?php echo $article_title; ?>'/>
     </div>
 
     <div class='form-group'>
@@ -54,7 +57,7 @@ $wjd = $article?->wjd;
 
     <div class='form-group'>
         <label for='category'>Categorie</label>
-        <select required name='category' id='category' class='form-control'>
+        <select <?php echo $open ? '' : 'disabled'; ?> required name='category' id='category' class='form-control'>
             <option disabled hidden selected value=''>Kies een categorie</option>
             <?php
         foreach ($categories as $category) {
@@ -70,53 +73,68 @@ $wjd = $article?->wjd;
     </div>
 
     <div class='form-group'>
-        <textarea id='text' class='form-control text input' name='text'><?php echo $contents; ?></textarea>
+        <textarea id='text' <?php echo $open ? '' : 'disabled'; ?>  class='form-control text input' name='text'><?php echo $contents; ?></textarea>
         <small class='float-right' id='charcount'></small>
 
         <div class="btn-group my-2" role="group" aria-label="Basic example">
             <?php
-            printButtons(['&euml;', '&eacute;', '&egrave']);
+            if ($open) {
+                printButtons(['&euml;', '&eacute;', '&egrave']);
+            }
 ?>
         </div>
         <div class="btn-group my-1" role="group" aria-label="Basic example">
             <?php
-        printButtons(['&iuml;', '&auml;', '&ouml;', '&uuml;']);
+            if ($open) {
+                printButtons(['&iuml;', '&auml;', '&ouml;', '&uuml;']);
+            }
 ?>
         </div>
     </div>
 
     <div class='form-group'>
 	<label for='context'>Context</label>
-        <textarea id='context' class='form-control text input' name='context' placeholder='Schrijf hier een toelichting op het stukje als dat handig is. Dit komt niet in de krant.'><?php echo $context; ?></textarea>
+        <textarea id='context' <?php echo $open ? '' : 'disabled'; ?> class='form-control text input' name='context' placeholder='Schrijf hier een toelichting op het stukje als dat handig is. Dit komt niet in de krant.'><?php echo $context; ?></textarea>
     </div>
 
     <div class='mt-3 form-group'>
         <div class="custom-control custom-checkbox">
-            <input type='checkbox' name='done' value='1' id="done-checkbox" class="custom-control-input" <?php echo true === $ready ? ' checked' : ''; ?>/>
+            <input type='checkbox' <?php echo $open ? '' : 'disabled'; ?> name='done' value='1' id="done-checkbox" class="custom-control-input" <?php echo true === $ready ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="done-checkbox">Dit stukje is klaar</label>
         </div>
         <div class="custom-control custom-checkbox">
-            <input type='checkbox' name='picture' value='1' id="picture-checkbox" class="custom-control-input" <?php echo true === $picture ? ' checked' : ''; ?>/>
+            <input type='checkbox' <?php echo $open ? '' : 'disabled'; ?>  name='picture' value='1' id="picture-checkbox" class="custom-control-input" <?php echo true === $picture ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="picture-checkbox">Dit stukje heeft een foto</label>
         </div>
         <div class="custom-control custom-checkbox">
-            <input type='checkbox' name='wjd' value='1' id="wjd-checkbox" class="custom-control-input" onClick='checkWJD()' <?php echo true === $wjd ? ' checked' : ''; ?>/>
+            <input type='checkbox' <?php echo $open ? '' : 'disabled'; ?> name='wjd' value='1' id="wjd-checkbox" class="custom-control-input" onClick='checkWJD()' <?php echo true === $wjd ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="wjd-checkbox">Dit zijn Wist je Datjes</label>
         </div>
     </div>
 
 <?php
 if ($check_mode) {
-    echo "<input class='btn btn-primary' type='submit' value='Nagekeken' /> ";
+    if ($open) {
+        echo "<input class='btn btn-primary' type='submit' value='Nagekeken' /> ";
+    }
     echo "<a class='btn btn-secondary' href='?action=list'>Niet nagekeken</a>";
 } else {
-    echo "<input class='btn btn-primary' type='submit' value='Opslaan'/> ";
-    if (null != $mail) {
+    if ($open) {
+        echo "<input class='btn btn-primary' type='submit' value='Opslaan'/> ";
+    }
+    echo "<a class='btn btn-secondary mr-1' href='?action=list'>Niet opslaan</a>";
+    if (null != $mail && $open) {
         echo "<button class='btn btn-secondary' type='button' id='mailbtn' value='$mail' onclick='sendMail()'>Mail Foto's</button>";
     }
 }
 if (null !== $article) {
     echo "<hr /><div class='emoji-reactions' data-article-id='".$article->id."'></div>";
+}
+
+if (count($liveDrafters) > 0) {
+    $names = implode(', ', array_column($liveDrafters, 'username'));
+    $warning = htmlspecialchars($names).(count($liveDrafters) > 1 ? ' hebben ' : ' heeft ').'het stukje open.';
+    echo "<p style='color: red'>$warning</p>";
 }
 ?>
     <span id='info'></span>
@@ -125,7 +143,13 @@ if (null !== $article) {
 <script src='assets/js/editor.js'></script>
 <script>
     $(function () {
-        Draft.init('.input');
         charCounter("#text", "#charcount");
     });
+    <?php
+    if ($open) {
+        echo "$(function () {
+        Draft.init('.input');
+        });";
+    }
+?>
 </script>

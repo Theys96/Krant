@@ -25,6 +25,8 @@ $authors_ids = array_map(
     $article->authors
 );
 $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
+$user_id = Session::instance()->getUser()->id;
+$open = 0 == count($liveDrafters);
 ?>
 
 <div class="stukje card mt-3 shadow-sm border-1">
@@ -75,10 +77,10 @@ if (true === $article->wjd) {
     </ul>
     <div class="card-footer d-flex justify-content-between">
         <?php if (2 != $role && Article::STATUS_OPEN === $article->status) { ?>
-            <a class="btn btn-primary" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
+            <a class="btn <?php echo $open ? 'btn-primary' : 'btn-secondary'; ?>" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
         <?php }
-        if (2 == $role && Article::STATUS_OPEN === $article->status && 0 == count($liveDrafters) && true === $article->ready && !in_array(Session::instance()->getUser()->id, $authors_ids)) { ?>
-            <a class="btn btn-primary" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
+        if (2 == $role && Article::STATUS_OPEN === $article->status && true === $article->ready && !in_array($user_id, $authors_ids)) { ?>
+            <a class="btn <?php echo $open ? 'btn-primary' : 'btn-secondary'; ?>" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
         <?php } ?>
         <a class="btn btn-primary" href="?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>">Lezen</a>
         <?php if (3 == $role) { ?>

@@ -19,6 +19,7 @@ class UpdateDraft extends APIResponse
             }
 
             $new_article_change = $article_change->updateFields(
+                $_REQUEST['update_type'] ?? $article_change->update_type_id,
                 $article_change->article->status,
                 $_REQUEST['title'] ?? $article_change->article->title,
                 $_REQUEST['contents'] ?? $article_change->article->contents,

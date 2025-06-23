@@ -6,7 +6,7 @@ Draft = {
 	server: 'api.php',
 	draftID: null,
 	article_id: $('#article_id').val(),
-
+	update_type: 10,
 	title: $($('[name="title"]')[0]),
 	category: $($('[name="category"]')[0]),
 	text: $($('[name="text"]')[0]),
@@ -18,13 +18,14 @@ Draft = {
 
 	/* Start drafting */
 	init: function(inputSelector) {
-		$(inputSelector).on('input', function() {
-			Draft.draft();
-			setInterval(function() {
-				Draft.draft();
-			}, 10000);
+		Draft.draft();
+		setInterval(function() {
+			$(inputSelector).on('input', function() {
+				Draft.update_type = 1;
 			$(inputSelector).off('input');
-		});
+			});
+			Draft.draft();
+		}, 10000);
 	},
 
 	/* Post draft naar server */
@@ -49,6 +50,7 @@ Draft = {
 			action: action,
 			article_id: Draft.article_id === '' ? null : Draft.article_id,
 			draft_id: Draft.draftID,
+			update_type: Draft.update_type,
 			title: Draft.title.val(),
 			category_id: Draft.category.val() === '' ? null : Draft.category.val(),
 			contents: Draft.text.val(),

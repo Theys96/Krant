@@ -19,6 +19,12 @@ class Configuration
     /** @var (string|null)[] */
     public array $passwords;
 
+    public int $max_articles;
+
+    public int $max_pictures;
+
+    public int $max_wjd;
+
     /**
      * Returns the singleton instance.
      */
@@ -57,6 +63,15 @@ class Configuration
                         explode(',', $variables['value'])
                     );
                     break;
+                case 'max_articles':
+                    $this->max_articles = (int) $variables['value'];
+                    break;
+                case 'max_pictures':
+                    $this->max_pictures = (int) $variables['value'];
+                    break;
+                case 'max_wjd':
+                    $this->max_wjd = (int) $variables['value'];
+                    break;
             }
         }
     }
@@ -80,7 +95,7 @@ class Configuration
      *
      * @return $this
      */
-    public function updateAll(string $schrijfregels, int $min_checks, ?string $mail_address, array $passwords): Configuration
+    public function updateAll(string $schrijfregels, int $min_checks, ?string $mail_address, array $passwords, int $max_articles, int $max_pictures, int $max_wjd): Configuration
     {
         $this->schrijfregels = $this->schrijfregels == $schrijfregels ? $schrijfregels : $this->update('schrijfregels', $schrijfregels);
         $this->min_checks = $this->min_checks == $min_checks ? $min_checks : (int) $this->update('min_checks', (string) $min_checks);
@@ -91,6 +106,9 @@ class Configuration
             $this->passwords[2] = '' == $this->passwords[2] ? null : $this->passwords[2];
             $this->passwords[3] = '' == $this->passwords[3] ? null : $this->passwords[3];
         }
+        $this->max_articles = $this->max_articles == $max_articles ? $max_articles : (int) $this->update('max_articles', (string) $max_articles);
+        $this->max_pictures = $this->max_pictures == $max_pictures ? $max_pictures : (int) $this->update('max_pictures', (string) $max_pictures);
+        $this->max_wjd = $this->max_wjd == $max_wjd ? $max_wjd : (int) $this->update('max_wjd', (string) $max_wjd);
 
         return $this;
     }

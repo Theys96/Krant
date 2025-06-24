@@ -19,6 +19,18 @@ function sendMail(){
     if (context.indexOf('Foto(s) door ' + author + ' gemaild') == -1) {
         document.getElementById('context').value = 'Foto(s) door ' + author + ' gemaild\n' + context;
     }
-    window.location.href = 'mailto:' + mail + '?subject= FOTO ' + title + ', AUTEUR ' + author + '&body=Voeg je foto(s) toe!'; 
+    document.getElementById('picture-checkbox').checked = true;
+    window.location.href = 'mailto:' + mail + '?subject= FOTO ' + title + ', AUTEUR ' + author + '&body=Voeg je foto(s) toe!';
 
+}
+
+function checkWJD(){
+    var wjd = document.getElementById('wjd-checkbox').checked
+    console.log(wjd)
+    var title = document.getElementById('title').value
+    if (wjd == true) {
+        if (title.indexOf('WJD:') == -1) {
+            document.getElementById('title').value = 'WJD: ' + title;
+        }
+    }
 }

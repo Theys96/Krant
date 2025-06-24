@@ -242,6 +242,16 @@ table.diff-wrapper {
 	line-height: 1.25;
 }
 
+.box {
+	height: 20px;
+	width: 20px;
+	border-radius: 5px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: gray;
+	margin: 2px;
+}
+
 @media (max-width: 768px) {
 	.stukje {
 		display: flex;
@@ -276,6 +286,12 @@ table.diff-wrapper {
 	.row {
 		margin-left: 0;
 		margin-right: 0;
+	}
+
+	.box {
+		width: 18px;
+		height: 18px;
+		display: inline-block;
 	}
 }
 

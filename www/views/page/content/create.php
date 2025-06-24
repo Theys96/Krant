@@ -66,7 +66,7 @@ $wjd = $article?->wjd;
             } else {
                 $selected = false;
             }
-            echo "<option value='".$category->id.($selected ? "' selected" : "'").'>'.htmlspecialchars($category->name)."</option>\n";
+            echo "<option value='".$category->id.($selected ? "' selected" : "'").'>'.htmlspecialchars($category->name).(strlen($category->description) > 0 ? (' - '.$category->description) : '')."</option>\n";
         }
 ?>
         </select>

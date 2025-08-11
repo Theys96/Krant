@@ -20,7 +20,7 @@ class Create extends LoggedInPage
             $article_change = ArticleChange::getById((int) $_POST['draftid']);
             if (null !== $article_change && null !== $article_change->article) {
                 $article_change = $article_change->updateFields(
-                    null,
+                    $article_change_type,
                     $article_change->article->status,
                     $_POST['title'],
                     $_POST['text'],

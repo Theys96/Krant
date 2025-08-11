@@ -23,14 +23,3 @@ function sendMail(){
     window.location.href = 'mailto:' + mail + '?subject= FOTO ' + title + ', AUTEUR ' + author + '&body=Voeg je foto(s) toe!';
 
 }
-
-function checkWJD(){
-    var wjd = document.getElementById('wjd-checkbox').checked
-    console.log(wjd)
-    var title = document.getElementById('title').value
-    if (wjd == true) {
-        if (title.indexOf('WJD:') == -1) {
-            document.getElementById('title').value = 'WJD: ' + title;
-        }
-    }
-}

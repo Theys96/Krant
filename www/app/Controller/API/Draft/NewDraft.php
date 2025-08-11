@@ -24,7 +24,7 @@ class NewDraft extends APIResponse
 
             $new_article_change = ArticleChange::createNew(
                 $article->id,
-                ArticleChange::CHANGE_TYPE_OPEN,
+                ArticleChange::CHANGE_TYPE_OPENED,
                 $article->status,
                 $_REQUEST['title'] ?? $article->title,
                 $_REQUEST['contents'] ?? $article->contents,

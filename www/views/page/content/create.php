@@ -107,7 +107,7 @@ $wjd = $article?->wjd;
             <label class="custom-control-label" for="picture-checkbox">Dit stukje heeft een foto</label>
         </div>
         <div class="custom-control custom-checkbox">
-            <input type='checkbox' <?php echo $open ? '' : 'disabled'; ?> name='wjd' value='1' id="wjd-checkbox" class="custom-control-input" onClick='checkWJD()' <?php echo true === $wjd ? ' checked' : ''; ?>/>
+            <input type='checkbox' <?php echo $open ? '' : 'disabled'; ?> name='wjd' value='1' id="wjd-checkbox" class="custom-control-input" <?php echo true === $wjd ? ' checked' : ''; ?>/>
             <label class="custom-control-label" for="wjd-checkbox">Dit zijn Wist je Datjes</label>
         </div>
     </div>

@@ -104,7 +104,7 @@ class User
     public static function getLiveDrafters(int $article_id): array
     {
         $update_type1 = ArticleChange::CHANGE_TYPE_DRAFT;
-        $update_type2 = ArticleChange::CHANGE_TYPE_OPEN;
+        $update_type2 = ArticleChange::CHANGE_TYPE_OPENED;
 
         return User::getAllByQuery(
             'SELECT * FROM users WHERE id IN (SELECT DISTINCT(user) FROM `article_updates` WHERE article_id = '.$article_id.' AND ( update_type = '.$update_type1.' OR  update_type = '.$update_type2.') AND timestamp >= DATE_SUB(NOW(), INTERVAL 20 SECOND))'

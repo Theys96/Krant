@@ -38,30 +38,35 @@ $open = 0 == count($liveDrafters);
         <li class="list-group-item p-2">
             <div class="d-flex justify-content-between">
                 <p class="mb-0">
-                <?php if (true === $article->ready) { ?>
-                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s)<?php echo (0 == count($article->checkers) ? '' : ': ').$checkers; ?>
-                <?php } else { ?>
-                    <span class='badge badge-warning'>Niet klaar</span>
-                <?php } ?>
+                    <?php if (true === $article->ready) { ?>
+                    <b><?php echo count($article->checkers); ?></b> check(s)<?php echo (0 == count($article->checkers) ? '' : ': ').$checkers; ?>
+                    <?php } ?>
                 </p>
                 <div class="d-flex">
-                <p class="mb-0">
-                    <?php
-                    if (true === $article->picture) {
-                        echo "<span class='badge badge-secondary'>Foto</span>";
-                    }
+                    <p class="mb-0">
+                        <?php if (true === $article->ready) {
+                            echo "<span class='badge badge-success mx-1'>Klaar</span>";
+                        } else {
+                            echo "<span class='badge badge-warning mx-1'>Niet klaar</span>";
+                        } ?>
+                    </p>
+                    <p class="mb-0">
+                        <?php
+                        if (true === $article->picture) {
+                            echo "<span class='badge badge-info mx-1'>Foto</span>";
+                        }
 ?>
-                </p>
-                <p class="mb-0">
-                    <?php
+                    </p>
+                    <p class="mb-0">
+                        <?php
 if (true === $article->wjd) {
-    echo "<span class='badge badge-secondary ml-1'>WJD</span>";
+    echo "<span class='badge badge-danger mx-1'>WJD</span>";
 }
 ?>
-                </p>
-                <p class="mb-0">
-                    <span class='badge badge-secondary ml-1'><?php echo htmlspecialchars($article->category?->name); ?></span>
-                </p>
+                    </p>
+                    <p class="mb-0">
+                        <span class='badge badge-secondary mx-1'><?php echo htmlspecialchars($article->category?->name); ?></span>
+                    </p>
                 </div>
             </div>
         </li>

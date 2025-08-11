@@ -23,7 +23,6 @@ function printButtons(array $chars): void
  * @var string|null  $mail
  */
 $liveDrafters = null == $article ? [] : User::getLiveDrafters($article->id);
-$open = null == $liveDrafters;
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
 $contents = $article?->contents;
@@ -31,7 +30,21 @@ $context = $article?->context;
 $ready = $article?->ready;
 $picture = $article?->picture;
 $wjd = $article?->wjd;
+$ignore_warning = isset($_GET['ignore_warning']) ? true : false;
+$open = null == $liveDrafters || $ignore_warning;
 ?>
+<div class="text-center mb-5">
+<?php
+if (!$open) {
+    $names = implode(', ', array_column($liveDrafters, 'username'));
+    $warning = htmlspecialchars($names).(count($liveDrafters) > 1 ? ' hebben ' : ' heeft ').'het stukje open.';
+    echo "<p class='text-danger'>$warning</p>";
+    echo "<p class='text-danger'>Weet je zeker dat je het stukje nu ook wil bewerken? <br> Het tegelijkertijd bewerken van stukjes kan lijden tot het verlies van aanpassingen! <br> Dit is niet aangeraden!</p>";
+    echo "<a class='btn btn-danger mr-1' href='?action=".$_GET['action'].'&stukje='.$article->id."&ignore_warning=1'>Ja ik weet het zeker</a>";
+}
+?>
+</div>
+
 <h2><?php echo $title; ?></h2>
 
 <form method='post' onSubmit='return Draft.plaats(this)'>
@@ -49,9 +62,7 @@ $wjd = $article?->wjd;
 
     <div class='form-group'>
         <label for='user'>Auteur</label>
-	<div class='form-control input'>
-	<?php echo null == $article ? $username : $article->getAuthorsString(); ?>
-	</div>
+        <input type='text' class='form-control input' id='author' value='<?php echo null == $article ? $username : $article->getAuthorsString(); ?>' disabled/>
         <input type='hidden' class='form-control' id='user' value='<?php echo htmlspecialchars($username); ?>' disabled/>
     </div>
 
@@ -131,11 +142,6 @@ if (null !== $article) {
     echo "<hr /><div class='emoji-reactions' data-article-id='".$article->id."'></div>";
 }
 
-if (count($liveDrafters) > 0) {
-    $names = implode(', ', array_column($liveDrafters, 'username'));
-    $warning = htmlspecialchars($names).(count($liveDrafters) > 1 ? ' hebben ' : ' heeft ').'het stukje open.';
-    echo "<p style='color: red'>$warning</p>";
-}
 ?>
     <span id='info'></span>
 </form>

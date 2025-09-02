@@ -1,1 +1,1 @@
-<embed src="/assets/pdf/scoutinggroepen.pdf" style="position:absolute; left: 0; top: 0;" width="100%" height="100%" type="application/pdf">
+<embed src="assets/pdf/scoutinggroepen.pdf" style="position:absolute; left: 0; top: 0;" width="100%" height="95%" type="application/pdf">

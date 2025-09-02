@@ -1,6 +1,1 @@
-<h2>Groepenoverzicht</h2>
-<object class="pdf" 
-        data="assets/pdf/scoutinggroepen.pdf"
-        width="100%"
-        height="100%">
-</object>
+<embed src="assets/pdf/scoutinggroepen.pdf" style="position:absolute; left: 0; top: 0;" width="100%" height="95%" type="application/pdf">

@@ -1,7 +1,8 @@
 <?php
 /**
- * @var int                             $highscore
- * @var array<array{0: string, 1: int}> $topFive
+ * @var int                                    $highscore_small
+ * @var int                                    $highscore_big
+ * @var array<array<array{0: string, 1: int}>> $topFive
  */
 ?>
 
@@ -27,7 +28,8 @@
 
 <?php
 // hidden input om deze variabelen in het js script te kunnen pakken
-echo "<input type='hidden' id='highscore' value='$highscore'/>";
+echo "<input type='hidden' id='highscore_small' value='$highscore_small'/>";
+echo "<input type='hidden' id='highscore_big' value='$highscore_big'/>";
 echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
 ?>
 
@@ -39,6 +41,9 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
   // Stel canvasgrootte in
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  
+  //decide highscore mode
+  const isSmall = canvas.width * canvas.height < 1400000;
 
   // Variabelen voor vijandgrootte, spawnmarge en spelerafmetingen
   const enemySize = 120;        // Basisgrootte van vijand
@@ -58,9 +63,19 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
   let gameState = 0;  // 0 = active, 1 = paused, 2 = game over
   let soundOn = true;
   const enemyLimit = 10;
-  let highscore = document.getElementById("highscore").value;
+  let highscore = 0;
+  if (isSmall) {
+    highscore = document.getElementById("highscore_small").value;
+  } else {
+    highscore = document.getElementById("highscore_big").value;
+  }
   let oldhighscore = highscore;
   let topFive = JSON.parse(document.getElementById("topFive").value);
+  if (isSmall) {
+    topFive = topFive[0];
+  } else {
+    topFive = topFive[1];
+  }
 
   // Speler object met afbeelding
   const player = {
@@ -222,7 +237,7 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
       const togglesound = 
         clickX > canvas.width - 50 && 
         clickX < canvas.width &&
-        clickY < 30;
+        clickY < 90 && clickY > 40;
 
       if (togglesound) {
         soundOn = soundOn == false;
@@ -230,7 +245,7 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
       const pause = 
         clickX > canvas.width - 100 && 
         clickX < canvas.width - 50 &&
-        clickY < 30;
+        clickY < 90 && clickY > 40;
 
       if (pause) {
         gameState = gameState == 1 ? 0 : 1;
@@ -309,7 +324,7 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
   function updateHighscore() {
     setTimeout(() => {
       if(highscore > oldhighscore) {
-        $.post("?action=minigame", {highscore: highscore}, function(data) {
+        $.post("?action=minigame", {highscore: highscore, is_small: isSmall}, function(data) {
           oldhighscore = highscore;
         })
         updateHighscore();
@@ -329,19 +344,25 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
     ctx.fillText("Raak geen NHW!", 10, 90);
     ctx.fillText("Score: " + score, 10, 120);
     ctx.fillText("Nachtmeries: " + enemyCount, 10, 150);
+    //modus
+    if (isSmall) {
+      ctx.fillText("Kleine modus", canvas.width - ctx.measureText("Kleine modus").width - 15, 30);
+    } else {
+      ctx.fillText("Grote modus",  canvas.width - ctx.measureText("Grote modus").width - 15, 30);
+    }
     //dynamische knopjes voor pauzeren en geluid
     if (gameState == 1) { //gepauzeerd
-      ctx.drawImage(playImage, canvas.width -100, 10, 25, 25);
+      ctx.drawImage(playImage, canvas.width -100, 40, 25, 25);
     } else {
-      ctx.drawImage(pauseImage, canvas.width -100, 10, 25, 25);
+      ctx.drawImage(pauseImage, canvas.width -100, 40, 25, 25);
     }
     if (soundOn) {
-      ctx.drawImage(soundImage, canvas.width -50, 10, 25, 25);
+      ctx.drawImage(soundImage, canvas.width -50, 40, 25, 25);
     } else {
-      ctx.drawImage(muteImage, canvas.width -50, 10, 25, 25);
+      ctx.drawImage(muteImage, canvas.width -50, 40, 25, 25);
     }
-    ctx.fillText("Highscore:", canvas.width - 110, 60);
-    ctx.fillText(highscore, canvas.width - ctx.measureText(highscore).width - 15, 90);
+    ctx.fillText("Highscore:", canvas.width - 110, 90);
+    ctx.fillText(highscore, canvas.width - ctx.measureText(highscore).width - 15, 120);
 
     // Tekent speler als afbeelding met centrering
     ctx.save();
@@ -419,7 +440,7 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
       ctx.fillText("Opnieuw", (canvas.width / 2) - ctx.measureText("Opnieuw").width / 2, (canvas.height / 2) + 187);
       renderScores();
       if (highscore > oldhighscore) {
-        $.post("?action=minigame", {highscore: highscore}, function(data) {
+        $.post("?action=minigame", {highscore: highscore,  is_small: isSmall}, function(data) {
           oldhighscore = highscore;
         })
         updateHighscore();

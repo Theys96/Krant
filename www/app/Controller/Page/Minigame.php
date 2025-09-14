@@ -16,7 +16,7 @@ class Minigame implements Response, LoggedIn
     public function __construct()
     {
         if (isset($_POST['highscore'])) {
-            $user = Session::instance()->getUser()->updateHighscore($_POST['highscore']);
+            $user = Session::instance()->getUser()->updateHighscore($_POST['highscore'], 'true' == $_POST['is_small']);
             Session::instance()->setUser($user);
         }
     }
@@ -26,7 +26,8 @@ class Minigame implements Response, LoggedIn
         $user = Session::instance()->getUser();
 
         return ViewRenderer::render_view('minigame', [
-            'highscore' => $user->highscore,
+            'highscore_small' => $user->highscore_small,
+            'highscore_big' => $user->highscore_big,
             'topFive' => User::getTopFive($user->id),
         ]);
     }

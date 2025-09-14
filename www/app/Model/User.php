@@ -29,16 +29,19 @@ class User
 
     public int $alt_css;
 
-    public int $highscore;
+    public int $highscore_small;
 
-    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css, int $highscore)
+    public int $highscore_big;
+
+    public function __construct(int $id, string $username, int $perm_level, bool $active, int $alt_css, int $highscore_small, int $highscore_big)
     {
         $this->id = $id;
         $this->username = $username;
         $this->perm_level = $perm_level;
         $this->active = $active;
         $this->alt_css = $alt_css;
-        $this->highscore = $highscore;
+        $this->highscore_small = $highscore_small;
+        $this->highscore_big = $highscore_big;
     }
 
     /**
@@ -52,7 +55,7 @@ class User
         $stmt->execute();
         $user_data = $stmt->get_result()->fetch_assoc();
         if ($user_data) {
-            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+            return new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore_small'], $user_data['highscore_big']);
         }
 
         return null;
@@ -72,7 +75,7 @@ class User
 
         $users = [];
         while ($user_data = $result->fetch_assoc()) {
-            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore']);
+            $users[$user_data['id']] = new User($user_data['id'], $user_data['username'], $user_data['perm_level'], (bool) $user_data['active'], $user_data['alt_css'], $user_data['highscore_small'], $user_data['highscore_big']);
         }
 
         return $users;
@@ -154,9 +157,13 @@ class User
     /**
      * Update de highscore.
      */
-    public function updateHighscore(int $highscore): ?User
+    public function updateHighscore(int $highscore, bool $isSmall): ?User
     {
-        Database::instance()->storeQuery('UPDATE `users` SET highscore = ? WHERE id = ? && highscore < ?');
+        if ($isSmall) {
+            Database::instance()->storeQuery('UPDATE `users` SET highscore_small = ? WHERE id = ? && highscore_small < ?');
+        } else {
+            Database::instance()->storeQuery('UPDATE `users` SET highscore_big = ? WHERE id = ? && highscore_big < ?');
+        }
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('iii', $highscore, $this->id, $highscore);
         $stmt->execute();
@@ -169,17 +176,22 @@ class User
      *
      * @param int $userid de user die moet worden buitengesloten
      *
-     * @return array<array{0: string, 1: int}>
+     * @return array<array<array{0: string, 1: int}>>
      */
     public static function getTopFive(int $userid): array
     {
-        $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.' ORDER BY highscore DESC LIMIT 5');
-        $top = [];
+        $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.'  AND highscore_small > 0 ORDER BY highscore_small DESC LIMIT 5');
+        $topSmall = [];
         foreach ($users as $user) {
-            $top[] = [$user->username, $user->highscore];
+            $topSmall[] = [$user->username, $user->highscore_small];
+        }
+        $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.'  AND highscore_big > 0 ORDER BY highscore_big DESC LIMIT 5');
+        $topBig = [];
+        foreach ($users as $user) {
+            $topBig[] = [$user->username, $user->highscore_big];
         }
 
-        return $top;
+        return [$topSmall, $topBig];
     }
 
     /**

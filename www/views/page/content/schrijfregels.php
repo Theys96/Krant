@@ -1,9 +1,10 @@
 <?php
 function printSchrijfregels(string $schrijfregels): void
 {
+    echo '<ul>';
     $regels = explode("\n", str_replace('- ', '', $schrijfregels));
     $double = false;
-    echo '<ul>';
+    echo "<li>Schrijf de naam van groepen zoals in <a href='?action=groepen'>dit overzicht.</a></li>";
     foreach ($regels as $regel) {
         if (ltrim($regel) == $regel) {
             if ($double) {
@@ -28,5 +29,5 @@ function printSchrijfregels(string $schrijfregels): void
 ?>
 <h2>Schrijfregels</h2>
 <div class='schrijfregels'>
-<?php printSchrijfregels($schrijfregels); ?>
+    <?php printSchrijfregels($schrijfregels); ?>
 </div>

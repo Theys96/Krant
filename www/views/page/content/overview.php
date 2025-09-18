@@ -10,12 +10,12 @@ use App\Model\Category;
 <h2>Overzicht</h2>
 
 <div class='px-3 mx-auto my-5'>
-    <div style='background-color: #AAAAAA' class='row'>
+    <div class='row table-color1'>
         <div class='col-3'><b>Categorie</b></div>
         <div class='col-6'><b>Ongeplaatst</b></div>
         <div class='col-3'><b>Geplaatst</b></div>
     </div>
-    <div style='background-color: #DDDDDD' class='row'>
+    <div class='row table-color2'>
         <div class='col-3'></div>
         <div class='col-3'><i>Niet klaar</i></div>
         <div class='col-3'><i>Klaar</i></div>
@@ -42,9 +42,9 @@ foreach ($categories as $category) {
         }
     }
 
-    $color = $row ? '#AAAAAA' : '#DDDDDD';
+    $color = $row ? 'table-color1' : 'table-color2';
     $row = !$row;
-    echo "<div style='background-color: ".$color."' class='row'>\n";
+    echo "<div class='row ". $color ."'>\n";
     echo "<div class='col-3'>".htmlspecialchars($category->name).'</div>';
     foreach (['open_not_ready', 'open_ready', 'placed'] as $bin) {
         echo "<div class='col-3'><span data-toggle='tooltip' data-placement='top' title='".$counts[$bin][0].' stukje(s), '.$counts[$bin][1]." teken(s)' >".$counts[$bin][0].' / '.$counts[$bin][1].'</span></div>';

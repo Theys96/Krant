@@ -13,10 +13,10 @@ use App\Model\Category;
 <?php
 $row = true;
 foreach ($categories as $category) {
-    $color = $row ? '#AAAAAA' : '#DDDDDD';
+    $color = $row ? 'table-color1' : 'table-color2';
     $row = !$row;
 
-    echo "<div style='background-color: ".$color."' class='row'>\n";
+    echo "<div class='row ". $color ."'>\n";
     echo "<div class='col-4'><b>".htmlspecialchars($category->name).'</b></div>';
     echo "<div class='col-6'>".htmlspecialchars($category->description).'</div>';
     echo "<div class='col-2'>";

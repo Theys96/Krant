@@ -14,11 +14,11 @@ use App\Model\Edition;
     <?php
     $row = true;
 foreach ($editions as $edition) {
-    $color = $row ? '#AAAAAA' : '#DDDDDD';
+    $color = $row ? 'table-color1' : 'table-color2';
     $row = !$row;
 
     $article_count = $edition->countArticles(Article::STATUS_OPEN);
-    echo "<div style='background-color: ".$color."' class='row'>\n";
+    echo "<div class='row ". $color ."'>\n";
     echo "<div class='col-1'>";
     if ($edition->active) {
         echo "<span class='badge badge-success my-1 float-right'>Actief</span>";

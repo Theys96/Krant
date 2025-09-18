@@ -44,7 +44,7 @@ foreach ($categories as $category) {
 
     $color = $row ? 'table-color1' : 'table-color2';
     $row = !$row;
-    echo "<div class='row ". $color ."'>\n";
+    echo "<div class='row ".$color."'>\n";
     echo "<div class='col-3'>".htmlspecialchars($category->name).'</div>';
     foreach (['open_not_ready', 'open_ready', 'placed'] as $bin) {
         echo "<div class='col-3'><span data-toggle='tooltip' data-placement='top' title='".$counts[$bin][0].' stukje(s), '.$counts[$bin][1]." teken(s)' >".$counts[$bin][0].' / '.$counts[$bin][1].'</span></div>';

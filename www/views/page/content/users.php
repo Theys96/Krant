@@ -12,7 +12,7 @@ function printUserList(array $users, int $role, bool $active): void
         $color = $row ? 'table-color1' : 'table-color2';
         $row = !$row;
 
-        echo "<div class='row ". $color ."'>\n";
+        echo "<div class='row ".$color."'>\n";
         echo "<div class='col-sm-8 d-flex justify-content-between py-2 pl-3'><span><b>".htmlspecialchars($user->username).'</b></span>';
         echo '<span>'.$user->getPermLevelName().'</span>';
         echo '</div>';

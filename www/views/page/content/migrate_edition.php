@@ -79,7 +79,7 @@ if (0 == count($to_categories)) {
             },
             $article->authors
         )));
-        echo "<div class='row form-row ". $color ."'>\n";
+        echo "<div class='row form-row ".$color."'>\n";
         echo "<div class='col-1'><div class='form-check mb-0'><input name='migrate_articles[]' type='checkbox' value='".$article->id."' checked></div></div>";
         echo "<div class='col-3'><a data-toggle='tooltip' data-placement='top' title='Klik om te bekijken' target='_blank' href='?action=read&stukje=".$article->id."&source=editions'>".htmlspecialchars($article->title).'</a></div>';
         echo "<div class='col-3'>".htmlspecialchars($article->category->name).'</a></div>';

@@ -16,7 +16,7 @@ foreach ($categories as $category) {
     $color = $row ? 'table-color1' : 'table-color2';
     $row = !$row;
 
-    echo "<div class='row ". $color ."'>\n";
+    echo "<div class='row ".$color."'>\n";
     echo "<div class='col-4'><b>".htmlspecialchars($category->name).'</b></div>';
     echo "<div class='col-6'>".htmlspecialchars($category->description).'</div>';
     echo "<div class='col-2'>";

@@ -18,7 +18,7 @@ foreach ($editions as $edition) {
     $row = !$row;
 
     $article_count = $edition->countArticles(Article::STATUS_OPEN);
-    echo "<div class='row ". $color ."'>\n";
+    echo "<div class='row ".$color."'>\n";
     echo "<div class='col-1'>";
     if ($edition->active) {
         echo "<span class='badge badge-success my-1 float-right'>Actief</span>";

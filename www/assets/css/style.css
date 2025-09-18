@@ -292,3 +292,11 @@ table.diff-wrapper {
 .pdf {
 	min-height: calc(70vh);
 }
+
+.table-color1 {
+	background-color: #AAAAAA;
+}
+
+.table-color2 {
+	background-color: #DDDDDD;
+}

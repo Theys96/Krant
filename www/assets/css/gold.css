@@ -25,27 +25,48 @@ body {
 
 .card {
 	background-color: white;
+	color: black;
+}
+
+.card-header {
+	color: black;
 }
 
 .stukje {
 	background-color: goldenrod;
 }
 
-.list-group {
+.list-group-item {
 	color: black;
+	background-color: rgb(219, 190, 114);
+}
+
+.list-group {
+	background-color: rgb(219, 190, 114);
+}
+
+.read-row {
+	background-color: white;
+	border-radius: .25rem;
 }
 
 .row {
-	background-color: white;
 	color: black;
-	border-radius: .25rem;
 }
 
 p {
-	background-color: white;
 	color: black;
 	border-radius: .25rem;
 	padding: .5rem;
+}
+
+.text-grey {
+	background-color: rgb(230,230,230);
+	border-radius: .25rem;
+}
+
+hr {
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .schrijfregels {
@@ -53,4 +74,12 @@ p {
 	color: black;
 	border-radius: .25rem;
 	padding: .5rem;
+}
+
+.table-color1 {
+	background-color: goldenrod;
+}
+
+.table-color2 {
+	background-color: rgb(219, 190, 114);
 }

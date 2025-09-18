@@ -1,13 +1,21 @@
 body {
 	font-family: 'Monospace', monospace;
-	background-color: black;
-    background-image: url(kakkerlak.gif);
-	background-size: 60px, 60px;
+	background-color: #343a40
 }
 
 #body {
 	color: white;
     animation: blinker 2.5s linear infinite;
+}
+
+#footer {
+	color: rgb(17, 103, 189);
+}
+
+.innerbody {
+	background-color: black;
+    background-image: url(kakkerlak.gif);
+	background-size: 60px, 60px;
 }
 
 .role {
@@ -24,6 +32,7 @@ body {
 
 .card {
 	background-color: white;
+	color: black;
 }
 
 .stukje {
@@ -34,10 +43,13 @@ body {
 	color: black;
 }
 
-.row {
+.read-row {
 	background-color: white;
-	color: black;
 	border-radius: .25rem;
+}
+
+.row {
+	color: black;
 }
 
 p {
@@ -45,6 +57,10 @@ p {
 	color: black;
 	border-radius: .25rem;
 	padding: .5rem;
+}
+
+hr {
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .schrijfregels {

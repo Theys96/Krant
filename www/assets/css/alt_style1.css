@@ -5,16 +5,33 @@
 
 body {
 	font-family: InstalledComicSans, "Comic Sans MS";
+	background-color: #343a40;
+}
+
+hr {
+	border-top: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.read-row {
+	background-color: white;
+	border-radius: .25rem;
+}
+
+.text-grey {
+	background-color: white;
+	border-radius: .25rem;
+}
+
+#body {
+	background: rgba(245,232,204,0.6);
+}
+
+.innerbody {
 	background-image: url('banana-dance.gif');
 	background-size: 40px 40px;
 	background-color: #ff7f00;
 }
 
-#body {
-	background: linear-gradient(rgba(245,232,204,0.6) 90%, rgba(245,232,204,0.1) 100%);
-}
-
 #footer {
-	color: blue;
-	text-shadow: 0px 0px 3px white;
+	color: rgb(17, 103, 189);
 }

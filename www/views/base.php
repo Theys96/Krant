@@ -39,8 +39,11 @@ $gold = Session::instance()->getGold();
         <script src='assets/js/emoji-react.js'></script>
     </head>
     <body>
+        <div class="innerbody">
 
     <?php echo $body; ?>
+    
+        </div>
 
 <?php
 if ($show_easter_egg) {

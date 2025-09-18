@@ -59,6 +59,10 @@ p {
 	padding: .5rem;
 }
 
+hr {
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .schrijfregels {
 	background-color: white;
 	color: black;

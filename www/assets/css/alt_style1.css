@@ -8,6 +8,20 @@ body {
 	background-color: #343a40;
 }
 
+hr {
+	border-top: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.read-row {
+	background-color: white;
+	border-radius: .25rem;
+}
+
+.text-grey {
+	background-color: white;
+	border-radius: .25rem;
+}
+
 #body {
 	background: rgba(245,232,204,0.6);
 }

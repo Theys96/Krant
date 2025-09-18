@@ -94,7 +94,7 @@ if (0 == count($articles)) {
 $n = 0;
 foreach ($articles as $article) {
     $filtered = false;
-    if($role == 3 && $showFilters){
+    if (3 == $role && $showFilters) {
         $filtered = !in_array($article->category_id, $catFilter);
     }
     if (1 == $role && 0 != $filtercat) {

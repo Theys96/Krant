@@ -1,11 +1,11 @@
 body {
 	font-family: 'Times New Roman', Times, serif;
 	background-image: none;
-	background-color: hotpink;
+	background-color: rgb(238, 147, 197)
 }
 
 #body {
-	background: lightpink none;
+	background: rgb(238, 147, 197) none;
 	color: white;
 }
 
@@ -40,10 +40,19 @@ body {
 
 
 .form-control:disabled {
-	background-color: mistyrose;
+	background-color: rgb(250, 217, 228);
 }
 
 .click-text {
 	color: white;
 }
 
+.table-color1 {
+	background-color: rgb(250, 217, 228);
+	color: black;
+}
+
+.table-color2 {
+	background-color: lavenderblush;
+	color: black;
+}

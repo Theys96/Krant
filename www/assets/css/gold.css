@@ -25,24 +25,36 @@ body {
 
 .card {
 	background-color: white;
+	color: black;
+}
+
+.card-header {
+	color: black;
 }
 
 .stukje {
 	background-color: goldenrod;
 }
 
-.list-group {
+.list-group-item {
 	color: black;
+	background-color: rgb(219, 190, 114);
 }
 
-.row {
+.list-group {
+	background-color: rgb(219, 190, 114);
+}
+
+.read-row {
 	background-color: white;
-	color: black;
 	border-radius: .25rem;
 }
 
+.row {
+	color: black;
+}
+
 p {
-	background-color: white;
 	color: black;
 	border-radius: .25rem;
 	padding: .5rem;
@@ -53,4 +65,12 @@ p {
 	color: black;
 	border-radius: .25rem;
 	padding: .5rem;
+}
+
+.table-color1 {
+	background-color: goldenrod;
+}
+
+.table-color2 {
+	background-color: rgb(219, 190, 114);
 }

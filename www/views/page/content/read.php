@@ -24,7 +24,7 @@ $authors = $article->getAuthorsString();
 <div class="alert alert-info fixed-bottom text-center" style="display: none" role="alert" id="copy-message"></div>
 
 <h2 class='mb-3'>Stukje lezen</h2>
-<div class='row'>
+<div class='row read-row'>
     <?php
     if (count($checkers) > 0) {
         echo "<div class='col-sm-12'>Nagekeken door ".htmlspecialchars(implode(', ', $checkers)).'.</div>';
@@ -45,7 +45,7 @@ $authors = $article->getAuthorsString();
     <div class='col-sm-4'><b>Klaar</b></div>
     <div class='col-sm-8'><?php echo (1 == $article->ready) ? 'Ja' : 'Nee'; ?></div>
 </div>
-<div class='row mt-4'>
+<div class='row read-row mt-4'>
     <?php
 if (3 == $role) {
     echo "<div class='col-sm-12 tekst click-text' data-toggle='tooltip' data-placement='left' title='Kopi&euml;ren' onclick='copyText(this, \"Tekst gekopieerd.\")'>".nl2br(htmlspecialchars($article->contents)).'</div>';
@@ -56,7 +56,7 @@ if (3 == $role) {
 </div>
 <?php
 if ('' != $article->context) {
-    echo "<div class='row'>";
+    echo "<div class='row read-row'>";
     echo "<div class='col-sm-12'><b>Context</b></div>";
     echo "<div class='col-sm-12 text-grey'>".nl2br(htmlspecialchars($article->context)).'</div>';
     echo '</div>';

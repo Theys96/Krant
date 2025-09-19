@@ -16,9 +16,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
 $filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
 $categories = Category::getAll();
-if (sizeof($catFilter) == sizeof($categories)) {
-    $catFilter = [];
-}
+$showFilters = isset($_GET['show_filter_options'])
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -46,7 +44,7 @@ if ($role > 1) {
         }
     }
     if (3 == $role) {
-        echo "<a class='btn m-1 ".(!empty($catFilter) ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter=$filter".(isset($_GET['show_filter_options']) ? '' : '&show_filter_options=1')."'>Filter op categorie</a>";
+        echo "<a class='btn m-1 ".(!empty($catFilter) && $showFilters ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter=$filter".($showFilters ? '' : '&show_filter_options=1')."'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }
@@ -67,7 +65,7 @@ if (1 == $role) {
 ?>
 
 <?php
-if (3 == $role && isset($_GET['show_filter_options'])) {
+if (3 == $role && $showFilters) {
     echo "<div class='w-100 text-center pt-2'>";
     echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : '', isset($_GET['show_filter_options']) ? '&show_filter_options=1' : '', "'>";
     echo "<div class='form-group'>";
@@ -79,7 +77,7 @@ if (3 == $role && isset($_GET['show_filter_options'])) {
         }
         $first = false;
         echo "<input id='cat-filter-$cat->id' onchange=submit() type='checkbox' name='filters[]' value='$cat->id'",
-        in_array($cat->id, $catFilter) || empty($catFilter) ? ' checked' : '', '/>';
+        in_array($cat->id, $catFilter) ? ' checked' : '', '/>';
         echo "&nbsp;<label for='cat-filter-$cat->id'> $cat->name </label> ";
     }
     echo '</form>';
@@ -95,7 +93,10 @@ if (0 == count($articles)) {
 
 $n = 0;
 foreach ($articles as $article) {
-    $filtered = !empty($catFilter) && !in_array($article->category_id, $catFilter);
+    $filtered = false;
+    if (3 == $role && $showFilters) {
+        $filtered = !in_array($article->category_id, $catFilter);
+    }
     if (1 == $role && 0 != $filtercat) {
         $filtered = $filtered || $article->category_id != $filtercat;
     }

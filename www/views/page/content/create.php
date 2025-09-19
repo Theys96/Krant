@@ -43,6 +43,7 @@ if (!$open) {
     echo "<a class='btn btn-danger mr-1' href='?action=".$_GET['action'].'&stukje='.$article->id."&ignore_warning=1'>Ja ik weet het zeker</a>";
 }
 ?>
+    <span id='info'></span>
 </div>
 
 <h2><?php echo $title; ?></h2>
@@ -143,7 +144,6 @@ if (null !== $article) {
 }
 
 ?>
-    <span id='info'></span>
 </form>
 <script src='assets/js/draft.js'></script>
 <script src='assets/js/editor.js'></script>

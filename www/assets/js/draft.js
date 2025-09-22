@@ -75,11 +75,11 @@ Draft = {
 		post.done(function(data) {
 			time = new Date();
 			if (data.warning) {
-				$('#info').html('<span style="color: red; font-size: 15px;">' + data.warning + '</span>');
+				$('#info').html("<span class='alert alert-danger' role='alert'>" + data.warning + "</span>");
 			}
 		});
 		post.fail(function() {
-			$('#info').html('<span style="color: red; font-size: 15px;">Verbinding met de server verloren!</span>');
+			$('#info').html("<span class='alert alert-danger' role='alert'>Verbinding met de server verloren!</span>");
 		});
 	},
 

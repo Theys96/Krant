@@ -38,9 +38,9 @@ $open = null == $liveDrafters || $ignore_warning;
 if (!$open) {
     $names = implode(', ', array_column($liveDrafters, 'username'));
     $warning = htmlspecialchars($names).(count($liveDrafters) > 1 ? ' hebben ' : ' heeft ').'het stukje open.';
-    echo "<p class='text-danger'>$warning</p>";
-    echo "<p class='text-danger'>Weet je zeker dat je het stukje nu ook wil bewerken? <br> Het tegelijkertijd bewerken van stukjes kan lijden tot het verlies van aanpassingen! <br> Dit is niet aangeraden!</p>";
-    echo "<a class='btn btn-danger mr-1' href='?action=".$_GET['action'].'&stukje='.$article->id."&ignore_warning=1'>Ja ik weet het zeker</a>";
+    echo "<div class='alert alert-danger' role='alert'><p>$warning</p>";
+    echo '<p>Weet je zeker dat je het stukje nu ook wil bewerken? <br> Het tegelijkertijd bewerken van stukjes kan leiden tot het verlies van aanpassingen!</p>';
+    echo "<a class='btn btn-danger mr-1' href='?action=".$_GET['action'].'&stukje='.$article->id."&ignore_warning=1'>Ja ik weet het zeker</a></div>";
 }
 ?>
     <span id='info'></span>

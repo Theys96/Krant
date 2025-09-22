@@ -31,7 +31,7 @@ class ArticleChange
     public const CHANGE_TYPE_TO_OPEN = 8;
     /** @var int */
     public const CHANGE_TYPE_MIGRATION = 9;
-   
+
     public int $id;
 
     protected int $article_id;

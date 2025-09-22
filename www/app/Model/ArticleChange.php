@@ -31,9 +31,7 @@ class ArticleChange
     public const CHANGE_TYPE_TO_OPEN = 8;
     /** @var int */
     public const CHANGE_TYPE_MIGRATION = 9;
-    /** @var int */
-    public const CHANGE_TYPE_OPENED = 10;
-
+   
     public int $id;
 
     protected int $article_id;
@@ -213,7 +211,7 @@ class ArticleChange
     public static function getByArticleId(int $id): array
     {
         Database::instance()->storeQuery(
-            'SELECT article_updates.*, article_update_types.id AS update_type_id, article_update_types.description AS update_type_description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.article_id = ? AND article_updates.update_type != 10 ORDER BY article_updates.timestamp DESC'
+            'SELECT article_updates.*, article_update_types.id AS update_type_id, article_update_types.description AS update_type_description FROM article_updates LEFT JOIN article_update_types ON article_updates.update_type = article_update_types.id WHERE article_updates.article_id = ? ORDER BY article_updates.timestamp DESC'
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param('i', $id);

@@ -6,7 +6,7 @@ Draft = {
 	server: 'api.php',
 	draftID: null,
 	article_id: $('#article_id').val(),
-	update_type: 10,
+	update_type: 1,
 	title: $($('[name="title"]')[0]),
 	category: $($('[name="category"]')[0]),
 	text: $($('[name="text"]')[0]),
@@ -21,7 +21,6 @@ Draft = {
 		Draft.draft();
 		setInterval(function() {
 			$(inputSelector).on('input', function() {
-				Draft.update_type = 1;
 			$(inputSelector).off('input');
 			});
 			Draft.draft();

@@ -11,7 +11,7 @@ use App\Util\Singleton\Session;
  * @var string  $list_type
  */
 $authors = $article->getAuthorsString();
-$liveDrafters = User::getLiveDrafters($article->id);
+$liveDrafters = User::getLiveDrafters($article->id, null);
 $checkers = htmlspecialchars(implode(', ', array_map(
     static function (User $author): string {
         return $author->username;

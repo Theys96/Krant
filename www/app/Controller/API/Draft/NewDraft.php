@@ -42,7 +42,7 @@ class NewDraft extends APIResponse
 
             $warning = null;
             $live_drafters = array_filter(
-                User::getLiveDrafters($article->id),
+                User::getLiveDrafters($article->id, null),
                 static function (User $user): bool {
                     return $user->id !== Session::instance()->getUser()->id;
                 }

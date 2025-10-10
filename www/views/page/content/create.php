@@ -22,7 +22,7 @@ function printButtons(array $chars): void
  * @var bool         $check_mode
  * @var string|null  $mail
  */
-$liveDrafters = null == $article ? [] : User::getLiveDrafters($article->id);
+$liveDrafters = null == $article ? [] : User::getLiveDrafters($article->id, $username);
 $article_title = $article?->title;
 $category_id = $article?->category?->id;
 $contents = $article?->contents;
@@ -31,7 +31,7 @@ $ready = $article?->ready;
 $picture = $article?->picture;
 $wjd = $article?->wjd;
 $ignore_warning = isset($_GET['ignore_warning']) ? true : false;
-$open = null == $liveDrafters || $ignore_warning;
+$open = $ignore_warning || $liveDrafters == null;
 ?>
 <div class="text-center mb-5">
 <?php

@@ -52,6 +52,10 @@ class ArticleChange
 
     public ?bool $changed_ready;
 
+    public ?bool $changed_picture;
+
+    public ?bool $changed_wjd;
+
     protected int $user_id;
 
     public ?\DateTime $timestamp;
@@ -69,6 +73,8 @@ class ArticleChange
         string $changed_context,
         ?int $changed_category_id,
         bool $changed_ready,
+        bool $changed_picture,
+        bool $changed_wjd,
         int $user_id,
         string $timestamp,
     ) {
@@ -82,6 +88,8 @@ class ArticleChange
         $this->changed_context = $changed_context;
         $this->changed_category_id = $changed_category_id;
         $this->changed_ready = $changed_ready;
+        $this->changed_picture = $changed_picture;
+        $this->changed_wjd = $changed_wjd;
         $this->user_id = $user_id;
         try {
             $this->timestamp = new \DateTime($timestamp);
@@ -119,14 +127,16 @@ class ArticleChange
         ?string $changed_context,
         ?int $changed_category_id,
         ?bool $changed_ready,
+        ?bool $changed_picture,
+        ?bool $changed_wjd,
         int $user_id,
     ): ?ArticleChange {
         Database::instance()->storeQuery(
-            'INSERT INTO `article_updates` (article_id, update_type, changed_status, changed_title, changed_contents, changed_context, changed_category, changed_ready, user) VALUES (?,?,?,?,?,?,?,?,?)'
+            'INSERT INTO `article_updates` (article_id, update_type, changed_status, changed_title, changed_contents, changed_context, changed_category, changed_ready, changed_picture, changed_wjd, user) VALUES (?,?,?,?,?,?,?,?,?,?,?)'
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'iissssiii',
+            'iissssiiiii',
             $article_id,
             $update_type,
             $changed_status,
@@ -135,6 +145,8 @@ class ArticleChange
             $changed_context,
             $changed_category_id,
             $changed_ready,
+            $changed_picture,
+            $changed_wjd,
             $user_id
         );
         $stmt->execute();
@@ -146,25 +158,31 @@ class ArticleChange
     }
 
     public function updateFields(
+        int $update_type,
         string $changed_status,
         string $changed_title,
         string $changed_contents,
         string $changed_context,
         ?int $changed_category_id,
         bool $changed_ready,
+        bool $changed_picture,
+        bool $changed_wjd,
     ): ArticleChange {
         Database::instance()->storeQuery(
-            'UPDATE `article_updates` SET changed_status = ?, changed_title = ?, changed_contents = ?, changed_context = ?, changed_category = ?, changed_ready = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?'
+            'UPDATE `article_updates` SET update_type = ?, changed_status = ?, changed_title = ?, changed_contents = ?, changed_context = ?, changed_category = ?, changed_ready = ?, changed_picture = ?, changed_wjd = ?, timestamp = CURRENT_TIMESTAMP WHERE id = ?'
         );
         $stmt = Database::instance()->prepareStoredQuery();
         $stmt->bind_param(
-            'ssssiii',
+            'issssiiiii',
+            $update_type,
             $changed_status,
             $changed_title,
             $changed_contents,
             $changed_context,
             $changed_category_id,
             $changed_ready,
+            $changed_picture,
+            $changed_wjd,
             $this->id
         );
         $stmt->execute();
@@ -212,6 +230,8 @@ class ArticleChange
                 $change_data['changed_context'],
                 $change_data['changed_category'],
                 (bool) $change_data['changed_ready'],
+                (bool) $change_data['changed_picture'],
+                (bool) $change_data['changed_wjd'],
                 $change_data['user'],
                 $change_data['timestamp']
             );
@@ -241,6 +261,8 @@ class ArticleChange
                 $change_data['changed_context'],
                 $change_data['changed_category'],
                 (bool) $change_data['changed_ready'],
+                (bool) $change_data['changed_picture'],
+                (bool) $change_data['changed_wjd'],
                 $change_data['user'],
                 $change_data['timestamp']
             );

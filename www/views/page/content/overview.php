@@ -29,7 +29,7 @@ echo "<a class='btn m-1 ".(1 == $filter[0] ? 'btn-info' : 'btn-secondary')."' hr
 echo '</div>';
 ?>
 <div class='px-3 mx-auto my-5'>
-    <div style='background-color: #AAAAAA' class='row'>
+    <div class='row table-color1'>
         <div class='col-3'><b>Categorie</b></div>
         <div class='col-3'><b>Stukjes</b></div>
         <div class='col-3'><b>Foto's</b></div>
@@ -73,10 +73,9 @@ foreach ($categories as $category) {
         'pictures' => $counts['pictures'][3].' foto(s)',
         'wjd' => ($counts['wjd'][0] + $counts['wjd'][1] + $counts['wjd'][2]).' wist je datje(s) | '.$counts['wjd'][3].' tekens',
     ];
-
-    $color = $row ? '#DDDDDD' : '#AAAAAA';
+    $color = !$row ? 'table-color1' : 'table-color2';
     $row = !$row;
-    echo "<div style='background-color: ".$color."' class='row'>\n";
+    echo "<div class='row ".$color."'>\n";
     echo "<div class='col-3'>".htmlspecialchars($category->name).'</div>';
     foreach (['articles', 'pictures', 'wjd'] as $bin) {
         echo "<div data-toggle='tooltip' data-placement='top' title='".$titles[$bin]."' class='col-3 align-self-start d-flex flex-wrap mb-2'>";

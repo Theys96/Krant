@@ -106,7 +106,7 @@ class User
         $update_type1 = ArticleChange::CHANGE_TYPE_DRAFT;
 
         return User::getAllByQuery(
-            'SELECT * FROM users WHERE username != "'. $ignore_username .'" AND id IN (SELECT DISTINCT(user) FROM `article_updates` WHERE article_id = '.$article_id.' AND ( update_type = '.$update_type1.') AND timestamp >= DATE_SUB(NOW(), INTERVAL 20 SECOND))'
+            'SELECT * FROM users WHERE username != "'.$ignore_username.'" AND id IN (SELECT DISTINCT(user) FROM `article_updates` WHERE article_id = '.$article_id.' AND ( update_type = '.$update_type1.') AND timestamp >= DATE_SUB(NOW(), INTERVAL 20 SECOND))'
         );
     }
 

@@ -31,7 +31,7 @@ $ready = $article?->ready;
 $picture = $article?->picture;
 $wjd = $article?->wjd;
 $ignore_warning = isset($_GET['ignore_warning']) ? true : false;
-$open = $ignore_warning || $liveDrafters == null;
+$open = $ignore_warning || null == $liveDrafters;
 ?>
 <div class="text-center mb-5">
 <?php

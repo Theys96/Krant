@@ -75,6 +75,8 @@ Draft = {
 			time = new Date();
 			if (data.warning) {
 				$('#info').html("<span class='alert alert-danger' role='alert'>" + data.warning + "</span>");
+			} else {
+				$('#info').html("");
 			}
 		});
 		post.fail(function() {

@@ -16,7 +16,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
 $filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
 $categories = Category::getAll();
-$showFilters = isset($_GET['show_filter_options'])
+$showFilters = isset($_GET['show_filter_options']);
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>

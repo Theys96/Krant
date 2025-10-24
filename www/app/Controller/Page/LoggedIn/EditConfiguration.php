@@ -20,11 +20,8 @@ class EditConfiguration extends LoggedInPage
                 $edit_checks = (int) $_POST['edit_checks'];
                 $edit_mail = $_POST['edit_mail'];
                 $passwords = $_POST['edit_passwords'];
-                $max_articles = $_POST['edit_max_articles'];
-                $max_pictures = $_POST['edit_max_pictures'];
-                $max_wjd = $_POST['edit_max_wjd'];
                 $edit_mail = '' == $edit_mail ? null : $edit_mail;
-                Configuration::instance()->updateAll($edit_schrijfregels, $edit_checks, $edit_mail, $passwords, $max_articles, $max_pictures, $max_wjd);
+                Configuration::instance()->updateAll($edit_schrijfregels, $edit_checks, $edit_mail, $passwords);
             }
         }
     }

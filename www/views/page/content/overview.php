@@ -5,15 +5,7 @@ use App\Model\Category;
 
 /**
  * @var Category[] $categories
- * @var int        $max_articles
- * @var int        $max_pictures
- * @var int        $max_wjd
  */
-$maxes = [
-    'articles' => $max_articles,
-    'pictures' => $max_pictures,
-    'wjd' => $max_wjd,
-];
 $filter = [
     isset($_GET['notdone']) ? $_GET['notdone'] : 1,
     isset($_GET['done']) ? $_GET['done'] : 1,
@@ -38,6 +30,11 @@ echo '</div>';
 <?php
 $row = true;
 foreach ($categories as $category) {
+    $maxes = [
+        'articles' => $category->article_amount,
+        'pictures' => $category->picture_amount,
+        'wjd' => $category->wjd_amount,
+    ];
     $counts = [
         'articles' => [0, 0, 0, 0],
         'pictures' => [0, 0, 0, 0],

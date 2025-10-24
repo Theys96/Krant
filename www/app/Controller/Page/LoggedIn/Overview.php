@@ -22,9 +22,6 @@ class Overview extends LoggedInPage
 
         return ViewRenderer::render_view('page.content.overview', [
             'categories' => Category::getAll(),
-            'max_articles' => $configuration->max_articles,
-            'max_pictures' => $configuration->max_pictures,
-            'max_wjd' => $configuration->max_wjd,
         ]);
     }
 

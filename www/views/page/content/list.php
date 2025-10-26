@@ -96,8 +96,8 @@ foreach ($articles as $article) {
     if (3 == $role && $showFilters) {
         $filtered = !in_array($article->category_id, $catFilter);
     }
-    if (1 == $role && count($catFilter) == 1) {
-        $filtered = $filtered || $article->category_id != $catFilter[0];
+    if (1 == $role && count($catFilter) > 0) {
+        $filtered = $filtered || !in_array($article->category_id, $catFilter);
     }
     if (isset($filter) && 'list' == $action) {
         if ($filter >= 1) {

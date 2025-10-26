@@ -14,7 +14,6 @@ use App\Util\ViewRenderer;
  */
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
-$filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
 $categories = Category::getAll();
 $showFilters = isset($_GET['show_filter_options'])
 ?>
@@ -51,12 +50,12 @@ if ($role > 1) {
 
 if (1 == $role) {
     echo "<div class='w-100 text-center'>";
-    echo "<form class='form-group'>";
+    echo "<form class='form-group' method='post'>";
     echo "<input hidden id='action' name='action' value='$action'>";
-    echo "<select onchange=submit() class='form-drop' id='filtercat' name='filtercat'>";
+    echo "<select onchange=submit() class='form-drop' id='filtercat' name='filters[]'>";
     echo "<option value='0'>Geen Filter</option>";
     foreach ($categories as $cat) {
-        echo '<option '.($filtercat == $cat->id ? 'selected' : '')." value='$cat->id'>$cat->name</option>";
+        echo '<option '.($catFilter[0] == $cat->id ? 'selected' : '')." value='$cat->id'>$cat->name</option>";
     }
     echo '</select> ';
     echo '</form>';
@@ -97,8 +96,8 @@ foreach ($articles as $article) {
     if (3 == $role && $showFilters) {
         $filtered = !in_array($article->category_id, $catFilter);
     }
-    if (1 == $role && 0 != $filtercat) {
-        $filtered = $filtered || $article->category_id != $filtercat;
+    if (1 == $role && count($catFilter) == 1) {
+        $filtered = $filtered || $article->category_id != $catFilter[0];
     }
     if (isset($filter) && 'list' == $action) {
         if ($filter >= 1) {

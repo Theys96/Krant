@@ -2,9 +2,9 @@
 
 namespace App\Util\Singleton;
 
+use App\Model\Category;
 use App\Model\Log;
 use App\Model\User;
-use App\Model\Category;
 
 /**
  * Session wrapper.
@@ -39,6 +39,12 @@ class Session
         }
         if (isset($_POST['filters'])) {
             $this->setFilter($_POST['filters']);
+        }
+        if (isset($_GET['filter_mode'])) {
+            $this->setFilterMode($_GET['filter_mode']);
+        }
+        if (isset($_GET['filter_categories'])) {
+            $this->setFilterCategories($_GET['filter_categories']);
         }
     }
 
@@ -87,12 +93,30 @@ class Session
     }
 
     /**
+     * @return int int representing how to filter
+     */
+    public function getFilterMode(): int
+    {
+        return key_exists('filter_mode', $_SESSION[self::SESSION_NAMESPACE]) ?
+           $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] : 1;
+    }
+
+    /**
+     * @return int int representing if to filter on categories
+     */
+    public function getFilterCategories(): int
+    {
+        return key_exists('filter_categories', $_SESSION[self::SESSION_NAMESPACE]) ?
+           $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] : 0;
+    }
+
+    /**
      * @return array<int, int> array containing the filter
      */
     public function getFilter(): array
     {
         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
-           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array_map(function($var){return $var->id;},Category::getALL());
+           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array_map(function ($var) {return $var->id; }, Category::getALL());
     }
 
     /**
@@ -122,6 +146,16 @@ class Session
     public function setGold(): void
     {
         $_SESSION[self::SESSION_NAMESPACE]['gold'] = 5 == rand(0, 500);
+    }
+
+    public function setFilterMode(int $filter_mode): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = $filter_mode;
+    }
+
+    public function setFilterCategories(int $filter_categories): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] = $filter_categories;
     }
 
     /**

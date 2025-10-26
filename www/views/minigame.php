@@ -43,7 +43,7 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
   canvas.height = window.innerHeight;
   
   //decide highscore mode
-  const isSmall = canvas.width * canvas.height < 1400000;
+  const isSmall = canvas.width * canvas.height < 600000;
 
   // Variabelen voor vijandgrootte, spawnmarge en spelerafmetingen
   const enemySize = 120;        // Basisgrootte van vijand

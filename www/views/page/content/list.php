@@ -44,7 +44,7 @@ if ($role > 1) {
         }
     }
     if (3 == $role) {
-        echo "<a class='btn m-1 ".(!empty($catFilter) && $showFilters ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter=$filter".($showFilters ? '' : '&show_filter_options=1')."'>Filter op categorie</a>";
+        echo "<a class='btn m-1 ". ( $showFilters ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter=$filter".($showFilters ? '' : '&show_filter_options=1')."'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }

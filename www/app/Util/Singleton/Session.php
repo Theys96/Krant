@@ -4,6 +4,7 @@ namespace App\Util\Singleton;
 
 use App\Model\Log;
 use App\Model\User;
+use App\Model\Category;
 
 /**
  * Session wrapper.
@@ -91,7 +92,7 @@ class Session
     public function getFilter(): array
     {
         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
-           $_SESSION[self::SESSION_NAMESPACE]['filter'] : [];
+           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array_map(function($var){return $var->id;},Category::getALL());
     }
 
     /**

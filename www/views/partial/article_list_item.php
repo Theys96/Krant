@@ -11,6 +11,7 @@ use App\Util\Singleton\Session;
  * @var string  $list_type
  */
 $authors = $article->getAuthorsString();
+$liveDrafters = User::getLiveDrafters($article->id, null);
 $checkers = htmlspecialchars(implode(', ', array_map(
     static function (User $author): string {
         return $author->username;
@@ -24,6 +25,8 @@ $authors_ids = array_map(
     $article->authors
 );
 $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
+$user_id = Session::instance()->getUser()->id;
+$open = 0 == count($liveDrafters);
 ?>
 
 <div class="stukje card mt-3 shadow-sm border-1">
@@ -35,13 +38,36 @@ $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
         <li class="list-group-item p-2">
             <div class="d-flex justify-content-between">
                 <p class="mb-0">
-                <?php if (true === $article->ready) { ?>
-                    <span class='badge badge-success mr-2'>Klaar</span><b><?php echo count($article->checkers); ?></b> check(s)<?php echo (0 == count($article->checkers) ? '' : ': ').$checkers; ?>
-                <?php } else { ?>
-                    <span class='badge badge-warning'>Niet klaar</span>
-                <?php } ?>
+                    <?php if (true === $article->ready) { ?>
+                    <b><?php echo count($article->checkers); ?></b> check(s)<?php echo (0 == count($article->checkers) ? '' : ': ').$checkers; ?>
+                    <?php } ?>
                 </p>
-                <p class="mb-0"><span class='badge badge-secondary'><?php echo htmlspecialchars($article->category?->name); ?></span></p>
+                <div class="d-flex">
+                    <p class="mb-0">
+                        <?php if (true === $article->ready) {
+                            echo "<span class='badge badge-success mx-1'>Klaar</span>";
+                        } else {
+                            echo "<span class='badge badge-warning mx-1'>Niet klaar</span>";
+                        } ?>
+                    </p>
+                    <p class="mb-0">
+                        <?php
+                        if (true === $article->picture) {
+                            echo "<span class='badge badge-info mx-1'>Foto</span>";
+                        }
+?>
+                    </p>
+                    <p class="mb-0">
+                        <?php
+if (true === $article->wjd) {
+    echo "<span class='badge badge-danger mx-1'>WJD</span>";
+}
+?>
+                    </p>
+                    <p class="mb-0">
+                        <span class='badge badge-secondary mx-1'><?php echo htmlspecialchars($article->category?->name); ?></span>
+                    </p>
+                </div>
             </div>
         </li>
         <li class="list-group-item p-2">
@@ -56,10 +82,10 @@ $reactions = ArticleReaction::getByArticleIdGrouped($article->id);
     </ul>
     <div class="card-footer d-flex justify-content-between">
         <?php if (2 != $role && Article::STATUS_OPEN === $article->status) { ?>
-            <a class="btn btn-primary" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
+            <a class="btn <?php echo $open ? 'btn-primary' : 'btn-secondary'; ?>" href="?action=edit&stukje=<?php echo $article->id; ?>">Wijzigen</a>
         <?php }
-        if (2 == $role && Article::STATUS_OPEN === $article->status && true === $article->ready && !in_array(Session::instance()->getUser()->id, $authors_ids)) { ?>
-            <a class="btn btn-primary" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
+        if (2 == $role && Article::STATUS_OPEN === $article->status && true === $article->ready && !in_array($user_id, $authors_ids)) { ?>
+            <a class="btn <?php echo $open ? 'btn-primary' : 'btn-secondary'; ?>" href="?action=check&stukje=<?php echo $article->id; ?>">Nakijken</a>
         <?php } ?>
         <a class="btn btn-primary" href="?action=read&stukje=<?php echo $article->id; ?>&source=<?php echo $list_type; ?>">Lezen</a>
         <?php if (3 == $role) { ?>

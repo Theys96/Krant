@@ -14,9 +14,9 @@ use App\Util\ViewRenderer;
  */
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $catFilter = Session::instance()->getFilter();
-$filtercat = isset($_GET['filtercat']) ? intval($_GET['filtercat']) : 0;
 $categories = Category::getAll();
-$showFilters = isset($_GET['show_filter_options'])
+$filterMode = Session::instance()->getFilterMode();
+$filterCategories = Session::instance()->getFilterCategories();
 ?>
 
     <h2 class='mb-4'><?php echo $title; ?></h2>
@@ -31,32 +31,30 @@ if ($role > 1) {
      * 1 - alle stukjes die klaar zijn
      * 2 - alle stukjes die klaar zijn & nog niet nagekeken
      */
-    $filter = isset($_GET['filter']) ? intval($_GET['filter']) : 1;
     echo "<div class='w-100 text-center'>";
     if ('list' == $action) {
-        echo "<a class='btn m-1 ".(0 == $filter ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter=0'>Alles</a>";
-        echo "<a class='btn m-1 ".(1 == $filter ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter=1'>Klaar</a>";
+        echo "<a class='btn m-1 ".(0 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=0'>Alles</a>";
+        echo "<a class='btn m-1 ".(1 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=1'>Klaar</a>";
         if (2 == $role) {
-            echo "<a class='btn m-1 ".(2 == $filter ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter=2'>Klaar & kan ik nakijken</a>";
+            echo "<a class='btn m-1 ".(2 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=2'>Klaar & kan ik nakijken</a>";
         }
         if (3 == $role) {
-            echo "<a class='btn m-1 ".(3 == $filter ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter=3'>Klaar & nagekeken</a>";
+            echo "<a class='btn m-1 ".(3 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=3'>Klaar & nagekeken</a>";
         }
     }
     if (3 == $role) {
-        echo "<a class='btn m-1 ".(!empty($catFilter) && $showFilters ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter=$filter".($showFilters ? '' : '&show_filter_options=1')."'>Filter op categorie</a>";
+        echo "<a class='btn m-1 ".($filterCategories ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter_categories=".(1 == $filterCategories ? 0 : 1)."'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }
 
 if (1 == $role) {
     echo "<div class='w-100 text-center'>";
-    echo "<form class='form-group'>";
-    echo "<input hidden id='action' name='action' value='$action'>";
-    echo "<select onchange=submit() class='form-drop' id='filtercat' name='filtercat'>";
+    echo "<form class='form-group' method='post' action='?action=$action'>";
+    echo "<select onchange=submit() class='form-drop' id='filtercat' name='filters[]'>";
     echo "<option value='0'>Geen Filter</option>";
     foreach ($categories as $cat) {
-        echo '<option '.($filtercat == $cat->id ? 'selected' : '')." value='$cat->id'>$cat->name</option>";
+        echo '<option '.($catFilter[0] == $cat->id ? 'selected' : '')." value='$cat->id'>$cat->name</option>";
     }
     echo '</select> ';
     echo '</form>';
@@ -65,9 +63,9 @@ if (1 == $role) {
 ?>
 
 <?php
-if (3 == $role && $showFilters) {
+if (3 == $role && $filterCategories) {
     echo "<div class='w-100 text-center pt-2'>";
-    echo "<form method='post' action='?action=$action", isset($filter) ? "&filter=$filter" : '', isset($_GET['show_filter_options']) ? '&show_filter_options=1' : '', "'>";
+    echo "<form method='post' action='?action=$action'>";
     echo "<div class='form-group'>";
     echo "<input type='hidden' name='filters[]' value='0'>";
     $first = true;
@@ -94,21 +92,21 @@ if (0 == count($articles)) {
 $n = 0;
 foreach ($articles as $article) {
     $filtered = false;
-    if (3 == $role && $showFilters) {
+    if (3 == $role && $filterCategories) {
         $filtered = !in_array($article->category_id, $catFilter);
     }
-    if (1 == $role && 0 != $filtercat) {
-        $filtered = $filtered || $article->category_id != $filtercat;
+    if (1 == $role && count($catFilter) > 0) {
+        $filtered = $filtered || !in_array($article->category_id, $catFilter);
     }
-    if (isset($filter) && 'list' == $action) {
-        if ($filter >= 1) {
+    if ($role > 1 && 'list' == $action) {
+        if ($filterMode >= 1) {
             $filtered = $filtered || false === $article->ready;
         }
-        if (2 == $filter) {
+        if (2 == $filterMode) {
             $user = Session::instance()->getUser();
             $filtered = $filtered || count($article->checkers) >= $checks || in_array($user, $article->checkers) || in_array($user, $article->authors);
         }
-        if (3 == $filter) {
+        if (3 == $filterMode) {
             $filtered = $filtered || count($article->checkers) < $checks;
         }
     }

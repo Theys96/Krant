@@ -99,9 +99,9 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
-  `article_amount` int(11) NOT NULL DEFAULT '5',
-  `picture_amount` int(11) NOT NULL DEFAULT '2',
-  `wjd_amount` int(11) NOT NULL DEFAULT '7',
+  `article_number` int(11) NOT NULL DEFAULT '5',
+  `picture_number` int(11) NOT NULL DEFAULT '2',
+  `wjd_number` int(11) NOT NULL DEFAULT '7',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `edition` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

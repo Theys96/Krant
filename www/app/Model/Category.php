@@ -16,31 +16,31 @@ class Category
 
     public string $description;
 
-    public int $article_amount;
+    public int $article_number;
 
-    public int $picture_amount;
+    public int $picture_number;
 
-    public int $wjd_amount;
+    public int $wjd_number;
 
-    public function __construct(int $id, string $name, string $description, int $article_amount, int $picture_amount, int $wjd_amount)
+    public function __construct(int $id, string $name, string $description, int $article_number, int $picture_number, int $wjd_number)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
-        $this->article_amount = $article_amount;
-        $this->picture_amount = $picture_amount;
-        $this->wjd_amount = $wjd_amount;
+        $this->article_number = $article_number;
+        $this->picture_number = $picture_number;
+        $this->wjd_number = $wjd_number;
     }
 
-    public static function createNew(string $name, string $description, int $article_amount, int $picture_amount, int $wjd_amount): ?Category
+    public static function createNew(string $name, string $description, int $article_number, int $picture_number, int $wjd_number): ?Category
     {
         $edition = Edition::getActive()?->id;
         if (null === $edition) {
             return null;
         }
-        Database::instance()->storeQuery('INSERT INTO `categories` (name, description, article_amount, picture_amount, wjd_amount, edition) VALUES (?, ?, ?, ?, ?, ?)');
+        Database::instance()->storeQuery('INSERT INTO `categories` (name, description, article_number, picture_number, wjd_number, edition) VALUES (?, ?, ?, ?, ?, ?)');
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('ssiiii', $name, $description, $article_amount, $picture_amount, $wjd_amount, $edition);
+        $stmt->bind_param('ssiiii', $name, $description, $article_number, $picture_number, $wjd_number, $edition);
         $stmt->execute();
         if ($stmt->insert_id) {
             return Category::getById($stmt->insert_id);
@@ -49,11 +49,11 @@ class Category
         return null;
     }
 
-    public function update(string $name, string $description, int $article_amount, int $picture_amount, int $wjd_amount): ?Category
+    public function update(string $name, string $description, int $article_number, int $picture_number, int $wjd_number): ?Category
     {
-        Database::instance()->storeQuery('UPDATE categories SET name = ?, description = ?, article_amount = ?, picture_amount = ?, wjd_amount = ? WHERE id = ?');
+        Database::instance()->storeQuery('UPDATE categories SET name = ?, description = ?, article_number = ?, picture_number = ?, wjd_number = ? WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('ssiiii', $name, $description, $article_amount, $picture_amount, $wjd_amount, $this->id);
+        $stmt->bind_param('ssiiii', $name, $description, $article_number, $picture_number, $wjd_number, $this->id);
         $stmt->execute();
 
         return Category::getById($this->id);
@@ -93,7 +93,7 @@ class Category
         $stmt->execute();
         $category_data = $stmt->get_result()->fetch_assoc();
         if ($category_data) {
-            return new Category($category_data['id'], $category_data['name'], $category_data['description'], $category_data['article_amount'], $category_data['picture_amount'], $category_data['wjd_amount']);
+            return new Category($category_data['id'], $category_data['name'], $category_data['description'], $category_data['article_number'], $category_data['picture_number'], $category_data['wjd_number']);
         }
 
         return null;
@@ -114,7 +114,7 @@ class Category
 
         $categories = [];
         while ($category_data = $result->fetch_assoc()) {
-            $categories[$category_data['id']] = new Category($category_data['id'], $category_data['name'], $category_data['description'], $category_data['article_amount'], $category_data['picture_amount'], $category_data['wjd_amount']);
+            $categories[$category_data['id']] = new Category($category_data['id'], $category_data['name'], $category_data['description'], $category_data['article_number'], $category_data['picture_number'], $category_data['wjd_number']);
         }
 
         return $categories;

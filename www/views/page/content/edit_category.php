@@ -24,16 +24,16 @@ use App\Model\Category;
     <p class='mb-0'>Aantal blokjes in het overzicht voor:</p>
     <div class='d-flex justify-content-between'>
 	    <div class='form-group mr-1'>
-		    <label for='edit_article_amount'>Stukjes</label>
-		    <input type='number' id='edit_article_amount' class='form-control' name='edit_article_amount' required value='<?php echo $category->article_amount; ?>'></input>
+		    <label for='edit_article_number'>Stukjes</label>
+		    <input type='number' id='edit_article_number' class='form-control' name='edit_article_number' required  min='0' value='<?php echo $category->article_number; ?>'></input>
 	    </div>
 	    <div class='form-group mr-1'>
-		    <label for='edit_picture_amount'>Foto's</label>
-		    <input type='number' id='edit_picture_amount' class='form-control' name='edit_picture_amount' required value='<?php echo $category->picture_amount; ?>'></input>
+		    <label for='edit_picture_number'>Foto's</label>
+		    <input type='number' id='edit_picture_number' class='form-control' name='edit_picture_number' required  min='0' value='<?php echo $category->picture_number; ?>'></input>
 	    </div>
 	    <div class='form-group'>
-		    <label for='edit_wjd_amount'>Wist je Datjes</label>
-		    <input type='number' id='edit_wjd_amount' class='form-control' name='edit_wjd_amount' required value='<?php echo $category->wjd_amount; ?>'></input>
+		    <label for='edit_wjd_number'>Wist je Datjes</label>
+		    <input type='number' id='edit_wjd_number' class='form-control' name='edit_wjd_number' required min='0' value='<?php echo $category->wjd_number; ?>'></input>
 	    </div>
     </div>
 

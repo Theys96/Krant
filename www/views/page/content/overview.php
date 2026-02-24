@@ -31,9 +31,9 @@ echo '</div>';
 $row = true;
 foreach ($categories as $category) {
     $maxes = [
-        'articles' => $category->article_amount,
-        'pictures' => $category->picture_amount,
-        'wjd' => $category->wjd_amount,
+        'articles' => $category->article_number,
+        'pictures' => $category->picture_number,
+        'wjd' => $category->wjd_number,
     ];
     $counts = [
         'articles' => [0, 0, 0, 0],

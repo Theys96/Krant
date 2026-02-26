@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 cd "$(dirname "$0")" || exit
 
 if ! test -f ../.env; then
@@ -17,7 +19,7 @@ fi
 rm -R ../www/node_modules
 
 # Install the necessary PHP dependencies
-rm -R ../www/vendor
+rm -R ../www/vendor || echo "No vendor folder to remove."
 ./composer install --no-dev
 
 # Sync only the necessary files

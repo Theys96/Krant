@@ -20,9 +20,12 @@ class Categories extends LoggedInPage
                 $edit_category_id = (int) $_GET['edit_category'];
                 $edit_name = $_POST['edit_name'];
                 $edit_description = $_POST['edit_description'];
+                $edit_article_number = $_POST['edit_article_number'] > 0 ? $_POST['edit_article_number'] : 0;
+                $edit_picture_number = $_POST['edit_picture_number'] > 0 ? $_POST['edit_picture_number'] : 0;
+                $edit_wjd_number = $_POST['edit_wjd_number'] > 0 ? $_POST['edit_wjd_number'] : 0;
                 $edit_category = Category::getById($edit_category_id);
                 if (null !== $edit_category) {
-                    $edit_category->update($edit_name, $edit_description);
+                    $edit_category->update($edit_name, $edit_description, $edit_article_number, $edit_picture_number, $edit_wjd_number);
                 } else {
                     ErrorHandler::instance()->addError('Kon categorie niet aanpassen: Niet gevonden.');
                 }
@@ -30,7 +33,10 @@ class Categories extends LoggedInPage
             if (isset($_POST['new_name']) && isset($_POST['new_description'])) {
                 $new_name = $_POST['new_name'];
                 $new_description = $_POST['new_description'];
-                $new_category = Category::createNew($new_name, $new_description);
+                $new_article_number = $_POST['new_article_number'] > 0 ? $_POST['new_article_number'] : 0;
+                $new_picture_number = $_POST['new_picture_number'] > 0 ? $_POST['new_picture_number'] : 0;
+                $new_wjd_number = $_POST['new_wjd_number'] > 0 ? $_POST['new_wjd_number'] : 0;
+                $new_category = Category::createNew($new_name, $new_description, $new_article_number, $new_picture_number, $new_wjd_number);
                 if (null !== $new_category) {
                     ErrorHandler::instance()->addMessage('Categorie aangemaakt.');
                 }

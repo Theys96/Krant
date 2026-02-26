@@ -29,21 +29,6 @@ use App\Util\Singleton\Configuration;
 	<label for='edit_password_3'>Wachtwoord voor beheerders</label>
 	<input type='text' id='edit_password_3' class='form-control text input' name='edit_passwords[]' required value='<?php echo $variables->passwords[3]; ?>'></input>
 </div>
-<p class='mb-0'>Aantal blokjes in het overzicht voor:</p>
-<div class='d-flex justify-content-between'>
-	<div class='form-group mr-1'>
-		<label for='edit_max_articles'>Stukjes</label>
-		<input type='number' id='edit_max_articles' class='form-control' name='edit_max_articles' required value='<?php echo $variables->max_articles; ?>'></input>
-	</div>
-	<div class='form-group mr-1'>
-		<label for='edit_max_pictures'>Foto's</label>
-		<input type='number' id='edit_max_pictures' class='form-control' name='edit_max_pictures' required value='<?php echo $variables->max_pictures; ?>'></input>
-	</div>
-	<div class='form-group'>
-		<label for='edit_max_wjd'>Wist je Datjes</label>
-		<input type='number' id='edit_max_wjd' class='form-control' name='edit_max_wjd' required value='<?php echo $variables->max_wjd; ?>'></input>
-	</div>
-</div>
 <div class='form-group'>
 	<label for='edit_schrijfregels'>Schrijfregels</label>
 	<textarea id='edit_schrijfregels' class='form-control text input' name='edit_schrijfregels'><?php echo $variables->schrijfregels; ?></textarea>

@@ -11,14 +11,25 @@ use App\Model\Category;
 
 <div class='px-3 mx-auto my-5'>
 <?php
-$row = true;
+$row = false;
+echo "<div class='row table-color1'>\n";
+echo "<div class='col-3'><b>Categorie</b></div>";
+echo "<div class='col-4'>Beschrijving</div>";
+echo "<div class='col-1'>Stukjes</div>";
+echo "<div class='col-1'>Foto's</div>";
+echo "<div class='col-1'>Wjd</div>";
+echo "<div class='col-2'></div>";
+echo "</div>\n";
 foreach ($categories as $category) {
     $color = $row ? 'table-color1' : 'table-color2';
     $row = !$row;
 
     echo "<div class='row ".$color."'>\n";
-    echo "<div class='col-4'><b>".htmlspecialchars($category->name).'</b></div>';
-    echo "<div class='col-6'>".htmlspecialchars($category->description).'</div>';
+    echo "<div class='col-3'><b>".htmlspecialchars($category->name).'</b></div>';
+    echo "<div class='col-4'>".htmlspecialchars($category->description).'</div>';
+    echo "<div class='col-1'>".$category->article_number.'</div>';
+    echo "<div class='col-1'>".$category->picture_number.'</div>';
+    echo "<div class='col-1'>".$category->wjd_number.'</div>';
     echo "<div class='col-2'>";
     if (3 === $role) {
         echo "<a href='?action=edit_category&category=".$category->id."'>Aanpassen</a>";
@@ -32,7 +43,7 @@ foreach ($categories as $category) {
 <?php
 if (3 == $role) {
     ?>
-<form method='post'>
+<form method='post' action="?action=categories">
 <h3>Categorie toevoegen</h3>
 <div class='form-group'>
 	<label for='name'>Naam</label>
@@ -42,6 +53,22 @@ if (3 == $role) {
 	<label for='description'>Beschrijving</label>
 	<input id='description' name='new_description' class='form-control' type='text' />
 </div>
+
+<p class='mb-0'>Aantal blokjes in het overzicht voor:</p>
+    <div class='d-flex justify-content-between'>
+	    <div class='form-group mr-1'>
+		    <label for='new_article_number'>Stukjes</label>
+		    <input type='number' id='new_article_number' class='form-control' name='new_article_number' required  min='0' value='5'></input>
+	    </div>
+	    <div class='form-group mr-1'>
+		    <label for='new_picture_number'>Foto's</label>
+		    <input type='number' id='new_picture_number' class='form-control' name='new_picture_number' required  min='0' value='2'></input>
+	    </div>
+	    <div class='form-group'>
+		    <label for='new_wjd_number'>Wist je Datjes</label>
+		    <input type='number' id='new_wjd_number' class='form-control' name='new_wjd_number' required  min='0' value='7'></input>
+	    </div>
+    </div>
 <input type='submit' class='btn btn-primary' value='Toevoegen' />
 </form>
 <?php

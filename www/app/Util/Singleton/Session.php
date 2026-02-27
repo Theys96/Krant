@@ -94,6 +94,10 @@ class Session
 
     /**
      * @return int int representing how to filter
+     * 0 - alle stukjes
+     * 1 - alle stukjes die klaar zijn
+     * 2 - alle stukjes die klaar zijn & nog niet nagekeken
+     * 3 - alle stukjes die klaar zijn & nagekeken
      */
     public function getFilterMode(): int
     {
@@ -102,12 +106,12 @@ class Session
     }
 
     /**
-     * @return int int representing if to filter on categories
+     * @return bool if the filter on categories is active
      */
-    public function getFilterCategories(): int
+    public function getFilterCategories(): bool
     {
         return key_exists('filter_categories', $_SESSION[self::SESSION_NAMESPACE]) ?
-           $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] : 0;
+           $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] : false;
     }
 
     /**
@@ -116,7 +120,7 @@ class Session
     public function getFilter(): array
     {
         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
-           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array_map(function ($var) {return $var->id; }, Category::getALL());
+           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array_map(static function ($cat) {return $cat->id; }, Category::getALL());
     }
 
     /**
@@ -148,18 +152,29 @@ class Session
         $_SESSION[self::SESSION_NAMESPACE]['gold'] = 5 == rand(0, 500);
     }
 
+    /**
+     * @param int $filter_mode Which filter is active
+     * 0 - alle stukjes
+     * 1 - alle stukjes die klaar zijn
+     * 2 - alle stukjes die klaar zijn & nog niet nagekeken
+     * 3 - alle stukjes die klaar zijn & nagekeken
+     */
     public function setFilterMode(int $filter_mode): void
     {
+        $filter_mode = $filter_mode <= 3 && $filter_mode >= 0 ? $filter_mode : 1;
         $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = $filter_mode;
     }
 
-    public function setFilterCategories(int $filter_categories): void
+    /**
+     * @param bool $filter_categories If the filter on categories is active
+     */
+    public function setFilterCategories(bool $filter_categories): void
     {
         $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] = $filter_categories;
     }
 
     /**
-     * @param array<int, int> $filters
+     * @param array<int, int> $filters the categories that are shown
      */
     public function setFilter(array $filters): void
     {

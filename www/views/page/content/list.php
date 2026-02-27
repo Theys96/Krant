@@ -30,6 +30,7 @@ if ($role > 1) {
     /* 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn
      * 2 - alle stukjes die klaar zijn & nog niet nagekeken
+     * 3 - alle stukjes die klaar zijn & nagekeken
      */
     echo "<div class='w-100 text-center'>";
     if ('list' == $action) {

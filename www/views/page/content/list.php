@@ -2,6 +2,7 @@
 
 use App\Model\Article;
 use App\Model\Category;
+use App\Model\FilterMode;
 use App\Util\Singleton\Session;
 use App\Util\ViewRenderer;
 
@@ -27,24 +28,24 @@ function cap(string $text, int $len): string
 }
 
 if ($role > 1) {
-    /* 0 - alle stukjes
-     * 1 - alle stukjes die klaar zijn
-     * 2 - alle stukjes die klaar zijn & nog niet nagekeken
-     * 3 - alle stukjes die klaar zijn & nagekeken
+    /* ALL - alle stukjes
+     * FINISHED - alle stukjes die klaar zijn
+     * CHECKABLE - alle stukjes die klaar zijn & nog niet nagekeken door de gebruiker
+     * CHECKED - alle stukjes die klaar zijn & vaak genoeg nagekeken
      */
     echo "<div class='w-100 text-center'>";
     if ('list' == $action) {
-        echo "<a class='btn m-1 ".(0 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=0'>Alles</a>";
-        echo "<a class='btn m-1 ".(1 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=1'>Klaar</a>";
+        echo "<a class='btn m-1 ".($filterMode == FilterMode::ALL ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=0'>Alles</a>";
+        echo "<a class='btn m-1 ".($filterMode == FilterMode::FINISHED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=1'>Klaar</a>";
         if (2 == $role) {
-            echo "<a class='btn m-1 ".(2 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=2'>Klaar & kan ik nakijken</a>";
+            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKABLE ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=2'>Klaar & kan ik nakijken</a>";
         }
         if (3 == $role) {
-            echo "<a class='btn m-1 ".(3 == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=3'>Klaar & nagekeken</a>";
+            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=3'>Klaar & nagekeken</a>";
         }
     }
     if (3 == $role) {
-        echo "<a class='btn m-1 ".($filterCategories ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter_categories=".(1 == $filterCategories ? 0 : 1)."'>Filter op categorie</a>";
+        echo "<a class='btn m-1 ".($filterCategories ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter_categories=".($filterCategories ? 0 : 1)."'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }
@@ -100,14 +101,14 @@ foreach ($articles as $article) {
         $filtered = $filtered || !in_array($article->category_id, $catFilter);
     }
     if ($role > 1 && 'list' == $action) {
-        if ($filterMode >= 1) {
+        if ($filterMode != FilterMode::ALL) {
             $filtered = $filtered || false === $article->ready;
         }
-        if (2 == $filterMode) {
+        if ($filterMode == FilterMode::CHECKABLE) {
             $user = Session::instance()->getUser();
             $filtered = $filtered || count($article->checkers) >= $checks || in_array($user, $article->checkers) || in_array($user, $article->authors);
         }
-        if (3 == $filterMode) {
+        if ($filterMode == FilterMode::CHECKED) {
             $filtered = $filtered || count($article->checkers) < $checks;
         }
     }

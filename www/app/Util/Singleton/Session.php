@@ -5,6 +5,7 @@ namespace App\Util\Singleton;
 use App\Model\Category;
 use App\Model\Log;
 use App\Model\User;
+use App\Model\FilterMode;
 
 /**
  * Session wrapper.
@@ -96,8 +97,8 @@ class Session
      * @return int int representing how to filter
      * 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn
-     * 2 - alle stukjes die klaar zijn & nog niet nagekeken
-     * 3 - alle stukjes die klaar zijn & nagekeken
+     * 2 - alle stukjes die klaar zijn & nog niet nagekeken door de gebruiker
+     * 3 - alle stukjes die klaar zijn & vaak genoeg nagekeken
      */
     public function getFilterMode(): int
     {
@@ -156,13 +157,12 @@ class Session
      * @param int $filter_mode Which filter is active
      * 0 - alle stukjes
      * 1 - alle stukjes die klaar zijn
-     * 2 - alle stukjes die klaar zijn & nog niet nagekeken
-     * 3 - alle stukjes die klaar zijn & nagekeken
+     * 2 - alle stukjes die klaar zijn & nog niet nagekeken door de gebruiker
+     * 3 - alle stukjes die klaar zijn & vaak genoeg nagekeken
      */
     public function setFilterMode(int $filter_mode): void
     {
-        $filter_mode = $filter_mode <= 3 && $filter_mode >= 0 ? $filter_mode : 1;
-        $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = $filter_mode;
+        $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = FilterMode::validValue($filter_mode);
     }
 
     /**

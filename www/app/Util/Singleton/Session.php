@@ -45,7 +45,7 @@ class Session
             $this->setFilterMode($_GET['filter_mode']);
         }
         if (isset($_GET['filter_categories'])) {
-            $this->setFilterCategories($_GET['filter_categories']);
+            $this->setFilterCategories((bool) $_GET['filter_categories']);
         }
     }
 
@@ -95,10 +95,7 @@ class Session
 
     /**
      * @return int int representing how to filter
-     * 0 - alle stukjes
-     * 1 - alle stukjes die klaar zijn
-     * 2 - alle stukjes die klaar zijn & nog niet nagekeken door de gebruiker
-     * 3 - alle stukjes die klaar zijn & vaak genoeg nagekeken
+     * @see FilterMode
      */
     public function getFilterMode(): int
     {
@@ -155,14 +152,11 @@ class Session
 
     /**
      * @param int $filter_mode Which filter is active
-     * 0 - alle stukjes
-     * 1 - alle stukjes die klaar zijn
-     * 2 - alle stukjes die klaar zijn & nog niet nagekeken door de gebruiker
-     * 3 - alle stukjes die klaar zijn & vaak genoeg nagekeken
+     * @see FilterMode
      */
     public function setFilterMode(int $filter_mode): void
     {
-        $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = FilterMode::validValue($filter_mode);
+        $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = FilterMode::isValidValue($filter_mode) ? $filter_mode : FilterMode::FINISHED;
     }
 
     /**

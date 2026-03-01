@@ -16,7 +16,7 @@ class FilterMode
     //alle stukjes die klaar zijn en vaak genoeg nagekeken
     const CHECKED = 3;
 
-    static function validValue(int $value): int {
-        return $value >= 0 && $value <= 3 ? $value : 1;
+    public static function isValidValue(int $value): bool {
+        return $value >= 0 && $value <= 3;
     }
 }

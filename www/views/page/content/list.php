@@ -35,17 +35,17 @@ if ($role > 1) {
      */
     echo "<div class='w-100 text-center'>";
     if ('list' == $action) {
-        echo "<a class='btn m-1 ".($filterMode == FilterMode::ALL ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=0'>Alles</a>";
-        echo "<a class='btn m-1 ".($filterMode == FilterMode::FINISHED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=1'>Klaar</a>";
+        echo "<a class='btn m-1 ".($filterMode == FilterMode::ALL ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::ALL ."'>Alles</a>";
+        echo "<a class='btn m-1 ".($filterMode == FilterMode::FINISHED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::FINISHED ."'>Klaar</a>";
         if (2 == $role) {
-            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKABLE ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=2'>Klaar & kan ik nakijken</a>";
+            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKABLE ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::CHECKABLE ."'>Klaar & kan ik nakijken</a>";
         }
         if (3 == $role) {
-            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=3'>Klaar & nagekeken</a>";
+            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::CHECKED ."'>Klaar & nagekeken</a>";
         }
     }
     if (3 == $role) {
-        echo "<a class='btn m-1 ".($filterCategories ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter_categories=".($filterCategories ? 0 : 1)."'>Filter op categorie</a>";
+        echo "<a class='btn m-1 ".($filterCategories ? 'btn-success' : 'btn-secondary')."' href='?action=$action&filter_categories=".($filterCategories ? false : true)."'>Filter op categorie</a>";
     }
     echo "</div>\n";
 }

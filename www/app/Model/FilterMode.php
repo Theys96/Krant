@@ -4,18 +4,30 @@ namespace App\Model;
 
 class FilterMode
 {
-    //alle stukjes
+    /**
+     * @var int alle stukjes
+     */
     const ALL = 0;
     
-    //alles stukjes die klaar zijn
+    /** 
+     * @var int alle stukjes die klaar zijn
+    */
     const FINISHED = 1;
 
-    //alle stukjes die klaar zijn en nog niet nagekeken door de gebruiker
+    /** 
+     * @var int alle stukjes die klaar zijn en nog niet nagekeken door de gebruiker
+    */
     const CHECKABLE = 2;
 
-    //alle stukjes die klaar zijn en vaak genoeg nagekeken
+    /** 
+     * @var int alle stukjes die klaar zijn en vaak genoeg nagekeken
+    */
     const CHECKED = 3;
 
+    /** 
+     * @param int $value
+     * @return bool
+    */
     public static function isValidValue(int $value): bool {
         return $value >= 0 && $value <= 3;
     }

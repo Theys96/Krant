@@ -99,6 +99,9 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
+  `article_number` int(11) NOT NULL DEFAULT '5',
+  `picture_number` int(11) NOT NULL DEFAULT '2',
+  `wjd_number` int(11) NOT NULL DEFAULT '7',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `edition` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -108,7 +111,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `description`, `active`, `edition`) VALUES
-(1, 'Algemeen', 'Algemeen', 1, 1);
+(1, 'Algemeen', 'Algemeen', 5, 2, 7, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -188,10 +191,7 @@ INSERT INTO `configuration` (`id`, `name`, `value`) VALUES
 (1, 'schrijfregels', 'Dit zijn de schrijfregels'),
 (2, 'min_checks', '3'),
 (3, 'mail_address', null),
-(4, 'passwords', ',,,printer'),
-(5, 'max_articles', 10),
-(6, 'max_pictures', 4),
-(7, 'max_wjd', 10);
+(4, 'passwords', ',,,printer');
 
 --
 -- Indexes for dumped tables

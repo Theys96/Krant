@@ -58,7 +58,7 @@ if (!$open) {
 
     <div class='form-group'>
         <label for='title'>Titel</label>
-        <input type='text' <?php echo $open ? '' : 'disabled'; ?>  class='form-control input' name='title' id='title' value='<?php echo $article_title; ?>'/>
+        <input type='text' <?php echo $open ? '' : 'disabled'; ?>  class='form-control input' name='title' id='title' value='<?php echo htmlspecialchars($article_title, ENT_QUOTES); ?>'/>
     </div>
 
     <div class='form-group'>

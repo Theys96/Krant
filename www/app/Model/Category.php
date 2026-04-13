@@ -16,22 +16,31 @@ class Category
 
     public string $description;
 
-    public function __construct(int $id, string $name, string $description)
+    public int $article_number;
+
+    public int $picture_number;
+
+    public int $wjd_number;
+
+    public function __construct(int $id, string $name, string $description, int $article_number, int $picture_number, int $wjd_number)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->article_number = $article_number;
+        $this->picture_number = $picture_number;
+        $this->wjd_number = $wjd_number;
     }
 
-    public static function createNew(string $name, string $description): ?Category
+    public static function createNew(string $name, string $description, int $article_number, int $picture_number, int $wjd_number): ?Category
     {
         $edition = Edition::getActive()?->id;
         if (null === $edition) {
             return null;
         }
-        Database::instance()->storeQuery('INSERT INTO `categories` (name, description, edition) VALUES (?, ?, ?)');
+        Database::instance()->storeQuery('INSERT INTO `categories` (name, description, article_number, picture_number, wjd_number, edition) VALUES (?, ?, ?, ?, ?, ?)');
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('ssi', $name, $description, $edition);
+        $stmt->bind_param('ssiiii', $name, $description, $article_number, $picture_number, $wjd_number, $edition);
         $stmt->execute();
         if ($stmt->insert_id) {
             return Category::getById($stmt->insert_id);
@@ -40,11 +49,11 @@ class Category
         return null;
     }
 
-    public function update(string $name, string $description): ?Category
+    public function update(string $name, string $description, int $article_number, int $picture_number, int $wjd_number): ?Category
     {
-        Database::instance()->storeQuery('UPDATE categories SET name = ?, description = ? WHERE id = ?');
+        Database::instance()->storeQuery('UPDATE categories SET name = ?, description = ?, article_number = ?, picture_number = ?, wjd_number = ? WHERE id = ?');
         $stmt = Database::instance()->prepareStoredQuery();
-        $stmt->bind_param('ssi', $name, $description, $this->id);
+        $stmt->bind_param('ssiiii', $name, $description, $article_number, $picture_number, $wjd_number, $this->id);
         $stmt->execute();
 
         return Category::getById($this->id);
@@ -84,7 +93,7 @@ class Category
         $stmt->execute();
         $category_data = $stmt->get_result()->fetch_assoc();
         if ($category_data) {
-            return new Category($category_data['id'], $category_data['name'], $category_data['description']);
+            return new Category($category_data['id'], $category_data['name'], $category_data['description'], $category_data['article_number'], $category_data['picture_number'], $category_data['wjd_number']);
         }
 
         return null;
@@ -105,7 +114,7 @@ class Category
 
         $categories = [];
         while ($category_data = $result->fetch_assoc()) {
-            $categories[$category_data['id']] = new Category($category_data['id'], $category_data['name'], $category_data['description']);
+            $categories[$category_data['id']] = new Category($category_data['id'], $category_data['name'], $category_data['description'], $category_data['article_number'], $category_data['picture_number'], $category_data['wjd_number']);
         }
 
         return $categories;

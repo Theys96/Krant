@@ -191,7 +191,10 @@ class User
             $topBig[] = [$user->username, $user->highscore_big];
         }
 
-        return [$topSmall, $topBig];
+        return [
+            'small': $topSmall, 
+            'big': $topBig
+        ];
     }
 
     /**

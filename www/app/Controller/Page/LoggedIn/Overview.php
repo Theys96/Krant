@@ -4,6 +4,7 @@ namespace App\Controller\Page\LoggedIn;
 
 use App\Controller\Page\LoggedInPage;
 use App\Model\Category;
+use App\Util\Singleton\Configuration;
 use App\Util\ViewRenderer;
 
 /**
@@ -17,6 +18,8 @@ class Overview extends LoggedInPage
 
     public function get_content(): string
     {
+        $configuration = Configuration::instance();
+
         return ViewRenderer::render_view('page.content.overview', [
             'categories' => Category::getAll(),
         ]);

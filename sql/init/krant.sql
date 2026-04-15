@@ -35,6 +35,8 @@ CREATE TABLE `articles` (
   `category` int(11) DEFAULT NULL,
   `status` set('draft','open','placed','bin') NOT NULL DEFAULT 'draft',
   `ready` tinyint(1) NOT NULL DEFAULT '0',
+  `picture` tinyint(1) NOT NULL DEFAULT '0',
+  `wjd` tinyint(1) NOT NULL DEFAULT '0',
   `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -54,6 +56,8 @@ CREATE TABLE `article_updates` (
   `changed_context` text NOT NULL,
   `changed_category` int(11) DEFAULT NULL,
   `changed_ready` tinyint(1) NOT NULL,
+  `changed_picture` tinyint(1) NOT NULL,
+  `changed_wjd` tinyint(1) NOT NULL,
   `user` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -95,6 +99,9 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
+  `article_number` int(11) NOT NULL DEFAULT '5',
+  `picture_number` int(11) NOT NULL DEFAULT '2',
+  `wjd_number` int(11) NOT NULL DEFAULT '7',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `edition` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -104,7 +111,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `description`, `active`, `edition`) VALUES
-(1, 'Algemeen', 'Algemeen', 1, 1);
+(1, 'Algemeen', 'Algemeen', 5, 2, 7, 1, 1);
 
 -- --------------------------------------------------------
 

@@ -6,23 +6,25 @@ Draft = {
 	server: 'api.php',
 	draftID: null,
 	article_id: $('#article_id').val(),
-
+	update_type: 1,
 	title: $($('[name="title"]')[0]),
 	category: $($('[name="category"]')[0]),
 	text: $($('[name="text"]')[0]),
 	context: $($('[name="context"]')[0]),
 	done: $($('[name="done"]')[0]),
+	picture: $($('[name="picture"]')[0]),
+	wjd: $($('[name="wjd"]')[0]),
 	draftIDinput: $($('#draftid')[0]),
 
 	/* Start drafting */
 	init: function(inputSelector) {
-		$(inputSelector).on('input', function() {
-			Draft.draft();
-			setInterval(function() {
-				Draft.draft();
-			}, 10000);
+		Draft.draft();
+		setInterval(function() {
+			$(inputSelector).on('input', function() {
 			$(inputSelector).off('input');
-		});
+			});
+			Draft.draft();
+		}, 10000);
 	},
 
 	/* Post draft naar server */
@@ -37,6 +39,8 @@ Draft = {
 			}
 		
 		klaar = Draft.done.is(':checked') ? 1 : 0;
+		picture = Draft.picture.is(':checked') ? 1 : 0;
+		wjd = Draft.wjd.is(':checked') ? 1 : 0;
 		
 		/* Post action */
 		console.log(action, Draft.draftID, Draft.title.val(), Draft.category.val(), Draft.text.val(), Draft.context.val(), klaar);
@@ -45,11 +49,14 @@ Draft = {
 			action: action,
 			article_id: Draft.article_id === '' ? null : Draft.article_id,
 			draft_id: Draft.draftID,
+			update_type: Draft.update_type,
 			title: Draft.title.val(),
-			category_id: Draft.category.val(),
+			category_id: Draft.category.val() === '' ? null : Draft.category.val(),
 			contents: Draft.text.val(),
 			context: Draft.context.val(),
-			ready: klaar
+			ready: klaar,
+			picture: picture,
+			wjd: wjd
 		}).done(function(data) {
 			/* Get a Draft ID  */
 			if (data.draft_id) {
@@ -67,11 +74,13 @@ Draft = {
 		post.done(function(data) {
 			time = new Date();
 			if (data.warning) {
-				$('#info').html('<span style="color: red; font-size: 15px;">' + data.warning + '</span>');
+				$('#info').html("<span class='alert alert-danger' role='alert'>" + data.warning + "</span>");
+			} else {
+				$('#info').html("");
 			}
 		});
 		post.fail(function() {
-			$('#info').html('<span style="color: red; font-size: 15px;">Verbinding met de server verloren!</span>');
+			$('#info').html("<span class='alert alert-danger' role='alert'>Verbinding met de server verloren!</span>");
 		});
 	},
 

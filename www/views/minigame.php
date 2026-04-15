@@ -1,8 +1,8 @@
 <?php
 /**
- * @var int                                    $highscore_small
- * @var int                                    $highscore_big
- * @var array<array<array{0: string, 1: int}>> $topFive
+ * @var int                                                                                               $highscore_small
+ * @var int                                                                                               $highscore_big
+ * @var array{small: array<array{user: string, score: int}>, big: array<array{user: string, score: int}>} $topFive
  */
 ?>
 
@@ -71,10 +71,11 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
   }
   let oldhighscore = highscore;
   let topFive = JSON.parse(document.getElementById("topFive").value);
+  let scores = [];
   if (isSmall) {
-    topFive = topFive[0];
+    scores = topFive['small'];
   } else {
-    topFive = topFive[1];
+    scores = topFive['big'];
   }
 
   // Speler object met afbeelding
@@ -453,10 +454,10 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
 
   // Tekent de top 5 highscores plus de gebruikers score op het midden van het scherm
   function renderScores() {
-    const newTopFive = topFive.slice()
-    const rank = newTopFive.findIndex(entry => highscore > entry[1]);
+    const newTopFive = scores.slice()
+    const rank = newTopFive.findIndex(entry => highscore > entry['score']);
     if (rank !== -1) {
-      newTopFive.splice(rank, 0, ['JIJ', highscore]);
+      newTopFive.splice(rank, 0, {user: 'JIJ', score: highscore});
       if (newTopFive.length > 5) {
         newTopFive.pop();
       }
@@ -468,7 +469,7 @@ echo "<input type='hidden' id='topFive' value='".json_encode($topFive)."'/>";
     let text = "";
     ctx.font = "20px Arial";
     for (let i = 0; i < newTopFive.length; i++) {
-      text = (i + 1) + ". " + newTopFive[i][0] + ": " + newTopFive[i][1];
+      text = (i + 1) + ". " + newTopFive[i]['user'] + ": " + newTopFive[i]['score'];
       ctx.fillText(text, (canvas.width / 2) - ctx.measureText(text).width / 2, (canvas.height / 2) + offset);
       offset = offset + 30;
     }

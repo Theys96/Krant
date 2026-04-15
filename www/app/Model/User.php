@@ -176,24 +176,24 @@ class User
      *
      * @param int $userid de user die moet worden buitengesloten
      *
-     * @return array<array<array{0: string, 1: int}>>
+     * @return array{small: array<array{user: string, score: int}>, big: array<array{user: string, score: int}>}
      */
     public static function getTopFive(int $userid): array
     {
         $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.'  AND highscore_small > 0 ORDER BY highscore_small DESC LIMIT 5');
         $topSmall = [];
         foreach ($users as $user) {
-            $topSmall[] = [$user->username, $user->highscore_small];
+            $topSmall[] = ['user' => $user->username, 'score' => $user->highscore_small];
         }
         $users = User::getAllByQuery('SELECT * FROM users WHERE id != '.$userid.'  AND highscore_big > 0 ORDER BY highscore_big DESC LIMIT 5');
         $topBig = [];
         foreach ($users as $user) {
-            $topBig[] = [$user->username, $user->highscore_big];
+            $topBig[] = ['user' => $user->username, 'score' => $user->highscore_big];
         }
 
         return [
-            'small': $topSmall, 
-            'big': $topBig
+            'small' => $topSmall,
+            'big' => $topBig,
         ];
     }
 

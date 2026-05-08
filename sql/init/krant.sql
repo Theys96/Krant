@@ -162,16 +162,17 @@ CREATE TABLE `users` (
   `perm_level` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `alt_css` tinyint(2) NOT NULL DEFAULT '0',
-  `highscore` int(11) NOT NULL DEFAULT '0'
+  `highscore_small` int(11) NOT NULL DEFAULT '0',
+  `highscore_big` int(11) NOT NULL DEFAULT '0',
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `perm_level`, `active`, `alt_css`, `highscore`) VALUES
-(1, 'Thijs', 3, 1, 0, 0),
-(2, 'Renske', 3, 1, 0, 0);
+INSERT INTO `users` (`id`, `username`, `perm_level`, `active`, `alt_css`) VALUES
+(1, 'Thijs', 3, 1, 0, 0, 0),
+(2, 'Renske', 3, 1, 0, 0, 0);
 
 --
 -- Table structure for table `single_variables`

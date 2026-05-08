@@ -2,8 +2,10 @@
 
 namespace App\Util\Singleton;
 
+use App\Model\Category;
 use App\Model\Log;
 use App\Model\User;
+use App\Model\FilterMode;
 
 /**
  * Session wrapper.
@@ -38,6 +40,12 @@ class Session
         }
         if (isset($_POST['filters'])) {
             $this->setFilter($_POST['filters']);
+        }
+        if (isset($_GET['filter_mode'])) {
+            $this->setFilterMode($_GET['filter_mode']);
+        }
+        if (isset($_GET['filter_categories'])) {
+            $this->setFilterCategories((bool) $_GET['filter_categories']);
         }
     }
 
@@ -86,12 +94,31 @@ class Session
     }
 
     /**
+     * @return int int representing how to filter
+     * @see FilterMode
+     */
+    public function getFilterMode(): int
+    {
+        return key_exists('filter_mode', $_SESSION[self::SESSION_NAMESPACE]) ?
+           $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] : 1;
+    }
+
+    /**
+     * @return bool if the filter on categories is active
+     */
+    public function getFilterCategories(): bool
+    {
+        return key_exists('filter_categories', $_SESSION[self::SESSION_NAMESPACE]) ?
+           $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] : false;
+    }
+
+    /**
      * @return array<int, int> array containing the filter
      */
     public function getFilter(): array
     {
         return key_exists('filter', $_SESSION[self::SESSION_NAMESPACE]) ?
-           $_SESSION[self::SESSION_NAMESPACE]['filter'] : [];
+           $_SESSION[self::SESSION_NAMESPACE]['filter'] : array_map(static function ($cat) {return $cat->id; }, Category::getALL());
     }
 
     /**
@@ -124,7 +151,24 @@ class Session
     }
 
     /**
-     * @param array<int, int> $filters
+     * @param int $filter_mode Which filter is active
+     * @see FilterMode
+     */
+    public function setFilterMode(int $filter_mode): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['filter_mode'] = FilterMode::isValidValue($filter_mode) ? $filter_mode : FilterMode::FINISHED;
+    }
+
+    /**
+     * @param bool $filter_categories If the filter on categories is active
+     */
+    public function setFilterCategories(bool $filter_categories): void
+    {
+        $_SESSION[self::SESSION_NAMESPACE]['filter_categories'] = $filter_categories;
+    }
+
+    /**
+     * @param array<int, int> $filters the categories that are shown
      */
     public function setFilter(array $filters): void
     {

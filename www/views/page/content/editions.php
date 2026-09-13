@@ -68,9 +68,9 @@ if (3 == $role) {
         <input id='description' name='new_description' class='form-control' type='text' />
     </div>
     <div class='form-group'>
-        <label for='copy_categories'>Kopieer de categorieën van</label>
+        <label for='copy_categories'>Maak de editie aan met de categorieën van</label>
         <select name='copy_categories' id='copy_categories' class='form-control'>
-            <option value='0' selected>Geen categoriën kopiëren</option>
+            <option value='0' selected>Maak aan zonder categorieën</option>
             <?php
                 foreach ($editions as $edition) {
                     echo "<option value='".$edition->id."'>".htmlspecialchars($edition->name)."</option>\n";

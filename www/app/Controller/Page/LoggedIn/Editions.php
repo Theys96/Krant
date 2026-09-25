@@ -4,6 +4,7 @@ namespace App\Controller\Page\LoggedIn;
 
 use App\Controller\Page\LoggedInPage;
 use App\Model\Article;
+use App\Model\Category;
 use App\Model\Edition;
 use App\Util\Singleton\ErrorHandler;
 use App\Util\Singleton\Session;
@@ -34,6 +35,14 @@ class Editions extends LoggedInPage
                 $new_edition = Edition::createNew($new_name, $new_description);
                 if (null !== $new_edition) {
                     ErrorHandler::instance()->addMessage('Editie aangemaakt.');
+                }
+                if (isset($_POST['copy_categories']) && 0 !== (int) $_POST['copy_categories'] && null !== $new_edition) {
+                    $from_edition_id = (int) $_POST['copy_categories'];
+                    $to_edition_id = $new_edition->id;
+                    $errno = Category::copyCategories($from_edition_id, $to_edition_id);
+                    if ($errno > 0) {
+                        ErrorHandler::instance()->addMessage('Fout bij het kopiëren van de categorieën.');
+                    }
                 }
             }
             if (isset($_POST['active_edition'])) {

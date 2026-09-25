@@ -67,6 +67,17 @@ if (3 == $role) {
         <label for='description'>Beschrijving</label>
         <input id='description' name='new_description' class='form-control' type='text' />
     </div>
+    <div class='form-group'>
+        <label for='copy_categories'>Maak de editie aan met de categorieën van</label>
+        <select name='copy_categories' id='copy_categories' class='form-control'>
+            <option value='0' selected>Maak aan zonder categorieën</option>
+            <?php
+                foreach ($editions as $edition) {
+                    echo "<option value='".$edition->id."'>".htmlspecialchars($edition->name)."</option>\n";
+                }
+    ?>
+        </select>
+    </div>
     <input type='submit' class='btn btn-primary' value='Toevoegen' />
 </form>
 <?php

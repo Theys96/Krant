@@ -35,13 +35,13 @@ if ($role > 1) {
      */
     echo "<div class='w-100 text-center'>";
     if ('list' == $action) {
-        echo "<a class='btn m-1 ".($filterMode == FilterMode::ALL ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::ALL ."'>Alles</a>";
-        echo "<a class='btn m-1 ".($filterMode == FilterMode::FINISHED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::FINISHED ."'>Klaar</a>";
+        echo "<a class='btn m-1 ".(FilterMode::ALL == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=".FilterMode::ALL."'>Alles</a>";
+        echo "<a class='btn m-1 ".(FilterMode::FINISHED == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=".FilterMode::FINISHED."'>Klaar</a>";
         if (2 == $role) {
-            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKABLE ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::CHECKABLE ."'>Klaar & kan ik nakijken</a>";
+            echo "<a class='btn m-1 ".(FilterMode::CHECKABLE == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=".FilterMode::CHECKABLE."'>Klaar & kan ik nakijken</a>";
         }
         if (3 == $role) {
-            echo "<a class='btn m-1 ".($filterMode == FilterMode::CHECKED ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=". FilterMode::CHECKED ."'>Klaar & nagekeken</a>";
+            echo "<a class='btn m-1 ".(FilterMode::CHECKED == $filterMode ? 'btn-success' : 'btn-secondary')."' href='?action=list&filter_mode=".FilterMode::CHECKED."'>Klaar & nagekeken</a>";
         }
     }
     if (3 == $role) {
@@ -101,14 +101,14 @@ foreach ($articles as $article) {
         $filtered = $filtered || !in_array($article->category_id, $catFilter);
     }
     if ($role > 1 && 'list' == $action) {
-        if ($filterMode != FilterMode::ALL) {
+        if (FilterMode::ALL != $filterMode) {
             $filtered = $filtered || false === $article->ready;
         }
-        if ($filterMode == FilterMode::CHECKABLE) {
+        if (FilterMode::CHECKABLE == $filterMode) {
             $user = Session::instance()->getUser();
             $filtered = $filtered || count($article->checkers) >= $checks || in_array($user, $article->checkers) || in_array($user, $article->authors);
         }
-        if ($filterMode == FilterMode::CHECKED) {
+        if (FilterMode::CHECKED == $filterMode) {
             $filtered = $filtered || count($article->checkers) < $checks;
         }
     }

@@ -3,9 +3,9 @@
 namespace App\Util\Singleton;
 
 use App\Model\Category;
+use App\Model\FilterMode;
 use App\Model\Log;
 use App\Model\User;
-use App\Model\FilterMode;
 
 /**
  * Session wrapper.
@@ -95,6 +95,7 @@ class Session
 
     /**
      * @return int int representing how to filter
+     *
      * @see FilterMode
      */
     public function getFilterMode(): int
@@ -152,6 +153,7 @@ class Session
 
     /**
      * @param int $filter_mode Which filter is active
+     *
      * @see FilterMode
      */
     public function setFilterMode(int $filter_mode): void

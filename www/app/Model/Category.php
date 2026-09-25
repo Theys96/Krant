@@ -119,4 +119,20 @@ class Category
 
         return $categories;
     }
+
+    /**
+     * CopyCategories copies all categories from one edition to another edition.
+     *
+     * @param int $from_edition_id the id of the edition to copy the categories from
+     * @param int $to_edition_id   the id of the edition to copy the categories to
+     */
+    public static function copyCategories(int $from_edition_id, int $to_edition_id): int
+    {
+        Database::instance()->storeQuery('INSERT INTO categories (name, description, article_number, picture_number, wjd_number, active, edition) SELECT name, description, article_number, picture_number, wjd_number, active, ? FROM categories WHERE edition = ?');
+        $stmt = Database::instance()->prepareStoredQuery();
+        $stmt->bind_param('ii', $to_edition_id, $from_edition_id);
+        $stmt->execute();
+
+        return $stmt->errno;
+    }
 }

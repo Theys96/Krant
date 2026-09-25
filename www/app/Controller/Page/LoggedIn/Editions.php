@@ -41,7 +41,7 @@ class Editions extends LoggedInPage
                     $to_edition_id = $new_edition->id;
                     $errno = Category::copyCategories($from_edition_id, $to_edition_id);
                     if ($errno > 0) {
-                        ErrorHandler::instance()->addMessage('Fout bij het kopiëren van decategorieën.');
+                        ErrorHandler::instance()->addMessage('Fout bij het kopiëren van de categorieën.');
                     }
                 }
             }
